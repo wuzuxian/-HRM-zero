@@ -8,11 +8,8 @@ import (
 )
 
 // countEmployeesByOrg counts employees per 所属组织 by grouping hrm_employee on
-// org_uuid (员工档案, HRM-03). Until that ticket lands the table does not exist
-// in the migrations yet: the "missing table" error is logged and reported as an
-// empty result so the 组织架构图 keeps rendering; once HRM-03 is merged this
-// implementation starts returning real counts without further changes. Any
-// other query failure is returned to the caller.
+// org_uuid (员工档案, HRM-03), 在册口径: person_status NOT IN ('5','6') —
+// 即不含 离职('5')/退休('6') (见 hrm-03-notes.md 的人员状态枚举).
 func countEmployeesByOrg(ctx context.Context, conn sqlx.SqlConn, orgUuids []string) (map[string]int64, error) {
 	out := make(map[string]int64, len(orgUuids))
 	if len(orgUuids) == 0 {
@@ -25,7 +22,7 @@ func countEmployeesByOrg(ctx context.Context, conn sqlx.SqlConn, orgUuids []stri
 		placeholders[i] = "?"
 		args = append(args, uuid)
 	}
-	query := "SELECT org_uuid, COUNT(*) AS cnt FROM hrm_employee WHERE org_uuid IN (" +
+	query := "SELECT org_uuid, COUNT(*) AS cnt FROM hrm_employee WHERE person_status NOT IN ('5','6') AND org_uuid IN (" +
 		strings.Join(placeholders, ",") + ") GROUP BY org_uuid"
 
 	var rows []struct {
