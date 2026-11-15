@@ -322,6 +322,15 @@ export function ExportEmployee() {
   });
 }
 
+/** 生成系统账号 (HRM-04): 单个/批量; 用户名=工号, 昵称=姓名, 初始密码取配置; 已生成的员工跳过 */
+export function GenerateEmployeeUser(req: Api.Hrm.GenerateUserRequest) {
+  return request<Api.Hrm.GenerateUserResponse>({
+    url: '/api/v1/hrm/generateUser',
+    method: 'post',
+    data: req
+  });
+}
+
 /** get 培训计划单 paginated list */
 export function GetTrainingPlanList(params?: Api.Hrm.TrainingPlanSearchParams) {
   return request<Api.Hrm.TrainingPlanList>({

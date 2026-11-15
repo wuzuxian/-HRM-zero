@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import { computed, reactive, ref } from 'vue';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import { DeleteEmployee, ExportEmployee, GetEmployeeDetail, GetEmployeeList, GetOrgTree } from '@/service/api';
+import { DeleteEmployee, ExportEmployee, GenerateEmployeeUser, GetEmployeeDetail, GetEmployeeList, GetOrgTree } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import {
@@ -290,6 +290,28 @@ async function handleDelete(uuid: string) {
 // ---- import modal ----
 const importVisible = ref(false);
 
+// ---- 生成系统账号 (HRM-04): 对勾选的员工批量生成, 未勾选则提示 ----
+const generateUserLoading = ref(false);
+
+async function handleGenerateUser() {
+  const uuids: string[] = [...checkedRowKeys.value];
+  if (uuids.length === 0) {
+    window.$message?.warning($t('page.hrm.employee.generateUserSelectTip'));
+    return;
+  }
+  generateUserLoading.value = true;
+  const { error, data } = await GenerateEmployeeUser({ uuids });
+  generateUserLoading.value = false;
+  if (error) return;
+  if (data && data.generated > 0) {
+    window.$message?.success($t('page.hrm.employee.generateUserSuccess', { generated: data.generated, skipped: data.skipped }));
+  } else {
+    window.$message?.info($t('page.hrm.employee.generateUserAllSkipped', { skipped: data?.skipped ?? 0 }));
+  }
+  checkedRowKeys.value = [];
+  getData();
+}
+
 // ---- export ----
 async function handleExport() {
   const { error, data: exported } = await ExportEmployee();
@@ -337,7 +359,14 @@ async function handleExport() {
           <NButton v-if="hasAuth('hrm:employee:export')" size="small" ghost type="primary" @click="handleExport">
             {{ $t('page.hrm.employee.exportEmployee') }}
           </NButton>
-          <NButton v-if="hasAuth('hrm:employee:generateuser')" size="small" ghost type="warning" disabled>
+          <NButton
+            v-if="hasAuth('hrm:employee:generateuser')"
+            size="small"
+            ghost
+            type="warning"
+            :loading="generateUserLoading"
+            @click="handleGenerateUser"
+          >
             {{ $t('page.hrm.employee.generateUser') }}
           </NButton>
         </NSpace>

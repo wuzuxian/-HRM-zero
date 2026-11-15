@@ -1476,6 +1476,9 @@ declare namespace App {
             importEmployee: string;
             exportEmployee: string;
             generateUser: string;
+            generateUserSelectTip: string;
+            generateUserSuccess: string;
+            generateUserAllSkipped: string;
             importSuccess: string;
             chooseFileTip: string;
             importModalTitle: string;

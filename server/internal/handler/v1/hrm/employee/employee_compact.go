@@ -76,6 +76,24 @@ func Export(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
+func GenerateUser(svcCtx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.GenerateUserRequest
+		if err := httpx.Parse(r, &req); err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+			return
+		}
+
+		l := employee.NewGenerateUser(r.Context(), svcCtx, r)
+		resp, err := l.GenerateUser(&req)
+		if err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+		} else {
+			httpx.OkJsonCtx(r.Context(), w, resp)
+		}
+	}
+}
+
 func Detail(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.DetailRequest

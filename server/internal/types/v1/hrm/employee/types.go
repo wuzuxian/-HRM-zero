@@ -106,6 +106,15 @@ type ExportResponse struct {
 	Content  string `json:"content"`
 }
 
+type GenerateUserRequest struct {
+	Uuids []string `json:"uuids"`
+}
+
+type GenerateUserResponse struct {
+	Generated int64 `json:"generated"`
+	Skipped   int64 `json:"skipped"`
+}
+
 type HrmEmployee struct {
 	Uuid             string                 `json:"uuid"`
 	EmployeeNo       string                 `json:"employeeNo"`

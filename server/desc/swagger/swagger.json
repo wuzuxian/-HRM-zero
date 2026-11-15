@@ -4473,6 +4473,67 @@
         ]
       }
     },
+    "/api/v1/hrm/generateUser": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:employee:generateUser",
+        "operationId": "v1/Hrm/EmployeeGenerateUser",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "generated": {
+                  "type": "integer"
+                },
+                "skipped": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "GenerateUser",
+        "tags": [
+          "v1/hrm/employee"
+        ]
+      }
+    },
     "/api/v1/hrm/getAllPerfIndicator": {
       "get": {
         "description": "接口权限编码:v1:hrm:perf_indicator:getAll",

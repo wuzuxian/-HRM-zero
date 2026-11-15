@@ -861,6 +861,18 @@ declare namespace Api {
       fileName: string;
       content: string;
     };
+
+    /** 生成系统账号请求 (HRM-04): 单个/批量; 已生成过账号的员工自动跳过 */
+    type GenerateUserRequest = {
+      uuids: string[];
+    };
+
+    type GenerateUserResponse = {
+      /** 本次实际新生成的账号数 */
+      generated: number;
+      /** 已有账号而跳过的员工数 */
+      skipped: number;
+    };
     /**
      * attendance group 班制 (groupType)
      *

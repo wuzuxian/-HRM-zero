@@ -364,6 +364,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Handler: v1hrmemployee.Export(serverCtx),
 					},
 					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/generateUser",
+						Handler: v1hrmemployee.GenerateUser(serverCtx),
+					},
+					{
 						Method:  http.MethodGet,
 						Path:    "/hrm/getEmployeeDetail",
 						Handler: v1hrmemployee.Detail(serverCtx),

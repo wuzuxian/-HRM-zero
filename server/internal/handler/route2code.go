@@ -59,6 +59,7 @@ var RoutesCodesMap = map[string]string{
 	"POST:/api/v1/hrm/deleteEmployee":                   "v1:hrm:employee:delete",
 	"POST:/api/v1/hrm/editEmployee":                     "v1:hrm:employee:edit",
 	"GET:/api/v1/hrm/exportEmployee":                    "v1:hrm:employee:export",
+	"POST:/api/v1/hrm/generateUser":                     "v1:hrm:employee:generateUser",
 	"GET:/api/v1/hrm/getEmployeeDetail":                 "v1:hrm:employee:detail",
 	"GET:/api/v1/hrm/getEmployeeList":                   "v1:hrm:employee:list",
 	"POST:/api/v1/hrm/importEmployee":                   "v1:hrm:employee:import",
