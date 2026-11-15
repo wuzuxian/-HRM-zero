@@ -488,6 +488,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         },
         children: [
           {
+            name: 'hrm_salary_archive-list',
+            path: '/hrm/salary/archive-list',
+            component: 'view.hrm_salary_archive-list',
+            meta: {
+              title: 'hrm_salary_archive-list',
+              i18nKey: 'route.hrm_salary_archive-list'
+            }
+          },
+          {
             name: 'hrm_salary_setting',
             path: '/hrm/salary/setting',
             meta: {
@@ -502,6 +511,15 @@ export const generatedRoutes: GeneratedRoute[] = [
                 meta: {
                   title: 'hrm_salary_setting_item',
                   i18nKey: 'route.hrm_salary_setting_item'
+                }
+              },
+              {
+                name: 'hrm_salary_setting_scheme',
+                path: '/hrm/salary/setting/scheme',
+                component: 'view.hrm_salary_setting_scheme',
+                meta: {
+                  title: 'hrm_salary_setting_scheme',
+                  i18nKey: 'route.hrm_salary_setting_scheme'
                 }
               },
               {

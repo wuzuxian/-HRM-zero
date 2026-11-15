@@ -903,6 +903,14 @@ export function DeleteSalarySubject(req: string[]) {
   });
 }
 
+/** get 全量薪资项目 (不分页, calc_order 升序 —— 薪酬方案配置弹窗全量勾选用) */
+export function GetSalaryItemAllList() {
+  return request<{ records: Api.Hrm.SalaryItem[] }>({
+    url: '/api/v1/hrm/getAllSalaryItem',
+    method: 'get'
+  });
+}
+
 /** get 薪资项目 paginated list (默认按计算顺序升序, 同序按 id) */
 export function GetSalaryItemList(params?: Api.Hrm.SalaryItemSearchParams) {
   return request<Api.Hrm.SalaryItemList>({
@@ -934,6 +942,64 @@ export function EditSalaryItem(req: Api.Hrm.EditSalaryItemRequest) {
 export function DeleteSalaryItem(req: string[]) {
   return request<Api.Common.Empty>({
     url: '/api/v1/hrm/deleteSalaryItem',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+// ===== HRM-34 薪酬方案 (薪酬管理域 薪酬设置) =====
+
+/** get 薪酬方案 paginated list (每行带 项目数/配置完整度) */
+export function GetSalarySchemeList(params?: Api.Hrm.SalarySchemeSearchParams) {
+  return request<Api.Hrm.SalarySchemeList>({
+    url: '/api/v1/hrm/getSalarySchemeList',
+    method: 'get',
+    params
+  });
+}
+
+/** get 薪酬方案 detail (方案 + 全量项目配置, 按 calc_order 排序; 配置弹窗回显用) */
+export function GetSalarySchemeDetail(uuid: string) {
+  return request<Api.Hrm.SalarySchemeDetail>({
+    url: '/api/v1/hrm/getSalarySchemeDetail',
+    method: 'get',
+    params: { uuid }
+  });
+}
+
+/** get scheme items (HRM-37 试算消费: 按方案取项目清单+计算规则, calc_order 升序含覆盖值) */
+export function GetSalarySchemeItems(schemeUuid: string) {
+  return request<Api.Hrm.SalarySchemeItemsResponse>({
+    url: '/api/v1/hrm/getSalarySchemeItems',
+    method: 'get',
+    params: { schemeUuid }
+  });
+}
+
+/** add 薪酬方案 (关联薪酬主体; 项目配置整体替换落关联表) */
+export function AddSalaryScheme(req: Api.Hrm.AddSalarySchemeRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addSalaryScheme',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 薪酬方案 (项目配置全删全插, 事务内) */
+export function EditSalaryScheme(req: Api.Hrm.EditSalarySchemeRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editSalaryScheme',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 薪酬方案 (连同关联表配置) */
+export function DeleteSalaryScheme(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteSalaryScheme',
     method: 'post',
     data: {
       uuids: req
@@ -1720,5 +1786,54 @@ export function GetMyDashboard(params?: Api.Hrm.MyDashboardSearchParams) {
     url: '/api/v1/hrm/getMyDashboard',
     method: 'get',
     params
+  });
+}
+
+// ===== HRM-35 员工薪资档案 (薪酬管理域) =====
+
+/** get 员工薪资档案 paginated list (筛选 员工姓名/员工ID/主体/方案/状态) */
+export function GetSalaryArchiveList(params?: Api.Hrm.SalaryArchiveSearchParams) {
+  return request<Api.Hrm.SalaryArchiveList>({
+    url: '/api/v1/hrm/getSalaryArchiveList',
+    method: 'get',
+    params
+  });
+}
+
+/** get 员工生效薪资档案 (HRM-37 试算消费: 按试算月份取当时有效档案+方案+项目清单) */
+export function GetEffectiveSalaryArchive(employeeUuid: string, yearMonth: string) {
+  return request<Api.Hrm.SalaryArchiveEffective>({
+    url: '/api/v1/hrm/getEffectiveSalaryArchive',
+    method: 'get',
+    params: { employeeUuid, yearMonth }
+  });
+}
+
+/** add 员工薪资档案 (选员工带出 公司/部门 快照; 同员工同主体区间重叠拒绝) */
+export function AddSalaryArchive(req: Api.Hrm.AddSalaryArchiveRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addSalaryArchive',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 员工薪资档案 (区间变更时重新做重叠检查) */
+export function EditSalaryArchive(req: Api.Hrm.EditSalaryArchiveRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editSalaryArchive',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 员工薪资档案 */
+export function DeleteSalaryArchive(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteSalaryArchive',
+    method: 'post',
+    data: {
+      uuids: req
+    }
   });
 }

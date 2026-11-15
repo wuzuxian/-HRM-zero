@@ -230,6 +230,184 @@
         ]
       }
     },
+    "/api/v1/hrm/getAllSalaryItem": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:salary_item:getAll",
+        "operationId": "v1/Hrm/SalaryItemGetAll",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "calcOrder": {
+                        "type": "integer"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "formula": {
+                        "type": "string"
+                      },
+                      "isPreset": {
+                        "type": "integer"
+                      },
+                      "itemClass": {
+                        "type": "string"
+                      },
+                      "itemCode": {
+                        "type": "string"
+                      },
+                      "itemName": {
+                        "type": "string"
+                      },
+                      "itemType": {
+                        "type": "string"
+                      },
+                      "orderNum": {
+                        "type": "integer"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "valueMode": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "itemCode",
+                      "itemName",
+                      "itemType",
+                      "itemClass",
+                      "valueMode",
+                      "calcOrder",
+                      "orderNum",
+                      "formula",
+                      "isPreset",
+                      "status",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "records"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "calcOrder": {
+                        "type": "integer"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "formula": {
+                        "type": "string"
+                      },
+                      "isPreset": {
+                        "type": "integer"
+                      },
+                      "itemClass": {
+                        "type": "string"
+                      },
+                      "itemCode": {
+                        "type": "string"
+                      },
+                      "itemName": {
+                        "type": "string"
+                      },
+                      "itemType": {
+                        "type": "string"
+                      },
+                      "orderNum": {
+                        "type": "integer"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "valueMode": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "itemCode",
+                      "itemName",
+                      "itemType",
+                      "itemClass",
+                      "valueMode",
+                      "calcOrder",
+                      "orderNum",
+                      "formula",
+                      "isPreset",
+                      "status",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "GetAll",
+        "tags": [
+          "v1/hrm/salary_item"
+        ]
+      }
+    },
     "/api/v1/hrm/getSalaryItemList": {
       "get": {
         "description": "接口权限编码:v1:hrm:salary_item:list",

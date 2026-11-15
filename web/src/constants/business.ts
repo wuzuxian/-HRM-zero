@@ -298,6 +298,21 @@ export const hrmSalaryItemValueModeRecord: Record<Api.Hrm.SalaryItemValueMode, A
 
 export const hrmSalaryItemValueModeOptions = transformRecordToOption(hrmSalaryItemValueModeRecord);
 
+/** 薪酬方案结算周期 (HRM-34, 演示站口径仅月度) */
+export const hrmSalarySchemeSettleCycleRecord: Record<string, App.I18n.I18nKey> = {
+  monthly: 'page.hrm.salary.scheme.settleCycleEnum.monthly'
+};
+
+export const hrmSalarySchemeSettleCycleOptions = transformRecordToOption(hrmSalarySchemeSettleCycleRecord);
+
+/** 币种选项 (HRM-34) */
+export const hrmSalarySchemeCurrencyOptions: CommonType.Option<string>[] = [
+  { label: 'CNY', value: 'CNY' },
+  { label: 'USD', value: 'USD' },
+  { label: 'EUR', value: 'EUR' },
+  { label: 'HKD', value: 'HKD' }
+];
+
 /** HRM-05 合同预警状态 normal/warning(≤90天)/expired/terminated（terminated 优先于天数口径） */
 export const contractExpiryStateRecord: Record<Api.Hrm.ContractExpiryState, App.I18n.I18nKey> = {
   normal: 'page.hrm.employee.contractExpiring.stateNormal',

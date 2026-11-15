@@ -36,7 +36,9 @@ import (
 	v1hrmrequirement "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/requirement"
 	v1hrmresignation "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/resignation"
 	v1hrmreward "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/reward"
+	v1hrmsalary_archive "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_archive"
 	v1hrmsalary_item "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_item"
+	v1hrmsalary_scheme "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_scheme"
 	v1hrmsalary_subject "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_subject"
 	v1hrmscheduleboard "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/scheduleboard"
 	v1hrmschedulecycle "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/schedulecycle"
@@ -1121,6 +1123,42 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				[]rest.Route{
 					{
 						Method:  http.MethodPost,
+						Path:    "/hrm/addSalaryArchive",
+						Handler: v1hrmsalary_archive.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteSalaryArchive",
+						Handler: v1hrmsalary_archive.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editSalaryArchive",
+						Handler: v1hrmsalary_archive.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getEffectiveSalaryArchive",
+						Handler: v1hrmsalary_archive.GetEffectiveArchive(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getSalaryArchiveList",
+						Handler: v1hrmsalary_archive.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
 						Path:    "/hrm/addSalaryItem",
 						Handler: v1hrmsalary_item.Add(serverCtx),
 					},
@@ -1136,8 +1174,54 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					},
 					{
 						Method:  http.MethodGet,
+						Path:    "/hrm/getAllSalaryItem",
+						Handler: v1hrmsalary_item.GetAll(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
 						Path:    "/hrm/getSalaryItemList",
 						Handler: v1hrmsalary_item.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addSalaryScheme",
+						Handler: v1hrmsalary_scheme.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteSalaryScheme",
+						Handler: v1hrmsalary_scheme.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editSalaryScheme",
+						Handler: v1hrmsalary_scheme.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getSalarySchemeDetail",
+						Handler: v1hrmsalary_scheme.GetSchemeDetail(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getSalarySchemeItems",
+						Handler: v1hrmsalary_scheme.GetSchemeItems(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getSalarySchemeList",
+						Handler: v1hrmsalary_scheme.List(serverCtx),
 					},
 				}...,
 			),

@@ -40,7 +40,10 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_regularization_bill"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_resignation_bill"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_reward_bill"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_archive"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_item"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_scheme"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_scheme_item"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_subject"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_schedule_cycle"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_schedule_entry"
@@ -96,7 +99,10 @@ type Model struct {
 	HrmRegularizationBill         hrm_regularization_bill.HrmRegularizationBillModel
 	HrmResignationBill            hrm_resignation_bill.HrmResignationBillModel
 	HrmRewardBill                 hrm_reward_bill.HrmRewardBillModel
+	HrmSalaryArchive              hrm_salary_archive.HrmSalaryArchiveModel
 	HrmSalaryItem                 hrm_salary_item.HrmSalaryItemModel
+	HrmSalaryScheme               hrm_salary_scheme.HrmSalarySchemeModel
+	HrmSalarySchemeItem           hrm_salary_scheme_item.HrmSalarySchemeItemModel
 	HrmSalarySubject              hrm_salary_subject.HrmSalarySubjectModel
 	HrmScheduleCycle              hrm_schedule_cycle.HrmScheduleCycleModel
 	HrmScheduleEntry              hrm_schedule_entry.HrmScheduleEntryModel
@@ -153,7 +159,10 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmRegularizationBill:         hrm_regularization_bill.NewHrmRegularizationBillModel(conn, op...),
 		HrmResignationBill:            hrm_resignation_bill.NewHrmResignationBillModel(conn, op...),
 		HrmRewardBill:                 hrm_reward_bill.NewHrmRewardBillModel(conn, op...),
+		HrmSalaryArchive:              hrm_salary_archive.NewHrmSalaryArchiveModel(conn, op...),
 		HrmSalaryItem:                 hrm_salary_item.NewHrmSalaryItemModel(conn, op...),
+		HrmSalaryScheme:               hrm_salary_scheme.NewHrmSalarySchemeModel(conn, op...),
+		HrmSalarySchemeItem:           hrm_salary_scheme_item.NewHrmSalarySchemeItemModel(conn, op...),
 		HrmSalarySubject:              hrm_salary_subject.NewHrmSalarySubjectModel(conn, op...),
 		HrmScheduleCycle:              hrm_schedule_cycle.NewHrmScheduleCycleModel(conn, op...),
 		HrmScheduleEntry:              hrm_schedule_entry.NewHrmScheduleEntryModel(conn, op...),

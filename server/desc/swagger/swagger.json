@@ -2660,6 +2660,91 @@
         ]
       }
     },
+    "/api/v1/hrm/addSalaryArchive": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_archive:add",
+        "operationId": "v1/Hrm/SalaryArchiveAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "effectiveDate": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "expireDate": {
+                  "type": "string"
+                },
+                "fixedAllowance": {
+                  "default": 0,
+                  "example": 0,
+                  "type": "number"
+                },
+                "fixedSalary": {
+                  "default": 0,
+                  "example": 0,
+                  "type": "number"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "schemeUuid": {
+                  "type": "string"
+                },
+                "status": {
+                  "default": "1",
+                  "example": "1",
+                  "type": "string"
+                },
+                "subjectUuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "employeeUuid",
+                "subjectUuid",
+                "fixedSalary",
+                "fixedAllowance",
+                "status",
+                "effectiveDate"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/salary_archive"
+        ]
+      }
+    },
     "/api/v1/hrm/addSalaryItem": {
       "post": {
         "consumes": [
@@ -2741,6 +2826,114 @@
         "summary": "Add",
         "tags": [
           "v1/hrm/salary_item"
+        ]
+      }
+    },
+    "/api/v1/hrm/addSalaryScheme": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_scheme:add",
+        "operationId": "v1/Hrm/SalarySchemeAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "currency": {
+                  "default": "CNY",
+                  "example": "CNY",
+                  "type": "string"
+                },
+                "items": {
+                  "items": {
+                    "properties": {
+                      "itemUuid": {
+                        "type": "string"
+                      },
+                      "overrideAmount": {
+                        "type": "number"
+                      },
+                      "overrideFormula": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "itemUuid"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "payDay": {
+                  "default": 1,
+                  "example": 1,
+                  "type": "integer"
+                },
+                "personStatus": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "schemeName": {
+                  "type": "string"
+                },
+                "settleCycle": {
+                  "default": "monthly",
+                  "example": "monthly",
+                  "type": "string"
+                },
+                "status": {
+                  "default": "1",
+                  "example": "1",
+                  "type": "string"
+                },
+                "subjectUuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "schemeName",
+                "subjectUuid",
+                "personStatus",
+                "settleCycle",
+                "payDay",
+                "currency",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/salary_scheme"
         ]
       }
     },
@@ -5025,6 +5218,59 @@
         ]
       }
     },
+    "/api/v1/hrm/deleteSalaryArchive": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_archive:delete",
+        "operationId": "v1/Hrm/SalaryArchiveDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/salary_archive"
+        ]
+      }
+    },
     "/api/v1/hrm/deleteSalaryItem": {
       "post": {
         "consumes": [
@@ -5075,6 +5321,59 @@
         "summary": "Delete",
         "tags": [
           "v1/hrm/salary_item"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteSalaryScheme": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_scheme:delete",
+        "operationId": "v1/Hrm/SalarySchemeDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/salary_scheme"
         ]
       }
     },
@@ -7781,6 +8080,93 @@
         ]
       }
     },
+    "/api/v1/hrm/editSalaryArchive": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_archive:edit",
+        "operationId": "v1/Hrm/SalaryArchiveEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "effectiveDate": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "expireDate": {
+                  "type": "string"
+                },
+                "fixedAllowance": {
+                  "default": 0,
+                  "example": 0,
+                  "type": "number"
+                },
+                "fixedSalary": {
+                  "default": 0,
+                  "example": 0,
+                  "type": "number"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "schemeUuid": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "subjectUuid": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "employeeUuid",
+                "subjectUuid",
+                "fixedSalary",
+                "fixedAllowance",
+                "status",
+                "effectiveDate"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/salary_archive"
+        ]
+      }
+    },
     "/api/v1/hrm/editSalaryItem": {
       "post": {
         "consumes": [
@@ -7864,6 +8250,116 @@
         "summary": "Edit",
         "tags": [
           "v1/hrm/salary_item"
+        ]
+      }
+    },
+    "/api/v1/hrm/editSalaryScheme": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_scheme:edit",
+        "operationId": "v1/Hrm/SalarySchemeEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "currency": {
+                  "default": "CNY",
+                  "example": "CNY",
+                  "type": "string"
+                },
+                "items": {
+                  "items": {
+                    "properties": {
+                      "itemUuid": {
+                        "type": "string"
+                      },
+                      "overrideAmount": {
+                        "type": "number"
+                      },
+                      "overrideFormula": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "itemUuid"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "payDay": {
+                  "default": 1,
+                  "example": 1,
+                  "type": "integer"
+                },
+                "personStatus": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "schemeName": {
+                  "type": "string"
+                },
+                "settleCycle": {
+                  "default": "monthly",
+                  "example": "monthly",
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "subjectUuid": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "schemeName",
+                "subjectUuid",
+                "personStatus",
+                "settleCycle",
+                "payDay",
+                "currency",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/salary_scheme"
         ]
       }
     },
@@ -9168,6 +9664,184 @@
         ]
       }
     },
+    "/api/v1/hrm/getAllSalaryItem": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:salary_item:getAll",
+        "operationId": "v1/Hrm/SalaryItemGetAll",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "calcOrder": {
+                        "type": "integer"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "formula": {
+                        "type": "string"
+                      },
+                      "isPreset": {
+                        "type": "integer"
+                      },
+                      "itemClass": {
+                        "type": "string"
+                      },
+                      "itemCode": {
+                        "type": "string"
+                      },
+                      "itemName": {
+                        "type": "string"
+                      },
+                      "itemType": {
+                        "type": "string"
+                      },
+                      "orderNum": {
+                        "type": "integer"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "valueMode": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "itemCode",
+                      "itemName",
+                      "itemType",
+                      "itemClass",
+                      "valueMode",
+                      "calcOrder",
+                      "orderNum",
+                      "formula",
+                      "isPreset",
+                      "status",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "records"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "calcOrder": {
+                        "type": "integer"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "formula": {
+                        "type": "string"
+                      },
+                      "isPreset": {
+                        "type": "integer"
+                      },
+                      "itemClass": {
+                        "type": "string"
+                      },
+                      "itemCode": {
+                        "type": "string"
+                      },
+                      "itemName": {
+                        "type": "string"
+                      },
+                      "itemType": {
+                        "type": "string"
+                      },
+                      "orderNum": {
+                        "type": "integer"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "valueMode": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "itemCode",
+                      "itemName",
+                      "itemType",
+                      "itemClass",
+                      "valueMode",
+                      "calcOrder",
+                      "orderNum",
+                      "formula",
+                      "isPreset",
+                      "status",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "GetAll",
+        "tags": [
+          "v1/hrm/salary_item"
+        ]
+      }
+    },
     "/api/v1/hrm/getApprovalRecordList": {
       "get": {
         "description": "接口权限编码:v1:hrm:bill:getApprovalRecordList",
@@ -10431,6 +11105,223 @@
         "summary": "EffectiveRule",
         "tags": [
           "v1/hrm/attendancegroup"
+        ]
+      }
+    },
+    "/api/v1/hrm/getEffectiveSalaryArchive": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:salary_archive:getEffectiveArchive",
+        "operationId": "v1/Hrm/SalaryArchiveGetEffectiveArchive",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "employeeUuid",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "yearMonth",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "archive": {
+                  "properties": {
+                    "companyName": {
+                      "type": "string"
+                    },
+                    "companyUuid": {
+                      "type": "string"
+                    },
+                    "createTime": {
+                      "type": "string"
+                    },
+                    "effectiveDate": {
+                      "type": "string"
+                    },
+                    "employeeName": {
+                      "type": "string"
+                    },
+                    "employeeNo": {
+                      "type": "string"
+                    },
+                    "employeeUuid": {
+                      "type": "string"
+                    },
+                    "expireDate": {
+                      "type": "string"
+                    },
+                    "fixedAllowance": {
+                      "type": "number"
+                    },
+                    "fixedSalary": {
+                      "type": "number"
+                    },
+                    "orgName": {
+                      "type": "string"
+                    },
+                    "orgUuid": {
+                      "type": "string"
+                    },
+                    "remark": {
+                      "type": "string"
+                    },
+                    "schemeName": {
+                      "type": "string"
+                    },
+                    "schemeUuid": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "subjectName": {
+                      "type": "string"
+                    },
+                    "subjectUuid": {
+                      "type": "string"
+                    },
+                    "updateTime": {
+                      "type": "string"
+                    },
+                    "uuid": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "uuid",
+                    "employeeUuid",
+                    "employeeNo",
+                    "employeeName",
+                    "companyUuid",
+                    "companyName",
+                    "orgUuid",
+                    "orgName",
+                    "subjectUuid",
+                    "subjectName",
+                    "schemeUuid",
+                    "schemeName",
+                    "fixedSalary",
+                    "fixedAllowance",
+                    "status",
+                    "effectiveDate",
+                    "expireDate",
+                    "remark",
+                    "createTime",
+                    "updateTime"
+                  ],
+                  "type": "object"
+                },
+                "items": {
+                  "items": {
+                    "properties": {
+                      "calcOrder": {
+                        "type": "integer"
+                      },
+                      "itemClass": {
+                        "type": "string"
+                      },
+                      "itemCode": {
+                        "type": "string"
+                      },
+                      "itemName": {
+                        "type": "string"
+                      },
+                      "itemType": {
+                        "type": "string"
+                      },
+                      "itemUuid": {
+                        "type": "string"
+                      },
+                      "overrideAmount": {
+                        "type": "number"
+                      },
+                      "overrideFormula": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "valueMode": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "itemUuid",
+                      "itemCode",
+                      "itemName",
+                      "itemType",
+                      "itemClass",
+                      "valueMode",
+                      "calcOrder",
+                      "status",
+                      "overrideAmount",
+                      "overrideFormula"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "scheme": {
+                  "properties": {
+                    "currency": {
+                      "type": "string"
+                    },
+                    "payDay": {
+                      "type": "integer"
+                    },
+                    "schemeName": {
+                      "type": "string"
+                    },
+                    "settleCycle": {
+                      "type": "string"
+                    },
+                    "subjectName": {
+                      "type": "string"
+                    },
+                    "subjectUuid": {
+                      "type": "string"
+                    },
+                    "uuid": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "uuid",
+                    "schemeName",
+                    "subjectUuid",
+                    "subjectName",
+                    "settleCycle",
+                    "payDay",
+                    "currency"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "GetEffectiveArchive",
+        "tags": [
+          "v1/hrm/salary_archive"
         ]
       }
     },
@@ -15666,6 +16557,182 @@
         ]
       }
     },
+    "/api/v1/hrm/getSalaryArchiveList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:salary_archive:list",
+        "operationId": "v1/Hrm/SalaryArchiveList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "subjectUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "schemeUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "companyName": {
+                        "type": "string"
+                      },
+                      "companyUuid": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "effectiveDate": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "expireDate": {
+                        "type": "string"
+                      },
+                      "fixedAllowance": {
+                        "type": "number"
+                      },
+                      "fixedSalary": {
+                        "type": "number"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "orgUuid": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "schemeName": {
+                        "type": "string"
+                      },
+                      "schemeUuid": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "subjectName": {
+                        "type": "string"
+                      },
+                      "subjectUuid": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "companyUuid",
+                      "companyName",
+                      "orgUuid",
+                      "orgName",
+                      "subjectUuid",
+                      "subjectName",
+                      "schemeUuid",
+                      "schemeName",
+                      "fixedSalary",
+                      "fixedAllowance",
+                      "status",
+                      "effectiveDate",
+                      "expireDate",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/salary_archive"
+        ]
+      }
+    },
     "/api/v1/hrm/getSalaryItemList": {
       "get": {
         "description": "接口权限编码:v1:hrm:salary_item:list",
@@ -15803,6 +16870,459 @@
         "summary": "List",
         "tags": [
           "v1/hrm/salary_item"
+        ]
+      }
+    },
+    "/api/v1/hrm/getSalarySchemeDetail": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:salary_scheme:getSchemeDetail",
+        "operationId": "v1/Hrm/SalarySchemeGetSchemeDetail",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "uuid",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "items": {
+                  "items": {
+                    "properties": {
+                      "calcOrder": {
+                        "type": "integer"
+                      },
+                      "itemClass": {
+                        "type": "string"
+                      },
+                      "itemCode": {
+                        "type": "string"
+                      },
+                      "itemName": {
+                        "type": "string"
+                      },
+                      "itemType": {
+                        "type": "string"
+                      },
+                      "itemUuid": {
+                        "type": "string"
+                      },
+                      "overrideAmount": {
+                        "type": "number"
+                      },
+                      "overrideFormula": {
+                        "type": "string"
+                      },
+                      "schemeUuid": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "valueMode": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "schemeUuid",
+                      "itemUuid",
+                      "itemCode",
+                      "itemName",
+                      "itemType",
+                      "itemClass",
+                      "valueMode",
+                      "calcOrder",
+                      "status",
+                      "overrideAmount",
+                      "overrideFormula"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "scheme": {
+                  "properties": {
+                    "completeness": {
+                      "properties": {
+                        "schemeAttendance": {
+                          "type": "integer"
+                        },
+                        "schemeCalc": {
+                          "type": "integer"
+                        },
+                        "schemeItems": {
+                          "type": "integer"
+                        },
+                        "schemePosition": {
+                          "type": "integer"
+                        },
+                        "schemeSi": {
+                          "type": "integer"
+                        },
+                        "schemeTax": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "schemeItems",
+                        "schemeCalc",
+                        "schemePosition",
+                        "schemeSi",
+                        "schemeTax",
+                        "schemeAttendance"
+                      ],
+                      "type": "object"
+                    },
+                    "createTime": {
+                      "type": "string"
+                    },
+                    "currency": {
+                      "type": "string"
+                    },
+                    "itemCount": {
+                      "type": "integer"
+                    },
+                    "payDay": {
+                      "type": "integer"
+                    },
+                    "personStatus": {
+                      "type": "string"
+                    },
+                    "remark": {
+                      "type": "string"
+                    },
+                    "schemeName": {
+                      "type": "string"
+                    },
+                    "settleCycle": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "subjectName": {
+                      "type": "string"
+                    },
+                    "subjectUuid": {
+                      "type": "string"
+                    },
+                    "updateTime": {
+                      "type": "string"
+                    },
+                    "uuid": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "uuid",
+                    "schemeName",
+                    "subjectUuid",
+                    "subjectName",
+                    "personStatus",
+                    "settleCycle",
+                    "payDay",
+                    "currency",
+                    "status",
+                    "remark",
+                    "itemCount",
+                    "completeness",
+                    "createTime",
+                    "updateTime"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "GetSchemeDetail",
+        "tags": [
+          "v1/hrm/salary_scheme"
+        ]
+      }
+    },
+    "/api/v1/hrm/getSalarySchemeItems": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:salary_scheme:getSchemeItems",
+        "operationId": "v1/Hrm/SalarySchemeGetSchemeItems",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "schemeUuid",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "items": {
+                  "items": {
+                    "properties": {
+                      "calcOrder": {
+                        "type": "integer"
+                      },
+                      "itemClass": {
+                        "type": "string"
+                      },
+                      "itemCode": {
+                        "type": "string"
+                      },
+                      "itemName": {
+                        "type": "string"
+                      },
+                      "itemType": {
+                        "type": "string"
+                      },
+                      "itemUuid": {
+                        "type": "string"
+                      },
+                      "overrideAmount": {
+                        "type": "number"
+                      },
+                      "overrideFormula": {
+                        "type": "string"
+                      },
+                      "schemeUuid": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "valueMode": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "schemeUuid",
+                      "itemUuid",
+                      "itemCode",
+                      "itemName",
+                      "itemType",
+                      "itemClass",
+                      "valueMode",
+                      "calcOrder",
+                      "status",
+                      "overrideAmount",
+                      "overrideFormula"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "GetSchemeItems",
+        "tags": [
+          "v1/hrm/salary_scheme"
+        ]
+      }
+    },
+    "/api/v1/hrm/getSalarySchemeList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:salary_scheme:list",
+        "operationId": "v1/Hrm/SalarySchemeList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "schemeName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "subjectUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "completeness": {
+                        "properties": {
+                          "schemeAttendance": {
+                            "type": "integer"
+                          },
+                          "schemeCalc": {
+                            "type": "integer"
+                          },
+                          "schemeItems": {
+                            "type": "integer"
+                          },
+                          "schemePosition": {
+                            "type": "integer"
+                          },
+                          "schemeSi": {
+                            "type": "integer"
+                          },
+                          "schemeTax": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "schemeItems",
+                          "schemeCalc",
+                          "schemePosition",
+                          "schemeSi",
+                          "schemeTax",
+                          "schemeAttendance"
+                        ],
+                        "type": "object"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "currency": {
+                        "type": "string"
+                      },
+                      "itemCount": {
+                        "type": "integer"
+                      },
+                      "payDay": {
+                        "type": "integer"
+                      },
+                      "personStatus": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "schemeName": {
+                        "type": "string"
+                      },
+                      "settleCycle": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "subjectName": {
+                        "type": "string"
+                      },
+                      "subjectUuid": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "schemeName",
+                      "subjectUuid",
+                      "subjectName",
+                      "personStatus",
+                      "settleCycle",
+                      "payDay",
+                      "currency",
+                      "status",
+                      "remark",
+                      "itemCount",
+                      "completeness",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/salary_scheme"
         ]
       }
     },

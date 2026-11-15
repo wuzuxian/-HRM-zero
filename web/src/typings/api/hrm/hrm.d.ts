@@ -1909,6 +1909,131 @@ declare namespace Api {
       remark: string;
     };
 
+     // ===== HRM-34 薪酬方案 =====
+
+    /** hrm salary scheme (薪酬方案, GLOSSARY: 某薪酬主体下适用于某类人员状态的薪资计算配置) */
+    type SalaryScheme = {
+      /** record uuid */
+      uuid: string;
+      /** scheme name */
+      schemeName: string;
+      /** linked salary subject uuid */
+      subjectUuid: string;
+      /** linked subject name snapshot */
+      subjectName: string;
+      /** 适用人员状态, 逗号分隔 (1=正式 2=试用期 3=实习生 4=临时工 5=离职 6=退休) */
+      personStatus: string;
+      /** settle cycle: monthly=月度 */
+      settleCycle: string;
+      /** pay day (几号, 1-31) */
+      payDay: number;
+      /** currency (ISO 4217) */
+      currency: string;
+      /** status: enabled/disabled */
+      status: SalarySubjectStatus | null;
+      /** remark */
+      remark: string;
+      /** configured item count */
+      itemCount: number;
+      /** 配置完整度 6 项检查 (1=已配置 0=未配置/未接入) */
+      completeness: SalarySchemeCompleteness;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** 配置完整度 (项目✓ 计薪✓ 岗位✓ 社保✓ 个税✓ 考勤✓; 岗位/社保/考勤 未接入恒 0) */
+    type SalarySchemeCompleteness = {
+      schemeItems: number;
+      schemeCalc: number;
+      schemePosition: number;
+      schemeSi: number;
+      schemeTax: number;
+      schemeAttendance: number;
+    };
+
+    /** 方案项目配置行 (项目快照字段实时取自 hrm_salary_item, 不落库) */
+    type SalarySchemeItem = {
+      /** record uuid */
+      uuid: string;
+      /** scheme uuid */
+      schemeUuid: string;
+      /** salary item uuid */
+      itemUuid: string;
+      /** item code (snapshot) */
+      itemCode: string;
+      /** item name (snapshot) */
+      itemName: string;
+      /** item type (snapshot) */
+      itemType: SalaryItemType;
+      /** item class (snapshot) */
+      itemClass: SalaryItemClass;
+      /** value mode (snapshot) */
+      valueMode: SalaryItemValueMode;
+      /** calc order (snapshot) */
+      calcOrder: number;
+      /** item status (snapshot; 停用项目容忍展示) */
+      status: SalarySubjectStatus | null;
+      /** override amount (0=继承项目默认) */
+      overrideAmount: number;
+      /** override formula (''=继承项目默认) */
+      overrideFormula: string;
+    };
+
+    /** salary scheme search params */
+    type SalarySchemeSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.SalaryScheme, 'schemeName' | 'subjectUuid' | 'status'> & Common.CommonSearchParams
+    >;
+
+    /** salary scheme paginated list */
+    type SalarySchemeList = Common.PaginatingQueryRecord<SalaryScheme>;
+
+    /** 方案项目配置入参 */
+    type SalarySchemeItemPayload = {
+      itemUuid: string;
+      overrideAmount: number;
+      overrideFormula: string;
+    };
+
+    /** add salary scheme request */
+    type AddSalarySchemeRequest = {
+      schemeName: string;
+      subjectUuid: string;
+      personStatus: string[];
+      settleCycle: string;
+      payDay: number;
+      currency: string;
+      status: SalarySubjectStatus | null;
+      remark: string;
+      items: SalarySchemeItemPayload[];
+    };
+
+    /** edit salary scheme request */
+    type EditSalarySchemeRequest = {
+      uuid: string;
+      schemeName: string;
+      subjectUuid: string;
+      personStatus: string[];
+      settleCycle: string;
+      payDay: number;
+      currency: string;
+      status: SalarySubjectStatus | null;
+      remark: string;
+      items: SalarySchemeItemPayload[];
+    };
+
+    /** get salary scheme detail response (配置弹窗回显) */
+    type SalarySchemeDetail = {
+      scheme: SalaryScheme;
+      items: SalarySchemeItem[];
+    };
+
+    /** get scheme items response (HRM-37 试算消费) */
+    type SalarySchemeItemsResponse = {
+      items: SalarySchemeItem[];
+    };
+
     /**
      * overtime day type (当天类型)
      *
@@ -4767,6 +4892,113 @@ declare namespace Api {
     type MyDashboardSearchParams = {
       month?: string | null;
       employeeUuid?: string | null;
+    };
+
+    // ===== HRM-35 员工薪资档案 =====
+
+    /** hrm salary archive (员工薪资档案, demo-inventory 8.2) */
+    type SalaryArchive = {
+      /** record uuid */
+      uuid: string;
+      /** employee uuid (hrm_employee) */
+      employeeUuid: string;
+      /** employee no snapshot (选员工带出) */
+      employeeNo: string;
+      /** employee name snapshot */
+      employeeName: string;
+      /** company uuid snapshot (选员工带出) */
+      companyUuid: string;
+      /** company name snapshot */
+      companyName: string;
+      /** dept org uuid snapshot (选员工带出) */
+      orgUuid: string;
+      /** dept org name snapshot */
+      orgName: string;
+      /** salary subject uuid */
+      subjectUuid: string;
+      /** subject name snapshot */
+      subjectName: string;
+      /** salary scheme uuid (''=未绑定方案) */
+      schemeUuid: string;
+      /** scheme name snapshot */
+      schemeName: string;
+      /** 固定薪资 */
+      fixedSalary: number;
+      /** 固定补贴 */
+      fixedAllowance: number;
+      /** status: enabled/disabled */
+      status: SalarySubjectStatus | null;
+      /** 生效日期 YYYY-MM-DD */
+      effectiveDate: string;
+      /** 失效日期 YYYY-MM-DD (''=长期有效) */
+      expireDate: string;
+      /** remark */
+      remark: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** salary archive search params */
+    type SalaryArchiveSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.SalaryArchive, 'employeeName' | 'employeeNo' | 'subjectUuid' | 'schemeUuid' | 'status'> & Common.CommonSearchParams
+    >;
+
+    /** salary archive paginated list */
+    type SalaryArchiveList = Common.PaginatingQueryRecord<SalaryArchive>;
+
+    /** add salary archive request */
+    type AddSalaryArchiveRequest = {
+      employeeUuid: string;
+      subjectUuid: string;
+      schemeUuid?: string;
+      fixedSalary?: number;
+      fixedAllowance?: number;
+      status?: SalarySubjectStatus | null;
+      /** YYYY-MM-DD */
+      effectiveDate: string;
+      /** YYYY-MM-DD, ''=长期有效; 必须大于生效日期 */
+      expireDate?: string;
+      remark?: string;
+    };
+
+    /** edit salary archive request */
+    type EditSalaryArchiveRequest = AddSalaryArchiveRequest & {
+      uuid: string;
+      status: SalarySubjectStatus | null;
+    };
+
+    /** HRM-37 试算消费: 生效档案对应方案摘要 */
+    type SalaryArchiveEffectiveScheme = {
+      uuid: string;
+      schemeName: string;
+      subjectUuid: string;
+      subjectName: string;
+      settleCycle: string;
+      payDay: number;
+      currency: string;
+    };
+
+    /** HRM-37 试算消费: 项目行 = 方案项目配置 + 项目实时快照 (calc_order 升序) */
+    type SalaryArchiveEffectiveItem = {
+      itemUuid: string;
+      itemCode: string;
+      itemName: string;
+      itemType: SalaryItemType;
+      itemClass: SalaryItemClass;
+      valueMode: SalaryItemValueMode;
+      calcOrder: number;
+      status: SalarySubjectStatus | null;
+      overrideAmount: number;
+      overrideFormula: string;
+    };
+
+    /** HRM-37 试算消费: 按试算月份取员工当时有效档案 (生效≤月末 AND (失效空 OR 失效≥月初)) */
+    type SalaryArchiveEffective = {
+      archive: SalaryArchive;
+      scheme: SalaryArchiveEffectiveScheme;
+      items: SalaryArchiveEffectiveItem[];
     };
   }
 }

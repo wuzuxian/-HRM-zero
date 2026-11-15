@@ -219,6 +219,8 @@ const local: App.I18n.Schema = {
     hrm_salary_setting: 'Salary Settings',
     hrm_salary_setting_subject: 'Salary Subjects',
     hrm_salary_setting_item: 'Salary Items',
+    hrm_salary_setting_scheme: 'Salary Scheme',
+    'hrm_salary_archive-list': 'Employee Salary Archives',
     hrm_salary_tax: 'Tax',
     'hrm_salary_tax_tax-profile': 'Tax Profiles',
     'hrm_salary_tax_special-deduction': 'Special Deductions',
@@ -430,6 +432,16 @@ const local: App.I18n.Schema = {
         add: 'Add Salary Item',
         edit: 'Edit Salary Item',
         delete: 'Delete Salary Item'
+      },
+      salary_scheme: {
+        add: 'Add Salary Scheme',
+        edit: 'Edit Salary Scheme',
+        delete: 'Delete Salary Scheme'
+      },
+      salary_archive: {
+        add: 'Add Salary Archive',
+        edit: 'Edit Salary Archive',
+        delete: 'Delete Salary Archive'
       },
       tax_profile: {
         add: 'Add Tax Profile',
@@ -2122,6 +2134,79 @@ const local: App.I18n.Schema = {
             itemClass: 'Please select item class',
             valueMode: 'Please select value mode',
             formula: 'Please enter formula expression',
+            status: 'Please select status',
+            remark: 'Please enter remark'
+          }
+        },
+        scheme: {
+          title: 'Salary Scheme',
+          schemeName: 'Scheme Name',
+          subject: 'Salary Subject',
+          personStatus: 'Applicable Person Status',
+          settleCycle: 'Settle Cycle',
+          payDay: 'Pay Day',
+          payDayUnit: 'th',
+          currency: 'Currency',
+          itemCount: 'Items',
+          status: 'Status',
+          remark: 'Remark',
+          config: 'Configure',
+          addScheme: 'Add Salary Scheme',
+          editScheme: 'Edit Salary Scheme',
+          configItems: 'Salary Item Composition (select all that apply)',
+          overrideTitle: 'Item Override Value / Formula (empty inherits item default)',
+          itemChecked: 'Select',
+          itemCountTip: 'Selected items',
+          overrideAmountPlaceholder: 'Override amount (empty inherits default)',
+          overrideFormulaPlaceholder: 'Override formula (empty inherits default)',
+          settleCycleEnum: {
+            monthly: 'Monthly'
+          },
+          completeness: {
+            title: 'Config Completeness',
+            items: 'Items',
+            calc: 'Calc',
+            position: 'Position',
+            si: 'SI',
+            tax: 'Tax',
+            attendance: 'Attend',
+            notIntegrated: 'N/A',
+            notIntegratedTip: 'This check is not integrated yet'
+          },
+          form: {
+            schemeName: 'Please enter scheme name',
+            subject: 'Please select salary subject',
+            personStatus: 'Please select person status',
+            personStatusRequired: 'Person status is required',
+            payDayInvalid: 'Pay day must be 1-31',
+            status: 'Please select status',
+            remark: 'Please enter remark'
+          }
+        },
+        archive: {
+          title: 'Employee Salary Archives',
+          employee: 'Employee',
+          employeeName: 'Employee Name',
+          employeeNo: 'Employee ID',
+          companyName: 'Company',
+          orgName: 'Department',
+          subject: 'Salary Subject',
+          scheme: 'Salary Scheme',
+          status: 'Status',
+          fixedSalary: 'Fixed Salary',
+          fixedAllowance: 'Fixed Allowance',
+          effectiveDate: 'Effective Date',
+          expireDate: 'Expire Date',
+          longTerm: 'Long-term',
+          remark: 'Remark',
+          addArchive: 'Add Salary Archive',
+          editArchive: 'Edit Salary Archive',
+          employeeInfoTip: 'Company and department are auto-filled from the selected employee',
+          form: {
+            employee: 'Please select employee',
+            subject: 'Please select salary subject',
+            scheme: 'Please select salary scheme (optional)',
+            effectiveDateRequired: 'Effective date is required',
             status: 'Please select status',
             remark: 'Please enter remark'
           }

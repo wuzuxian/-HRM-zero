@@ -1,0 +1,160 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/salary_scheme"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// HrmSalaryScheme 薪酬方案（GLOSSARY「薪酬方案」）: 某薪酬主体下适用于某类人员状态的
+// 薪资计算配置（薪资项目构成、结算周期、发薪日、币种、考勤与个税口径）。
+// completeness 配置完整度: scheme_items=项目 scheme_calc=计薪 scheme_position=岗位
+// scheme_si=社保 scheme_tax=个税 scheme_attendance=考勤（岗位/社保/考勤 暂未接入恒 0）。
+type HrmSalaryScheme {
+	Uuid         string                      `json:"uuid"`
+	SchemeName   string                      `json:"schemeName"`
+	SubjectUuid  string                      `json:"subjectUuid"`
+	SubjectName  string                      `json:"subjectName"`
+	PersonStatus string                      `json:"personStatus"`
+	SettleCycle  string                      `json:"settleCycle"`
+	PayDay       int64                       `json:"payDay"`
+	Currency     string                      `json:"currency"`
+	Status       string                      `json:"status"`
+	Remark       string                      `json:"remark"`
+	ItemCount    int64                       `json:"itemCount"`
+	Completeness HrmSalarySchemeCompleteness `json:"completeness"`
+	CreateTime   string                      `json:"createTime"`
+	UpdateTime   string                      `json:"updateTime"`
+}
+
+// HrmSalarySchemeCompleteness 配置完整度（6 项检查，1=已配置 0=未接入/未配置）。
+type HrmSalarySchemeCompleteness {
+	SchemeItems      int64 `json:"schemeItems"`
+	SchemeCalc       int64 `json:"schemeCalc"`
+	SchemePosition   int64 `json:"schemePosition"`
+	SchemeSi         int64 `json:"schemeSi"`
+	SchemeTax        int64 `json:"schemeTax"`
+	SchemeAttendance int64 `json:"schemeAttendance"`
+}
+
+// HrmSalarySchemeItem 方案 × 薪资项目 关联配置行（含项目快照字段用于展示；
+// override_amount/override_formula 为空时继承项目默认值）。
+type HrmSalarySchemeItem {
+	Uuid            string  `json:"uuid"`
+	SchemeUuid      string  `json:"schemeUuid"`
+	ItemUuid        string  `json:"itemUuid"`
+	ItemCode        string  `json:"itemCode"`
+	ItemName        string  `json:"itemName"`
+	ItemType        string  `json:"itemType"`
+	ItemClass       string  `json:"itemClass"`
+	ValueMode       string  `json:"valueMode"`
+	CalcOrder       int64   `json:"calcOrder"`
+	Status          string  `json:"status"`
+	OverrideAmount  float64 `json:"overrideAmount"`
+	OverrideFormula string  `json:"overrideFormula"`
+}
+
+type ListRequest {
+	PageRequest
+	SchemeName  string `form:"schemeName,optional"`
+	SubjectUuid string `form:"subjectUuid,optional"`
+	Status      string `form:"status,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmSalaryScheme `json:"records"`
+}
+
+// SchemeItemPayload 方案项目配置入参（Add/Edit 均整体替换关联表行）。
+type SchemeItemPayload {
+	ItemUuid        string  `json:"itemUuid"`
+	OverrideAmount  float64 `json:"overrideAmount,optional"`
+	OverrideFormula string  `json:"overrideFormula,optional"`
+}
+
+type AddRequest {
+	SchemeName   string              `json:"schemeName"`
+	SubjectUuid  string              `json:"subjectUuid"`
+	PersonStatus []string            `json:"personStatus"`
+	SettleCycle  string              `json:"settleCycle,default=monthly"`
+	PayDay       int64               `json:"payDay,default=1"`
+	Currency     string              `json:"currency,default=CNY"`
+	Status       string              `json:"status,default=1"`
+	Remark       string              `json:"remark,optional"`
+	Items        []SchemeItemPayload `json:"items,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid         string              `json:"uuid"`
+	SchemeName   string              `json:"schemeName"`
+	SubjectUuid  string              `json:"subjectUuid"`
+	PersonStatus []string            `json:"personStatus"`
+	SettleCycle  string              `json:"settleCycle,default=monthly"`
+	PayDay       int64               `json:"payDay,default=1"`
+	Currency     string              `json:"currency,default=CNY"`
+	Status       string              `json:"status"`
+	Remark       string              `json:"remark,optional"`
+	Items        []SchemeItemPayload `json:"items,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+// GetSchemeDetailRequest 方案详情请求（配置弹窗回显用）。
+type GetSchemeDetailRequest {
+	Uuid string `form:"uuid"`
+}
+
+// GetSchemeDetailResponse 方案 + 全量项目配置（按 calc_order ASC 排序）。
+type GetSchemeDetailResponse {
+	Scheme HrmSalaryScheme       `json:"scheme"`
+	Items  []HrmSalarySchemeItem `json:"items"`
+}
+
+// GetSchemeItemsRequest HRM-37 试算消费接口：按方案取项目清单+计算规则。
+type GetSchemeItemsRequest {
+	SchemeUuid string `form:"schemeUuid"`
+}
+
+type GetSchemeItemsResponse {
+	Items []HrmSalarySchemeItem `json:"items"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/salary_scheme
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getSalarySchemeList (ListRequest) returns (ListResponse)
+
+	@handler GetSchemeDetail
+	get /hrm/getSalarySchemeDetail (GetSchemeDetailRequest) returns (GetSchemeDetailResponse)
+
+	@handler GetSchemeItems
+	get /hrm/getSalarySchemeItems (GetSchemeItemsRequest) returns (GetSchemeItemsResponse)
+
+	@handler Add
+	post /hrm/addSalaryScheme (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editSalaryScheme (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deleteSalaryScheme (DeleteRequest) returns (DeleteResponse)
+}
+

@@ -3,7 +3,6 @@ package salary_item
 import (
 	"context"
 	"net/http"
-	"time"
 
 	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -47,22 +46,7 @@ func (l *List) List(req *types.ListRequest) (resp *types.ListResponse, err error
 
 	records := make([]types.HrmSalaryItem, 0, len(rows))
 	for _, row := range rows {
-		records = append(records, types.HrmSalaryItem{
-			Uuid:       row.Uuid,
-			ItemCode:   row.ItemCode,
-			ItemName:   row.ItemName,
-			ItemType:   row.ItemType,
-			ItemClass:  row.ItemClass,
-			ValueMode:  row.ValueMode,
-			CalcOrder:  row.CalcOrder,
-			OrderNum:   row.OrderNum,
-			Formula:    row.Formula,
-			IsPreset:   row.IsPreset,
-			Status:     row.Status,
-			Remark:     row.Remark,
-			CreateTime: row.CreateTime.Format(time.DateTime),
-			UpdateTime: row.UpdateTime.Format(time.DateTime),
-		})
+		records = append(records, itemRowToRecord(row))
 	}
 
 	return &types.ListResponse{PageResponse: types.PageResponse{

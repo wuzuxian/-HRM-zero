@@ -49,6 +49,10 @@ type EditRequest struct {
 type EditResponse struct {
 }
 
+type GetAllResponse struct {
+	Records []HrmSalaryItem `json:"records"`
+}
+
 type HrmSalaryItem struct {
 	Uuid       string `json:"uuid"`
 	ItemCode   string `json:"itemCode"`
