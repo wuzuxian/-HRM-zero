@@ -112,27 +112,17 @@ watch(visible, () => {
   <NModal v-model:show="visible" :title="title" preset="card" class="w-680px">
     <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" :label-width="100">
       <NGrid responsive="screen" item-responsive>
-        <NFormItemGi
-          span="24 s:12 m:8"
-          :label="$t('page.hrm.training.certTemplate.templateName')"
-          path="templateName"
-        >
+        <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.training.certTemplate.templateName')" path="templateName">
           <NInput
             v-model:value="model.templateName"
             :placeholder="$t('page.hrm.training.certTemplate.form.templateName')"
           />
         </NFormItemGi>
         <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.training.certTemplate.certType')" path="certType">
-          <NInput
-            v-model:value="model.certType"
-            :placeholder="$t('page.hrm.training.certTemplate.form.certType')"
-          />
+          <NInput v-model:value="model.certType" :placeholder="$t('page.hrm.training.certTemplate.form.certType')" />
         </NFormItemGi>
         <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.training.certTemplate.noPrefix')" path="noPrefix">
-          <NInput
-            v-model:value="model.noPrefix"
-            :placeholder="$t('page.hrm.training.certTemplate.form.noPrefix')"
-          />
+          <NInput v-model:value="model.noPrefix" :placeholder="$t('page.hrm.training.certTemplate.form.noPrefix')" />
         </NFormItemGi>
         <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.training.certTemplate.sourceLabel')" path="source">
           <NSelect

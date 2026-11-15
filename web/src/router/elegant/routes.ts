@@ -450,6 +450,43 @@ export const generatedRoutes: GeneratedRoute[] = [
                 }
               }
             ]
+          },
+          {
+            name: 'hrm_salary_tax',
+            path: '/hrm/salary/tax',
+            meta: {
+              title: 'hrm_salary_tax',
+              i18nKey: 'route.hrm_salary_tax'
+            },
+            children: [
+              {
+                name: 'hrm_salary_tax_special-deduction',
+                path: '/hrm/salary/tax/special-deduction',
+                component: 'view.hrm_salary_tax_special-deduction',
+                meta: {
+                  title: 'hrm_salary_tax_special-deduction',
+                  i18nKey: 'route.hrm_salary_tax_special-deduction'
+                }
+              },
+              {
+                name: 'hrm_salary_tax_tax-opening',
+                path: '/hrm/salary/tax/tax-opening',
+                component: 'view.hrm_salary_tax_tax-opening',
+                meta: {
+                  title: 'hrm_salary_tax_tax-opening',
+                  i18nKey: 'route.hrm_salary_tax_tax-opening'
+                }
+              },
+              {
+                name: 'hrm_salary_tax_tax-profile',
+                path: '/hrm/salary/tax/tax-profile',
+                component: 'view.hrm_salary_tax_tax-profile',
+                meta: {
+                  title: 'hrm_salary_tax_tax-profile',
+                  i18nKey: 'route.hrm_salary_tax_tax-profile'
+                }
+              }
+            ]
           }
         ]
       },

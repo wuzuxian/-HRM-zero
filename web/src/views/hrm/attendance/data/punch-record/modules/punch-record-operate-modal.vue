@@ -64,11 +64,6 @@ const statusOptions = computed(() => [
   { label: $t('page.hrm.attendance.punchRecord.statusField'), value: 'field' }
 ]);
 
-const overtimeOptions = computed(() => [
-  { label: $t('page.hrm.attendance.punchRecord.overtimeYes'), value: '1' },
-  { label: $t('page.hrm.attendance.punchRecord.overtimeNo'), value: '0' }
-]);
-
 const title = computed(() =>
   props.operateType === 'add'
     ? $t('page.hrm.attendance.punchRecord.addTitle')
@@ -138,26 +133,24 @@ watch(visible, newVal => {
           path="employeeUuid"
           :rule="{ required: true, message: $t('page.hrm.attendance.punchRecord.form.employeeUuid') }"
         >
-          <NInput v-model:value="model.employeeUuid" :placeholder="$t('page.hrm.attendance.punchRecord.form.employeeUuid')" />
+          <NInput
+            v-model:value="model.employeeUuid"
+            :placeholder="$t('page.hrm.attendance.punchRecord.form.employeeUuid')"
+          />
         </NFormItem>
         <NFormItem
           :label="$t('page.hrm.attendance.punchRecord.punchDate')"
           path="punchDate"
           :rule="{ required: true, message: $t('page.hrm.attendance.punchRecord.form.punchDate') }"
         >
-          <NDatePicker
-            v-model:formatted-value="model.punchDate"
-            type="date"
-            :value-format="'yyyy-MM-dd'"
-            class="w-full"
-          />
+          <NDatePicker v-model:formatted-value="model.punchDate" type="date" value-format="yyyy-MM-dd" class="w-full" />
         </NFormItem>
       </template>
       <NFormItem :label="$t('page.hrm.attendance.punchRecord.clockInTime')" path="clockInTime">
         <NDatePicker
           v-model:formatted-value="model.clockInTime"
           type="datetime"
-          :value-format="'yyyy-MM-dd HH:mm:ss'"
+          value-format="yyyy-MM-dd HH:mm:ss"
           class="w-full"
           clearable
         />
@@ -166,13 +159,16 @@ watch(visible, newVal => {
         <NSelect v-model:value="model.clockInStatus" :options="statusOptions" />
       </NFormItem>
       <NFormItem :label="$t('page.hrm.attendance.punchRecord.clockInLocation')" path="clockInLocation">
-        <NInput v-model:value="model.clockInLocation" :placeholder="$t('page.hrm.attendance.punchRecord.form.location')" />
+        <NInput
+          v-model:value="model.clockInLocation"
+          :placeholder="$t('page.hrm.attendance.punchRecord.form.location')"
+        />
       </NFormItem>
       <NFormItem :label="$t('page.hrm.attendance.punchRecord.clockOutTime')" path="clockOutTime">
         <NDatePicker
           v-model:formatted-value="model.clockOutTime"
           type="datetime"
-          :value-format="'yyyy-MM-dd HH:mm:ss'"
+          value-format="yyyy-MM-dd HH:mm:ss"
           class="w-full"
           clearable
         />
@@ -181,7 +177,10 @@ watch(visible, newVal => {
         <NSelect v-model:value="model.clockOutStatus" :options="statusOptions" />
       </NFormItem>
       <NFormItem :label="$t('page.hrm.attendance.punchRecord.clockOutLocation')" path="clockOutLocation">
-        <NInput v-model:value="model.clockOutLocation" :placeholder="$t('page.hrm.attendance.punchRecord.form.location')" />
+        <NInput
+          v-model:value="model.clockOutLocation"
+          :placeholder="$t('page.hrm.attendance.punchRecord.form.location')"
+        />
       </NFormItem>
       <NFormItem :label="$t('page.hrm.attendance.punchRecord.overtime')" path="overtime">
         <NRadioGroup v-model:value="model.overtime">

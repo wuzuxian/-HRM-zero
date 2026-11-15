@@ -212,6 +212,10 @@ const local: App.I18n.Schema = {
     hrm_salary_setting: 'Salary Settings',
     hrm_salary_setting_subject: 'Salary Subjects',
     hrm_salary_setting_item: 'Salary Items',
+    hrm_salary_tax: 'Tax',
+    'hrm_salary_tax_tax-profile': 'Tax Profiles',
+    'hrm_salary_tax_special-deduction': 'Special Deductions',
+    'hrm_salary_tax_tax-opening': 'Tax Openings',
     hrm_training_plan: 'Training Plan',
     hrm_training_session: 'Training Session',
     'hrm_training_cert-template': 'Certificate Template',
@@ -383,6 +387,26 @@ const local: App.I18n.Schema = {
         add: 'Add Salary Item',
         edit: 'Edit Salary Item',
         delete: 'Delete Salary Item'
+      },
+      tax_profile: {
+        add: 'Add Tax Profile',
+        edit: 'Edit Tax Profile',
+        delete: 'Delete Tax Profile',
+        export: 'Export Tax Profiles'
+      },
+      tax_special_deduction: {
+        maintain: 'Maintain',
+        delete: 'Delete',
+        maintain_year: 'Maintain by Year',
+        import: 'Import',
+        export: 'Export'
+      },
+      tax_opening: {
+        add: 'Add Tax Opening',
+        edit: 'Edit Tax Opening',
+        delete: 'Delete Tax Opening',
+        import: 'Import',
+        export: 'Export'
       },
       employee: {
         add: 'Add Employee',
@@ -1143,7 +1167,7 @@ const local: App.I18n.Schema = {
           form: {
             selectEmployee: 'Please select employee',
             certType: 'Please enter certificate type',
-            certNo: "Please enter certificate no. (keep masked value on edit = unchanged)"
+            certNo: 'Please enter certificate no. (keep masked value on edit = unchanged)'
           }
         }
       },
@@ -1370,12 +1394,14 @@ const local: App.I18n.Schema = {
           editTitle: 'Edit Punch Record',
           exportTitle: 'Export',
           importTitle: 'Import External Punch Data',
-          importHint: 'CSV columns: date,employee_no,clock_in_time,clock_in_status,clock_in_location,clock_out_time,clock_out_status,clock_out_location,overtime',
+          importHint:
+            'CSV columns: date,employee_no,clock_in_time,clock_in_status,clock_in_location,clock_out_time,clock_out_status,clock_out_location,overtime',
           importFileRequired: 'Please select a CSV file',
           importSuccess: 'Imported',
           settleTitle: 'Manual Day Settle',
           settleScope: 'Settle Scope',
-          settleScopeHint: 'Settle all employees day by day in the range; workdays without punches are recorded as missing',
+          settleScopeHint:
+            'Settle all employees day by day in the range; workdays without punches are recorded as missing',
           settleRangeRequired: 'Please select the settle date range',
           settleSuccess: 'Settle completed',
           form: {
@@ -1767,6 +1793,100 @@ const local: App.I18n.Schema = {
             formula: 'Please enter formula expression',
             status: 'Please select status',
             remark: 'Please enter remark'
+          }
+        },
+        tax: {
+          profile: {
+            title: 'Employee Tax Profiles',
+            employeeName: 'Employee',
+            idCard: 'ID Card',
+            residentType: 'Resident Type',
+            residentTypeEnum: {
+              resident: 'Resident Individual',
+              non_resident: 'Non-resident Individual'
+            },
+            taxCity: 'Tax City',
+            defaultSpecialExtra: 'Default Special Deductions',
+            status: 'Status',
+            remark: 'Remark',
+            addProfile: 'Add Tax Profile',
+            editProfile: 'Edit Tax Profile',
+            form: {
+              employeeName: 'Please select employee',
+              residentType: 'Please select resident type',
+              taxCity: 'Please enter tax city',
+              defaultSpecialExtra: 'Please check default special deduction items',
+              status: 'Please select status',
+              remark: 'Please enter remark'
+            }
+          },
+          deduction: {
+            title: 'Special Additional Deductions',
+            employeeName: 'Name',
+            idCard: 'ID Card',
+            deductYear: 'Deduction Year',
+            deductMonth: 'Month',
+            deductTypeTitle: 'Deduction Item',
+            amount: 'Amount',
+            sourceTitle: 'Source',
+            remark: 'Remark',
+            maintain: 'Maintain',
+            maintainYear: 'Maintain by Year',
+            import: 'Import',
+            importSuccess: 'Import succeeded',
+            importModalTitle: 'Import Special Deductions',
+            chooseFileTip: 'Choose an xlsx file (columns: name / ID card / year / month / item / amount / remark)',
+            maintainModalTitle: 'Maintain Special Deductions (monthly)',
+            maintainYearTitle: 'Maintain Special Deductions by Year',
+            saved: 'Saved',
+            form: {
+              employeeName: 'Please select employee',
+              deductYear: 'Please select deduction year',
+              amount: 'Please enter monthly amount',
+              months: 'Months to apply (empty = all 12 months)'
+            },
+            deductType: {
+              CHILDREN_EDU: 'Children Education',
+              CONTINUING_EDU: 'Continuing Education',
+              CRITICAL_ILLNESS: 'Critical Illness',
+              HOUSE_LOAN: 'House Loan Interest',
+              HOUSE_RENT: 'House Rent',
+              SUPPORT_ELDERLY: 'Supporting the Elderly',
+              INFANT_CARE: 'Infant Care (under 3)'
+            },
+            source: {
+              manual: 'Manual',
+              import: 'Import'
+            }
+          },
+          opening: {
+            title: 'Cumulative Tax Openings',
+            employeeName: 'Employee',
+            idCard: 'ID Card',
+            subjectName: 'Salary Subject',
+            taxYear: 'Year',
+            untilMonth: 'Until Month',
+            incomeTotal: 'Cumulative Income',
+            specialDeductionTotal: 'Cumulative Special Deduction',
+            specialExtraTotal: 'Cumulative Special Extra',
+            exemptTotal: 'Cumulative Exempt',
+            otherDeductionTotal: 'Cumulative Other Deduction',
+            taxableIncomeTotal: 'Cumulative Taxable Income',
+            taxPaidTotal: 'Cumulative Tax Paid',
+            remark: 'Remark',
+            addOpening: 'Add Tax Opening',
+            editOpening: 'Edit Tax Opening',
+            import: 'Import',
+            importSuccess: 'Import succeeded',
+            importModalTitle: 'Import Tax Openings',
+            chooseFileTip:
+              'Choose an xlsx file (columns: name / ID card / subject / year / until month / totals / remark)',
+            form: {
+              employeeName: 'Please select employee',
+              subjectName: 'Please select salary subject (empty = any subject)',
+              taxYear: 'Please select year',
+              untilMonth: 'Please select until month (1-12)'
+            }
           }
         }
       },

@@ -75,7 +75,7 @@ async function search() {
                 :value="dateRange"
                 type="daterange"
                 clearable
-                :value-format="'yyyy-MM-dd'"
+                value-format="yyyy-MM-dd"
                 @update:value="handleRangeChange"
               />
             </NFormItemGi>

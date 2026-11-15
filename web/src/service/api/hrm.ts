@@ -1207,6 +1207,164 @@ export function AdjustLeaveBalance(req: Api.Hrm.LeaveBalanceAdjustRequest) {
   });
 }
 
+// ===== HRM-36 个税管理三件套 (薪酬管理域 个税管理) =====
+
+/** get 员工个税档案 paginated list (员工唯一) */
+export function GetTaxProfileList(params?: Api.Hrm.TaxProfileSearchParams) {
+  return request<Api.Hrm.TaxProfileList>({
+    url: '/api/v1/hrm/getTaxProfileList',
+    method: 'get',
+    params
+  });
+}
+
+/** add 员工个税档案 (姓名/身份证以快照落库) */
+export function AddTaxProfile(req: Api.Hrm.AddTaxProfileRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addTaxProfile',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 员工个税档案 */
+export function EditTaxProfile(req: Api.Hrm.EditTaxProfileRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editTaxProfile',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 员工个税档案 */
+export function DeleteTaxProfile(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteTaxProfile',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** export 员工个税档案 as a base64-encoded xlsx file */
+export function ExportTaxProfile() {
+  return request<Api.Hrm.ExportTaxProfileResponse>({
+    url: '/api/v1/hrm/exportTaxProfile',
+    method: 'get'
+  });
+}
+
+/** get 专项附加扣除 paginated list (按 员工+年度+月份+扣除项 唯一) */
+export function GetTaxSpecialDeductionList(params?: Api.Hrm.TaxSpecialDeductionSearchParams) {
+  return request<Api.Hrm.TaxSpecialDeductionList>({
+    url: '/api/v1/hrm/getTaxSpecialDeductionList',
+    method: 'get',
+    params
+  });
+}
+
+/** 维护弹窗提交: 员工+年度的一批 (月份, 扣除项, 金额) 格子; 已存在行覆盖金额, 部分月份更新 */
+export function MaintainTaxSpecialDeduction(req: Api.Hrm.MaintainTaxSpecialDeductionRequest) {
+  return request<Api.Hrm.MaintainTaxSpecialDeductionResponse>({
+    url: '/api/v1/hrm/maintainTaxSpecialDeduction',
+    method: 'post',
+    data: req
+  });
+}
+
+/** 年度维护: 扣除项默认金额套用到 1-12 月 (months 为空=全年) */
+export function MaintainTaxSpecialDeductionYear(req: Api.Hrm.MaintainTaxSpecialDeductionYearRequest) {
+  return request<Api.Hrm.MaintainTaxSpecialDeductionResponse>({
+    url: '/api/v1/hrm/maintainTaxSpecialDeductionYear',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 专项附加扣除行 */
+export function DeleteTaxSpecialDeduction(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteTaxSpecialDeduction',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** import 专项附加扣除 (xlsx, 姓名+身份证 定位员工) */
+export function ImportTaxSpecialDeduction(req: Api.Hrm.TaxSpecialDeductionImportRequest) {
+  return request<Api.Hrm.TaxSpecialDeductionImportResponse>({
+    url: '/api/v1/hrm/importTaxSpecialDeduction',
+    method: 'post',
+    data: req
+  });
+}
+
+/** export 专项附加扣除 as a base64-encoded xlsx file */
+export function ExportTaxSpecialDeduction() {
+  return request<Api.Hrm.ExportTaxSpecialDeductionResponse>({
+    url: '/api/v1/hrm/exportTaxSpecialDeduction',
+    method: 'get'
+  });
+}
+
+/** get 个税累计期初 paginated list (员工+主体+年度 唯一; HRM-37 试算消费) */
+export function GetTaxOpeningList(params?: Api.Hrm.TaxOpeningSearchParams) {
+  return request<Api.Hrm.TaxOpeningList>({
+    url: '/api/v1/hrm/getTaxOpeningList',
+    method: 'get',
+    params
+  });
+}
+
+/** add 个税累计期初 */
+export function AddTaxOpening(req: Api.Hrm.AddTaxOpeningRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addTaxOpening',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 个税累计期初 */
+export function EditTaxOpening(req: Api.Hrm.EditTaxOpeningRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editTaxOpening',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 个税累计期初 */
+export function DeleteTaxOpening(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteTaxOpening',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** import 个税累计期初 (xlsx, 主体按名称解析可空) */
+export function ImportTaxOpening(req: Api.Hrm.TaxOpeningImportRequest) {
+  return request<Api.Hrm.TaxOpeningImportResponse>({
+    url: '/api/v1/hrm/importTaxOpening',
+    method: 'post',
+    data: req
+  });
+}
+
+/** export 个税累计期初 as a base64-encoded xlsx file */
+export function ExportTaxOpening() {
+  return request<Api.Hrm.ExportTaxOpeningResponse>({
+    url: '/api/v1/hrm/exportTaxOpening',
+    method: 'get'
+  });
+}
+
 /** punch (上/下班打卡 HRM-16): type=clockIn|clockOut, location 外勤打卡地点 */
 export function Punch(req: Api.Hrm.PunchRequest) {
   return request<Api.Hrm.PunchResponse>({

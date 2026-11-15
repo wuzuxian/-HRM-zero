@@ -35,6 +35,9 @@ import (
 	v1hrmsalary_subject "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_subject"
 	v1hrmschedulecycle "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/schedulecycle"
 	v1hrmshift "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/shift"
+	v1hrmtax_opening "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/tax_opening"
+	v1hrmtax_profile "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/tax_profile"
+	v1hrmtax_special_deduction "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/tax_special_deduction"
 	v1hrmtraining "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/training"
 	v1hrmtraining_plan "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/training_plan"
 	v1hrmtraining_session "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/training_session"
@@ -1067,6 +1070,124 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodGet,
 						Path:    "/hrm/getShiftList",
 						Handler: v1hrmshift.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addTaxOpening",
+						Handler: v1hrmtax_opening.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteTaxOpening",
+						Handler: v1hrmtax_opening.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editTaxOpening",
+						Handler: v1hrmtax_opening.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/exportTaxOpening",
+						Handler: v1hrmtax_opening.Export(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getTaxOpeningList",
+						Handler: v1hrmtax_opening.List(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/importTaxOpening",
+						Handler: v1hrmtax_opening.Import(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addTaxProfile",
+						Handler: v1hrmtax_profile.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteTaxProfile",
+						Handler: v1hrmtax_profile.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editTaxProfile",
+						Handler: v1hrmtax_profile.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/exportTaxProfile",
+						Handler: v1hrmtax_profile.Export(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getTaxProfileList",
+						Handler: v1hrmtax_profile.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteTaxSpecialDeduction",
+						Handler: v1hrmtax_special_deduction.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/exportTaxSpecialDeduction",
+						Handler: v1hrmtax_special_deduction.Export(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getTaxSpecialDeductionList",
+						Handler: v1hrmtax_special_deduction.List(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/importTaxSpecialDeduction",
+						Handler: v1hrmtax_special_deduction.Import(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/maintainTaxSpecialDeduction",
+						Handler: v1hrmtax_special_deduction.Maintain(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/maintainTaxSpecialDeductionYear",
+						Handler: v1hrmtax_special_deduction.MaintainYear(serverCtx),
 					},
 				}...,
 			),

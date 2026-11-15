@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { $t } from '@/locales';
 import { useNaiveForm } from '@/hooks/common/form';
-import { hrmBillStatusOptions, hrmTrainingPlanPublishedOptions, hrmTrainingPlanTypeOptions } from '@/constants/business';
+import {
+  hrmBillStatusOptions,
+  hrmTrainingPlanPublishedOptions,
+  hrmTrainingPlanTypeOptions
+} from '@/constants/business';
 import { translateOptions } from '@/utils/common';
 
 defineOptions({
@@ -42,10 +46,7 @@ async function search() {
               path="planName"
               class="pr-24px"
             >
-              <NInput
-                v-model:value="model.planName"
-                :placeholder="$t('page.hrm.training.plan.form.planName')"
-              />
+              <NInput v-model:value="model.planName" :placeholder="$t('page.hrm.training.plan.form.planName')" />
             </NFormItemGi>
             <NFormItemGi
               span="24 s:12 m:6"

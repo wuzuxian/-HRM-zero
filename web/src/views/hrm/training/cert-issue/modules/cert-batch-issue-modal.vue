@@ -2,7 +2,7 @@
 import { reactive, ref, watch } from 'vue';
 import { useLoading } from '@sa/hooks';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
-import { GetCertTemplateList, GetTrainingSessionList, BatchIssueCertificates } from '@/service/api';
+import { BatchIssueCertificates, GetCertTemplateList, GetTrainingSessionList } from '@/service/api';
 import { $t } from '@/locales';
 
 defineOptions({
@@ -97,12 +97,7 @@ watch(visible, () => {
 </script>
 
 <template>
-  <NModal
-    v-model:show="visible"
-    :title="$t('page.hrm.training.certificate.batchIssue')"
-    preset="card"
-    class="w-560px"
-  >
+  <NModal v-model:show="visible" :title="$t('page.hrm.training.certificate.batchIssue')" preset="card" class="w-560px">
     <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" :label-width="100">
       <NFormItemGi :label="$t('page.hrm.training.certificate.session')" path="sessionUuid">
         <NSelect

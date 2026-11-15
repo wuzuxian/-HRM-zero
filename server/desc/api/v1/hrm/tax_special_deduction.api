@@ -1,0 +1,123 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/tax_special_deduction"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// TaxDeductionType 专项附加扣除项 7 类（demo-inventory 8.3）:
+// CHILDREN_EDU 子女教育 / CONTINUING_EDU 继续教育 / CRITICAL_ILLNESS 大病医疗 /
+// HOUSE_LOAN 住房贷款利息 / HOUSE_RENT 住房租金 / SUPPORT_ELDERLY 赡养老人 /
+// INFANT_CARE 3岁以下婴幼儿照护
+// HrmTaxSpecialDeductionRow 专项附加扣除行: 员工 + 扣除年度 + 月份 + 扣除项 唯一。
+type HrmTaxSpecialDeductionRow {
+	Uuid         string  `json:"uuid"`
+	EmployeeUuid string  `json:"employeeUuid"`
+	EmployeeName string  `json:"employeeName"`
+	IdCard       string  `json:"idCard"`
+	DeductYear   string  `json:"deductYear"`
+	DeductMonth  int64   `json:"deductMonth"`
+	DeductType   string  `json:"deductType"`
+	Amount       float64 `json:"amount"`
+	Source       string  `json:"source"`
+	Remark       string  `json:"remark"`
+	CreateTime   string  `json:"createTime"`
+	UpdateTime   string  `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	EmployeeName string `form:"employeeName,optional"`
+	DeductYear   string `form:"deductYear,optional"`
+	DeductType   string `form:"deductType,optional"`
+	Source       string `form:"source,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmTaxSpecialDeductionRow `json:"records"`
+}
+
+// MaintainRequest 行操作「维护」弹窗: 一次提交一个员工一个年度的逐月扣除项金额。
+// Rows 按 (月份, 扣除项) 落库；只更新提交的格子，未提交月份不动（部分月份更新）。
+type MaintainRequest {
+	EmployeeUuid string        `json:"employeeUuid"`
+	DeductYear   string        `json:"deductYear"`
+	Rows         []MaintainRow `json:"rows"`
+}
+
+type MaintainRow {
+	DeductMonth int64   `json:"deductMonth"`
+	DeductType  string  `json:"deductType"`
+	Amount      float64 `json:"amount"`
+}
+
+type MaintainResponse {
+	Saved int64 `json:"saved"`
+}
+
+// MaintainYearRequest 按钮年度维护: 把某员工某年度的扣除项默认金额套用到 1-12 月
+// （已维护月份覆盖为默认值，source=manual）。
+type MaintainYearRequest {
+	EmployeeUuid string  `json:"employeeUuid"`
+	DeductYear   string  `json:"deductYear"`
+	DeductType   string  `json:"deductType"`
+	Amount       float64 `json:"amount"`
+	Months       []int64 `json:"months,optional"`
+}
+
+type MaintainYearResponse {
+	Saved int64 `json:"saved"`
+}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+type ImportRequest {
+	FileName string `json:"fileName"`
+	Content  string `json:"content"`
+}
+
+type ImportResponse {
+	SuccessCount int64 `json:"successCount"`
+}
+
+type ExportResponse {
+	FileName string `json:"fileName"`
+	Content  string `json:"content"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/tax_special_deduction
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getTaxSpecialDeductionList (ListRequest) returns (ListResponse)
+
+	@handler Maintain
+	post /hrm/maintainTaxSpecialDeduction (MaintainRequest) returns (MaintainResponse)
+
+	@handler MaintainYear
+	post /hrm/maintainTaxSpecialDeductionYear (MaintainYearRequest) returns (MaintainYearResponse)
+
+	@handler Delete
+	post /hrm/deleteTaxSpecialDeduction (DeleteRequest) returns (DeleteResponse)
+
+	@handler Import
+	post /hrm/importTaxSpecialDeduction (ImportRequest) returns (ImportResponse)
+
+	@handler Export
+	get /hrm/exportTaxSpecialDeduction returns (ExportResponse)
+}
+

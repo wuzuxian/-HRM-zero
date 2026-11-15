@@ -12,16 +12,7 @@ defineOptions({
 
 const appStore = useAppStore();
 
-const {
-  columns,
-  columnChecks,
-  data,
-  getData,
-  loading,
-  mobilePagination,
-  searchParams,
-  resetSearchParams
-} = useTable({
+const { columns, columnChecks, data, getData, loading, mobilePagination, searchParams, resetSearchParams } = useTable({
   apiFn: GetMyPunchList,
   showTotal: true,
   apiParams: {
@@ -92,7 +83,9 @@ const {
       align: 'center',
       width: 70,
       render: row =>
-        row.overtime === '1' ? $t('page.hrm.attendance.punchRecord.overtimeYes') : $t('page.hrm.attendance.punchRecord.overtimeNo')
+        row.overtime === '1'
+          ? $t('page.hrm.attendance.punchRecord.overtimeYes')
+          : $t('page.hrm.attendance.punchRecord.overtimeNo')
     }
   ]
 });
@@ -160,10 +153,22 @@ async function handlePunch(type: 'clockIn' | 'clockOut') {
       <div class="flex items-center justify-between py-12px">
         <span class="text-16px font-bold">{{ $t('page.hrm.attendance.attendancePunch.title') }}</span>
         <NSpace>
-          <NButton v-auth="'hrm:punch:punch'" type="primary" size="large" :loading="clocking" @click="handlePunch('clockIn')">
+          <NButton
+            v-auth="'hrm:punch:punch'"
+            type="primary"
+            size="large"
+            :loading="clocking"
+            @click="handlePunch('clockIn')"
+          >
             {{ $t('page.hrm.attendance.attendancePunch.clockIn') }}
           </NButton>
-          <NButton v-auth="'hrm:punch:punch'" type="warning" size="large" :loading="clocking" @click="handlePunch('clockOut')">
+          <NButton
+            v-auth="'hrm:punch:punch'"
+            type="warning"
+            size="large"
+            :loading="clocking"
+            @click="handlePunch('clockOut')"
+          >
             {{ $t('page.hrm.attendance.attendancePunch.clockOut') }}
           </NButton>
         </NSpace>

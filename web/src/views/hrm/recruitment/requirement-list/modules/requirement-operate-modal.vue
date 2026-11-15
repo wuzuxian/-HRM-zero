@@ -146,16 +146,9 @@ watch(visible, () => {
         <NDivider :title="$t('page.hrm.requirement.sectionPost')" title-placement="left" />
         <NGrid responsive="screen" item-responsive>
           <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.requirement.postName')" path="postName">
-            <NInput
-              v-model:value="model.postName"
-              :placeholder="$t('page.hrm.requirement.form.postName')"
-            />
+            <NInput v-model:value="model.postName" :placeholder="$t('page.hrm.requirement.form.postName')" />
           </NFormItemGi>
-          <NFormItemGi
-            span="24 s:12 m:8"
-            :label="$t('page.hrm.requirement.postCategory.title')"
-            path="postCategory"
-          >
+          <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.requirement.postCategory.title')" path="postCategory">
             <NSelect
               v-model:value="model.postCategory"
               :options="translateOptions(hrmRequirementPostCategoryOptions)"
@@ -188,11 +181,7 @@ watch(visible, () => {
               @update:value="handleOrgChange"
             />
           </NFormItemGi>
-          <NFormItemGi
-            span="24"
-            :label="$t('page.hrm.requirement.requirementDesc')"
-            path="requirementDesc"
-          >
+          <NFormItemGi span="24" :label="$t('page.hrm.requirement.requirementDesc')" path="requirementDesc">
             <NTextarea
               v-model:value="model.requirementDesc"
               :rows="2"

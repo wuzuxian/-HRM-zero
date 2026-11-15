@@ -557,6 +557,26 @@ declare namespace App {
             edit: string;
             delete: string;
           };
+          tax_profile: {
+            add: string;
+            edit: string;
+            delete: string;
+            export: string;
+          };
+          tax_special_deduction: {
+            maintain: string;
+            delete: string;
+            maintain_year: string;
+            import: string;
+            export: string;
+          };
+          tax_opening: {
+            add: string;
+            edit: string;
+            delete: string;
+            import: string;
+            export: string;
+          };
           employee: {
             add: string;
             edit: string;
@@ -1741,6 +1761,99 @@ declare namespace App {
                 formula: string;
                 status: string;
                 remark: string;
+              };
+            };
+            tax: {
+              profile: {
+                title: string;
+                employeeName: string;
+                idCard: string;
+                residentType: string;
+                residentTypeEnum: {
+                  resident: string;
+                  non_resident: string;
+                };
+                taxCity: string;
+                defaultSpecialExtra: string;
+                status: string;
+                remark: string;
+                addProfile: string;
+                editProfile: string;
+                form: {
+                  employeeName: string;
+                  residentType: string;
+                  taxCity: string;
+                  defaultSpecialExtra: string;
+                  status: string;
+                  remark: string;
+                };
+              };
+              deduction: {
+                title: string;
+                employeeName: string;
+                idCard: string;
+                deductYear: string;
+                deductMonth: string;
+                deductTypeTitle: string;
+                amount: string;
+                sourceTitle: string;
+                remark: string;
+                maintain: string;
+                maintainYear: string;
+                import: string;
+                importSuccess: string;
+                importModalTitle: string;
+                chooseFileTip: string;
+                maintainModalTitle: string;
+                maintainYearTitle: string;
+                saved: string;
+                form: {
+                  employeeName: string;
+                  deductYear: string;
+                  amount: string;
+                  months: string;
+                };
+                deductType: {
+                  CHILDREN_EDU: string;
+                  CONTINUING_EDU: string;
+                  CRITICAL_ILLNESS: string;
+                  HOUSE_LOAN: string;
+                  HOUSE_RENT: string;
+                  SUPPORT_ELDERLY: string;
+                  INFANT_CARE: string;
+                };
+                source: {
+                  manual: string;
+                  import: string;
+                };
+              };
+              opening: {
+                title: string;
+                employeeName: string;
+                idCard: string;
+                subjectName: string;
+                taxYear: string;
+                untilMonth: string;
+                incomeTotal: string;
+                specialDeductionTotal: string;
+                specialExtraTotal: string;
+                exemptTotal: string;
+                otherDeductionTotal: string;
+                taxableIncomeTotal: string;
+                taxPaidTotal: string;
+                remark: string;
+                addOpening: string;
+                editOpening: string;
+                import: string;
+                importSuccess: string;
+                importModalTitle: string;
+                chooseFileTip: string;
+                form: {
+                  employeeName: string;
+                  subjectName: string;
+                  taxYear: string;
+                  untilMonth: string;
+                };
               };
             };
           };

@@ -1,17 +1,10 @@
 <script setup lang="tsx">
 import { computed, reactive, ref } from 'vue';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import {
-  DeleteCertTemplate,
-  GetCertTemplateList,
-  ToggleCertTemplateStatus
-} from '@/service/api';
+import { DeleteCertTemplate, GetCertTemplateList, ToggleCertTemplateStatus } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
-import {
-  hrmCertTemplateSourceRecord,
-  hrmCertTemplateStatusRecord
-} from '@/constants/business';
+import { hrmCertTemplateSourceRecord, hrmCertTemplateStatusRecord } from '@/constants/business';
 import { useTable } from '@/hooks/common/table';
 import CertTemplateOperateModal from './modules/cert-template-operate-modal.vue';
 import CertTemplateSearch from './modules/cert-template-search.vue';
@@ -162,7 +155,6 @@ function renderOperate(row: Api.Hrm.CertTemplate) {
 const operateVisible = ref(false);
 const operateType = ref<NaiveUI.TableOperateType>('add');
 const editingData = ref<Api.Hrm.CertTemplate | null>(null);
-
 
 function handleAdd() {
   operateType.value = 'add';

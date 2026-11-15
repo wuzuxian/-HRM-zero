@@ -15,8 +15,8 @@
 --     clock_out_time,clock_out_status,clock_out_location,overtime），HRM-22 可直接复用该 seam。
 -- 错误码 1052x 段（server/internal/errcodes/hrm_punch.go）。
 -- 菜单 uuid 段 19xx（grep 全部 migration: 0xxx 基础/03xx 假勤设置/07xx 考勤组/09xx-16xx 各域/
--- 18xx 假期余额；本票取 19xx: 1901 我的打卡 page / 1911-1913 buttons；1902 打卡记录 page /
--- 1921-1926 buttons；role_menu aaa20000 19xx）。
+-- 18xx 假期余额；本票取 20xx（19xx 已被 HRM-36 个税占用）: 2001 我的打卡 page / 2011-2012 buttons；2002 打卡记录 page /
+-- 2021-2026 buttons；role_menu aaa20000 20xx）。
 
 CREATE TABLE "hrm_punch_record" (
     id serial NOT NULL,
@@ -56,39 +56,39 @@ FOR EACH ROW EXECUTE FUNCTION update_update_time_column();
 -- 我的假勤-考勤打卡 page (假勤管理 dir aaa...000101 下, order 7)
 INSERT INTO "manage_menu" (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
-    ('aaa10000-1111-4000-8000-000000001901','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000000101','2','考勤打卡',0,'',7,'hrm_attendance_my_attendance-punch','/hrm/attendance/my/attendance-punch','view.hrm_attendance_my_attendance-punch','mdi:fingerprint','1','route.hrm_attendance_my_attendance-punch',0,'',0,0,'[]','[{"code":"v1:hrm:punch:myList","desc":"我的打卡记录列表"},{"code":"v1:hrm:punch:punch","desc":"打卡"}]',0,'');
+    ('aaa10000-1111-4000-8000-000000002001','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000000101','2','考勤打卡',0,'',7,'hrm_attendance_my_attendance-punch','/hrm/attendance/my/attendance-punch','view.hrm_attendance_my_attendance-punch','mdi:fingerprint','1','route.hrm_attendance_my_attendance-punch',0,'',0,0,'[]','[{"code":"v1:hrm:punch:myList","desc":"我的打卡记录列表"},{"code":"v1:hrm:punch:punch","desc":"打卡"}]',0,'');
 
 -- 考勤打卡 buttons
 INSERT INTO "manage_menu" (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
-    ('aaa10000-1111-4000-8000-000000001911','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000001901','3','上/下班打卡',0,'',0,'','','','','1','button.hrm.punch.punch',0,'',0,0,'[]','[{"code":"v1:hrm:punch:punch","desc":"上/下班打卡"}]',0,'v1:hrm:punch:punch'),
-    ('aaa10000-1111-4000-8000-000000001912','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000001901','3','刷新我的打卡',0,'',1,'','','','','1','button.hrm.punch.myList',0,'',0,0,'[]','[{"code":"v1:hrm:punch:myList","desc":"我的打卡记录列表"}]',0,'v1:hrm:punch:myList');
+    ('aaa10000-1111-4000-8000-000000002011','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000002001','3','上/下班打卡',0,'',0,'','','','','1','button.hrm.punch.punch',0,'',0,0,'[]','[{"code":"v1:hrm:punch:punch","desc":"上/下班打卡"}]',0,'v1:hrm:punch:punch'),
+    ('aaa10000-1111-4000-8000-000000002012','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000002001','3','刷新我的打卡',0,'',1,'','','','','1','button.hrm.punch.myList',0,'',0,0,'[]','[{"code":"v1:hrm:punch:myList","desc":"我的打卡记录列表"}]',0,'v1:hrm:punch:myList');
 
 -- 假勤数据-打卡记录 page (管理端, order 8)
 INSERT INTO "manage_menu" (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
-    ('aaa10000-1111-4000-8000-000000001902','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000000101','2','打卡记录',0,'',8,'hrm_attendance_data_punch-record','/hrm/attendance/data/punch-record','view.hrm_attendance_data_punch-record','mdi:clipboard-text-clock-outline','1','route.hrm_attendance_data_punch-record',0,'',0,0,'[]','[{"code":"v1:hrm:punch:list","desc":"打卡记录列表"},{"code":"v1:hrm:punch:settle","desc":"手动日结"}]',0,'');
+    ('aaa10000-1111-4000-8000-000000002002','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000000101','2','打卡记录',0,'',8,'hrm_attendance_data_punch-record','/hrm/attendance/data/punch-record','view.hrm_attendance_data_punch-record','mdi:clipboard-text-clock-outline','1','route.hrm_attendance_data_punch-record',0,'',0,0,'[]','[{"code":"v1:hrm:punch:list","desc":"打卡记录列表"},{"code":"v1:hrm:punch:settle","desc":"手动日结"}]',0,'');
 
 -- 打卡记录 buttons
 INSERT INTO "manage_menu" (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
-    ('aaa10000-1111-4000-8000-000000001921','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000001902','3','新增打卡记录',0,'',0,'','','','','1','button.hrm.punch.add',0,'',0,0,'[]','[{"code":"v1:hrm:punch:add","desc":"新增打卡记录"}]',0,'v1:hrm:punch:add'),
-    ('aaa10000-1111-4000-8000-000000001922','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000001902','3','修改打卡记录',0,'',1,'','','','','1','button.hrm.punch.edit',0,'',0,0,'[]','[{"code":"v1:hrm:punch:edit","desc":"修改打卡记录"}]',0,'v1:hrm:punch:edit'),
-    ('aaa10000-1111-4000-8000-000000001923','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000001902','3','删除打卡记录',0,'',2,'','','','','1','button.hrm.punch.delete',0,'',0,0,'[]','[{"code":"v1:hrm:punch:delete","desc":"删除打卡记录"}]',0,'v1:hrm:punch:delete'),
-    ('aaa10000-1111-4000-8000-000000001924','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000001902','3','导出打卡记录',0,'',3,'','','','','1','button.hrm.punch.export',0,'',0,0,'[]','[{"code":"v1:hrm:punch:export","desc":"导出打卡记录"}]',0,'v1:hrm:punch:export'),
-    ('aaa10000-1111-4000-8000-000000001925','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000001902','3','导入外部考勤数据',0,'',4,'','','','','1','button.hrm.punch.import',0,'',0,0,'[]','[{"code":"v1:hrm:punch:import","desc":"导入外部考勤数据"}]',0,'v1:hrm:punch:import'),
-    ('aaa10000-1111-4000-8000-000000001926','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000001902','3','手动日结',0,'',5,'','','','','1','button.hrm.punch.settle',0,'',0,0,'[]','[{"code":"v1:hrm:punch:settle","desc":"手动日结"}]',0,'v1:hrm:punch:settle');
+    ('aaa10000-1111-4000-8000-000000002021','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000002002','3','新增打卡记录',0,'',0,'','','','','1','button.hrm.punch.add',0,'',0,0,'[]','[{"code":"v1:hrm:punch:add","desc":"新增打卡记录"}]',0,'v1:hrm:punch:add'),
+    ('aaa10000-1111-4000-8000-000000002022','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000002002','3','修改打卡记录',0,'',1,'','','','','1','button.hrm.punch.edit',0,'',0,0,'[]','[{"code":"v1:hrm:punch:edit","desc":"修改打卡记录"}]',0,'v1:hrm:punch:edit'),
+    ('aaa10000-1111-4000-8000-000000002023','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000002002','3','删除打卡记录',0,'',2,'','','','','1','button.hrm.punch.delete',0,'',0,0,'[]','[{"code":"v1:hrm:punch:delete","desc":"删除打卡记录"}]',0,'v1:hrm:punch:delete'),
+    ('aaa10000-1111-4000-8000-000000002024','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000002002','3','导出打卡记录',0,'',3,'','','','','1','button.hrm.punch.export',0,'',0,0,'[]','[{"code":"v1:hrm:punch:export","desc":"导出打卡记录"}]',0,'v1:hrm:punch:export'),
+    ('aaa10000-1111-4000-8000-000000002025','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000002002','3','导入外部考勤数据',0,'',4,'','','','','1','button.hrm.punch.import',0,'',0,0,'[]','[{"code":"v1:hrm:punch:import","desc":"导入外部考勤数据"}]',0,'v1:hrm:punch:import'),
+    ('aaa10000-1111-4000-8000-000000002026','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000002002','3','手动日结',0,'',5,'','','','','1','button.hrm.punch.settle',0,'',0,0,'[]','[{"code":"v1:hrm:punch:settle","desc":"手动日结"}]',0,'v1:hrm:punch:settle');
 
 -- 超级管理员 gets the new menus (casbin rules are derived from these at startup)
 INSERT INTO "manage_role_menu" (uuid, create_time, update_time, role_uuid, menu_uuid, is_home)
 VALUES
-    ('aaa20000-1111-4000-8000-000000001901','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000001901',0),
-    ('aaa20000-1111-4000-8000-000000001902','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000001902',0),
-    ('aaa20000-1111-4000-8000-000000001911','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000001911',0),
-    ('aaa20000-1111-4000-8000-000000001912','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000001912',0),
-    ('aaa20000-1111-4000-8000-000000001921','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000001921',0),
-    ('aaa20000-1111-4000-8000-000000001922','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000001922',0),
-    ('aaa20000-1111-4000-8000-000000001923','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000001923',0),
-    ('aaa20000-1111-4000-8000-000000001924','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000001924',0),
-    ('aaa20000-1111-4000-8000-000000001925','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000001925',0),
-    ('aaa20000-1111-4000-8000-000000001926','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000001926',0);
+    ('aaa20000-1111-4000-8000-000000002001','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000002001',0),
+    ('aaa20000-1111-4000-8000-000000002002','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000002002',0),
+    ('aaa20000-1111-4000-8000-000000002011','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000002011',0),
+    ('aaa20000-1111-4000-8000-000000002012','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000002012',0),
+    ('aaa20000-1111-4000-8000-000000002021','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000002021',0),
+    ('aaa20000-1111-4000-8000-000000002022','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000002022',0),
+    ('aaa20000-1111-4000-8000-000000002023','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000002023',0),
+    ('aaa20000-1111-4000-8000-000000002024','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000002024',0),
+    ('aaa20000-1111-4000-8000-000000002025','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000002025',0),
+    ('aaa20000-1111-4000-8000-000000002026','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000002026',0);

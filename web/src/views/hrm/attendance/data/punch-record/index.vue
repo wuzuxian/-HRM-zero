@@ -115,7 +115,10 @@ const {
       title: $t('page.hrm.attendance.punchRecord.overtime'),
       align: 'center',
       width: 70,
-      render: row => (row.overtime === '1' ? $t('page.hrm.attendance.punchRecord.overtimeYes') : $t('page.hrm.attendance.punchRecord.overtimeNo'))
+      render: row =>
+        row.overtime === '1'
+          ? $t('page.hrm.attendance.punchRecord.overtimeYes')
+          : $t('page.hrm.attendance.punchRecord.overtimeNo')
     },
     {
       key: 'operate',
@@ -124,22 +127,10 @@ const {
       width: 130,
       render: row => (
         <div class="flex-center gap-8px">
-          <NButton
-            v-auth={['hrm:punch:edit']}
-            type="primary"
-            ghost
-            size="small"
-            onClick={() => handleEdit(row)}
-          >
+          <NButton v-auth={['hrm:punch:edit']} type="primary" ghost size="small" onClick={() => handleEdit(row)}>
             {$t('common.edit')}
           </NButton>
-          <NButton
-            v-auth={['hrm:punch:delete']}
-            type="error"
-            ghost
-            size="small"
-            onClick={() => handleDelete(row)}
-          >
+          <NButton v-auth={['hrm:punch:delete']} type="error" ghost size="small" onClick={() => handleDelete(row)}>
             {$t('common.delete')}
           </NButton>
         </div>
@@ -285,9 +276,7 @@ async function handleImport() {
   });
   importing.value = false;
   if (error) return;
-  window.$message?.success(
-    `${$t('page.hrm.attendance.punchRecord.importSuccess')} (${importData?.successCount ?? 0})`
-  );
+  window.$message?.success(`${$t('page.hrm.attendance.punchRecord.importSuccess')} (${importData?.successCount ?? 0})`);
   importVisible.value = false;
   importFileName.value = '';
   importFileContent.value = '';
@@ -300,7 +289,12 @@ const settling = ref(false);
 const settleRange = ref<[number, number] | null>(null);
 
 const settlePreviewColumns = computed(() => [
-  { key: 'employeeName', title: $t('page.hrm.attendance.punchRecord.employeeName'), align: 'center' as const, width: 100 },
+  {
+    key: 'employeeName',
+    title: $t('page.hrm.attendance.punchRecord.employeeName'),
+    align: 'center' as const,
+    width: 100
+  },
   { key: 'punchDate', title: $t('page.hrm.attendance.punchRecord.punchDate'), align: 'center' as const, width: 110 },
   {
     key: 'settleStatus',
@@ -308,8 +302,18 @@ const settlePreviewColumns = computed(() => [
     align: 'center' as const,
     render: (row: Api.Hrm.PunchSettleItem) => renderSettle(row.settleStatus)
   },
-  { key: 'lateMinutes', title: $t('page.hrm.attendance.punchRecord.lateMinutes'), align: 'center' as const, width: 100 },
-  { key: 'earlyMinutes', title: $t('page.hrm.attendance.punchRecord.earlyMinutes'), align: 'center' as const, width: 100 },
+  {
+    key: 'lateMinutes',
+    title: $t('page.hrm.attendance.punchRecord.lateMinutes'),
+    align: 'center' as const,
+    width: 100
+  },
+  {
+    key: 'earlyMinutes',
+    title: $t('page.hrm.attendance.punchRecord.earlyMinutes'),
+    align: 'center' as const,
+    width: 100
+  },
   { key: 'workHours', title: $t('page.hrm.attendance.punchRecord.workHours'), align: 'center' as const, width: 100 }
 ]);
 
@@ -423,12 +427,7 @@ async function handleSettle() {
     >
       <NForm label-placement="left" :label-width="100">
         <NFormItem :label="$t('page.hrm.attendance.punchRecord.dateRange')" path="settleRange">
-          <NDatePicker
-            v-model:value="settleRange"
-            type="daterange"
-            clearable
-            :value-format="'yyyy-MM-dd'"
-          />
+          <NDatePicker v-model:value="settleRange" type="daterange" clearable value-format="yyyy-MM-dd" />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.attendance.punchRecord.settleScope')">
           <span class="text-gray-500">{{ $t('page.hrm.attendance.punchRecord.settleScopeHint') }}</span>

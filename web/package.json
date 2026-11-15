@@ -120,6 +120,11 @@
     "vue-eslint-parser": "9.4.3",
     "vue-tsc": "2.1.6"
   },
+  "pnpm": {
+    "patchedDependencies": {
+      "@elegant-router/core": "patches/@elegant-router__core.patch"
+    }
+  },
   "simple-git-hooks": {
     "commit-msg": "cd web && pnpm sa git-commit-verify",
     "pre-commit": "cd web && pnpm typecheck && pnpm lint-staged"
@@ -127,10 +132,5 @@
   "lint-staged": {
     "*": "eslint --fix"
   },
-  "website": "https://admin.jzero.io",
-  "pnpm": {
-    "patchedDependencies": {
-      "@elegant-router/core": "patches/@elegant-router__core.patch"
-    }
-  }
+  "website": "https://admin.jzero.io"
 }

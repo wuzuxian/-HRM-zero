@@ -10,10 +10,7 @@ import {
 } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
-import {
-  hrmCertificateSourceRecord,
-  hrmTrainingCertificateStatusRecord
-} from '@/constants/business';
+import { hrmCertificateSourceRecord, hrmTrainingCertificateStatusRecord } from '@/constants/business';
 import { useTable } from '@/hooks/common/table';
 import { useAuth } from '@/hooks/business/auth';
 import CertBatchIssueModal from './modules/cert-batch-issue-modal.vue';
@@ -311,11 +308,7 @@ function handleUpload(row: Api.Hrm.TrainingCertificate) {
           <NButton v-if="canImport" type="primary" ghost @click="handleImport">
             {{ $t('page.hrm.training.certificate.importExternal') }}
           </NButton>
-          <TableHeaderOperation
-            v-model:columns="columnChecks"
-            :loading="loading"
-            @refresh="getData"
-          />
+          <TableHeaderOperation v-model:columns="columnChecks" :loading="loading" @refresh="getData" />
         </NSpace>
       </template>
       <NDataTable

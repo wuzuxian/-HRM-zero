@@ -53,10 +53,7 @@ async function search() {
               path="planUuid"
               class="pr-24px"
             >
-              <NInput
-                v-model:value="model.planUuid"
-                :placeholder="$t('page.hrm.training.session.form.planUuid')"
-              />
+              <NInput v-model:value="model.planUuid" :placeholder="$t('page.hrm.training.session.form.planUuid')" />
             </NFormItemGi>
             <NFormItemGi
               span="24 s:12 m:6"

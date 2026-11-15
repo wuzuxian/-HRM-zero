@@ -40,16 +40,8 @@ async function search() {
       <NCollapseItem :title="$t('common.search')" name="requirement-search">
         <NForm ref="formRef" :model="model" label-placement="left" :label-width="90">
           <NGrid responsive="screen" item-responsive>
-            <NFormItemGi
-              span="24 s:12 m:6"
-              :label="$t('page.hrm.requirement.billNo')"
-              path="billNo"
-              class="pr-24px"
-            >
-              <NInput
-                v-model:value="model.billNo"
-                :placeholder="$t('page.hrm.requirement.form.billNo')"
-              />
+            <NFormItemGi span="24 s:12 m:6" :label="$t('page.hrm.requirement.billNo')" path="billNo" class="pr-24px">
+              <NInput v-model:value="model.billNo" :placeholder="$t('page.hrm.requirement.form.billNo')" />
             </NFormItemGi>
             <NFormItemGi
               span="24 s:12 m:6"
@@ -70,10 +62,7 @@ async function search() {
               path="postName"
               class="pr-24px"
             >
-              <NInput
-                v-model:value="model.postName"
-                :placeholder="$t('page.hrm.requirement.form.postName')"
-              />
+              <NInput v-model:value="model.postName" :placeholder="$t('page.hrm.requirement.form.postName')" />
             </NFormItemGi>
             <NFormItemGi
               span="24 s:12 m:6"

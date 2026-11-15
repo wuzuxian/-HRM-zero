@@ -186,11 +186,7 @@ watch(visible, () => {
 
         <NDivider :title="$t('page.hrm.employeeRelation.resignation.sectionSnapshot')" title-placement="left" />
         <NGrid responsive="screen" item-responsive>
-          <NFormItemGi
-            span="24 s:12 m:8"
-            :label="$t('page.hrm.employeeRelation.resignation.orgUuid')"
-            path="orgUuid"
-          >
+          <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.employeeRelation.resignation.orgUuid')" path="orgUuid">
             <NInput
               v-model:value="model.orgUuid"
               disabled
@@ -208,11 +204,7 @@ watch(visible, () => {
               :placeholder="$t('page.hrm.employeeRelation.resignation.form.none')"
             />
           </NFormItemGi>
-          <NFormItemGi
-            span="24 s:12 m:8"
-            :label="$t('page.hrm.employeeRelation.resignation.position')"
-            path="position"
-          >
+          <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.employeeRelation.resignation.position')" path="position">
             <NInput
               v-model:value="model.position"
               disabled

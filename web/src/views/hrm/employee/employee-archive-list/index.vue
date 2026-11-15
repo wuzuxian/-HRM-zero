@@ -1,7 +1,14 @@
 <script setup lang="tsx">
 import { computed, reactive, ref } from 'vue';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import { DeleteEmployee, ExportEmployee, GenerateEmployeeUser, GetEmployeeDetail, GetEmployeeList, GetOrgTree } from '@/service/api';
+import {
+  DeleteEmployee,
+  ExportEmployee,
+  GenerateEmployeeUser,
+  GetEmployeeDetail,
+  GetEmployeeList,
+  GetOrgTree
+} from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import {
@@ -304,7 +311,9 @@ async function handleGenerateUser() {
   generateUserLoading.value = false;
   if (error) return;
   if (data && data.generated > 0) {
-    window.$message?.success($t('page.hrm.employee.generateUserSuccess', { generated: data.generated, skipped: data.skipped }));
+    window.$message?.success(
+      $t('page.hrm.employee.generateUserSuccess', { generated: data.generated, skipped: data.skipped })
+    );
   } else {
     window.$message?.info($t('page.hrm.employee.generateUserAllSkipped', { skipped: data?.skipped ?? 0 }));
   }
