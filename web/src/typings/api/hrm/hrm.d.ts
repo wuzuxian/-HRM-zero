@@ -1914,5 +1914,155 @@ declare namespace Api {
       uuid: string;
       status: AttendanceStatus;
     };
+
+    /** HRM-05 合同预警状态 (合同解除优先于天数口径) */
+    type ContractExpiryState = 'normal' | 'warning' | 'expired' | 'terminated';
+
+    /** HRM-05 证照预警状态 */
+    type CertExpiryState = 'normal' | 'warning' | 'expired';
+
+    /** HRM-05 劳动合同 (spec 用户故事 14/15/17; join hrm_employee.uuid) */
+    type HrmEmployeeContract = {
+      /** record uuid */
+      uuid: string;
+      /** 员工档案 uuid */
+      employeeUuid: string;
+      /** 员工工号（快照） */
+      employeeNo: string;
+      /** 员工姓名（快照） */
+      employeeName: string;
+      /** 员工所属部门（组织 uuid，快照） */
+      orgUuid: string;
+      /** 合同编号 */
+      contractNo: string;
+      /** 合同生效日 YYYY-MM-DD */
+      startDate: string;
+      /** 合同到期日 YYYY-MM-DD */
+      endDate: string;
+      /** 续签次数 */
+      renewCount: number;
+      /** 合同状态 1=有效 2=已到期 3=已解除 */
+      status: string;
+      /** 距到期天数（负数=已过期 N 天） */
+      daysToExpiry: number;
+      /** 预警状态 normal/warning(≤90天)/expired/terminated */
+      expiryState: ContractExpiryState | '';
+      /** 备注 */
+      remark: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+      /** record creator uuid (NaiveUI.TableData) */
+      createBy: string;
+      /** record update time (NaiveUI.TableData) */
+      updateBy: string;
+    };
+
+    /** contract search params (筛选: 姓名/工号/到期范围/预警状态, demo-inventory §2.2) */
+    type ContractSearchParams = CommonType.RecordNullable<
+      Pick<
+        HrmEmployeeContract,
+        'employeeName' | 'employeeNo' | 'startDate' | 'endDate' | 'expiryState'
+      > &
+        Common.CommonSearchParams
+    >;
+
+    /** contract paginated list */
+    type ContractList = Common.PaginatingQueryRecord<HrmEmployeeContract>;
+
+    /** add contract request (选择员工带出快照) */
+    type AddContractRequest = {
+      employeeUuid: string;
+      contractNo?: string;
+      startDate: string;
+      endDate: string;
+      status?: string;
+      remark?: string;
+    };
+
+    /** edit contract request */
+    type EditContractRequest = {
+      uuid: string;
+      contractNo?: string;
+      startDate: string;
+      endDate: string;
+      status?: string;
+      remark?: string;
+    };
+
+    /** renew contract request (续签: 缺省新到期日=原到期日+1年) */
+    type RenewContractRequest = {
+      uuid: string;
+      endDate?: string;
+    };
+
+    /** HRM-05 员工证照 (spec 用户故事 16/17; 证号出参脱敏) */
+    type HrmEmployeeCertificate = {
+      /** record uuid */
+      uuid: string;
+      /** 员工档案 uuid */
+      employeeUuid: string;
+      /** 员工工号（快照） */
+      employeeNo: string;
+      /** 员工姓名（快照） */
+      employeeName: string;
+      /** 员工所属部门（组织 uuid，快照） */
+      orgUuid: string;
+      /** 证书类型（身份证/学历证书/职业资格证等） */
+      certType: string;
+      /** 证号（出参脱敏，如 4408**************12） */
+      certNo: string;
+      /** 发证日期 YYYY-MM-DD */
+      issueDate: string;
+      /** 到期日 YYYY-MM-DD */
+      expiryDate: string;
+      /** 距到期天数（负数=已过期 N 天） */
+      daysToExpiry: number;
+      /** 预警状态 normal/warning(≤90天)/expired */
+      expiryState: CertExpiryState | '';
+      /** 备注 */
+      remark: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+      /** record creator uuid (NaiveUI.TableData) */
+      createBy: string;
+      /** record update time (NaiveUI.TableData) */
+      updateBy: string;
+    };
+
+    /** employee certificate search params (筛选: 姓名/工号/证书类型/预警状态, demo-inventory §2.4) */
+    type EmployeeCertificateSearchParams = CommonType.RecordNullable<
+      Pick<
+        HrmEmployeeCertificate,
+        'employeeName' | 'employeeNo' | 'certType' | 'expiryState'
+      > &
+        Common.CommonSearchParams
+    >;
+
+    /** employee certificate paginated list */
+    type EmployeeCertificateList = Common.PaginatingQueryRecord<HrmEmployeeCertificate>;
+
+    /** add employee certificate request (选择员工带出快照) */
+    type AddEmployeeCertificateRequest = {
+      employeeUuid: string;
+      certType: string;
+      certNo: string;
+      issueDate?: string;
+      expiryDate?: string;
+      remark?: string;
+    };
+
+    /** edit employee certificate request (回显脱敏证号原样提交视为未修改) */
+    type EditEmployeeCertificateRequest = {
+      uuid: string;
+      certType: string;
+      certNo: string;
+      issueDate?: string;
+      expiryDate?: string;
+      remark?: string;
+    };
   }
 }

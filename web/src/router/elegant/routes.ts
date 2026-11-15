@@ -144,12 +144,39 @@ export const generatedRoutes: GeneratedRoute[] = [
         },
         children: [
           {
+            name: 'hrm_employee_certificate-expiring',
+            path: '/hrm/employee/certificate-expiring',
+            component: 'view.hrm_employee_certificate-expiring',
+            meta: {
+              title: 'hrm_employee_certificate-expiring',
+              i18nKey: 'route.hrm_employee_certificate-expiring'
+            }
+          },
+          {
             name: 'hrm_employee_employee-archive-list',
             path: '/hrm/employee/employee-archive-list',
             component: 'view.hrm_employee_employee-archive-list',
             meta: {
               title: 'hrm_employee_employee-archive-list',
               i18nKey: 'route.hrm_employee_employee-archive-list'
+            }
+          },
+          {
+            name: 'hrm_employee_employee-contract-expiring',
+            path: '/hrm/employee/employee-contract-expiring',
+            component: 'view.hrm_employee_employee-contract-expiring',
+            meta: {
+              title: 'hrm_employee_employee-contract-expiring',
+              i18nKey: 'route.hrm_employee_employee-contract-expiring'
+            }
+          },
+          {
+            name: 'hrm_employee_employee-contract-renewable',
+            path: '/hrm/employee/employee-contract-renewable',
+            component: 'view.hrm_employee_employee-contract-renewable',
+            meta: {
+              title: 'hrm_employee_employee-contract-renewable',
+              i18nKey: 'route.hrm_employee_employee-contract-renewable'
             }
           }
         ]
@@ -163,21 +190,21 @@ export const generatedRoutes: GeneratedRoute[] = [
         },
         children: [
           {
-            name: 'hrm_employee-relation_regular-list',
-            path: '/hrm/employee-relation/regular-list',
-            component: 'view.hrm_employee-relation_regular-list',
-            meta: {
-              title: 'hrm_employee-relation_regular-list',
-              i18nKey: 'route.hrm_employee-relation_regular-list'
-            }
-          },
-          {
             name: 'hrm_employee-relation_entry-list',
             path: '/hrm/employee-relation/entry-list',
             component: 'view.hrm_employee-relation_entry-list',
             meta: {
               title: 'hrm_employee-relation_entry-list',
               i18nKey: 'route.hrm_employee-relation_entry-list'
+            }
+          },
+          {
+            name: 'hrm_employee-relation_regular-list',
+            path: '/hrm/employee-relation/regular-list',
+            component: 'view.hrm_employee-relation_regular-list',
+            meta: {
+              title: 'hrm_employee-relation_regular-list',
+              i18nKey: 'route.hrm_employee-relation_regular-list'
             }
           },
           {

@@ -210,6 +210,9 @@ const local: App.I18n.Schema = {
     'hrm_training_cert-issue': 'Certificate Issue',
     hrm_employee: 'HR Archive',
     'hrm_employee_employee-archive-list': 'Employee Archive',
+    'hrm_employee_employee-contract-expiring': 'Contract Expiring Alert',
+    'hrm_employee_employee-contract-renewable': 'Renewable Contracts',
+    'hrm_employee_certificate-expiring': 'Certificate Expiring Alert',
     exception: 'Exception',
     exception_403: '403',
     exception_404: '404',
@@ -355,6 +358,17 @@ const local: App.I18n.Schema = {
         import: 'Import Employees',
         export: 'Export Employees',
         generateuser: 'Generate User'
+      },
+      contract: {
+        add: 'Add Contract',
+        edit: 'Edit Contract',
+        delete: 'Delete Contract',
+        renew: 'Renew Contract'
+      },
+      empcert: {
+        add: 'Add Certificate',
+        edit: 'Edit Certificate',
+        delete: 'Delete Certificate'
       },
       performance: {
         indicator: {
@@ -1019,6 +1033,85 @@ const local: App.I18n.Schema = {
           bankName: 'Please enter salary bank',
           bankAccount: 'Please enter salary account',
           remark: 'Please enter remark'
+        },
+        contractExpiring: {
+          title: 'Contract Expiring Alert',
+          employeeNo: 'Employee No.',
+          employeeName: 'Employee Name',
+          selectEmployee: 'Select Employee',
+          orgName: 'Department',
+          contractNo: 'Contract No.',
+          startDate: 'Start Date',
+          endDate: 'End Date',
+          daysToExpiry: 'Days to Expiry',
+          renewCount: 'Renewals',
+          status: 'Status',
+          stateNormal: 'Normal',
+          stateWarning: 'Expiring Soon',
+          stateExpired: 'Expired',
+          stateTerminated: 'Terminated',
+          statusActive: 'Active',
+          statusExpired: 'Expired',
+          statusTerminated: 'Terminated',
+          renew: 'Renew',
+          renewSuccess: 'Renewed, renewals +1',
+          confirmRenew: 'Renew this contract? New end date {endDate}, renewals +1.',
+          addContract: 'Add Contract',
+          editContract: 'Edit Contract',
+          form: {
+            employeeName: 'Please enter employee name',
+            employeeNo: 'Please enter employee no.',
+            status: 'Please select expiry state',
+            selectEmployee: 'Please select employee',
+            contractNo: 'Please enter contract no.',
+            remark: 'Please enter remark'
+          }
+        },
+        contractRenewable: {
+          title: 'Renewable Contracts',
+          employeeNo: 'Employee No.',
+          employeeName: 'Employee Name',
+          orgName: 'Department',
+          startDate: 'Start Date',
+          endDate: 'End Date',
+          daysToExpiry: 'Days to Expiry',
+          renewCount: 'Renewals',
+          status: 'Status',
+          stateNormal: 'Normal',
+          stateWarning: 'Expiring Soon',
+          stateExpired: 'Expired',
+          stateTerminated: 'Terminated',
+          renew: 'Renew',
+          renewSuccess: 'Renewed, renewals +1',
+          confirmRenew: 'Renew this contract? Renewals +1, end date extended by one year.',
+          form: {
+            employeeName: 'Please enter employee name',
+            employeeNo: 'Please enter employee no.',
+            status: 'Please select status'
+          }
+        },
+        certExpiring: {
+          title: 'Certificate Expiring Alert',
+          employeeNo: 'Employee No.',
+          employeeName: 'Employee Name',
+          selectEmployee: 'Select Employee',
+          orgName: 'Department',
+          certType: 'Certificate Type',
+          certNo: 'Certificate No.',
+          issueDate: 'Issue Date',
+          expiryDate: 'Expiry Date',
+          daysToExpiry: 'Days to Expiry',
+          status: 'Status',
+          stateNormal: 'Normal',
+          stateWarning: 'Expiring Soon',
+          stateExpired: 'Expired',
+          addCert: 'Add Certificate',
+          editCert: 'Edit Certificate',
+          form: {
+            selectEmployee: 'Please select employee',
+            certType: 'Please enter certificate type',
+            certNo: "Please enter certificate no. (keep masked value on edit = unchanged)"
+          }
         }
       },
       attendance: {

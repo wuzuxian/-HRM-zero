@@ -278,3 +278,22 @@ export const hrmSalaryItemValueModeRecord: Record<Api.Hrm.SalaryItemValueMode, A
 };
 
 export const hrmSalaryItemValueModeOptions = transformRecordToOption(hrmSalaryItemValueModeRecord);
+
+/** HRM-05 合同预警状态 normal/warning(≤90天)/expired/terminated（terminated 优先于天数口径） */
+export const contractExpiryStateRecord: Record<Api.Hrm.ContractExpiryState, App.I18n.I18nKey> = {
+  normal: 'page.hrm.employee.contractExpiring.stateNormal',
+  warning: 'page.hrm.employee.contractExpiring.stateWarning',
+  expired: 'page.hrm.employee.contractExpiring.stateExpired',
+  terminated: 'page.hrm.employee.contractExpiring.stateTerminated'
+};
+
+export const contractExpiryStateOptions = transformRecordToOption(contractExpiryStateRecord);
+
+/** HRM-05 证照预警状态 normal/warning(≤90天)/expired */
+export const certExpiryStateRecord: Record<Api.Hrm.CertExpiryState, App.I18n.I18nKey> = {
+  normal: 'page.hrm.employee.certExpiring.stateNormal',
+  warning: 'page.hrm.employee.certExpiring.stateWarning',
+  expired: 'page.hrm.employee.certExpiring.stateExpired'
+};
+
+export const certExpiryStateOptions = transformRecordToOption(certExpiryStateRecord);

@@ -987,3 +987,92 @@ export function ToggleOvertimeRuleStatus(req: { uuid: string; status: Api.Hrm.At
     data: req
   });
 }
+
+// ---- HRM-05 劳动合同（到期预警/待续签共享端点，spec 用户故事 14/15/17） ----
+
+/** get 劳动合同 paginated list (筛选: 姓名/工号/到期范围; 出参含 距到期天数/预警状态) */
+export function GetEmployeeContractList(params?: Api.Hrm.ContractSearchParams) {
+  return request<Api.Hrm.ContractList>({
+    url: '/api/v1/hrm/getEmployeeContractList',
+    method: 'get',
+    params
+  });
+}
+
+/** add 劳动合同 (员工档案上下文维护, 选择员工带出快照) */
+export function AddEmployeeContract(req: Api.Hrm.AddContractRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addEmployeeContract',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 劳动合同 */
+export function EditEmployeeContract(req: Api.Hrm.EditContractRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editEmployeeContract',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 劳动合同 */
+export function DeleteEmployeeContract(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteEmployeeContract',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** renew 劳动合同 (续签: 续签次数+1、生成新到期日; 缺省=原到期日+1年) */
+export function RenewEmployeeContract(req: Api.Hrm.RenewContractRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/renewEmployeeContract',
+    method: 'post',
+    data: req
+  });
+}
+
+// ---- HRM-05 员工证照（证照到期预警，spec 用户故事 16/17；证号出参脱敏） ----
+
+/** get 员工证照 paginated list (筛选: 姓名/工号/证书类型; 证号脱敏、距到期天数) */
+export function GetEmployeeCertificateList(params?: Api.Hrm.EmployeeCertificateSearchParams) {
+  return request<Api.Hrm.EmployeeCertificateList>({
+    url: '/api/v1/hrm/getEmployeeCertificateList',
+    method: 'get',
+    params
+  });
+}
+
+/** add 员工证照 (员工档案上下文维护, 选择员工带出快照) */
+export function AddEmployeeCertificate(req: Api.Hrm.AddEmployeeCertificateRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addEmployeeCertificate',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 员工证照 (回显脱敏证号原样提交视为未修改) */
+export function EditEmployeeCertificate(req: Api.Hrm.EditEmployeeCertificateRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editEmployeeCertificate',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 员工证照 */
+export function DeleteEmployeeCertificate(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteEmployeeCertificate',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
