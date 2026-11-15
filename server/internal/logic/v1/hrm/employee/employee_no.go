@@ -40,6 +40,13 @@ func NextEmployeeNo(maxNo string) (string, error) {
 	return fmt.Sprintf("%0*d", employeeNoWidth, n+1), nil
 }
 
+// MaxNumericEmployeeNo 在既有工号集合中找到数值最大的工号 (跳过非数字工号, 如
+// 导入的历史编号 "HR-001"); 集合中没有数字工号时返回 ""。Exported for 下游单据
+// (入职单 HRM-07 审批通过自动建档) reuse.
+func MaxNumericEmployeeNo(employeeNos []string) string {
+	return maxNumericEmployeeNo(employeeNos)
+}
+
 // maxNumericEmployeeNo 在既有工号集合中找到数值最大的工号 (跳过非数字工号, 如
 // 导入的历史编号 "HR-001"); 集合中没有数字工号时返回 ""。
 func maxNumericEmployeeNo(employeeNos []string) string {

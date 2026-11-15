@@ -36,7 +36,7 @@ func (l *Add) Add(req *types.AddRequest) (resp *types.AddResponse, err error) {
 		return nil, err
 	}
 	if req.PersonStatus == "" {
-		req.PersonStatus = personStatusRegular
+		req.PersonStatus = PersonStatusRegular
 	}
 
 	var employeeNo string
