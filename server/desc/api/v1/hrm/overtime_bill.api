@@ -1,0 +1,133 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/overtimebill"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 加班申请单（HR217，GLOSSARY「单据」）：加班日期、当天类型（工作日/休息日/法定节假日）、
+// 起止时间与申请时长（自动计算：按命中加班规则的最小计算单位向下取整）、事由、来源（员工申请）。
+// 提交时按 HRM-13 ResolveOvertimeRule 判定 需审批/免审批 并快照调休倍数：
+//   - 需审批 → 走共享审批底座（typeCode 217），审批人在 审批中 状态先 核定
+//     （核定时长 ≤ 申请时长）+ 补偿方式（调休/其他），再审批通过；
+//   - 免审批 → 提交即底座自动通过（同一事务 SubmitBill+ApproveBill，口径：免审批单不落核定，
+//     按申请时长直接折算）。
+// 审批通过事务内按 CompMultiplier 折算调休时长（最小计算单位向下取整、月上限守卫），
+// 补偿方式=调休时 leavebalance.AccrueCompLeave 入账 comp_leave 余额（流水 change_type=accrue）。
+// 生命周期（提交/审批/撤销/审批记录）走共享单据底座 v1/hrm/bill，类型码 217。
+// 列表默认按「我的单据」过滤（创建人=当前用户），超级管理员可看全部（spec 用户故事 4）。
+type HrmOvertimeBill {
+	Uuid           string  `json:"uuid"`
+	BillNo         string  `json:"billNo"` // 单据编号 HR217-...
+	Status         string  `json:"status"` // 单据状态 unsubmitted/approving/approved/rejected/revoked
+	EmployeeUuid   string  `json:"employeeUuid"` // 员工档案 uuid
+	EmployeeNo     string  `json:"employeeNo"` // 员工工号（快照）
+	EmployeeName   string  `json:"employeeName"` // 员工姓名（快照）
+	OrgUuid        string  `json:"orgUuid"` // 员工所属部门（组织 uuid，快照）
+	OrgName        string  `json:"orgName"` // 部门名称（快照）
+	OvertimeDate   string  `json:"overtimeDate"` // 加班日期 YYYY-MM-DD
+	DayType        string  `json:"dayType"` // 当天类型 1=工作日 2=休息日 3=法定节假日
+	StartTime      string  `json:"startTime"` // 开始时间 YYYY-MM-DD HH:MM:SS
+	EndTime        string  `json:"endTime"` // 结束时间 YYYY-MM-DD HH:MM:SS
+	ApplyHours     float64 `json:"applyHours"` // 申请时长（小时，自动计算）
+	Reason         string  `json:"reason"` // 加班事由
+	Source         string  `json:"source"` // 来源 employee=员工申请
+	RuleSource     string  `json:"ruleSource"` // 命中加班规则来源 group/org/global
+	CompMultiplier float64 `json:"compMultiplier"` // 调休倍数（提交时快照）
+	ConfirmHours   float64 `json:"confirmHours"` // 核定时长（小时，0=未核定）
+	CompType       string  `json:"compType"` // 补偿方式 comp_leave=调休 other=其他
+	AccrueHours    float64 `json:"accrueHours"` // 折算调休入账小时（审批通过落定）
+	Settled        int64   `json:"settled"` // 调休入账是否已完成 1=是 0=否
+	CreatorUuid    string  `json:"creatorUuid"` // 申请人 uuid
+	CreatorName    string  `json:"creatorName"` // 申请人姓名
+	CreateTime     string  `json:"createTime"`
+	UpdateTime     string  `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	BillNo  string `form:"billNo,optional"` // 单据编号（模糊）
+	Status  string `form:"status,optional"` // 单据状态
+	DayType string `form:"dayType,optional"` // 当天类型 1/2/3
+	Mine    int64  `form:"mine,optional"` // 1=强制只看我的单据
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmOvertimeBill `json:"records"`
+}
+
+type AddRequest {
+	EmployeeUuid string `json:"employeeUuid,optional"`
+	EmployeeNo   string `json:"employeeNo"`
+	EmployeeName string `json:"employeeName"`
+	OrgUuid      string `json:"orgUuid,optional"`
+	OrgName      string `json:"orgName,optional"`
+	OvertimeDate string `json:"overtimeDate"` // YYYY-MM-DD
+	DayType      string `json:"dayType"` // 1/2/3
+	StartTime    string `json:"startTime"` // YYYY-MM-DD HH:MM:SS
+	EndTime      string `json:"endTime"` // YYYY-MM-DD HH:MM:SS
+	Reason       string `json:"reason,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid         string `json:"uuid"`
+	EmployeeUuid string `json:"employeeUuid,optional"`
+	EmployeeNo   string `json:"employeeNo"`
+	EmployeeName string `json:"employeeName"`
+	OrgUuid      string `json:"orgUuid,optional"`
+	OrgName      string `json:"orgName,optional"`
+	OvertimeDate string `json:"overtimeDate"`
+	DayType      string `json:"dayType"`
+	StartTime    string `json:"startTime"`
+	EndTime      string `json:"endTime"`
+	Reason       string `json:"reason,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+// ConfirmRequest 核定：审批人在 审批中 状态填写 核定时长（≤申请时长）与补偿方式（调休/其他）。
+type ConfirmRequest {
+	Uuid         string  `json:"uuid"`
+	ConfirmHours float64 `json:"confirmHours"`
+	CompType     string  `json:"compType"` // comp_leave / other
+}
+
+type ConfirmResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/overtimebill
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getOvertimeBillList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addOvertimeBill (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editOvertimeBill (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deleteOvertimeBill (DeleteRequest) returns (DeleteResponse)
+
+	@handler Confirm
+	post /hrm/confirmOvertimeBill (ConfirmRequest) returns (ConfirmResponse)
+}
+
