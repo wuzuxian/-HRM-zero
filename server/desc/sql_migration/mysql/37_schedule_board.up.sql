@@ -11,7 +11,7 @@
 --     兜底走考勤组/组织默认规则（三级回退 attendancegroup.ResolveEffectiveRule 口径）；
 --   - fixed 固定班制员工不读排班表，直接走规则；
 --   - published 仅是管理流程标记（未发布月份排班可继续编辑，不拦截打卡）。
--- 错误码 1053x 段（server/internal/errcodes/hrm_schedule_board.go）。
+-- 错误码 1055x 段（server/internal/errcodes/hrm_schedule_board.go；1053x 实际被 HRM-36 个税占用至 10533）。
 -- 菜单 uuid 段 21xx（grep 全部 migration: 0xxx 基础/03xx 假勤设置/07xx 考勤组/09xx-20xx 各域；
 -- 本票取 21xx: 2101 排班表 page / 2111-2117 buttons；role_menu aaa20000 21xx）。
 

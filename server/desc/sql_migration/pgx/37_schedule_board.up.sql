@@ -3,7 +3,7 @@
 --   shift_uuid 空=休/未排班；group_uuid 维护口径考勤组快照；published 发布标记。
 --   排班表按考勤组维护（成员=考勤组适用范围展开）；周期生成复用 HRM-14 ExpandCycle。
 -- 发布口径: 日结取班次时发布与否都生效；排班制无排班日兜底走考勤组/组织默认规则。
--- 错误码 1053x 段（server/internal/errcodes/hrm_schedule_board.go）。
+-- 错误码 1055x 段（server/internal/errcodes/hrm_schedule_board.go；1053x 实际被 HRM-36 个税占用至 10533）。
 -- 菜单 uuid 段 21xx: 2101 排班表 page / 2111-2117 buttons；role_menu aaa20000 21xx。
 
 CREATE TABLE "hrm_schedule_entry" (
