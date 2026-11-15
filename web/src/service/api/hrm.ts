@@ -571,3 +571,43 @@ export function DeleteReward(req: string[]) {
     }
   });
 }
+
+// ---- 招聘需求单（HRM-24, HR207）----
+
+/** get recruitment requirement (招聘需求单 HR207) paginated list — defaults to 「我的单据」 server-side */
+export function GetRequirementList(params?: Api.Hrm.RequirementSearchParams) {
+  return request<Api.Hrm.RequirementList>({
+    url: '/api/v1/hrm/getRequirementList',
+    method: 'get',
+    params
+  });
+}
+
+/** add recruitment requirement bill */
+export function AddRequirement(req: Api.Hrm.AddRequirementRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addRequirement',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit recruitment requirement bill (only in editable 单据状态) */
+export function EditRequirement(req: Api.Hrm.EditRequirementRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editRequirement',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete recruitment requirement bills (only in editable 单据状态) */
+export function DeleteRequirement(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteRequirement',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}

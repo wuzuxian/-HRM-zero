@@ -1099,5 +1099,89 @@ declare namespace Api {
     type EditRewardRequest = AddRewardRequest & {
       uuid: string;
     };
+
+    /**
+     * requirement post category (岗位类别, demo-inventory §5)
+     *
+     * - "tech": 技术类
+     * - "product": 产品类
+     * - "design": 设计类
+     * - "operation": 运营类
+     * - "market": 市场类
+     * - "function": 职能类
+     * - "other": 其他
+     */
+    type RequirementPostCategory = 'tech' | 'product' | 'design' | 'operation' | 'market' | 'function' | 'other';
+
+    /**
+     * requirement urgency (紧急度, demo-inventory §5)
+     *
+     * - "normal": 普通
+     * - "urgent": 紧急
+     */
+    type RequirementUrgency = 'normal' | 'urgent';
+
+    /** recruitment requirement bill (招聘需求单 HR207) */
+    type HrmRequirement = {
+      /** record uuid */
+      uuid: string;
+      /** 单据编号 HR207-... */
+      billNo: string;
+      /** 单据状态 */
+      status: BillStatus | null;
+      /** 岗位名称 */
+      postName: string;
+      /** 岗位类别 */
+      postCategory: RequirementPostCategory | null;
+      /** 需求人数 */
+      headcount: number;
+      /** 紧急度 */
+      urgency: RequirementUrgency | null;
+      /** 期望到岗日期 YYYY-MM-DD */
+      expectDate: string;
+      /** 所属部门（组织 uuid） */
+      orgUuid: string;
+      /** 所属部门名称（快照） */
+      orgName: string;
+      /** 需求说明/任职要求 */
+      requirementDesc: string;
+      /** 申请人 uuid */
+      creatorUuid: string;
+      /** 申请人姓名 */
+      creatorName: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** requirement search params */
+    type RequirementSearchParams = CommonType.RecordNullable<
+      Pick<
+        Api.Hrm.HrmRequirement,
+        'billNo' | 'status' | 'postName' | 'postCategory' | 'urgency' | 'orgUuid'
+      > &
+        Common.CommonSearchParams
+    >;
+
+    /** requirement paginated list */
+    type RequirementList = Common.PaginatingQueryRecord<HrmRequirement>;
+
+    /** add requirement request */
+    type AddRequirementRequest = {
+      postName: string;
+      postCategory: RequirementPostCategory | null;
+      headcount: number;
+      urgency: RequirementUrgency | null;
+      expectDate: string;
+      orgUuid: string;
+      orgName: string;
+      requirementDesc: string;
+    };
+
+    /** edit requirement request */
+    type EditRequirementRequest = AddRequirementRequest & {
+      uuid: string;
+    };
   }
 }

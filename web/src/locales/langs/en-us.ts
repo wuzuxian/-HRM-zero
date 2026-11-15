@@ -194,6 +194,8 @@ const local: App.I18n.Schema = {
     hrm_training_my: 'My Training',
     hrm_reward: 'Reward & Discipline',
     hrm_reward_bill: 'Reward Bill',
+    hrm_recruitment: 'Recruitment',
+    'hrm_recruitment_requirement-list': 'Requirement',
     hrm_training_plan: 'Training Plan',
     hrm_training_session: 'Training Session',
     hrm_employee: 'HR Archive',
@@ -264,6 +266,11 @@ const local: App.I18n.Schema = {
         add: 'Add Reward Bill',
         edit: 'Edit Reward Bill',
         delete: 'Delete Reward Bill'
+      },
+      requirement: {
+        add: 'Add Requirement',
+        edit: 'Edit Requirement',
+        delete: 'Delete Requirement'
       },
       bill: {
         submit: 'Submit Bill',
@@ -575,6 +582,57 @@ const local: App.I18n.Schema = {
           docNo: 'Please enter document no.',
           salaryMonth: 'Salary month YYYY-MM, defaults to the occur-date month',
           reason: 'Please enter reason'
+        }
+      },
+      requirement: {
+        title: 'Recruitment Requirement',
+        billNo: 'Requirement No.',
+        billStatus: {
+          title: 'Bill Status'
+        },
+        postName: 'Post Name',
+        postCategory: {
+          title: 'Post Category',
+          tech: 'Tech',
+          product: 'Product',
+          design: 'Design',
+          operation: 'Operation',
+          market: 'Marketing',
+          function: 'Function',
+          other: 'Other'
+        },
+        headcount: 'Headcount',
+        urgency: {
+          title: 'Urgency',
+          normal: 'Normal',
+          urgent: 'Urgent'
+        },
+        expectDate: 'Expected Onboard Date',
+        orgName: 'Department',
+        requirementDesc: 'Requirement Description',
+        creatorName: 'Applicant',
+        createTime: 'Create Time',
+        submit: 'Submit',
+        approve: 'Approve',
+        reject: 'Reject',
+        revoke: 'Revoke',
+        records: 'Approval Records',
+        noRecords: 'No approval records',
+        confirmSubmit: 'Submit this requirement bill for approval?',
+        confirmApprove: 'Approve this bill? Once approved it can be referenced by recruitment positions.',
+        confirmReject: 'Reject this requirement bill?',
+        confirmRevoke: 'Revoke this requirement bill?',
+        addRequirement: 'Add Requirement',
+        editRequirement: 'Edit Requirement',
+        sectionPost: 'Post Info',
+        form: {
+          billNo: 'Please enter requirement no.',
+          status: 'Please select bill status',
+          postName: 'Please enter post name',
+          postCategory: 'Please select post category',
+          urgency: 'Please select urgency',
+          org: 'Please select department',
+          requirementDesc: 'Please enter requirement description'
         }
       },
       performance: {

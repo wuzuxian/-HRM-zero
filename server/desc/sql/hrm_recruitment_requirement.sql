@@ -1,0 +1,21 @@
+CREATE TABLE `hrm_recruitment_requirement` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(36) NOT NULL UNIQUE,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `bill_no` varchar(32) NOT NULL COMMENT '单据编号 HR207-YYYYMMDD+5位流水',
+  `status` varchar(16) NOT NULL DEFAULT 'unsubmitted' COMMENT '单据状态 unsubmitted/approving/approved/rejected/revoked',
+  `post_name` varchar(100) NOT NULL COMMENT '岗位名称',
+  `post_category` varchar(32) NOT NULL DEFAULT 'tech' COMMENT '岗位类别 tech=技术类 product=产品类 design=设计类 operation=运营类 market=市场类 function=职能类 other=其他',
+  `headcount` bigint NOT NULL DEFAULT 1 COMMENT '需求人数（>=1）',
+  `urgency` varchar(16) NOT NULL DEFAULT 'normal' COMMENT '紧急度 normal=普通 urgent=紧急',
+  `expect_date` varchar(10) NOT NULL DEFAULT '' COMMENT '期望到岗日期 YYYY-MM-DD',
+  `org_uuid` varchar(36) NOT NULL DEFAULT '' COMMENT '所属部门（组织 uuid，HRM-01 组织引用）',
+  `org_name` varchar(100) NOT NULL DEFAULT '' COMMENT '所属部门名称（快照）',
+  `requirement_desc` varchar(500) NOT NULL DEFAULT '' COMMENT '需求说明/任职要求',
+  `create_by` varchar(36) NOT NULL DEFAULT '' COMMENT '创建人（申请人）用户 uuid',
+  `creator_name` varchar(100) NOT NULL DEFAULT '' COMMENT '申请人姓名（快照）',
+  PRIMARY KEY (`id`),
+  KEY `idx_hrm_recruitment_requirement_status` (`status`),
+  KEY `idx_hrm_recruitment_requirement_org` (`org_uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

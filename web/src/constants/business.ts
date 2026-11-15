@@ -90,6 +90,30 @@ export const hrmRewardLevelRecord: Record<Api.Hrm.RewardLevel, App.I18n.I18nKey>
 
 export const hrmRewardLevelOptions = transformRecordToOption(hrmRewardLevelRecord);
 
+/** 岗位类别 (招聘需求单 HR207) */
+export const hrmRequirementPostCategoryRecord: Record<
+  Api.Hrm.RequirementPostCategory,
+  App.I18n.I18nKey
+> = {
+  tech: 'page.hrm.requirement.postCategory.tech',
+  product: 'page.hrm.requirement.postCategory.product',
+  design: 'page.hrm.requirement.postCategory.design',
+  operation: 'page.hrm.requirement.postCategory.operation',
+  market: 'page.hrm.requirement.postCategory.market',
+  function: 'page.hrm.requirement.postCategory.function',
+  other: 'page.hrm.requirement.postCategory.other'
+};
+
+export const hrmRequirementPostCategoryOptions = transformRecordToOption(hrmRequirementPostCategoryRecord);
+
+/** 紧急度 (招聘需求单 HR207) */
+export const hrmRequirementUrgencyRecord: Record<Api.Hrm.RequirementUrgency, App.I18n.I18nKey> = {
+  normal: 'page.hrm.requirement.urgency.normal',
+  urgent: 'page.hrm.requirement.urgency.urgent'
+};
+
+export const hrmRequirementUrgencyOptions = transformRecordToOption(hrmRequirementUrgencyRecord);
+
 export const hrmTrainingSessionStatusRecord: Record<Api.Hrm.TrainingSessionStatus, App.I18n.I18nKey> = {
   '1': 'page.hrm.training.sessionStatus.notStarted',
   '2': 'page.hrm.training.sessionStatus.ongoing',

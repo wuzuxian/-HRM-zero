@@ -194,6 +194,8 @@ const local: App.I18n.Schema = {
     hrm_training_my: '我的培训',
     hrm_reward: '奖惩管理',
     hrm_reward_bill: '奖惩单',
+    hrm_recruitment: '招聘管理',
+    'hrm_recruitment_requirement-list': '招聘需求',
     hrm_training_plan: '培训计划',
     hrm_training_session: '培训班次',
     hrm_employee: '人事档案',
@@ -264,6 +266,11 @@ const local: App.I18n.Schema = {
         add: '新增奖惩单',
         edit: '编辑奖惩单',
         delete: '删除奖惩单'
+      },
+      requirement: {
+        add: '新增招聘需求',
+        edit: '编辑招聘需求',
+        delete: '删除招聘需求'
       },
       bill: {
         submit: '提交单据',
@@ -575,6 +582,57 @@ const local: App.I18n.Schema = {
           docNo: '请输入文号',
           salaryMonth: '入账薪资年月 YYYY-MM，留空默认为发生日期所在月',
           reason: '请输入奖惩原因'
+        }
+      },
+      requirement: {
+        title: '招聘需求',
+        billNo: '需求编号',
+        billStatus: {
+          title: '单据状态'
+        },
+        postName: '岗位名称',
+        postCategory: {
+          title: '岗位类别',
+          tech: '技术类',
+          product: '产品类',
+          design: '设计类',
+          operation: '运营类',
+          market: '市场类',
+          function: '职能类',
+          other: '其他'
+        },
+        headcount: '需求人数',
+        urgency: {
+          title: '紧急度',
+          normal: '普通',
+          urgent: '紧急'
+        },
+        expectDate: '期望到岗日期',
+        orgName: '所属部门',
+        requirementDesc: '需求说明',
+        creatorName: '申请人',
+        createTime: '创建时间',
+        submit: '提交',
+        approve: '通过',
+        reject: '驳回',
+        revoke: '撤销',
+        records: '审批记录',
+        noRecords: '暂无审批记录',
+        confirmSubmit: '确认提交该招聘需求单进入审批？',
+        confirmApprove: '确认审批通过？通过后该需求可被招聘职位引用发布。',
+        confirmReject: '确认驳回该招聘需求单？',
+        confirmRevoke: '确认撤销该招聘需求单？',
+        addRequirement: '新增招聘需求',
+        editRequirement: '编辑招聘需求',
+        sectionPost: '岗位信息',
+        form: {
+          billNo: '请输入需求编号',
+          status: '请选择单据状态',
+          postName: '请输入岗位名称',
+          postCategory: '请选择岗位类别',
+          urgency: '请选择紧急度',
+          org: '请选择所属部门',
+          requirementDesc: '请输入需求说明/任职要求'
         }
       },
       performance: {

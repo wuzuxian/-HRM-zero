@@ -461,6 +461,11 @@ declare namespace App {
             edit: string;
             delete: string;
           };
+          requirement: {
+            add: string;
+            edit: string;
+            delete: string;
+          };
           bill: {
             submit: string;
             approve: string;
@@ -1126,6 +1131,57 @@ declare namespace App {
               docNo: string;
               salaryMonth: string;
               reason: string;
+            };
+          };
+          requirement: {
+            title: string;
+            billNo: string;
+            billStatus: {
+              title: string;
+            };
+            postName: string;
+            postCategory: {
+              title: string;
+              tech: string;
+              product: string;
+              design: string;
+              operation: string;
+              market: string;
+              function: string;
+              other: string;
+            };
+            headcount: string;
+            urgency: {
+              title: string;
+              normal: string;
+              urgent: string;
+            };
+            expectDate: string;
+            orgName: string;
+            requirementDesc: string;
+            creatorName: string;
+            createTime: string;
+            submit: string;
+            approve: string;
+            reject: string;
+            revoke: string;
+            records: string;
+            noRecords: string;
+            confirmSubmit: string;
+            confirmApprove: string;
+            confirmReject: string;
+            confirmRevoke: string;
+            addRequirement: string;
+            editRequirement: string;
+            sectionPost: string;
+            form: {
+              billNo: string;
+              status: string;
+              postName: string;
+              postCategory: string;
+              urgency: string;
+              org: string;
+              requirementDesc: string;
             };
           };
           training: {

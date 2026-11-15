@@ -18,6 +18,7 @@ import (
 	v1hrmperf_indicator "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_indicator"
 	v1hrmperf_scheme "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_scheme"
 	v1hrmperf_template "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_template"
+	v1hrmrequirement "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/requirement"
 	v1hrmreward "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/reward"
 	v1hrmshift "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/shift"
 	v1hrmtraining "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/training"
@@ -435,6 +436,37 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodGet,
 						Path:    "/hrm/getPerfTemplateList",
 						Handler: v1hrmperf_template.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addRequirement",
+						Handler: v1hrmrequirement.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteRequirement",
+						Handler: v1hrmrequirement.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editRequirement",
+						Handler: v1hrmrequirement.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getRequirementList",
+						Handler: v1hrmrequirement.List(serverCtx),
 					},
 				}...,
 			),

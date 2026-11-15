@@ -89,6 +89,16 @@ const (
 	RewardEmployeeRequiredCode = 10422
 	// RewardNotEditableCode 单据当前状态不允许修改/删除（仅 未提交/审批不通过/已撤销 可改）
 	RewardNotEditableCode = 10423
+
+	// HRM 招聘需求单（HRM-24，HR207）业务错误码。1043x 段（1042x 已被奖惩单占用）。
+	// RequirementNotFoundCode 招聘需求单不存在
+	RequirementNotFoundCode = 10430
+	// RequirementInvalidCode 招聘需求单参数非法（岗位名称/类别/人数/紧急度/日期等）
+	RequirementInvalidCode = 10431
+	// RequirementOrgRequiredCode 未指定所属部门
+	RequirementOrgRequiredCode = 10432
+	// RequirementNotEditableCode 单据当前状态不允许修改/删除（仅 未提交/审批不通过/已撤销 可改）
+	RequirementNotEditableCode = 10433
 )
 
 func init() {
@@ -136,4 +146,9 @@ func init() {
 	status.Register(RewardInvalidCode)
 	status.Register(RewardEmployeeRequiredCode)
 	status.Register(RewardNotEditableCode)
+
+	status.Register(RequirementNotFoundCode)
+	status.Register(RequirementInvalidCode)
+	status.Register(RequirementOrgRequiredCode)
+	status.Register(RequirementNotEditableCode)
 }
