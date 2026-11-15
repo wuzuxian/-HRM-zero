@@ -1,0 +1,93 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/training"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 培训班次（HRM-28 规范表 hrm_training_session 的读模型，我的培训视角）
+type HrmMyTrainingSession {
+	Uuid        string  `json:"uuid"`
+	SessionNo   string  `json:"sessionNo"`
+	SessionName string  `json:"sessionName"`
+	Lecturer    string  `json:"lecturer"`
+	Location    string  `json:"location"`
+	Hours       float64 `json:"hours"`
+	StartTime   string  `json:"startTime"`
+	EndTime     string  `json:"endTime"`
+	Status      string  `json:"status"`
+	Remark      string  `json:"remark"`
+	CreateTime  string  `json:"createTime"`
+	UpdateTime  string  `json:"updateTime"`
+}
+
+// 培训证书（HRM-30 规范表 hrm_training_certificate 的读模型，我的培训视角）
+type HrmMyTrainingCertificate {
+	Uuid        string `json:"uuid"`
+	CertNo      string `json:"certNo"`
+	CertName    string `json:"certName"`
+	CertType    string `json:"certType"`
+	Source      string `json:"source"`
+	SessionUuid string `json:"sessionUuid"`
+	IssueTime   string `json:"issueTime"`
+	Status      string `json:"status"`
+	FileName    string `json:"fileName"`
+	HasFile     bool   `json:"hasFile"`
+	CreateTime  string `json:"createTime"`
+	UpdateTime  string `json:"updateTime"`
+}
+
+type GetMySessionListRequest {
+	PageRequest
+	Status string `form:"status,optional"`
+}
+
+type GetMySessionListResponse {
+	PageResponse
+	Records []HrmMyTrainingSession `json:"records"`
+}
+
+type GetMyCertificateListRequest {
+	PageRequest
+	Status string `form:"status,optional"`
+}
+
+type GetMyCertificateListResponse {
+	PageResponse
+	Records []HrmMyTrainingCertificate `json:"records"`
+}
+
+type DownloadMyCertificateFileRequest {
+	Uuid string `form:"uuid"`
+}
+
+type DownloadMyCertificateFileResponse {
+	FileName string `json:"fileName"`
+	Content  string `json:"content"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/training
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	// 我的班次：当前登录用户是班次学员（hrm_training_session_participant）的班次
+	@handler GetMySessionList
+	get /hrm/getMyTrainingSessionList (GetMySessionListRequest) returns (GetMySessionListResponse)
+
+	// 我的培训证书：当前登录学员名下的证书
+	@handler GetMyCertificateList
+	get /hrm/getMyTrainingCertificateList (GetMyCertificateListRequest) returns (GetMyCertificateListResponse)
+
+	// 证书扫描件预览/下载（base64 内容，与组织导出同一返回模式）
+	@handler DownloadMyCertificateFile
+	get /hrm/downloadMyTrainingCertificateFile (DownloadMyCertificateFileRequest) returns (DownloadMyCertificateFileResponse)
+}
+

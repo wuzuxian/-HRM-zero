@@ -15,6 +15,7 @@ import (
 	v1hrmperf_indicator "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_indicator"
 	v1hrmperf_template "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_template"
 	v1hrmshift "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/shift"
+	v1hrmtraining "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/training"
 	v1managemenu "github.com/jzero-io/jzero-admin/server/internal/handler/v1/manage/menu"
 	v1managerole "github.com/jzero-io/jzero-admin/server/internal/handler/v1/manage/role"
 	v1manageuser "github.com/jzero-io/jzero-admin/server/internal/handler/v1/manage/user"
@@ -298,6 +299,32 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodGet,
 						Path:    "/hrm/getShiftList",
 						Handler: v1hrmshift.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/downloadMyTrainingCertificateFile",
+						Handler: v1hrmtraining.DownloadMyCertificateFile(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getMyTrainingCertificateList",
+						Handler: v1hrmtraining.GetMyCertificateList(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getMyTrainingSessionList",
+						Handler: v1hrmtraining.GetMySessionList(serverCtx),
 					},
 				}...,
 			),

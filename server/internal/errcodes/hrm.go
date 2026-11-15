@@ -38,6 +38,12 @@ const (
 	LeaveTypeNotFoundCode = 10345
 	// LeaveTypeInvalidCode 类型编码非法（须为小写字母+下划线）或状态非法
 	LeaveTypeInvalidCode = 10346
+
+	// HRM 培训管理：我的培训（HRM-31）业务错误码。
+	// TrainingCertificateNotFoundCode 证书不存在或无权访问（我的培训仅限证书本人）
+	TrainingCertificateNotFoundCode = 10360
+	// TrainingCertificateFileNotFoundCode 证书扫描件不存在（未上传或已清除）
+	TrainingCertificateFileNotFoundCode = 10361
 )
 
 func init() {
@@ -60,4 +66,7 @@ func init() {
 	status.Register(LeaveTypeCodeDuplicateCode)
 	status.Register(LeaveTypeNotFoundCode)
 	status.Register(LeaveTypeInvalidCode)
+
+	status.Register(TrainingCertificateNotFoundCode)
+	status.Register(TrainingCertificateFileNotFoundCode)
 }
