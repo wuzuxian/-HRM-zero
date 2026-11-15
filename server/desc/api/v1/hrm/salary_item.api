@@ -1,0 +1,102 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/salary_item"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// HrmSalaryItem 薪资项目（GLOSSARY「薪资项目」）: 薪资计算的最小条目。
+// item_type   项目类型: fixed=固定项 / data=取数项 / formula=公式项
+// item_class  项目分类: earning=应发 / deduction=应扣 / cost=成本
+// value_mode  取值方式: manual=手工维护 / system=系统取数 / formula=公式计算
+type HrmSalaryItem {
+	Uuid       string `json:"uuid"`
+	ItemCode   string `json:"itemCode"`
+	ItemName   string `json:"itemName"`
+	ItemType   string `json:"itemType"`
+	ItemClass  string `json:"itemClass"`
+	ValueMode  string `json:"valueMode"`
+	CalcOrder  int64  `json:"calcOrder"`
+	OrderNum   int64  `json:"orderNum"`
+	Formula    string `json:"formula"`
+	IsPreset   int64  `json:"isPreset"`
+	Status     string `json:"status"`
+	Remark     string `json:"remark"`
+	CreateTime string `json:"createTime"`
+	UpdateTime string `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	ItemName  string `form:"itemName,optional"`
+	ItemClass string `form:"itemClass,optional"`
+	Status    string `form:"status,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmSalaryItem `json:"records"`
+}
+
+type AddRequest {
+	ItemCode  string `json:"itemCode"`
+	ItemName  string `json:"itemName"`
+	ItemType  string `json:"itemType"`
+	ItemClass string `json:"itemClass"`
+	ValueMode string `json:"valueMode"`
+	CalcOrder int64  `json:"calcOrder,optional"`
+	OrderNum  int64  `json:"orderNum,optional"`
+	Formula   string `json:"formula,optional"`
+	Status    string `json:"status,default=1"`
+	Remark    string `json:"remark,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid      string `json:"uuid"`
+	ItemCode  string `json:"itemCode"`
+	ItemName  string `json:"itemName"`
+	ItemType  string `json:"itemType"`
+	ItemClass string `json:"itemClass"`
+	ValueMode string `json:"valueMode"`
+	CalcOrder int64  `json:"calcOrder,optional"`
+	OrderNum  int64  `json:"orderNum,optional"`
+	Formula   string `json:"formula,optional"`
+	Status    string `json:"status"`
+	Remark    string `json:"remark,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/salary_item
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getSalaryItemList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addSalaryItem (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editSalaryItem (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deleteSalaryItem (DeleteRequest) returns (DeleteResponse)
+}
+

@@ -24,6 +24,8 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_recruitment_candidate"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_recruitment_requirement"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_reward_bill"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_item"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_subject"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_shift"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_certificate"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_plan"
@@ -56,6 +58,8 @@ type Model struct {
 	HrmRecruitmentCandidate       hrm_recruitment_candidate.HrmRecruitmentCandidateModel
 	HrmRecruitmentRequirement     hrm_recruitment_requirement.HrmRecruitmentRequirementModel
 	HrmRewardBill                 hrm_reward_bill.HrmRewardBillModel
+	HrmSalaryItem                 hrm_salary_item.HrmSalaryItemModel
+	HrmSalarySubject              hrm_salary_subject.HrmSalarySubjectModel
 	HrmShift                      hrm_shift.HrmShiftModel
 	HrmTrainingCertificate        hrm_training_certificate.HrmTrainingCertificateModel
 	HrmTrainingPlan               hrm_training_plan.HrmTrainingPlanModel
@@ -89,6 +93,8 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmRecruitmentCandidate:       hrm_recruitment_candidate.NewHrmRecruitmentCandidateModel(conn, op...),
 		HrmRecruitmentRequirement:     hrm_recruitment_requirement.NewHrmRecruitmentRequirementModel(conn, op...),
 		HrmRewardBill:                 hrm_reward_bill.NewHrmRewardBillModel(conn, op...),
+		HrmSalaryItem:                 hrm_salary_item.NewHrmSalaryItemModel(conn, op...),
+		HrmSalarySubject:              hrm_salary_subject.NewHrmSalarySubjectModel(conn, op...),
 		HrmShift:                      hrm_shift.NewHrmShiftModel(conn, op...),
 		HrmTrainingCertificate:        hrm_training_certificate.NewHrmTrainingCertificateModel(conn, op...),
 		HrmTrainingPlan:               hrm_training_plan.NewHrmTrainingPlanModel(conn, op...),

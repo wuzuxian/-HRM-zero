@@ -1,0 +1,390 @@
+{
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/hrm/addSalaryItem": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_item:add",
+        "operationId": "v1/Hrm/SalaryItemAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "calcOrder": {
+                  "type": "integer"
+                },
+                "formula": {
+                  "type": "string"
+                },
+                "itemClass": {
+                  "type": "string"
+                },
+                "itemCode": {
+                  "type": "string"
+                },
+                "itemName": {
+                  "type": "string"
+                },
+                "itemType": {
+                  "type": "string"
+                },
+                "orderNum": {
+                  "type": "integer"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "status": {
+                  "default": "1",
+                  "example": "1",
+                  "type": "string"
+                },
+                "valueMode": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "itemCode",
+                "itemName",
+                "itemType",
+                "itemClass",
+                "valueMode",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/salary_item"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteSalaryItem": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_item:delete",
+        "operationId": "v1/Hrm/SalaryItemDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/salary_item"
+        ]
+      }
+    },
+    "/api/v1/hrm/editSalaryItem": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_item:edit",
+        "operationId": "v1/Hrm/SalaryItemEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "calcOrder": {
+                  "type": "integer"
+                },
+                "formula": {
+                  "type": "string"
+                },
+                "itemClass": {
+                  "type": "string"
+                },
+                "itemCode": {
+                  "type": "string"
+                },
+                "itemName": {
+                  "type": "string"
+                },
+                "itemType": {
+                  "type": "string"
+                },
+                "orderNum": {
+                  "type": "integer"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                },
+                "valueMode": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "itemCode",
+                "itemName",
+                "itemType",
+                "itemClass",
+                "valueMode",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/salary_item"
+        ]
+      }
+    },
+    "/api/v1/hrm/getSalaryItemList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:salary_item:list",
+        "operationId": "v1/Hrm/SalaryItemList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "itemName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "itemClass",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "calcOrder": {
+                        "type": "integer"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "formula": {
+                        "type": "string"
+                      },
+                      "isPreset": {
+                        "type": "integer"
+                      },
+                      "itemClass": {
+                        "type": "string"
+                      },
+                      "itemCode": {
+                        "type": "string"
+                      },
+                      "itemName": {
+                        "type": "string"
+                      },
+                      "itemType": {
+                        "type": "string"
+                      },
+                      "orderNum": {
+                        "type": "integer"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "valueMode": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "itemCode",
+                      "itemName",
+                      "itemType",
+                      "itemClass",
+                      "valueMode",
+                      "calcOrder",
+                      "orderNum",
+                      "formula",
+                      "isPreset",
+                      "status",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/salary_item"
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKey": {
+      "description": "Enter Authorization",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0"
+}

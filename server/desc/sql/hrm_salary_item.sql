@@ -1,0 +1,20 @@
+CREATE TABLE `hrm_salary_item` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(36) NOT NULL UNIQUE,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `item_code` varchar(50) NOT NULL UNIQUE COMMENT '项目编码 BASIC_SALARY/POST_SALARY/TAX/NET_SALARY…',
+  `item_name` varchar(100) NOT NULL COMMENT '项目名称',
+  `item_type` varchar(20) NOT NULL DEFAULT 'fixed' COMMENT '项目类型 fixed=固定项 data=取数项 formula=公式项',
+  `item_class` varchar(20) NOT NULL DEFAULT 'earning' COMMENT '项目分类 earning=应发 deduction=应扣 cost=成本',
+  `value_mode` varchar(20) NOT NULL DEFAULT 'manual' COMMENT '取值方式 manual=手工维护 system=系统取数 formula=公式计算',
+  `calc_order` bigint NOT NULL DEFAULT 0 COMMENT '计算顺序（同序按 id 升序）',
+  `order_num` bigint NOT NULL DEFAULT 0 COMMENT '显示顺序',
+  `formula` varchar(500) NOT NULL DEFAULT '' COMMENT '公式表达式（公式项使用）',
+  `is_preset` bigint NOT NULL DEFAULT 0 COMMENT '预置项目 1=是（不可删除） 0=否',
+  `status` varchar(1) NOT NULL DEFAULT '1' COMMENT '启停 1=启用 0=停用',
+  `remark` varchar(500) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `idx_hrm_salary_item_class` (`item_class`),
+  KEY `idx_hrm_salary_item_calc` (`calc_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
