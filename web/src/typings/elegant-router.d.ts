@@ -41,6 +41,10 @@ declare module "@elegant-router/types" {
     "hrm_attendance_setting_shift": "/hrm/attendance/setting/shift";
     "hrm_org": "/hrm/org";
     "hrm_org_orginfo": "/hrm/org/orginfo";
+    "hrm_performance": "/hrm/performance";
+    "hrm_performance_setting": "/hrm/performance/setting";
+    "hrm_performance_setting_indicator": "/hrm/performance/setting/indicator";
+    "hrm_performance_setting_template": "/hrm/performance/setting/template";
     "iframe-page": "/iframe-page/:url";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
     "manage": "/manage";
@@ -130,6 +134,8 @@ declare module "@elegant-router/types" {
     | "hrm_attendance_setting_leave-type"
     | "hrm_attendance_setting_shift"
     | "hrm_org_orginfo"
+    | "hrm_performance_setting_indicator"
+    | "hrm_performance_setting_template"
     | "manage_menu"
     | "manage_role"
     | "manage_user-detail"

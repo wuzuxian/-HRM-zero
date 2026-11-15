@@ -179,6 +179,10 @@ const local: App.I18n.Schema = {
     hrm_attendance_setting: '假勤设置',
     hrm_attendance_setting_shift: '班次管理',
     'hrm_attendance_setting_leave-type': '假期类型',
+    hrm_performance: '绩效管理',
+    hrm_performance_setting: '绩效设置',
+    hrm_performance_setting_indicator: '指标库',
+    hrm_performance_setting_template: '模板管理',
     exception: '异常页',
     exception_403: '403',
     exception_404: '404',
@@ -223,6 +227,18 @@ const local: App.I18n.Schema = {
         add: '新增假期类型',
         edit: '编辑假期类型',
         delete: '删除假期类型'
+      },
+      performance: {
+        indicator: {
+          add: '新增指标',
+          edit: '编辑指标',
+          delete: '删除指标'
+        },
+        template: {
+          add: '新增模板',
+          edit: '编辑模板',
+          delete: '删除模板'
+        }
       }
     }
   },
@@ -435,6 +451,70 @@ const local: App.I18n.Schema = {
       }
     },
     hrm: {
+      performance: {
+        common: {
+          status: {
+            enable: '启用',
+            disable: '停用'
+          }
+        },
+        indicatorType: {
+          kpi: '结果指标(KPI)',
+          behavior: '行为能力'
+        },
+        scoreRule: {
+          formula: '公式评分',
+          manual: '手工评分'
+        },
+        dataSource: {
+          system: '系统取数',
+          manual: '手工填报'
+        },
+        indicator: {
+          title: '指标库',
+          code: '指标编码',
+          name: '指标名称',
+          indicatorType: '指标类型',
+          unit: '计量单位',
+          scoreRule: '评分规则',
+          dataSource: '数据来源',
+          defaultWeight: '默认权重',
+          status: '状态',
+          remark: '备注',
+          form: {
+            code: '请输入指标编码',
+            name: '请输入指标名称',
+            indicatorType: '请选择指标类型',
+            unit: '请输入计量单位',
+            scoreRule: '请选择评分规则',
+            dataSource: '请选择数据来源',
+            status: '请选择状态',
+            remark: '请输入备注'
+          },
+          addIndicator: '新增指标',
+          editIndicator: '编辑指标'
+        },
+        template: {
+          title: '考核模板',
+          name: '模板名称',
+          status: '状态',
+          remark: '备注',
+          createTime: '创建时间',
+          form: {
+            name: '请输入模板名称',
+            status: '请选择状态',
+            remark: '请输入备注'
+          },
+          configItems: '指标权重配置',
+          indicatorPlaceholder: '请选择指标',
+          addIndicatorItem: '添加指标',
+          weightSumLabel: '权重之和',
+          weightSumError: '模板内指标权重之和必须等于 100%',
+          itemIncomplete: '请为每条指标配置选择指标并填写大于 0 的权重',
+          addTemplate: '新增模板',
+          editTemplate: '编辑模板'
+        }
+      },
       org: {
         title: '组织管理',
         orgName: '组织名称',

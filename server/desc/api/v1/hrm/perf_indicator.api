@@ -1,0 +1,105 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/perf_indicator"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 绩效指标库（HRM-40，演示站 9.1 指标库）。
+type HrmPerfIndicator {
+	Uuid          string  `json:"uuid"`
+	Code          string  `json:"code"`
+	Name          string  `json:"name"`
+	IndicatorType string  `json:"indicatorType"` // 指标类型：kpi=结果指标(KPI) behavior=行为能力
+	Unit          string  `json:"unit"` // 计量单位
+	ScoreRule     string  `json:"scoreRule"` // 评分规则：formula=公式评分 manual=手工评分
+	DataSource    string  `json:"dataSource"` // 数据来源：system=系统取数 manual=手工填报
+	DefaultWeight float64 `json:"defaultWeight"` // 默认权重（百分比）
+	Status        string  `json:"status"` // 1=启用 0=停用
+	Remark        string  `json:"remark"`
+	CreateTime    string  `json:"createTime"`
+	UpdateTime    string  `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	Code          string `form:"code,optional"`
+	Name          string `form:"name,optional"`
+	IndicatorType string `form:"indicatorType,optional"`
+	ScoreRule     string `form:"scoreRule,optional"`
+	DataSource    string `form:"dataSource,optional"`
+	Status        string `form:"status,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmPerfIndicator `json:"records"`
+}
+
+type GetAllResponse {
+	Records []HrmPerfIndicator `json:"records"`
+}
+
+type AddRequest {
+	Code          string  `json:"code"`
+	Name          string  `json:"name"`
+	IndicatorType string  `json:"indicatorType"`
+	Unit          string  `json:"unit,optional"`
+	ScoreRule     string  `json:"scoreRule"`
+	DataSource    string  `json:"dataSource"`
+	DefaultWeight float64 `json:"defaultWeight,optional"`
+	Status        string  `json:"status,default=1"`
+	Remark        string  `json:"remark,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid          string  `json:"uuid"`
+	Code          string  `json:"code"`
+	Name          string  `json:"name"`
+	IndicatorType string  `json:"indicatorType"`
+	Unit          string  `json:"unit,optional"`
+	ScoreRule     string  `json:"scoreRule"`
+	DataSource    string  `json:"dataSource"`
+	DefaultWeight float64 `json:"defaultWeight,optional"`
+	Status        string  `json:"status"`
+	Remark        string  `json:"remark,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/perf_indicator
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getPerfIndicatorList (ListRequest) returns (ListResponse)
+
+	@handler GetAll
+	get /hrm/getAllPerfIndicator (GetAllResponse) returns (GetAllResponse)
+
+	@handler Add
+	post /hrm/addPerfIndicator (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editPerfIndicator (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deletePerfIndicator (DeleteRequest) returns (DeleteResponse)
+}
+

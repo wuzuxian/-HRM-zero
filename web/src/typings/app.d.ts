@@ -438,6 +438,18 @@ declare namespace App {
             edit: string;
             delete: string;
           };
+          performance: {
+            indicator: {
+              add: string;
+              edit: string;
+              delete: string;
+            };
+            template: {
+              add: string;
+              edit: string;
+              delete: string;
+            };
+          };
         };
       };
       page: {
@@ -648,6 +660,70 @@ declare namespace App {
           };
         };
         hrm: {
+          performance: {
+            common: {
+              status: {
+                enable: string;
+                disable: string;
+              };
+            };
+            indicatorType: {
+              kpi: string;
+              behavior: string;
+            };
+            scoreRule: {
+              formula: string;
+              manual: string;
+            };
+            dataSource: {
+              system: string;
+              manual: string;
+            };
+            indicator: {
+              title: string;
+              code: string;
+              name: string;
+              indicatorType: string;
+              unit: string;
+              scoreRule: string;
+              dataSource: string;
+              defaultWeight: string;
+              status: string;
+              remark: string;
+              form: {
+                code: string;
+                name: string;
+                indicatorType: string;
+                unit: string;
+                scoreRule: string;
+                dataSource: string;
+                status: string;
+                remark: string;
+              };
+              addIndicator: string;
+              editIndicator: string;
+            };
+            template: {
+              title: string;
+              name: string;
+              status: string;
+              remark: string;
+              createTime: string;
+              form: {
+                name: string;
+                status: string;
+                remark: string;
+              };
+              configItems: string;
+              indicatorPlaceholder: string;
+              addIndicatorItem: string;
+              weightSumLabel: string;
+              weightSumError: string;
+              itemIncomplete: string;
+              addTemplate: string;
+              editTemplate: string;
+            };
+          };
           org: {
             title: string;
             orgName: string;

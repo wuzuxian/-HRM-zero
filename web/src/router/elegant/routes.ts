@@ -126,6 +126,44 @@ export const generatedRoutes: GeneratedRoute[] = [
             }
           }
         ]
+      },
+      {
+        name: 'hrm_performance',
+        path: '/hrm/performance',
+        meta: {
+          title: 'hrm_performance',
+          i18nKey: 'route.hrm_performance'
+        },
+        children: [
+          {
+            name: 'hrm_performance_setting',
+            path: '/hrm/performance/setting',
+            meta: {
+              title: 'hrm_performance_setting',
+              i18nKey: 'route.hrm_performance_setting'
+            },
+            children: [
+              {
+                name: 'hrm_performance_setting_indicator',
+                path: '/hrm/performance/setting/indicator',
+                component: 'view.hrm_performance_setting_indicator',
+                meta: {
+                  title: 'hrm_performance_setting_indicator',
+                  i18nKey: 'route.hrm_performance_setting_indicator'
+                }
+              },
+              {
+                name: 'hrm_performance_setting_template',
+                path: '/hrm/performance/setting/template',
+                component: 'view.hrm_performance_setting_template',
+                meta: {
+                  title: 'hrm_performance_setting_template',
+                  i18nKey: 'route.hrm_performance_setting_template'
+                }
+              }
+            ]
+          }
+        ]
       }
     ]
   },

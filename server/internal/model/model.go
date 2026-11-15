@@ -11,6 +11,9 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_bill_sequence"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_leave_type"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_org"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_indicator"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_template"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_template_item"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_shift"
 	"github.com/jzero-io/jzero-admin/server/internal/model/manage_email"
 	"github.com/jzero-io/jzero-admin/server/internal/model/manage_menu"
@@ -21,31 +24,37 @@ import (
 )
 
 type Model struct {
-	HrmApprovalRecord hrm_approval_record.HrmApprovalRecordModel
-	HrmBillSequence   hrm_bill_sequence.HrmBillSequenceModel
-	HrmLeaveType      hrm_leave_type.HrmLeaveTypeModel
-	HrmOrg            hrm_org.HrmOrgModel
-	HrmShift          hrm_shift.HrmShiftModel
-	ManageEmail       manage_email.ManageEmailModel
-	ManageMenu        manage_menu.ManageMenuModel
-	ManageRole        manage_role.ManageRoleModel
-	ManageRoleMenu    manage_role_menu.ManageRoleMenuModel
-	ManageUser        manage_user.ManageUserModel
-	ManageUserRole    manage_user_role.ManageUserRoleModel
+	HrmApprovalRecord   hrm_approval_record.HrmApprovalRecordModel
+	HrmBillSequence     hrm_bill_sequence.HrmBillSequenceModel
+	HrmLeaveType        hrm_leave_type.HrmLeaveTypeModel
+	HrmOrg              hrm_org.HrmOrgModel
+	HrmPerfIndicator    hrm_perf_indicator.HrmPerfIndicatorModel
+	HrmPerfTemplate     hrm_perf_template.HrmPerfTemplateModel
+	HrmPerfTemplateItem hrm_perf_template_item.HrmPerfTemplateItemModel
+	HrmShift            hrm_shift.HrmShiftModel
+	ManageEmail         manage_email.ManageEmailModel
+	ManageMenu          manage_menu.ManageMenuModel
+	ManageRole          manage_role.ManageRoleModel
+	ManageRoleMenu      manage_role_menu.ManageRoleMenuModel
+	ManageUser          manage_user.ManageUserModel
+	ManageUserRole      manage_user_role.ManageUserRoleModel
 }
 
 func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 	return Model{
-		HrmApprovalRecord: hrm_approval_record.NewHrmApprovalRecordModel(conn, op...),
-		HrmBillSequence:   hrm_bill_sequence.NewHrmBillSequenceModel(conn, op...),
-		HrmLeaveType:      hrm_leave_type.NewHrmLeaveTypeModel(conn, op...),
-		HrmOrg:            hrm_org.NewHrmOrgModel(conn, op...),
-		HrmShift:          hrm_shift.NewHrmShiftModel(conn, op...),
-		ManageEmail:       manage_email.NewManageEmailModel(conn, op...),
-		ManageMenu:        manage_menu.NewManageMenuModel(conn, op...),
-		ManageRole:        manage_role.NewManageRoleModel(conn, op...),
-		ManageRoleMenu:    manage_role_menu.NewManageRoleMenuModel(conn, op...),
-		ManageUser:        manage_user.NewManageUserModel(conn, op...),
-		ManageUserRole:    manage_user_role.NewManageUserRoleModel(conn, op...),
+		HrmApprovalRecord:   hrm_approval_record.NewHrmApprovalRecordModel(conn, op...),
+		HrmBillSequence:     hrm_bill_sequence.NewHrmBillSequenceModel(conn, op...),
+		HrmLeaveType:        hrm_leave_type.NewHrmLeaveTypeModel(conn, op...),
+		HrmOrg:              hrm_org.NewHrmOrgModel(conn, op...),
+		HrmPerfIndicator:    hrm_perf_indicator.NewHrmPerfIndicatorModel(conn, op...),
+		HrmPerfTemplate:     hrm_perf_template.NewHrmPerfTemplateModel(conn, op...),
+		HrmPerfTemplateItem: hrm_perf_template_item.NewHrmPerfTemplateItemModel(conn, op...),
+		HrmShift:            hrm_shift.NewHrmShiftModel(conn, op...),
+		ManageEmail:         manage_email.NewManageEmailModel(conn, op...),
+		ManageMenu:          manage_menu.NewManageMenuModel(conn, op...),
+		ManageRole:          manage_role.NewManageRoleModel(conn, op...),
+		ManageRoleMenu:      manage_role_menu.NewManageRoleMenuModel(conn, op...),
+		ManageUser:          manage_user.NewManageUserModel(conn, op...),
+		ManageUserRole:      manage_user_role.NewManageUserRoleModel(conn, op...),
 	}
 }
