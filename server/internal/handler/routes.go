@@ -33,6 +33,7 @@ import (
 	v1hrmreward "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/reward"
 	v1hrmsalary_item "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_item"
 	v1hrmsalary_subject "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_subject"
+	v1hrmscheduleboard "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/scheduleboard"
 	v1hrmschedulecycle "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/schedulecycle"
 	v1hrmshift "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/shift"
 	v1hrmtax_opening "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/tax_opening"
@@ -1003,6 +1004,57 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodGet,
 						Path:    "/hrm/getSalarySubjectList",
 						Handler: v1hrmsalary_subject.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/batchSaveSchedule",
+						Handler: v1hrmscheduleboard.BatchSave(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/copyScheduleWeek",
+						Handler: v1hrmscheduleboard.CopyWeek(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/exportScheduleBoard",
+						Handler: v1hrmscheduleboard.Export(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/generateScheduleFromCycle",
+						Handler: v1hrmscheduleboard.Generate(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getScheduleMatrix",
+						Handler: v1hrmscheduleboard.Matrix(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/importScheduleBoard",
+						Handler: v1hrmscheduleboard.Import(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/publishScheduleMonth",
+						Handler: v1hrmscheduleboard.Publish(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/saveScheduleCell",
+						Handler: v1hrmscheduleboard.SaveCell(serverCtx),
 					},
 				}...,
 			),

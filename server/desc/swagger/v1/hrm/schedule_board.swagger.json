@@ -1,0 +1,636 @@
+{
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/hrm/batchSaveSchedule": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:scheduleboard:batchSave",
+        "operationId": "v1/Hrm/ScheduleboardBatchSave",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "cells": {
+                  "items": {
+                    "properties": {
+                      "date": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "shiftUuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "employeeUuid",
+                      "date"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "groupUuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "groupUuid",
+                "cells"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "savedCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "BatchSave",
+        "tags": [
+          "v1/hrm/scheduleboard"
+        ]
+      }
+    },
+    "/api/v1/hrm/copyScheduleWeek": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:scheduleboard:copyWeek",
+        "operationId": "v1/Hrm/ScheduleboardCopyWeek",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "groupUuid": {
+                  "type": "string"
+                },
+                "overwrite": {
+                  "type": "string"
+                },
+                "sourceWeekStart": {
+                  "type": "string"
+                },
+                "targetWeekStart": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "groupUuid",
+                "sourceWeekStart",
+                "targetWeekStart"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "writtenCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "CopyWeek",
+        "tags": [
+          "v1/hrm/scheduleboard"
+        ]
+      }
+    },
+    "/api/v1/hrm/exportScheduleBoard": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:scheduleboard:export",
+        "operationId": "v1/Hrm/ScheduleboardExport",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "groupUuid": {
+                  "type": "string"
+                },
+                "month": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "groupUuid",
+                "month"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Export",
+        "tags": [
+          "v1/hrm/scheduleboard"
+        ]
+      }
+    },
+    "/api/v1/hrm/generateScheduleFromCycle": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:scheduleboard:generate",
+        "operationId": "v1/Hrm/ScheduleboardGenerate",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "anchorDate": {
+                  "type": "string"
+                },
+                "cycleUuid": {
+                  "type": "string"
+                },
+                "groupUuid": {
+                  "type": "string"
+                },
+                "month": {
+                  "type": "string"
+                },
+                "overwrite": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "groupUuid",
+                "month",
+                "cycleUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "writtenCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Generate",
+        "tags": [
+          "v1/hrm/scheduleboard"
+        ]
+      }
+    },
+    "/api/v1/hrm/getScheduleMatrix": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:scheduleboard:matrix",
+        "operationId": "v1/Hrm/ScheduleboardMatrix",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "groupUuid",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "month",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "orgName",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "groupName": {
+                  "type": "string"
+                },
+                "groupType": {
+                  "type": "string"
+                },
+                "groupUuid": {
+                  "type": "string"
+                },
+                "month": {
+                  "type": "string"
+                },
+                "monthDays": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "rows": {
+                  "items": {
+                    "properties": {
+                      "cells": {
+                        "items": {
+                          "properties": {
+                            "date": {
+                              "type": "string"
+                            },
+                            "employeeUuid": {
+                              "type": "string"
+                            },
+                            "published": {
+                              "type": "string"
+                            },
+                            "shiftUuid": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "employeeUuid",
+                            "date",
+                            "shiftUuid",
+                            "published"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "monthDays": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "publishedCount": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "orgName",
+                      "monthDays",
+                      "cells",
+                      "publishedCount"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Matrix",
+        "tags": [
+          "v1/hrm/scheduleboard"
+        ]
+      }
+    },
+    "/api/v1/hrm/importScheduleBoard": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:scheduleboard:import",
+        "operationId": "v1/Hrm/ScheduleboardImport",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "fileContent": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                },
+                "groupUuid": {
+                  "type": "string"
+                },
+                "month": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "groupUuid",
+                "month",
+                "fileName",
+                "fileContent"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "successCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Import",
+        "tags": [
+          "v1/hrm/scheduleboard"
+        ]
+      }
+    },
+    "/api/v1/hrm/publishScheduleMonth": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:scheduleboard:publish",
+        "operationId": "v1/Hrm/ScheduleboardPublish",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "groupUuid": {
+                  "type": "string"
+                },
+                "month": {
+                  "type": "string"
+                },
+                "unpublish": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "groupUuid",
+                "month"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "publishedCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Publish",
+        "tags": [
+          "v1/hrm/scheduleboard"
+        ]
+      }
+    },
+    "/api/v1/hrm/saveScheduleCell": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:scheduleboard:saveCell",
+        "operationId": "v1/Hrm/ScheduleboardSaveCell",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "date": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "groupUuid": {
+                  "type": "string"
+                },
+                "shiftUuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "groupUuid",
+                "employeeUuid",
+                "date"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "SaveCell",
+        "tags": [
+          "v1/hrm/scheduleboard"
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKey": {
+      "description": "Enter Authorization",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0"
+}

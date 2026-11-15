@@ -1,0 +1,215 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/scheduleboard"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 矩阵单元格: 员工×日期 上的班次（shiftUuid 空=休/未排班）。
+type HrmScheduleCell {
+	// EmployeeUuid 员工档案 uuid
+	EmployeeUuid string `json:"employeeUuid"`
+	// Date 排班日期 yyyy-MM-dd
+	Date string `json:"date"`
+	// ShiftUuid 班次 uuid（空=休/未排班）
+	ShiftUuid string `json:"shiftUuid"`
+	// Published 发布标记 1=已发布 0=未发布
+	Published string `json:"published"`
+}
+
+// 矩阵行: 一名员工在当月各日的班次（days 与 MonthDays 一一对应）。
+type HrmScheduleMatrixRow {
+	// EmployeeUuid 员工档案 uuid
+	EmployeeUuid string `json:"employeeUuid"`
+	// EmployeeNo 工号
+	EmployeeNo string `json:"employeeNo"`
+	// EmployeeName 姓名
+	EmployeeName string `json:"employeeName"`
+	// OrgName 部门名
+	OrgName string `json:"orgName"`
+	// MonthDays 当月每日日期 yyyy-MM-dd（升序，与 cells 一一对应）
+	MonthDays []string `json:"monthDays"`
+	// Cells 逐日单元格（len == len(monthDays)）
+	Cells []HrmScheduleCell `json:"cells"`
+	// PublishedCount 当月已发布天数
+	PublishedCount int64 `json:"publishedCount"`
+}
+
+// MatrixRequest 排班矩阵读取：按考勤组+月份查询员工×当月每日班次。
+type MatrixRequest {
+	// GroupUuid 考勤组 uuid（必填——排班表按考勤组维护）
+	GroupUuid string `form:"groupUuid"`
+	// Month 月份 yyyy-MM
+	Month string `form:"month"`
+	// Name 姓名模糊筛选（内存过滤，可选）
+	Name string `form:"name,optional"`
+	// EmployeeNo 工号模糊筛选（可选）
+	EmployeeNo string `form:"employeeNo,optional"`
+	// OrgName 部门名模糊筛选（可选）
+	OrgName string `form:"orgName,optional"`
+}
+
+type MatrixResponse {
+	// GroupUuid 考勤组 uuid
+	GroupUuid string `json:"groupUuid"`
+	// GroupName 考勤组名
+	GroupName string `json:"groupName"`
+	// GroupType 考勤组类型 1=固定班制 2=排班制 3=自由工时
+	GroupType string `json:"groupType"`
+	// Month 月份 yyyy-MM
+	Month string `json:"month"`
+	// MonthDays 当月每日日期 yyyy-MM-dd 升序
+	MonthDays []string `json:"monthDays"`
+	// Rows 矩阵行（每员工一行）
+	Rows []HrmScheduleMatrixRow `json:"rows"`
+}
+
+// CellRequest 单格写请求（矩阵单元格点击保存）。
+type CellRequest {
+	// GroupUuid 考勤组 uuid
+	GroupUuid string `json:"groupUuid"`
+	// EmployeeUuid 员工 uuid
+	EmployeeUuid string `json:"employeeUuid"`
+	// Date 日期 yyyy-MM-dd
+	Date string `json:"date"`
+	// ShiftUuid 班次 uuid，空=清空（休/未排班）
+	ShiftUuid string `json:"shiftUuid,optional"`
+}
+
+type CellResponse {}
+
+// BatchSaveRequest 批量保存（矩阵页整表保存：单元格列表）。
+type BatchSaveRequest {
+	// GroupUuid 考勤组 uuid
+	GroupUuid string `json:"groupUuid"`
+	// Cells 单元格列表（同格覆盖；shiftUuid 空=清空）
+	Cells []CellItem `json:"cells"`
+}
+
+type CellItem {
+	EmployeeUuid string `json:"employeeUuid"`
+	Date         string `json:"date"`
+	ShiftUuid    string `json:"shiftUuid,optional"`
+}
+
+type BatchSaveResponse {
+	// SavedCount 保存单元格数
+	SavedCount int64 `json:"savedCount"`
+}
+
+// GenerateRequest 周期生成：选排班周期 → ExpandCycle 从锚点日展开落当月。
+type GenerateRequest {
+	// GroupUuid 考勤组 uuid
+	GroupUuid string `json:"groupUuid"`
+	// Month 月份 yyyy-MM
+	Month string `json:"month"`
+	// CycleUuid 排班周期 uuid（hrm_schedule_cycle）
+	CycleUuid string `json:"cycleUuid"`
+	// AnchorDate 相位锚点日 yyyy-MM-dd（可选，缺省=当月 1 日；
+	// 跨月保持绝对相位时传同一历史锚点日，见 hrm-14-notes ExpandCycle 契约）
+	AnchorDate string `json:"anchorDate,optional"`
+	// Overwrite 是否覆盖已有排班（false=仅填充空单元格）
+	Overwrite string `json:"overwrite,optional"`
+}
+
+type GenerateResponse {
+	// WrittenCount 写入/覆盖单元格数
+	WrittenCount int64 `json:"writtenCount"`
+}
+
+// CopyWeekRequest 复制周：源周一周的排班复制到目标周（按星期对齐）。
+type CopyWeekRequest {
+	// GroupUuid 考勤组 uuid
+	GroupUuid string `json:"groupUuid"`
+	// SourceWeekStart 源周起始日 yyyy-MM-dd（周一）
+	SourceWeekStart string `json:"sourceWeekStart"`
+	// TargetWeekStart 目标周起始日 yyyy-MM-dd（周一）
+	TargetWeekStart string `json:"targetWeekStart"`
+	// Overwrite 是否覆盖目标周已有排班（"1"=覆盖）
+	Overwrite string `json:"overwrite,optional"`
+}
+
+type CopyWeekResponse {
+	// WrittenCount 写入单元格数
+	WrittenCount int64 `json:"writtenCount"`
+}
+
+// ImportRequest 导入排班矩阵模板：行=员工工号，列=1..31 班次编码（xlsx base64）。
+type ImportRequest {
+	// GroupUuid 考勤组 uuid
+	GroupUuid string `json:"groupUuid"`
+	// Month 月份 yyyy-MM
+	Month       string `json:"month"`
+	FileName    string `json:"fileName"`
+	FileContent string `json:"fileContent"`
+}
+
+type ImportResponse {
+	SuccessCount int64 `json:"successCount"`
+}
+
+// ExportRequest 导出排班矩阵（xlsx：行=工号/姓名，列=1..当月天数，值=班次编码，休=空）。
+type ExportRequest {
+	// GroupUuid 考勤组 uuid
+	GroupUuid string `json:"groupUuid"`
+	// Month 月份 yyyy-MM
+	Month string `json:"month"`
+}
+
+type ExportResponse {
+	FileName string `json:"fileName"`
+	Content  string `json:"content"`
+}
+
+// PublishRequest 发布本月：当月该考勤组成员排班行整批标记已发布。
+type PublishRequest {
+	// GroupUuid 考勤组 uuid
+	GroupUuid string `json:"groupUuid"`
+	// Month 月份 yyyy-MM
+	Month string `json:"month"`
+	// Unpublish "1"=撤销发布（当月整批置回未发布）
+	Unpublish string `json:"unpublish,optional"`
+}
+
+type PublishResponse {
+	// PublishedCount 标记行数
+	PublishedCount int64 `json:"publishedCount"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/scheduleboard
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler Matrix
+	get /hrm/getScheduleMatrix (MatrixRequest) returns (MatrixResponse)
+
+	@handler SaveCell
+	post /hrm/saveScheduleCell (CellRequest) returns (CellResponse)
+
+	@handler BatchSave
+	post /hrm/batchSaveSchedule (BatchSaveRequest) returns (BatchSaveResponse)
+
+	@handler Generate
+	post /hrm/generateScheduleFromCycle (GenerateRequest) returns (GenerateResponse)
+
+	@handler CopyWeek
+	post /hrm/copyScheduleWeek (CopyWeekRequest) returns (CopyWeekResponse)
+
+	@handler Import
+	post /hrm/importScheduleBoard (ImportRequest) returns (ImportResponse)
+
+	@handler Export
+	post /hrm/exportScheduleBoard (ExportRequest) returns (ExportResponse)
+
+	@handler Publish
+	post /hrm/publishScheduleMonth (PublishRequest) returns (PublishResponse)
+}
+

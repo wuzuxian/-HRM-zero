@@ -39,6 +39,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_item"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_subject"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_schedule_cycle"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_schedule_entry"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_shift"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_tax_opening"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_tax_profile"
@@ -90,6 +91,7 @@ type Model struct {
 	HrmSalaryItem                 hrm_salary_item.HrmSalaryItemModel
 	HrmSalarySubject              hrm_salary_subject.HrmSalarySubjectModel
 	HrmScheduleCycle              hrm_schedule_cycle.HrmScheduleCycleModel
+	HrmScheduleEntry              hrm_schedule_entry.HrmScheduleEntryModel
 	HrmShift                      hrm_shift.HrmShiftModel
 	HrmTaxOpening                 hrm_tax_opening.HrmTaxOpeningModel
 	HrmTaxProfile                 hrm_tax_profile.HrmTaxProfileModel
@@ -142,6 +144,7 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmSalaryItem:                 hrm_salary_item.NewHrmSalaryItemModel(conn, op...),
 		HrmSalarySubject:              hrm_salary_subject.NewHrmSalarySubjectModel(conn, op...),
 		HrmScheduleCycle:              hrm_schedule_cycle.NewHrmScheduleCycleModel(conn, op...),
+		HrmScheduleEntry:              hrm_schedule_entry.NewHrmScheduleEntryModel(conn, op...),
 		HrmShift:                      hrm_shift.NewHrmShiftModel(conn, op...),
 		HrmTaxOpening:                 hrm_tax_opening.NewHrmTaxOpeningModel(conn, op...),
 		HrmTaxProfile:                 hrm_tax_profile.NewHrmTaxProfileModel(conn, op...),

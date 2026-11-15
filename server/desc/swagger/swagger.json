@@ -2639,6 +2639,160 @@
         ]
       }
     },
+    "/api/v1/hrm/addTaxOpening": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_opening:add",
+        "operationId": "v1/Hrm/TaxOpeningAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "exemptTotal": {
+                  "type": "number"
+                },
+                "incomeTotal": {
+                  "type": "number"
+                },
+                "otherDeductionTotal": {
+                  "type": "number"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "specialDeductionTotal": {
+                  "type": "number"
+                },
+                "specialExtraTotal": {
+                  "type": "number"
+                },
+                "subjectUuid": {
+                  "type": "string"
+                },
+                "taxPaidTotal": {
+                  "type": "number"
+                },
+                "taxYear": {
+                  "type": "string"
+                },
+                "taxableIncomeTotal": {
+                  "type": "number"
+                },
+                "untilMonth": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "employeeUuid",
+                "taxYear",
+                "untilMonth"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/tax_opening"
+        ]
+      }
+    },
+    "/api/v1/hrm/addTaxProfile": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_profile:add",
+        "operationId": "v1/Hrm/TaxProfileAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "defaultSpecialExtra": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "residentType": {
+                  "type": "string"
+                },
+                "status": {
+                  "default": "1",
+                  "example": "1",
+                  "type": "string"
+                },
+                "taxCity": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "employeeUuid",
+                "residentType",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/tax_profile"
+        ]
+      }
+    },
     "/api/v1/hrm/addTrainingPlan": {
       "post": {
         "consumes": [
@@ -3065,6 +3219,149 @@
         "summary": "BatchIssue",
         "tags": [
           "v1/hrm/certificate"
+        ]
+      }
+    },
+    "/api/v1/hrm/batchSaveSchedule": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:scheduleboard:batchSave",
+        "operationId": "v1/Hrm/ScheduleboardBatchSave",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "cells": {
+                  "items": {
+                    "properties": {
+                      "date": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "shiftUuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "employeeUuid",
+                      "date"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "groupUuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "groupUuid",
+                "cells"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "savedCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "BatchSave",
+        "tags": [
+          "v1/hrm/scheduleboard"
+        ]
+      }
+    },
+    "/api/v1/hrm/copyScheduleWeek": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:scheduleboard:copyWeek",
+        "operationId": "v1/Hrm/ScheduleboardCopyWeek",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "groupUuid": {
+                  "type": "string"
+                },
+                "overwrite": {
+                  "type": "string"
+                },
+                "sourceWeekStart": {
+                  "type": "string"
+                },
+                "targetWeekStart": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "groupUuid",
+                "sourceWeekStart",
+                "targetWeekStart"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "writtenCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "CopyWeek",
+        "tags": [
+          "v1/hrm/scheduleboard"
         ]
       }
     },
@@ -4284,6 +4581,165 @@
         "summary": "Delete",
         "tags": [
           "v1/hrm/shift"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteTaxOpening": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_opening:delete",
+        "operationId": "v1/Hrm/TaxOpeningDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/tax_opening"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteTaxProfile": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_profile:delete",
+        "operationId": "v1/Hrm/TaxProfileDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/tax_profile"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteTaxSpecialDeduction": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_special_deduction:delete",
+        "operationId": "v1/Hrm/TaxSpecialDeductionDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/tax_special_deduction"
         ]
       }
     },
@@ -6653,6 +7109,166 @@
         ]
       }
     },
+    "/api/v1/hrm/editTaxOpening": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_opening:edit",
+        "operationId": "v1/Hrm/TaxOpeningEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "exemptTotal": {
+                  "type": "number"
+                },
+                "incomeTotal": {
+                  "type": "number"
+                },
+                "otherDeductionTotal": {
+                  "type": "number"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "specialDeductionTotal": {
+                  "type": "number"
+                },
+                "specialExtraTotal": {
+                  "type": "number"
+                },
+                "subjectUuid": {
+                  "type": "string"
+                },
+                "taxPaidTotal": {
+                  "type": "number"
+                },
+                "taxYear": {
+                  "type": "string"
+                },
+                "taxableIncomeTotal": {
+                  "type": "number"
+                },
+                "untilMonth": {
+                  "type": "integer"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "employeeUuid",
+                "taxYear",
+                "untilMonth"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/tax_opening"
+        ]
+      }
+    },
+    "/api/v1/hrm/editTaxProfile": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_profile:edit",
+        "operationId": "v1/Hrm/TaxProfileEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "defaultSpecialExtra": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "residentType": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "taxCity": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "employeeUuid",
+                "residentType",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/tax_profile"
+        ]
+      }
+    },
     "/api/v1/hrm/editTrainingPlan": {
       "post": {
         "consumes": [
@@ -7044,6 +7660,179 @@
         ]
       }
     },
+    "/api/v1/hrm/exportScheduleBoard": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:scheduleboard:export",
+        "operationId": "v1/Hrm/ScheduleboardExport",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "groupUuid": {
+                  "type": "string"
+                },
+                "month": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "groupUuid",
+                "month"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Export",
+        "tags": [
+          "v1/hrm/scheduleboard"
+        ]
+      }
+    },
+    "/api/v1/hrm/exportTaxOpening": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:tax_opening:export",
+        "operationId": "v1/Hrm/TaxOpeningExport",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Export",
+        "tags": [
+          "v1/hrm/tax_opening"
+        ]
+      }
+    },
+    "/api/v1/hrm/exportTaxProfile": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:tax_profile:export",
+        "operationId": "v1/Hrm/TaxProfileExport",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Export",
+        "tags": [
+          "v1/hrm/tax_profile"
+        ]
+      }
+    },
+    "/api/v1/hrm/exportTaxSpecialDeduction": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:tax_special_deduction:export",
+        "operationId": "v1/Hrm/TaxSpecialDeductionExport",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Export",
+        "tags": [
+          "v1/hrm/tax_special_deduction"
+        ]
+      }
+    },
     "/api/v1/hrm/finishTrainingSession": {
       "post": {
         "consumes": [
@@ -7091,6 +7880,75 @@
         "summary": "Finish",
         "tags": [
           "v1/hrm/training_session"
+        ]
+      }
+    },
+    "/api/v1/hrm/generateScheduleFromCycle": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:scheduleboard:generate",
+        "operationId": "v1/Hrm/ScheduleboardGenerate",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "anchorDate": {
+                  "type": "string"
+                },
+                "cycleUuid": {
+                  "type": "string"
+                },
+                "groupUuid": {
+                  "type": "string"
+                },
+                "month": {
+                  "type": "string"
+                },
+                "overwrite": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "groupUuid",
+                "month",
+                "cycleUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "writtenCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Generate",
+        "tags": [
+          "v1/hrm/scheduleboard"
         ]
       }
     },
@@ -13211,6 +14069,151 @@
         ]
       }
     },
+    "/api/v1/hrm/getScheduleMatrix": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:scheduleboard:matrix",
+        "operationId": "v1/Hrm/ScheduleboardMatrix",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "groupUuid",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "month",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "orgName",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "groupName": {
+                  "type": "string"
+                },
+                "groupType": {
+                  "type": "string"
+                },
+                "groupUuid": {
+                  "type": "string"
+                },
+                "month": {
+                  "type": "string"
+                },
+                "monthDays": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "rows": {
+                  "items": {
+                    "properties": {
+                      "cells": {
+                        "items": {
+                          "properties": {
+                            "date": {
+                              "type": "string"
+                            },
+                            "employeeUuid": {
+                              "type": "string"
+                            },
+                            "published": {
+                              "type": "string"
+                            },
+                            "shiftUuid": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "employeeUuid",
+                            "date",
+                            "shiftUuid",
+                            "published"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "monthDays": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "publishedCount": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "orgName",
+                      "monthDays",
+                      "cells",
+                      "publishedCount"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Matrix",
+        "tags": [
+          "v1/hrm/scheduleboard"
+        ]
+      }
+    },
     "/api/v1/hrm/getSessionParticipantList": {
       "get": {
         "description": "接口权限编码:v1:hrm:training_session:getSessionParticipantList",
@@ -13406,6 +14409,428 @@
         "summary": "List",
         "tags": [
           "v1/hrm/shift"
+        ]
+      }
+    },
+    "/api/v1/hrm/getTaxOpeningList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:tax_opening:list",
+        "operationId": "v1/Hrm/TaxOpeningList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "subjectUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "taxYear",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "exemptTotal": {
+                        "type": "number"
+                      },
+                      "idCard": {
+                        "type": "string"
+                      },
+                      "incomeTotal": {
+                        "type": "number"
+                      },
+                      "otherDeductionTotal": {
+                        "type": "number"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "specialDeductionTotal": {
+                        "type": "number"
+                      },
+                      "specialExtraTotal": {
+                        "type": "number"
+                      },
+                      "subjectName": {
+                        "type": "string"
+                      },
+                      "subjectUuid": {
+                        "type": "string"
+                      },
+                      "taxPaidTotal": {
+                        "type": "number"
+                      },
+                      "taxYear": {
+                        "type": "string"
+                      },
+                      "taxableIncomeTotal": {
+                        "type": "number"
+                      },
+                      "untilMonth": {
+                        "type": "integer"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "employeeUuid",
+                      "employeeName",
+                      "idCard",
+                      "subjectUuid",
+                      "subjectName",
+                      "taxYear",
+                      "untilMonth",
+                      "incomeTotal",
+                      "specialDeductionTotal",
+                      "specialExtraTotal",
+                      "exemptTotal",
+                      "otherDeductionTotal",
+                      "taxableIncomeTotal",
+                      "taxPaidTotal",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/tax_opening"
+        ]
+      }
+    },
+    "/api/v1/hrm/getTaxProfileList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:tax_profile:list",
+        "operationId": "v1/Hrm/TaxProfileList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "residentType",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "defaultSpecialExtra": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "idCard": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "residentType": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "taxCity": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "employeeUuid",
+                      "employeeName",
+                      "idCard",
+                      "residentType",
+                      "taxCity",
+                      "defaultSpecialExtra",
+                      "status",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/tax_profile"
+        ]
+      }
+    },
+    "/api/v1/hrm/getTaxSpecialDeductionList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:tax_special_deduction:list",
+        "operationId": "v1/Hrm/TaxSpecialDeductionList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "deductYear",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "deductType",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "source",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "amount": {
+                        "type": "number"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "deductMonth": {
+                        "type": "integer"
+                      },
+                      "deductType": {
+                        "type": "string"
+                      },
+                      "deductYear": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "idCard": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "source": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "employeeUuid",
+                      "employeeName",
+                      "idCard",
+                      "deductYear",
+                      "deductMonth",
+                      "deductType",
+                      "amount",
+                      "source",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/tax_special_deduction"
         ]
       }
     },
@@ -14241,6 +15666,191 @@
         ]
       }
     },
+    "/api/v1/hrm/importScheduleBoard": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:scheduleboard:import",
+        "operationId": "v1/Hrm/ScheduleboardImport",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "fileContent": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                },
+                "groupUuid": {
+                  "type": "string"
+                },
+                "month": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "groupUuid",
+                "month",
+                "fileName",
+                "fileContent"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "successCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Import",
+        "tags": [
+          "v1/hrm/scheduleboard"
+        ]
+      }
+    },
+    "/api/v1/hrm/importTaxOpening": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_opening:import",
+        "operationId": "v1/Hrm/TaxOpeningImport",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fileName",
+                "content"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "successCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Import",
+        "tags": [
+          "v1/hrm/tax_opening"
+        ]
+      }
+    },
+    "/api/v1/hrm/importTaxSpecialDeduction": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_special_deduction:import",
+        "operationId": "v1/Hrm/TaxSpecialDeductionImport",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fileName",
+                "content"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "successCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Import",
+        "tags": [
+          "v1/hrm/tax_special_deduction"
+        ]
+      }
+    },
     "/api/v1/hrm/initLeaveBalance": {
       "post": {
         "consumes": [
@@ -14350,6 +15960,161 @@
         ]
       }
     },
+    "/api/v1/hrm/maintainTaxSpecialDeduction": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_special_deduction:maintain",
+        "operationId": "v1/Hrm/TaxSpecialDeductionMaintain",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "deductYear": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "rows": {
+                  "items": {
+                    "properties": {
+                      "amount": {
+                        "type": "number"
+                      },
+                      "deductMonth": {
+                        "type": "integer"
+                      },
+                      "deductType": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "deductMonth",
+                      "deductType",
+                      "amount"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "employeeUuid",
+                "deductYear",
+                "rows"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "saved": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Maintain",
+        "tags": [
+          "v1/hrm/tax_special_deduction"
+        ]
+      }
+    },
+    "/api/v1/hrm/maintainTaxSpecialDeductionYear": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_special_deduction:maintainYear",
+        "operationId": "v1/Hrm/TaxSpecialDeductionMaintainYear",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "amount": {
+                  "type": "number"
+                },
+                "deductType": {
+                  "type": "string"
+                },
+                "deductYear": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "months": {
+                  "items": {
+                    "type": "integer"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "employeeUuid",
+                "deductYear",
+                "deductType",
+                "amount"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "saved": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "MaintainYear",
+        "tags": [
+          "v1/hrm/tax_special_deduction"
+        ]
+      }
+    },
     "/api/v1/hrm/previewLeaveBalanceInit": {
       "post": {
         "consumes": [
@@ -14443,6 +16208,68 @@
         "summary": "InitPreview",
         "tags": [
           "v1/hrm/leavebalance"
+        ]
+      }
+    },
+    "/api/v1/hrm/publishScheduleMonth": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:scheduleboard:publish",
+        "operationId": "v1/Hrm/ScheduleboardPublish",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "groupUuid": {
+                  "type": "string"
+                },
+                "month": {
+                  "type": "string"
+                },
+                "unpublish": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "groupUuid",
+                "month"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "publishedCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Publish",
+        "tags": [
+          "v1/hrm/scheduleboard"
         ]
       }
     },
@@ -14890,6 +16717,67 @@
         "summary": "Save",
         "tags": [
           "v1/hrm/attendanceconfig"
+        ]
+      }
+    },
+    "/api/v1/hrm/saveScheduleCell": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:scheduleboard:saveCell",
+        "operationId": "v1/Hrm/ScheduleboardSaveCell",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "date": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "groupUuid": {
+                  "type": "string"
+                },
+                "shiftUuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "groupUuid",
+                "employeeUuid",
+                "date"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "SaveCell",
+        "tags": [
+          "v1/hrm/scheduleboard"
         ]
       }
     },
