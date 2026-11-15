@@ -1,0 +1,203 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/punch"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 打卡类型: 上班卡 clockIn / 下班卡 clockOut.
+type PunchRequest {
+	// Type 打卡类型: clockIn=上班卡 clockOut=下班卡
+	Type string `json:"type"`
+	// Location 打卡地点（GPS 地址文本，选填；外勤打卡时为地点描述）
+	Location string `json:"location,optional"`
+	// EmployeeUuid 员工档案 uuid（管理端代打卡时指定；员工端缺省取当前登录人）
+	EmployeeUuid string `json:"employeeUuid,optional"`
+}
+
+type PunchResponse {
+	// PunchDate 打卡日期（跨天班下班卡归属上班日）
+	PunchDate string `json:"punchDate"`
+	// ClockInTime 签到时间（yyyy-MM-dd HH:mm:ss，空=缺上班卡）
+	ClockInTime string `json:"clockInTime"`
+	// ClockOutTime 签退时间
+	ClockOutTime string `json:"clockOutTime"`
+	// SettleStatus 日结状态（本次打卡后的即时判定）
+	SettleStatus string `json:"settleStatus"`
+}
+
+// 打卡记录（管理端列表行 / 员工端我的打卡列表行共用）
+type HrmPunchRecord {
+	Uuid               string  `json:"uuid"`
+	PunchDate          string  `json:"punchDate"`
+	EmployeeUuid       string  `json:"employeeUuid"`
+	UserUuid           string  `json:"userUuid"`
+	Username           string  `json:"username"`
+	EmployeeNo         string  `json:"employeeNo"`
+	EmployeeName       string  `json:"employeeName"`
+	OrgName            string  `json:"orgName"`
+	Weekday            string  `json:"weekday"`
+	ClockInTime        string  `json:"clockInTime"`
+	ClockInStatus      string  `json:"clockInStatus"`
+	ClockInLocation    string  `json:"clockInLocation"`
+	ClockOutTime       string  `json:"clockOutTime"`
+	ClockOutStatus     string  `json:"clockOutStatus"`
+	ClockOutLocation   string  `json:"clockOutLocation"`
+	Overtime           string  `json:"overtime"`
+	Source             string  `json:"source"`
+	RuleSource         string  `json:"ruleSource"`
+	SettleStatus       string  `json:"settleStatus"`
+	SettleLateMinutes  int64   `json:"settleLateMinutes"`
+	SettleEarlyMinutes int64   `json:"settleEarlyMinutes"`
+	SettleWorkHours    float64 `json:"settleWorkHours"`
+	SettleTime         string  `json:"settleTime"`
+	CreateTime         string  `json:"createTime"`
+	UpdateTime         string  `json:"updateTime"`
+}
+
+// MyListRequest 员工端「考勤打卡」页：我的打卡记录列表（4.1，按当前登录人过滤）。
+type MyListRequest {
+	PageRequest
+	StartDate        string `form:"startDate,optional"`
+	EndDate          string `form:"endDate,optional"`
+	ClockInOutStatus string `form:"clockStatus,optional"`
+}
+
+type MyListResponse {
+	PageResponse
+	Records []HrmPunchRecord `json:"records"`
+}
+
+// ListRequest 管理端「打卡记录」页（4.4）：筛选日期区间/姓名/签到状态。
+type ListRequest {
+	PageRequest
+	StartDate     string `form:"startDate,optional"`
+	EndDate       string `form:"endDate,optional"`
+	Name          string `form:"name,optional"`
+	ClockInStatus string `form:"clockInStatus,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmPunchRecord `json:"records"`
+}
+
+// AddRequest 管理端手动新增打卡记录（补录外部数据单行）。
+type AddRequest {
+	EmployeeUuid     string `json:"employeeUuid"`
+	PunchDate        string `json:"punchDate"`
+	ClockInTime      string `json:"clockInTime,optional"`
+	ClockInStatus    string `json:"clockInStatus,optional"`
+	ClockInLocation  string `json:"clockInLocation,optional"`
+	ClockOutTime     string `json:"clockOutTime,optional"`
+	ClockOutStatus   string `json:"clockOutStatus,optional"`
+	ClockOutLocation string `json:"clockOutLocation,optional"`
+	Overtime         string `json:"overtime,optional"`
+}
+
+type AddResponse {}
+
+// EditRequest 管理端修改打卡记录（行操作「修改」）。
+type EditRequest {
+	Uuid             string `json:"uuid"`
+	ClockInTime      string `json:"clockInTime,optional"`
+	ClockInStatus    string `json:"clockInStatus,optional"`
+	ClockInLocation  string `json:"clockInLocation,optional"`
+	ClockOutTime     string `json:"clockOutTime,optional"`
+	ClockOutStatus   string `json:"clockOutStatus,optional"`
+	ClockOutLocation string `json:"clockOutLocation,optional"`
+	Overtime         string `json:"overtime,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+// ExportRequest 管理端导出打卡记录（同列表筛选条件，返回 base64 xlsx）。
+type ExportRequest {
+	StartDate     string `json:"startDate,optional"`
+	EndDate       string `json:"endDate,optional"`
+	Name          string `json:"name,optional"`
+	ClockInStatus string `json:"clockInStatus,optional"`
+}
+
+type ExportResponse {
+	FileName string `json:"fileName"`
+	Content  string `json:"content"`
+}
+
+// ImportRequest 管理端导入外部考勤数据（HRM-22 考勤统计复用同一 CSV 约定；单行非法即整批拒绝并报行号）。
+type ImportRequest {
+	FileName    string `json:"fileName"`
+	FileContent string `json:"fileContent"`
+}
+
+type ImportResponse {
+	SuccessCount int64 `json:"successCount"`
+}
+
+// SettleRequest 手动日结（4.4 工具栏）：指定员工+日期逐日结算；日期区间批量时 employeeUuids 可省略为全体员工。
+type SettleRequest {
+	EmployeeUuids []string `json:"employeeUuids,optional"`
+	StartDate     string   `json:"startDate"`
+	EndDate       string   `json:"endDate,optional"`
+}
+
+type HrmSettleResult {
+	EmployeeUuid string  `json:"employeeUuid"`
+	EmployeeName string  `json:"employeeName"`
+	PunchDate    string  `json:"punchDate"`
+	SettleStatus string  `json:"settleStatus"`
+	LateMinutes  int64   `json:"lateMinutes"`
+	EarlyMinutes int64   `json:"earlyMinutes"`
+	WorkHours    float64 `json:"workHours"`
+}
+
+type SettleResponse {
+	Records []HrmSettleResult `json:"records"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/punch
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler Punch
+	post /hrm/punch (PunchRequest) returns (PunchResponse)
+
+	@handler MyList
+	get /hrm/getMyPunchList (MyListRequest) returns (MyListResponse)
+
+	@handler List
+	get /hrm/getPunchList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addPunchRecord (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editPunchRecord (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deletePunchRecord (DeleteRequest) returns (DeleteResponse)
+
+	@handler Export
+	post /hrm/exportPunchRecord (ExportRequest) returns (ExportResponse)
+
+	@handler Import
+	post /hrm/importPunchRecord (ImportRequest) returns (ImportResponse)
+
+	@handler Settle
+	post /hrm/settlePunchDay (SettleRequest) returns (SettleResponse)
+}
+
