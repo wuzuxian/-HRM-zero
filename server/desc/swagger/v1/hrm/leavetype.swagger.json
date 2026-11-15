@@ -1,0 +1,341 @@
+{
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/hrm/addLeaveType": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:leavetype:add",
+        "operationId": "v1/Hrm/LeavetypeAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "attachmentRequired": {
+                  "type": "integer"
+                },
+                "balanceEnabled": {
+                  "type": "integer"
+                },
+                "defaultDays": {
+                  "type": "number"
+                },
+                "orderNum": {
+                  "type": "integer"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "status": {
+                  "default": "1",
+                  "example": "1",
+                  "type": "string"
+                },
+                "typeCode": {
+                  "type": "string"
+                },
+                "typeName": {
+                  "type": "string"
+                },
+                "typeValue": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "typeCode",
+                "typeName",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/leavetype"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteLeaveType": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:leavetype:delete",
+        "operationId": "v1/Hrm/LeavetypeDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/leavetype"
+        ]
+      }
+    },
+    "/api/v1/hrm/editLeaveType": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:leavetype:edit",
+        "operationId": "v1/Hrm/LeavetypeEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "attachmentRequired": {
+                  "type": "integer"
+                },
+                "balanceEnabled": {
+                  "type": "integer"
+                },
+                "defaultDays": {
+                  "type": "number"
+                },
+                "orderNum": {
+                  "type": "integer"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "typeCode": {
+                  "type": "string"
+                },
+                "typeName": {
+                  "type": "string"
+                },
+                "typeValue": {
+                  "type": "integer"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "typeCode",
+                "typeName",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/leavetype"
+        ]
+      }
+    },
+    "/api/v1/hrm/getLeaveTypeList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:leavetype:list",
+        "operationId": "v1/Hrm/LeavetypeList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "typeName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "attachmentRequired": {
+                        "type": "integer"
+                      },
+                      "balanceEnabled": {
+                        "type": "integer"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "defaultDays": {
+                        "type": "number"
+                      },
+                      "orderNum": {
+                        "type": "integer"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "typeCode": {
+                        "type": "string"
+                      },
+                      "typeName": {
+                        "type": "string"
+                      },
+                      "typeValue": {
+                        "type": "integer"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "typeCode",
+                      "typeName",
+                      "typeValue",
+                      "balanceEnabled",
+                      "attachmentRequired",
+                      "defaultDays",
+                      "orderNum",
+                      "status",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/leavetype"
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKey": {
+      "description": "Enter Authorization",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0"
+}

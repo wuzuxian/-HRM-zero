@@ -1,0 +1,89 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/shift"
+)
+
+import (
+	"../../common/response.api"
+)
+
+type HrmShift {
+	Uuid            string  `json:"uuid"`
+	ShiftName       string  `json:"shiftName"`
+	StartTime       string  `json:"startTime"`
+	EndTime         string  `json:"endTime"`
+	CrossDay        int64   `json:"crossDay"`
+	RestStart       string  `json:"restStart"`
+	RestEnd         string  `json:"restEnd"`
+	StandardHours   float64 `json:"standardHours"`
+	FlexibleMinutes int64   `json:"flexibleMinutes"`
+	Status          string  `json:"status"`
+	Remark          string  `json:"remark"`
+	CreateTime      string  `json:"createTime"`
+	UpdateTime      string  `json:"updateTime"`
+}
+
+type ListRequest {
+	ShiftName string `form:"shiftName,optional"`
+	Status    string `form:"status,optional"`
+}
+
+type ListResponse {
+	Records []HrmShift `json:"records"`
+}
+
+type AddRequest {
+	ShiftName       string `json:"shiftName"`
+	StartTime       string `json:"startTime"`
+	EndTime         string `json:"endTime"`
+	RestStart       string `json:"restStart,optional"`
+	RestEnd         string `json:"restEnd,optional"`
+	FlexibleMinutes int64  `json:"flexibleMinutes,optional"`
+	Status          string `json:"status,default=1"`
+	Remark          string `json:"remark,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid            string `json:"uuid"`
+	ShiftName       string `json:"shiftName"`
+	StartTime       string `json:"startTime"`
+	EndTime         string `json:"endTime"`
+	RestStart       string `json:"restStart,optional"`
+	RestEnd         string `json:"restEnd,optional"`
+	FlexibleMinutes int64  `json:"flexibleMinutes,optional"`
+	Status          string `json:"status"`
+	Remark          string `json:"remark,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/shift
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getShiftList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addShift (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editShift (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deleteShift (DeleteRequest) returns (DeleteResponse)
+}
+

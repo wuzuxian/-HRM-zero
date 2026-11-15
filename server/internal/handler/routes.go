@@ -10,7 +10,9 @@ import (
 	swagger "github.com/jzero-io/jzero-admin/server/internal/handler/swagger"
 	v1auth "github.com/jzero-io/jzero-admin/server/internal/handler/v1/auth"
 	v1hrmbill "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/bill"
+	v1hrmleavetype "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/leavetype"
 	v1hrmorg "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/org"
+	v1hrmshift "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/shift"
 	v1managemenu "github.com/jzero-io/jzero-admin/server/internal/handler/v1/manage/menu"
 	v1managerole "github.com/jzero-io/jzero-admin/server/internal/handler/v1/manage/role"
 	v1manageuser "github.com/jzero-io/jzero-admin/server/internal/handler/v1/manage/user"
@@ -128,6 +130,37 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				[]rest.Route{
 					{
 						Method:  http.MethodPost,
+						Path:    "/hrm/addLeaveType",
+						Handler: v1hrmleavetype.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteLeaveType",
+						Handler: v1hrmleavetype.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editLeaveType",
+						Handler: v1hrmleavetype.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getLeaveTypeList",
+						Handler: v1hrmleavetype.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
 						Path:    "/hrm/addOrg",
 						Handler: v1hrmorg.Add(serverCtx),
 					},
@@ -160,6 +193,37 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodPost,
 						Path:    "/hrm/importOrg",
 						Handler: v1hrmorg.Import(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addShift",
+						Handler: v1hrmshift.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteShift",
+						Handler: v1hrmshift.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editShift",
+						Handler: v1hrmshift.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getShiftList",
+						Handler: v1hrmshift.List(serverCtx),
 					},
 				}...,
 			),
