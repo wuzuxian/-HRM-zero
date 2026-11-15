@@ -1,0 +1,148 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/salary_archive"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// HrmSalaryArchive 员工薪资档案（demo-inventory 8.2）: 员工在某薪酬主体/薪酬方案下的
+// 固定薪资口径档案，按生效区间管理；公司/部门/员工ID 由员工选择器带出（快照落库）。
+type HrmSalaryArchive {
+	Uuid           string  `json:"uuid"`
+	EmployeeUuid   string  `json:"employeeUuid"`
+	EmployeeNo     string  `json:"employeeNo"`
+	EmployeeName   string  `json:"employeeName"`
+	CompanyUuid    string  `json:"companyUuid"`
+	CompanyName    string  `json:"companyName"`
+	OrgUuid        string  `json:"orgUuid"`
+	OrgName        string  `json:"orgName"`
+	SubjectUuid    string  `json:"subjectUuid"`
+	SubjectName    string  `json:"subjectName"`
+	SchemeUuid     string  `json:"schemeUuid"`
+	SchemeName     string  `json:"schemeName"`
+	FixedSalary    float64 `json:"fixedSalary"`
+	FixedAllowance float64 `json:"fixedAllowance"`
+	Status         string  `json:"status"`
+	EffectiveDate  string  `json:"effectiveDate"`
+	ExpireDate     string  `json:"expireDate"`
+	Remark         string  `json:"remark"`
+	CreateTime     string  `json:"createTime"`
+	UpdateTime     string  `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	EmployeeName string `form:"employeeName,optional"`
+	EmployeeNo   string `form:"employeeNo,optional"`
+	SubjectUuid  string `form:"subjectUuid,optional"`
+	SchemeUuid   string `form:"schemeUuid,optional"`
+	Status       string `form:"status,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmSalaryArchive `json:"records"`
+}
+
+type AddRequest {
+	EmployeeUuid   string  `json:"employeeUuid"`
+	SubjectUuid    string  `json:"subjectUuid"`
+	SchemeUuid     string  `json:"schemeUuid,optional"`
+	FixedSalary    float64 `json:"fixedSalary,default=0"`
+	FixedAllowance float64 `json:"fixedAllowance,default=0"`
+	Status         string  `json:"status,default=1"`
+	EffectiveDate  string  `json:"effectiveDate"`
+	ExpireDate     string  `json:"expireDate,optional"`
+	Remark         string  `json:"remark,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid           string  `json:"uuid"`
+	EmployeeUuid   string  `json:"employeeUuid"`
+	SubjectUuid    string  `json:"subjectUuid"`
+	SchemeUuid     string  `json:"schemeUuid,optional"`
+	FixedSalary    float64 `json:"fixedSalary,default=0"`
+	FixedAllowance float64 `json:"fixedAllowance,default=0"`
+	Status         string  `json:"status"`
+	EffectiveDate  string  `json:"effectiveDate"`
+	ExpireDate     string  `json:"expireDate,optional"`
+	Remark         string  `json:"remark,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+// GetEffectiveArchiveRequest HRM-37 试算消费接口：按 试算月份 取员工当时有效的档案
+// （生效日期 ≤ 月末日 AND (失效日期为空 OR 失效日期 ≥ 月初日)；停用档案不返回）。
+type GetEffectiveArchiveRequest {
+	EmployeeUuid string `form:"employeeUuid"`
+	YearMonth    string `form:"yearMonth"`
+}
+
+// GetEffectiveArchiveResponse 生效档案 + 方案 + 项目清单（串 GetSchemeItemsForScheme，calc_order 升序）。
+type GetEffectiveArchiveResponse {
+	Archive HrmSalaryArchive   `json:"archive"`
+	Scheme  HrmEffectiveScheme `json:"scheme"`
+	Items   []HrmEffectiveItem `json:"items"`
+}
+
+// HrmEffectiveScheme 生效档案对应方案摘要（快照+实时项目配置）。
+type HrmEffectiveScheme {
+	Uuid        string `json:"uuid"`
+	SchemeName  string `json:"schemeName"`
+	SubjectUuid string `json:"subjectUuid"`
+	SubjectName string `json:"subjectName"`
+	SettleCycle string `json:"settleCycle"`
+	PayDay      int64  `json:"payDay"`
+	Currency    string `json:"currency"`
+}
+
+// HrmEffectiveItem 试算项目行 = 方案项目配置 + 项目实时快照 + 档案固定值兜底（FixedSalary/FixedAllowance）。
+type HrmEffectiveItem {
+	ItemUuid        string  `json:"itemUuid"`
+	ItemCode        string  `json:"itemCode"`
+	ItemName        string  `json:"itemName"`
+	ItemType        string  `json:"itemType"`
+	ItemClass       string  `json:"itemClass"`
+	ValueMode       string  `json:"valueMode"`
+	CalcOrder       int64   `json:"calcOrder"`
+	Status          string  `json:"status"`
+	OverrideAmount  float64 `json:"overrideAmount"`
+	OverrideFormula string  `json:"overrideFormula"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/salary_archive
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getSalaryArchiveList (ListRequest) returns (ListResponse)
+
+	@handler GetEffectiveArchive
+	get /hrm/getEffectiveSalaryArchive (GetEffectiveArchiveRequest) returns (GetEffectiveArchiveResponse)
+
+	@handler Add
+	post /hrm/addSalaryArchive (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editSalaryArchive (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deleteSalaryArchive (DeleteRequest) returns (DeleteResponse)
+}
+
