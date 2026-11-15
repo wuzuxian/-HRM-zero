@@ -4673,8 +4673,7 @@ declare namespace Api {
 
     /** card replacement search params */
     type CardReplacementSearchParams = CommonType.RecordNullable<
-      Pick<Api.Hrm.HrmCardReplacement, 'billNo' | 'status' | 'employeeNo' | 'cardType'> &
-        Common.CommonSearchParams
+      Pick<Api.Hrm.HrmCardReplacement, 'billNo' | 'status' | 'employeeNo' | 'cardType'> & Common.CommonSearchParams
     >;
 
     /** card replacement paginated list */
@@ -4698,6 +4697,76 @@ declare namespace Api {
     /** edit card replacement request (only in editable 单据状态) */
     type EditCardReplacementRequest = AddCardReplacementRequest & {
       uuid: string;
+    };
+
+    // ---- HRM-17 个人考勤看板 (dashboard) ----
+
+    /** dashboard today card */
+    type DashboardTodayCard = {
+      groupName: string;
+      ruleSource: string;
+      isRestDay: boolean;
+      noRule: boolean;
+      clockInTime: string;
+      clockInStatus: string;
+      clockOutTime: string;
+      clockOutStatus: string;
+      settleStatus: string;
+      lateMinutes: number;
+      earlyMinutes: number;
+      workHours: number;
+      scheduledStart: string;
+      scheduledEnd: string;
+    };
+
+    /** dashboard month stats (settle_* 聚合口径) */
+    type DashboardMonthStats = {
+      expectedDays: number;
+      attendedDays: number;
+      lateTimes: number;
+      earlyTimes: number;
+      missingTimes: number;
+      absentTimes: number;
+      overtimeTimes: number;
+      overtimeHours: number;
+      annualLeaveAvailable: number;
+      annualLeaveYear: number;
+    };
+
+    /** dashboard lock-day hint */
+    type DashboardLockHint = {
+      lockDay: number;
+      lockMonth: string;
+      hintText: string;
+    };
+
+    /** dashboard calendar day */
+    type DashboardCalendarDay = {
+      date: string;
+      weekday: string;
+      status: string;
+      clockInTime: string;
+      clockOutTime: string;
+      lateMinutes: number;
+      earlyMinutes: number;
+    };
+
+    /** get my dashboard response (单端点聚合) */
+    type MyDashboard = {
+      employeeUuid: string;
+      employeeName: string;
+      employeeNo: string;
+      registered: boolean;
+      today: DashboardTodayCard;
+      stats: DashboardMonthStats;
+      lock: DashboardLockHint;
+      calendar: DashboardCalendarDay[];
+    };
+
+    /** get my dashboard search params */
+    type MyDashboardSearchParams = {
+      month?: string | null;
+      employeeUuid?: string | null;
     };
   }
 }

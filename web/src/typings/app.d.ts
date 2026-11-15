@@ -443,6 +443,9 @@ declare namespace App {
             init: string;
             adjust: string;
           };
+          dashboard: {
+            view: string;
+          };
           leave: {
             add: string;
             edit: string;
@@ -1351,6 +1354,54 @@ declare namespace App {
               clockOut: string;
               clockInSuccess: string;
               clockOutSuccess: string;
+            };
+            myDashboard: {
+              title: string;
+              lockHint: string;
+              registeredGuide: string;
+              registeredGuideBtn: string;
+              quickActions: string;
+              goPunch: string;
+              todayRest: string;
+              todayWork: string;
+              noRuleHint: string;
+              clockInStatus: string;
+              clockOutStatus: string;
+              settleStatus: string;
+              lateMinutes: string;
+              earlyMinutes: string;
+              workHours: string;
+              scheduledTime: string;
+              monthStats: string;
+              expectedDays: string;
+              attendedDays: string;
+              lateTimes: string;
+              earlyTimes: string;
+              missingTimes: string;
+              absentTimes: string;
+              overtimeTimes: string;
+              overtimeHours: string;
+              annualLeaveAvailable: string;
+              daysUnit: string;
+              hoursUnit: string;
+              timesUnit: string;
+              calendar: string;
+              calendarStatus: {
+                rest: string;
+                normal: string;
+                late: string;
+                early: string;
+                missing: string;
+                noRule: string;
+                future: string;
+                none: string;
+              };
+              quick: {
+                leave: string;
+                cardReplacement: string;
+                overtime: string;
+                leaveCancel: string;
+              };
             };
             punchRecord: {
               title: string;
