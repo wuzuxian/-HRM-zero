@@ -47,7 +47,10 @@ declare module "@elegant-router/types" {
     "hrm_attendance_setting_overtime-rule": "/hrm/attendance/setting/overtime-rule";
     "hrm_attendance_setting_shift": "/hrm/attendance/setting/shift";
     "hrm_employee": "/hrm/employee";
+    "hrm_employee_certificate-expiring": "/hrm/employee/certificate-expiring";
     "hrm_employee_employee-archive-list": "/hrm/employee/employee-archive-list";
+    "hrm_employee_employee-contract-expiring": "/hrm/employee/employee-contract-expiring";
+    "hrm_employee_employee-contract-renewable": "/hrm/employee/employee-contract-renewable";
     "hrm_employee-relation": "/hrm/employee-relation";
     "hrm_employee-relation_entry-list": "/hrm/employee-relation/entry-list";
     "hrm_employee-relation_regular-list": "/hrm/employee-relation/regular-list";
@@ -173,7 +176,10 @@ declare module "@elegant-router/types" {
     | "hrm_employee-relation_regular-list"
     | "hrm_employee-relation_resignation-list"
     | "hrm_employee-relation_transfer-list"
+    | "hrm_employee_certificate-expiring"
     | "hrm_employee_employee-archive-list"
+    | "hrm_employee_employee-contract-expiring"
+    | "hrm_employee_employee-contract-renewable"
     | "hrm_org_org-chart"
     | "hrm_org_orginfo"
     | "hrm_performance_scheme"

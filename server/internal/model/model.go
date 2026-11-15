@@ -12,6 +12,8 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_attendance_group"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_bill_sequence"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_certificate"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_contract"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_education"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_family"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_work"
@@ -57,6 +59,8 @@ type Model struct {
 	HrmAttendanceGroup            hrm_attendance_group.HrmAttendanceGroupModel
 	HrmBillSequence               hrm_bill_sequence.HrmBillSequenceModel
 	HrmEmployee                   hrm_employee.HrmEmployeeModel
+	HrmEmployeeCertificate        hrm_employee_certificate.HrmEmployeeCertificateModel
+	HrmEmployeeContract           hrm_employee_contract.HrmEmployeeContractModel
 	HrmEmployeeEducation          hrm_employee_education.HrmEmployeeEducationModel
 	HrmEmployeeFamily             hrm_employee_family.HrmEmployeeFamilyModel
 	HrmEmployeeWork               hrm_employee_work.HrmEmployeeWorkModel
@@ -103,6 +107,8 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmAttendanceGroup:            hrm_attendance_group.NewHrmAttendanceGroupModel(conn, op...),
 		HrmBillSequence:               hrm_bill_sequence.NewHrmBillSequenceModel(conn, op...),
 		HrmEmployee:                   hrm_employee.NewHrmEmployeeModel(conn, op...),
+		HrmEmployeeCertificate:        hrm_employee_certificate.NewHrmEmployeeCertificateModel(conn, op...),
+		HrmEmployeeContract:           hrm_employee_contract.NewHrmEmployeeContractModel(conn, op...),
 		HrmEmployeeEducation:          hrm_employee_education.NewHrmEmployeeEducationModel(conn, op...),
 		HrmEmployeeFamily:             hrm_employee_family.NewHrmEmployeeFamilyModel(conn, op...),
 		HrmEmployeeWork:               hrm_employee_work.NewHrmEmployeeWorkModel(conn, op...),

@@ -215,6 +215,9 @@ const local: App.I18n.Schema = {
     'hrm_training_cert-issue': '证书发放',
     hrm_employee: '人事档案',
     'hrm_employee_employee-archive-list': '员工档案',
+    'hrm_employee_employee-contract-expiring': '劳动合同到期预警',
+    'hrm_employee_employee-contract-renewable': '待续签合同',
+    'hrm_employee_certificate-expiring': '证照到期预警',
     exception: '异常页',
     exception_403: '403',
     exception_404: '404',
@@ -375,6 +378,17 @@ const local: App.I18n.Schema = {
         import: '导入员工',
         export: '导出员工',
         generateuser: '生成用户'
+      },
+      contract: {
+        add: '新增劳动合同',
+        edit: '编辑劳动合同',
+        delete: '删除劳动合同',
+        renew: '合同续签'
+      },
+      empcert: {
+        add: '新增证照',
+        edit: '编辑证照',
+        delete: '删除证照'
       },
       performance: {
         indicator: {
@@ -1039,6 +1053,85 @@ const local: App.I18n.Schema = {
           bankName: '请输入工资开户行',
           bankAccount: '请输入工资卡账户',
           remark: '请输入备注'
+        },
+        contractExpiring: {
+          title: '劳动合同到期预警',
+          employeeNo: '员工工号',
+          employeeName: '员工姓名',
+          selectEmployee: '选择员工',
+          orgName: '所属部门',
+          contractNo: '合同编号',
+          startDate: '合同生效日',
+          endDate: '合同到期日',
+          daysToExpiry: '距到期(天)',
+          renewCount: '续签次数',
+          status: '合同状态',
+          stateNormal: '正常',
+          stateWarning: '即将到期',
+          stateExpired: '已到期',
+          stateTerminated: '已解除',
+          statusActive: '有效',
+          statusExpired: '已到期',
+          statusTerminated: '已解除',
+          renew: '续签',
+          renewSuccess: '续签成功，续签次数 +1',
+          confirmRenew: '确认续签？新到期日将为 {endDate}，续签次数 +1。',
+          addContract: '新增劳动合同',
+          editContract: '编辑劳动合同',
+          form: {
+            employeeName: '请输入员工姓名',
+            employeeNo: '请输入员工工号',
+            status: '请选择预警状态',
+            selectEmployee: '请选择员工',
+            contractNo: '请输入合同编号',
+            remark: '请输入备注'
+          }
+        },
+        contractRenewable: {
+          title: '待续签合同',
+          employeeNo: '员工工号',
+          employeeName: '员工姓名',
+          orgName: '所属部门',
+          startDate: '合同生效日',
+          endDate: '合同到期日',
+          daysToExpiry: '距到期(天)',
+          renewCount: '续签次数',
+          status: '合同状态',
+          stateNormal: '正常',
+          stateWarning: '即将到期',
+          stateExpired: '已到期',
+          stateTerminated: '已解除',
+          renew: '续签',
+          renewSuccess: '续签成功，续签次数 +1',
+          confirmRenew: '确认续签？续签次数 +1，到期日顺延一年。',
+          form: {
+            employeeName: '请输入员工姓名',
+            employeeNo: '请输入员工工号',
+            status: '请选择合同状态'
+          }
+        },
+        certExpiring: {
+          title: '证照到期预警',
+          employeeNo: '员工工号',
+          employeeName: '员工姓名',
+          selectEmployee: '选择员工',
+          orgName: '所属部门',
+          certType: '证书类型',
+          certNo: '证号',
+          issueDate: '发证日期',
+          expiryDate: '到期日',
+          daysToExpiry: '距到期天数',
+          status: '状态',
+          stateNormal: '正常',
+          stateWarning: '即将到期',
+          stateExpired: '已过期',
+          addCert: '新增证照',
+          editCert: '编辑证照',
+          form: {
+            selectEmployee: '请选择员工',
+            certType: '请输入证书类型',
+            certNo: '请输入证号（编辑时保留脱敏值表示未修改）'
+          }
         }
       },
       attendance: {

@@ -555,6 +555,17 @@ declare namespace App {
             export: string;
             generateuser: string;
           };
+          contract: {
+            add: string;
+            edit: string;
+            delete: string;
+            renew: string;
+          };
+          empcert: {
+            add: string;
+            edit: string;
+            delete: string;
+          };
           performance: {
             indicator: {
               add: string;
@@ -1931,6 +1942,85 @@ declare namespace App {
               bankName: string;
               bankAccount: string;
               remark: string;
+            };
+            contractExpiring: {
+              title: string;
+              employeeNo: string;
+              employeeName: string;
+              selectEmployee: string;
+              orgName: string;
+              contractNo: string;
+              startDate: string;
+              endDate: string;
+              daysToExpiry: string;
+              renewCount: string;
+              status: string;
+              stateNormal: string;
+              stateWarning: string;
+              stateExpired: string;
+              stateTerminated: string;
+              statusActive: string;
+              statusExpired: string;
+              statusTerminated: string;
+              renew: string;
+              renewSuccess: string;
+              confirmRenew: string;
+              addContract: string;
+              editContract: string;
+              form: {
+                employeeName: string;
+                employeeNo: string;
+                status: string;
+                selectEmployee: string;
+                contractNo: string;
+                remark: string;
+              };
+            };
+            contractRenewable: {
+              title: string;
+              employeeNo: string;
+              employeeName: string;
+              orgName: string;
+              startDate: string;
+              endDate: string;
+              daysToExpiry: string;
+              renewCount: string;
+              status: string;
+              stateNormal: string;
+              stateWarning: string;
+              stateExpired: string;
+              stateTerminated: string;
+              renew: string;
+              renewSuccess: string;
+              confirmRenew: string;
+              form: {
+                employeeName: string;
+                employeeNo: string;
+                status: string;
+              };
+            };
+            certExpiring: {
+              title: string;
+              employeeNo: string;
+              employeeName: string;
+              selectEmployee: string;
+              orgName: string;
+              certType: string;
+              certNo: string;
+              issueDate: string;
+              expiryDate: string;
+              daysToExpiry: string;
+              status: string;
+              stateNormal: string;
+              stateWarning: string;
+              stateExpired: string;
+              addCert: string;
+              editCert: string;
+              form: {
+                selectEmployee: string;
+                certType: string;
+                certNo: string;
+              };
             };
           };
         };
