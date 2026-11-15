@@ -203,6 +203,8 @@ const local: App.I18n.Schema = {
     'hrm_salary_setting_item': 'Salary Items',
     hrm_training_plan: 'Training Plan',
     hrm_training_session: 'Training Session',
+    'hrm_training_cert-template': 'Certificate Template',
+    'hrm_training_cert-issue': 'Certificate Issue',
     hrm_employee: 'HR Archive',
     'hrm_employee_employee-archive-list': 'Employee Archive',
     exception: 'Exception',
@@ -302,6 +304,19 @@ const local: App.I18n.Schema = {
           edit: 'Edit Session',
           delete: 'Delete Session',
           participants: 'Participants'
+        },
+        certTemplate: {
+          add: 'Add Template',
+          edit: 'Edit Template',
+          toggleStatus: 'Enable/Disable Template',
+          delete: 'Delete Template'
+        },
+        certificate: {
+          batchIssue: 'Batch Issue',
+          import: 'Import External Certificate',
+          issue: 'Issue Certificate',
+          revoke: 'Revoke Certificate',
+          uploadFile: 'Upload Scan File'
         }
       },
       salary_subject: {
@@ -931,6 +946,9 @@ const local: App.I18n.Schema = {
         importEmployee: 'Import',
         exportEmployee: 'Export',
         generateUser: 'Generate User',
+        generateUserSelectTip: 'Select employees to generate accounts first',
+        generateUserSuccess: 'Generated {generated} account(s), skipped {skipped} employee(s) with existing accounts',
+        generateUserAllSkipped: 'All selected employees already have accounts (skipped {skipped})',
         importSuccess: 'Import succeeded',
         chooseFileTip: 'Please select an xlsx file',
         importModalTitle: 'Import Employees',
@@ -1340,6 +1358,67 @@ const local: App.I18n.Schema = {
             status: 'Please select status',
             participantsPlaceholder: 'Search and select users (account/name)',
             endTimeBeforeStart: 'End time must be later than start time'
+          }
+        },
+        certTemplate: {
+          title: 'Certificate Template',
+          templateName: 'Template Name',
+          certType: 'Certificate Type',
+          sourceLabel: 'Source',
+          noPrefix: 'No. Prefix',
+          statusLabel: 'Status',
+          remark: 'Remark',
+          addTemplate: 'Add Template',
+          editTemplate: 'Edit Template',
+          enable: 'Enable',
+          disable: 'Disable',
+          confirmEnable: 'Enable this template? It can issue certificates once enabled.',
+          confirmDisable: 'Disable this template? Disabled templates cannot issue certificates.',
+          source: {
+            system: 'System',
+            org: 'Enterprise'
+          },
+          status: {
+            enabled: 'Enabled',
+            disabled: 'Disabled'
+          },
+          form: {
+            templateName: 'Please enter template name',
+            certType: 'Please enter certificate type',
+            source: 'Please select source',
+            noPrefix: 'Please enter number prefix (e.g. JN/AQ/HF; cert no = prefix-year-seq)'
+          }
+        },
+        certificate: {
+          title: 'Certificate Issue',
+          student: 'Student',
+          template: 'Template',
+          sourceLabel: 'Source',
+          source: {
+            session: 'Session Completion',
+            import: 'External Import'
+          },
+          session: 'Session',
+          batchIssue: 'Batch Issue',
+          batchIssueDone: 'Issued',
+          batchIssueSkipped: 'Skipped (already certified)',
+          batchIssueTip: 'Generates certificates for the finished-session participants (cert no = template prefix-year-seq); students already holding a valid certificate of the template are skipped (idempotent).',
+          importExternal: 'Import External Certificate',
+          issue: 'Issue',
+          revoke: 'Revoke',
+          upload: 'Upload Scan',
+          chooseFile: 'Choose File',
+          confirmIssue: 'Issue this certificate? It will be visible in My Training.',
+          confirmRevoke: 'Revoke this certificate? Revocation is terminal.',
+          form: {
+            session: 'Please select a session (finished)',
+            template: 'Please select a certificate template (enabled)',
+            student: 'Search and select a student (account/name)',
+            certName: 'Please enter certificate name',
+            certType: 'Please enter certificate type',
+            certNo: 'Please enter external cert no (unique)',
+            status: 'Please select status',
+            source: 'Please select source'
           }
         }
       }

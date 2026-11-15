@@ -333,6 +333,24 @@ export const generatedRoutes: GeneratedRoute[] = [
         },
         children: [
           {
+            name: 'hrm_training_cert-issue',
+            path: '/hrm/training/cert-issue',
+            component: 'view.hrm_training_cert-issue',
+            meta: {
+              title: 'hrm_training_cert-issue',
+              i18nKey: 'route.hrm_training_cert-issue'
+            }
+          },
+          {
+            name: 'hrm_training_cert-template',
+            path: '/hrm/training/cert-template',
+            component: 'view.hrm_training_cert-template',
+            meta: {
+              title: 'hrm_training_cert-template',
+              i18nKey: 'route.hrm_training_cert-template'
+            }
+          },
+          {
             name: 'hrm_training_my',
             path: '/hrm/training/my',
             component: 'view.hrm_training_my',

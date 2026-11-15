@@ -861,6 +861,18 @@ declare namespace Api {
       fileName: string;
       content: string;
     };
+
+    /** 生成系统账号请求 (HRM-04): 单个/批量; 已生成过账号的员工自动跳过 */
+    type GenerateUserRequest = {
+      uuids: string[];
+    };
+
+    type GenerateUserResponse = {
+      /** 本次实际新生成的账号数 */
+      generated: number;
+      /** 已有账号而跳过的员工数 */
+      skipped: number;
+    };
     /**
      * attendance group 班制 (groupType)
      *
@@ -1014,12 +1026,152 @@ declare namespace Api {
       workDays?: number[];
       remark?: string;
     };
-    /**
-     * reward type (奖惩类型, demo-inventory §7)
-     *
-     * - "reward": 奖励 → 薪资「奖惩奖励」(应发项数据源)
-     * - "punishment": 处分 → 薪资「奖惩扣款」(应扣项数据源)
-     */
+
+    // ---- HRM 证书模板与证书发放 (HRM-30) ----
+
+    /** certificate template status (证书模板状态) */
+    type CertTemplateStatus = '1' | '2';
+
+    /** certificate template source (模板来源) */
+    type CertTemplateSource = '1' | '2';
+
+    /** hrm training certificate template (证书模板) */
+    type CertTemplate = {
+      /** record uuid */
+      uuid: string;
+      /** 模板名称 */
+      templateName: string;
+      /** 证书类型（合格证/继续教育/荣誉/安全培训证/结业证/技能证明/上岗证/企业…） */
+      certType: string;
+      /** 来源 1=系统 2=企业 */
+      source: CertTemplateSource;
+      /** 编号前缀（HF/CE/YX/XF/RZ/JN/SG/AQ/HG/JX…），证书号=前缀-年-流水 */
+      noPrefix: string;
+      /** 状态 1=启用 2=停用（停用后不可发证） */
+      status: CertTemplateStatus | null;
+      remark: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** certificate template search params */
+    type CertTemplateSearchParams = CommonType.RecordNullable<
+      Pick<CertTemplate, 'templateName' | 'certType' | 'source' | 'status'> & Common.CommonSearchParams
+    >;
+
+    /** certificate template paginated list */
+    type CertTemplateList = Common.PaginatingQueryRecord<CertTemplate>;
+
+    /** add certificate template request */
+    type AddCertTemplateRequest = {
+      templateName: string;
+      certType: string;
+      source: CertTemplateSource;
+      noPrefix: string;
+      remark: string;
+    };
+
+    /** edit certificate template request */
+    type EditCertTemplateRequest = AddCertTemplateRequest & {
+      uuid: string;
+    };
+
+    /** toggle certificate template status request (1=启用 2=停用) */
+    type ToggleCertTemplateStatusRequest = {
+      uuid: string;
+      status: CertTemplateStatus;
+    };
+
+    /** hrm training certificate (证书发放, admin view of hrm_training_certificate) */
+    type TrainingCertificate = {
+      /** record uuid */
+      uuid: string;
+      /** 证书号 前缀-年-流水（如 JN-2026-000001） */
+      certNo: string;
+      /** 证书名称 */
+      certName: string;
+      /** 证书类型 */
+      certType: string;
+      /** 证书模板 uuid */
+      templateUuid: string;
+      /** 模板名称（展示快照） */
+      templateName: string;
+      /** 来源 1=班次结业 2=外部导入 */
+      source: TrainingCertificateSource;
+      /** 来源班次 uuid */
+      sessionUuid: string;
+      /** 来源班次名称（展示快照） */
+      sessionName: string;
+      /** 学员（manage_user.uuid） */
+      userUuid: string;
+      /** 学员账号 */
+      username: string;
+      /** 学员姓名 */
+      nickName: string;
+      /** 发证时间 */
+      issueTime: string;
+      /** 状态 0=待发 1=已发 2=已撤销 */
+      status: TrainingCertificateStatus | null;
+      /** 扫描件文件名, empty when absent */
+      fileName: string;
+      /** whether a scan file can be previewed/downloaded */
+      hasFile: boolean;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** training certificate (admin) search params */
+    type TrainingCertificateSearchParams = CommonType.RecordNullable<
+      Pick<TrainingCertificate, 'certNo' | 'certName' | 'certType' | 'status' | 'source' | 'sessionUuid'> & Common.CommonSearchParams
+    >;
+
+    /** training certificate (admin) paginated list */
+    type TrainingCertificateList = Common.PaginatingQueryRecord<TrainingCertificate>;
+
+    /** batch issue certificates request (班次结业批量发证) */
+    type BatchIssueRequest = {
+      sessionUuid: string;
+      templateUuid: string;
+      /** 缺省=班次全部学员 */
+      userUuids?: string[];
+    };
+
+    /** batch issue certificates response */
+    type BatchIssueResponse = {
+      /** 本次实际新生成证书数（幂等跳过的不计） */
+      issuedCount: number;
+      /** 因已有有效证书被跳过的学员数 */
+      skippedCount: number;
+    };
+
+    /** issue/revoke certificates request (批量 uuid) */
+    type CertificateActionRequest = {
+      uuids: string[];
+    };
+
+    /** import external certificate request (source='2', 证书号手动录入) */
+    type ImportExternalCertificateRequest = {
+      userUuid: string;
+      certName: string;
+      certType: string;
+      certNo: string;
+      fileName?: string;
+      fileContent?: string;
+    };
+
+    /** upload certificate scan file request */
+    type UploadCertificateFileRequest = {
+      uuid: string;
+      fileName: string;
+      fileContent: string;
+    };
+
+    /** certificate scan file response: content encoded as base64 (mirrors 我的培训) */
+    type DownloadCertificateFileResponse = {
+      fileName: string;
+      content: string;
+    };
+
     type RewardType = 'reward' | 'punishment';
 
     /**
@@ -1030,9 +1182,11 @@ declare namespace Api {
      * - "notice": 通报
      * - "other": 其他
      */
+
     type RewardLevel = 'company' | 'dept' | 'notice' | 'other';
 
     /** hrm reward bill (奖惩单 HR215) */
+
     type HrmReward = {
       /** record uuid */
       uuid: string;
@@ -1073,14 +1227,17 @@ declare namespace Api {
     };
 
     /** reward search params */
+
     type RewardSearchParams = CommonType.RecordNullable<
       Pick<Api.Hrm.HrmReward, 'billNo' | 'status' | 'rewardType' | 'employeeNo'> & Common.CommonSearchParams
     >;
 
     /** reward paginated list */
+
     type RewardList = Common.PaginatingQueryRecord<HrmReward>;
 
     /** add reward request */
+
     type AddRewardRequest = {
       employeeUuid: string;
       employeeNo: string;
@@ -1096,6 +1253,7 @@ declare namespace Api {
     };
 
     /** edit reward request */
+
     type EditRewardRequest = AddRewardRequest & {
       uuid: string;
     };
@@ -1111,6 +1269,7 @@ declare namespace Api {
      * - "function": 职能类
      * - "other": 其他
      */
+
     type RequirementPostCategory = 'tech' | 'product' | 'design' | 'operation' | 'market' | 'function' | 'other';
 
     /**
@@ -1119,9 +1278,11 @@ declare namespace Api {
      * - "normal": 普通
      * - "urgent": 紧急
      */
+
     type RequirementUrgency = 'normal' | 'urgent';
 
     /** recruitment requirement bill (招聘需求单 HR207) */
+
     type HrmRequirement = {
       /** record uuid */
       uuid: string;
@@ -1156,15 +1317,18 @@ declare namespace Api {
     };
 
     /** requirement search params */
+
     type RequirementSearchParams = CommonType.RecordNullable<
       Pick<Api.Hrm.HrmRequirement, 'billNo' | 'status' | 'postName' | 'postCategory' | 'urgency' | 'orgUuid'> &
         Common.CommonSearchParams
     >;
 
     /** requirement paginated list */
+
     type RequirementList = Common.PaginatingQueryRecord<HrmRequirement>;
 
     /** add requirement request */
+
     type AddRequirementRequest = {
       postName: string;
       postCategory: RequirementPostCategory | null;
@@ -1177,6 +1341,7 @@ declare namespace Api {
     };
 
     /** edit requirement request */
+
     type EditRequirementRequest = AddRequirementRequest & {
       uuid: string;
     };
@@ -1190,6 +1355,7 @@ declare namespace Api {
      * - "headhunter": 猎头
      * - "other": 其他
      */
+
     type CandidateSourceChannel = 'recommend' | 'website' | 'campus' | 'headhunter' | 'other';
 
     /**
@@ -1202,6 +1368,7 @@ declare namespace Api {
      * - "senior": 高中
      * - "other": 其他
      */
+
     type CandidateEducation = 'doctor' | 'master' | 'bachelor' | 'associate' | 'senior' | 'other';
 
     /**
@@ -1214,9 +1381,11 @@ declare namespace Api {
      * - "hired": 录用通过
      * - "rejected": 不通过
      */
+
     type CandidateStatus = 'new' | 'delivered' | 'interviewing' | 'offer' | 'hired' | 'rejected';
 
     /** recruitment candidate (候选人, HRM-26 候选人中心; 普通实体, 非单据底座) */
+
     type HrmCandidate = {
       /** record uuid */
       uuid: string;
@@ -1245,14 +1414,17 @@ declare namespace Api {
     };
 
     /** candidate search params (demo-inventory §5: 筛选姓名/手机号/来源渠道) */
+
     type CandidateSearchParams = CommonType.RecordNullable<
       Pick<Api.Hrm.HrmCandidate, 'name' | 'phone' | 'sourceChannel' | 'status'> & Common.CommonSearchParams
     >;
 
     /** candidate paginated list */
+
     type CandidateList = Common.PaginatingQueryRecord<HrmCandidate>;
 
     /** add candidate request (初始状态 新线索) */
+
     type AddCandidateRequest = {
       name: string;
       phone: string;
@@ -1266,11 +1438,13 @@ declare namespace Api {
     };
 
     /** edit candidate request (状态不在此接口修改) */
+
     type EditCandidateRequest = AddCandidateRequest & {
       uuid: string;
     };
 
     /** candidate status transition request (不可跳级/不可回退) */
+
     type UpdateCandidateStatusRequest = {
       uuid: string;
       status: CandidateStatus;

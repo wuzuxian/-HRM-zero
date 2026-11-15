@@ -1,0 +1,146 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/certificate"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 证书发放（HRM-30，管理端）：读写规范表 hrm_training_certificate（HRM-31 建表，
+// 列名不变）。批量发证（班次结业学员按模板生成证书号=前缀-年-流水）、发放（待发→已发）、
+// 撤销（已发→已撤销）、导入外部证书（source='2'）、扫描件上传/预览/下载。
+type HrmCertificate {
+	Uuid         string `json:"uuid"`
+	CertNo       string `json:"certNo"` // 证书号 前缀-年-流水（如 JN-2026-000001）
+	CertName     string `json:"certName"`
+	CertType     string `json:"certType"`
+	TemplateUuid string `json:"templateUuid"` // 证书模板 uuid（HRM-30 回填）
+	TemplateName string `json:"templateName"` // 模板名称（展示快照）
+	Source       string `json:"source"` // 1=班次结业 2=外部导入
+	SessionUuid  string `json:"sessionUuid"` // 来源班次 uuid
+	SessionName  string `json:"sessionName"` // 来源班次名称（展示快照）
+	UserUuid     string `json:"userUuid"` // 学员（manage_user.uuid）
+	Username     string `json:"username"` // 学员账号
+	NickName     string `json:"nickName"` // 学员姓名
+	IssueTime    string `json:"issueTime"` // 发证时间
+	Status       string `json:"status"` // 0=待发 1=已发 2=已撤销
+	FileName     string `json:"fileName"` // 扫描件文件名
+	HasFile      bool   `json:"hasFile"`
+	CreateTime   string `json:"createTime"`
+	UpdateTime   string `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	CertNo      string `form:"certNo,optional"` // 证书号（模糊）
+	CertName    string `form:"certName,optional"` // 证书名称（模糊）
+	CertType    string `form:"certType,optional"` // 证书类型
+	Status      string `form:"status,optional"` // 0=待发 1=已发 2=已撤销
+	Source      string `form:"source,optional"` // 1=班次结业 2=外部导入
+	SessionUuid string `form:"sessionUuid,optional"` // 来源班次
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmCertificate `json:"records"`
+}
+
+// 批量发证（班次结业）：按班次 + 模板为班次学员批量生成证书（source='1'，template_uuid 回填）。
+// 幂等：已是该班次+模板名下（非已撤销）证书的学员跳过，不重复发证。
+type BatchIssueRequest {
+	SessionUuid  string   `json:"sessionUuid"`
+	TemplateUuid string   `json:"templateUuid"`
+	UserUuids    []string `json:"userUuids,optional"` // 缺省=班次全部学员
+}
+
+type BatchIssueResponse {
+	// 本次实际新生成证书数（幂等跳过的不计）
+	IssuedCount int64 `json:"issuedCount"`
+	// 因已有有效证书被跳过的学员数
+	SkippedCount int64 `json:"skippedCount"`
+}
+
+// 发放（行操作）：待发（0）→已发（1），置发证时间。
+type IssueRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type IssueResponse {}
+
+// 撤销（行操作）：已发（1）→已撤销（2）。
+type RevokeRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type RevokeResponse {}
+
+// 导入外部证书：source='2'（无班次来源），证书号手动录入（外部编号体系）。
+type ImportExternalRequest {
+	UserUuid    string `json:"userUuid"` // 学员
+	CertName    string `json:"certName"`
+	CertType    string `json:"certType"`
+	CertNo      string `json:"certNo"` // 外部证书号（手动录入，唯一）
+	FileName    string `json:"fileName,optional"` // 扫描件文件名
+	FileContent string `json:"fileContent,optional"` // 扫描件内容 base64
+}
+
+type ImportExternalResponse {}
+
+// 上传/替换扫描件（行操作）。
+type UploadFileRequest {
+	Uuid        string `json:"uuid"`
+	FileName    string `json:"fileName"`
+	FileContent string `json:"fileContent"` // base64
+}
+
+type UploadFileResponse {}
+
+// 扫描件预览/下载（base64 内容，与我的培训同一返回模式）。
+type DownloadFileRequest {
+	Uuid string `form:"uuid"`
+}
+
+type DownloadFileResponse {
+	FileName string `json:"fileName"`
+	Content  string `json:"content"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/certificate
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getCertificateList (ListRequest) returns (ListResponse)
+
+	// 批量发证：班次结业学员按模板生成证书号=前缀-年-流水（幂等）
+	@handler BatchIssue
+	post /hrm/batchIssueCertificates (BatchIssueRequest) returns (BatchIssueResponse)
+
+	// 发放：待发 → 已发
+	@handler Issue
+	post /hrm/issueCertificates (IssueRequest) returns (IssueResponse)
+
+	// 撤销：已发 → 已撤销
+	@handler Revoke
+	post /hrm/revokeCertificates (RevokeRequest) returns (RevokeResponse)
+
+	// 导入外部证书（source='2'）
+	@handler ImportExternal
+	post /hrm/importExternalCertificate (ImportExternalRequest) returns (ImportExternalResponse)
+
+	// 上传/替换证书扫描件
+	@handler UploadFile
+	post /hrm/uploadCertificateFile (UploadFileRequest) returns (UploadFileResponse)
+
+	// 证书扫描件预览/下载（base64，与我的培训同一返回模式）
+	@handler DownloadFile
+	get /hrm/downloadCertificateFile (DownloadFileRequest) returns (DownloadFileResponse)
+}
+

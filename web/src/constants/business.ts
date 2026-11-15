@@ -145,6 +145,32 @@ export const hrmTrainingPlanPublishedRecord: Record<'0' | '1', App.I18n.I18nKey>
 
 export const hrmTrainingPlanPublishedOptions = transformRecordToOption(hrmTrainingPlanPublishedRecord);
 
+// ---- HRM 证书模板与证书发放 (HRM-30) ----
+
+/** 证书模板 来源 (1=系统 2=企业) */
+export const hrmCertTemplateSourceRecord: Record<Api.Hrm.CertTemplateSource, App.I18n.I18nKey> = {
+  '1': 'page.hrm.training.certTemplate.source.system',
+  '2': 'page.hrm.training.certTemplate.source.org'
+};
+
+export const hrmCertTemplateSourceOptions = transformRecordToOption(hrmCertTemplateSourceRecord);
+
+/** 证书模板 状态 (1=启用 2=停用) */
+export const hrmCertTemplateStatusRecord: Record<Api.Hrm.CertTemplateStatus, App.I18n.I18nKey> = {
+  '1': 'page.hrm.training.certTemplate.status.enabled',
+  '2': 'page.hrm.training.certTemplate.status.disabled'
+};
+
+export const hrmCertTemplateStatusOptions = transformRecordToOption(hrmCertTemplateStatusRecord);
+
+/** 证书发放 来源 (1=班次结业 2=外部导入) */
+export const hrmCertificateSourceRecord: Record<Api.Hrm.TrainingCertificateSource, App.I18n.I18nKey> = {
+  '1': 'page.hrm.training.certificate.source.session',
+  '2': 'page.hrm.training.certificate.source.import'
+};
+
+export const hrmCertificateSourceOptions = transformRecordToOption(hrmCertificateSourceRecord);
+
 // ---- HRM 员工档案 (HRM-03) ----
 
 /** 性别 1=男 2=女 */

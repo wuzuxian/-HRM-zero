@@ -55,7 +55,6 @@ func (l *Add) Add(req *types.AddRequest) (resp *types.AddResponse, err error) {
 	return &types.AddResponse{}, nil
 }
 
-
 // validateEmployeeBasic 校验公共枚举字段; name/pass 由调用方按 add/edit 语义处理。
 func validateEmployeeBasic(name, gender, maritalStatus, personStatus *string) error {
 	if name != nil && *name == "" {

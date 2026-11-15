@@ -4,14 +4,13 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/jzero-io/jzero/core/status"
+	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
-	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee"
-
 	"github.com/jzero-io/jzero-admin/server/internal/errcodes"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee"
 	"github.com/jzero-io/jzero-admin/server/internal/svc"
 	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/employee"
 )
@@ -99,6 +98,23 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 
 		if err = l.svcCtx.Model.HrmEmployee.Update(ctx, session, row); err != nil {
 			return err
+		}
+
+		// 员工↔账号双向同步 (HRM-04): 已生成账号的员工, 编辑档案同步账号资料
+		// (昵称=姓名, 手机号, 邮箱); 未生成账号 (user_uuid '') 则无账号可同步.
+		if row.UserUuid != "" {
+			user, userErr := l.svcCtx.Model.ManageUser.FindOneByUuid(ctx, session, row.UserUuid)
+			if userErr != nil && userErr != sqlx.ErrNotFound {
+				return userErr
+			}
+			if userErr == nil {
+				user.Nickname = row.Name
+				user.Phone = row.Phone
+				user.Email = row.Email
+				if err = l.svcCtx.Model.ManageUser.Update(ctx, session, user); err != nil {
+					return err
+				}
+			}
 		}
 
 		return saveChildren(ctx, session, l.svcCtx, row.Uuid, req.Educations, req.Works, req.Families)

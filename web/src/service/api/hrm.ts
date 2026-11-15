@@ -322,7 +322,14 @@ export function ExportEmployee() {
   });
 }
 
-// ---- HRM 培训计划单 (HRM-28, HR216) ----
+/** 生成系统账号 (HRM-04): 单个/批量; 用户名=工号, 昵称=姓名, 初始密码取配置; 已生成的员工跳过 */
+export function GenerateEmployeeUser(req: Api.Hrm.GenerateUserRequest) {
+  return request<Api.Hrm.GenerateUserResponse>({
+    url: '/api/v1/hrm/generateUser',
+    method: 'post',
+    data: req
+  });
+}
 
 /** get 培训计划单 paginated list */
 export function GetTrainingPlanList(params?: Api.Hrm.TrainingPlanSearchParams) {
@@ -361,8 +368,6 @@ export function DeleteTrainingPlan(req: string[]) {
     }
   });
 }
-
-// ---- HRM 培训班次 (HRM-28, 管理端 CRUD) ----
 
 /** get 培训班次 paginated list */
 export function GetTrainingSessionList(params?: Api.Hrm.TrainingSessionSearchParams) {
@@ -532,7 +537,115 @@ export function DeleteAttendanceConfig(req: string[]) {
   });
 }
 
-// ---- 奖惩单（HRM-07, HR215）----
+/** get 证书模板 paginated list (筛选: 模板名称/证书类型/来源/状态) */
+export function GetCertTemplateList(params?: Api.Hrm.CertTemplateSearchParams) {
+  return request<Api.Hrm.CertTemplateList>({
+    url: '/api/v1/hrm/getCertTemplateList',
+    method: 'get',
+    params
+  });
+}
+
+/** add 证书模板 (编号前缀唯一, 初始启用) */
+export function AddCertTemplate(req: Api.Hrm.AddCertTemplateRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addCertTemplate',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 证书模板 (前缀变更时保持唯一) */
+export function EditCertTemplate(req: Api.Hrm.EditCertTemplateRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editCertTemplate',
+    method: 'post',
+    data: req
+  });
+}
+
+/** toggle 证书模板 status (1=启用 2=停用, 停用后不可发证) */
+export function ToggleCertTemplateStatus(req: Api.Hrm.ToggleCertTemplateStatusRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/toggleCertTemplateStatus',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 证书模板 */
+export function DeleteCertTemplate(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteCertTemplate',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** get 证书发放 paginated list (筛选: 证书号/名称/类型/状态/来源/班次) */
+export function GetCertificateList(params?: Api.Hrm.TrainingCertificateSearchParams) {
+  return request<Api.Hrm.TrainingCertificateList>({
+    url: '/api/v1/hrm/getCertificateList',
+    method: 'get',
+    params
+  });
+}
+
+/** 批量发证: 班次结业学员按模板生成证书号=前缀-年-流水 (幂等, 跳过已有有效证书) */
+export function BatchIssueCertificates(req: Api.Hrm.BatchIssueRequest) {
+  return request<Api.Hrm.BatchIssueResponse>({
+    url: '/api/v1/hrm/batchIssueCertificates',
+    method: 'post',
+    data: req
+  });
+}
+
+/** 发放: 待发(0) → 已发(1), 置发证时间 */
+export function IssueCertificates(uuids: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/issueCertificates',
+    method: 'post',
+    data: { uuids }
+  });
+}
+
+/** 撤销: 已发(1) → 已撤销(2) */
+export function RevokeCertificates(uuids: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/revokeCertificates',
+    method: 'post',
+    data: { uuids }
+  });
+}
+
+/** 导入外部证书 (source='2', 证书号手动录入且唯一) */
+export function ImportExternalCertificate(req: Api.Hrm.ImportExternalCertificateRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/importExternalCertificate',
+    method: 'post',
+    data: req
+  });
+}
+
+/** 上传/替换证书扫描件 (base64) */
+export function UploadCertificateFile(req: Api.Hrm.UploadCertificateFileRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/uploadCertificateFile',
+    method: 'post',
+    data: req
+  });
+}
+
+/** 证书扫描件预览/下载 (base64, 与我的培训同一返回模式) */
+export function DownloadCertificateFile(uuid: string) {
+  return request<Api.Hrm.DownloadCertificateFileResponse>({
+    url: '/api/v1/hrm/downloadCertificateFile',
+    method: 'get',
+    params: { uuid }
+  });
+}
 
 /** get hrm reward bill (奖惩单 HR215) paginated list — defaults to 「我的单据」 server-side */
 export function GetRewardList(params?: Api.Hrm.RewardSearchParams) {
@@ -572,8 +685,6 @@ export function DeleteReward(req: string[]) {
   });
 }
 
-// ---- 招聘需求单（HRM-24, HR207）----
-
 /** get recruitment requirement (招聘需求单 HR207) paginated list — defaults to 「我的单据」 server-side */
 export function GetRequirementList(params?: Api.Hrm.RequirementSearchParams) {
   return request<Api.Hrm.RequirementList>({
@@ -611,8 +722,6 @@ export function DeleteRequirement(req: string[]) {
     }
   });
 }
-
-// ---- HRM 候选人中心 (HRM-26, Excel 导入) ----
 
 /** get 候选人 paginated list (筛选 姓名/手机号/来源渠道/状态) */
 export function GetCandidateList(params?: Api.Hrm.CandidateSearchParams) {

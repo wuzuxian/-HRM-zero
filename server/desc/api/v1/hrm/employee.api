@@ -198,6 +198,19 @@ type ExportResponse {
 	Content  string `json:"content"`
 }
 
+// GenerateUserRequest 员工一键生成系统账号 (HRM-04): 单个传一个 uuid, 批量传多个;
+// 已生成过账号的员工自动跳过 (幂等). 用户名=工号, 昵称=姓名, 初始密码取配置.
+type GenerateUserRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type GenerateUserResponse {
+	// Generated 本次实际新生成的账号数
+	Generated int64 `json:"generated"`
+	// Skipped 已有账号 (user_uuid 非空) 而跳过的员工数
+	Skipped int64 `json:"skipped"`
+}
+
 @server (
 	prefix:          /api/v1
 	group:           v1/hrm/employee
@@ -226,5 +239,8 @@ service server {
 
 	@handler Export
 	get /hrm/exportEmployee returns (ExportResponse)
+
+	@handler GenerateUser
+	post /hrm/generateUser (GenerateUserRequest) returns (GenerateUserResponse)
 }
 

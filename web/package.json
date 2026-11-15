@@ -127,5 +127,10 @@
   "lint-staged": {
     "*": "eslint --fix"
   },
-  "website": "https://admin.jzero.io"
+  "website": "https://admin.jzero.io",
+  "pnpm": {
+    "patchedDependencies": {
+      "@elegant-router/core": "patches/@elegant-router__core.patch"
+    }
+  }
 }

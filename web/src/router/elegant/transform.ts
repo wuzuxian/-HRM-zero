@@ -209,6 +209,8 @@ const routeMap: RouteMap = {
   "hrm_salary_setting_item": "/hrm/salary/setting/item",
   "hrm_salary_setting_subject": "/hrm/salary/setting/subject",
   "hrm_training": "/hrm/training",
+  "hrm_training_cert-issue": "/hrm/training/cert-issue",
+  "hrm_training_cert-template": "/hrm/training/cert-template",
   "hrm_training_my": "/hrm/training/my",
   "hrm_training_plan": "/hrm/training/plan",
   "hrm_training_session": "/hrm/training/session",

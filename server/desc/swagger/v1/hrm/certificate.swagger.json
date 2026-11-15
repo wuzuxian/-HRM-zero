@@ -1,0 +1,570 @@
+{
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/hrm/batchIssueCertificates": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:certificate:batchIssue",
+        "operationId": "v1/Hrm/CertificateBatchIssue",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "sessionUuid": {
+                  "type": "string"
+                },
+                "templateUuid": {
+                  "type": "string"
+                },
+                "userUuids": {
+                  "description": "缺省=班次全部学员",
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "sessionUuid",
+                "templateUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "issuedCount": {
+                  "type": "integer"
+                },
+                "skippedCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "BatchIssue",
+        "tags": [
+          "v1/hrm/certificate"
+        ]
+      }
+    },
+    "/api/v1/hrm/downloadCertificateFile": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:certificate:downloadFile",
+        "operationId": "v1/Hrm/CertificateDownloadFile",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "uuid",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "DownloadFile",
+        "tags": [
+          "v1/hrm/certificate"
+        ]
+      }
+    },
+    "/api/v1/hrm/getCertificateList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:certificate:list",
+        "operationId": "v1/Hrm/CertificateList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "证书号（模糊）",
+            "in": "query",
+            "name": "certNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "证书名称（模糊）",
+            "in": "query",
+            "name": "certName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "证书类型",
+            "in": "query",
+            "name": "certType",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "0=待发 1=已发 2=已撤销",
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "1=班次结业 2=外部导入",
+            "in": "query",
+            "name": "source",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "来源班次",
+            "in": "query",
+            "name": "sessionUuid",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "certName": {
+                        "type": "string"
+                      },
+                      "certNo": {
+                        "description": "证书号 前缀-年-流水（如 JN-2026-000001）",
+                        "type": "string"
+                      },
+                      "certType": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "fileName": {
+                        "description": "扫描件文件名",
+                        "type": "string"
+                      },
+                      "hasFile": {
+                        "type": "boolean"
+                      },
+                      "issueTime": {
+                        "description": "发证时间",
+                        "type": "string"
+                      },
+                      "nickName": {
+                        "description": "学员姓名",
+                        "type": "string"
+                      },
+                      "sessionName": {
+                        "description": "来源班次名称（展示快照）",
+                        "type": "string"
+                      },
+                      "sessionUuid": {
+                        "description": "来源班次 uuid",
+                        "type": "string"
+                      },
+                      "source": {
+                        "description": "1=班次结业 2=外部导入",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "0=待发 1=已发 2=已撤销",
+                        "type": "string"
+                      },
+                      "templateName": {
+                        "description": "模板名称（展示快照）",
+                        "type": "string"
+                      },
+                      "templateUuid": {
+                        "description": "证书模板 uuid（HRM-30 回填）",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "userUuid": {
+                        "description": "学员（manage_user.uuid）",
+                        "type": "string"
+                      },
+                      "username": {
+                        "description": "学员账号",
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "certNo",
+                      "certName",
+                      "certType",
+                      "templateUuid",
+                      "templateName",
+                      "source",
+                      "sessionUuid",
+                      "sessionName",
+                      "userUuid",
+                      "username",
+                      "nickName",
+                      "issueTime",
+                      "status",
+                      "fileName",
+                      "hasFile",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/certificate"
+        ]
+      }
+    },
+    "/api/v1/hrm/importExternalCertificate": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:certificate:importExternal",
+        "operationId": "v1/Hrm/CertificateImportExternal",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "certName": {
+                  "type": "string"
+                },
+                "certNo": {
+                  "description": "外部证书号（手动录入，唯一）",
+                  "type": "string"
+                },
+                "certType": {
+                  "type": "string"
+                },
+                "fileContent": {
+                  "description": "扫描件内容 base64",
+                  "type": "string"
+                },
+                "fileName": {
+                  "description": "扫描件文件名",
+                  "type": "string"
+                },
+                "userUuid": {
+                  "description": "学员",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "userUuid",
+                "certName",
+                "certType",
+                "certNo"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "ImportExternal",
+        "tags": [
+          "v1/hrm/certificate"
+        ]
+      }
+    },
+    "/api/v1/hrm/issueCertificates": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:certificate:issue",
+        "operationId": "v1/Hrm/CertificateIssue",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Issue",
+        "tags": [
+          "v1/hrm/certificate"
+        ]
+      }
+    },
+    "/api/v1/hrm/revokeCertificates": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:certificate:revoke",
+        "operationId": "v1/Hrm/CertificateRevoke",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Revoke",
+        "tags": [
+          "v1/hrm/certificate"
+        ]
+      }
+    },
+    "/api/v1/hrm/uploadCertificateFile": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:certificate:uploadFile",
+        "operationId": "v1/Hrm/CertificateUploadFile",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "fileContent": {
+                  "description": "base64",
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "fileName",
+                "fileContent"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "UploadFile",
+        "tags": [
+          "v1/hrm/certificate"
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKey": {
+      "description": "Enter Authorization",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0"
+}
