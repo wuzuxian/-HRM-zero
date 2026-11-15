@@ -304,6 +304,139 @@ declare namespace Api {
     };
 
     /**
+     * HRM bill status (单据状态, shared approval state machine, GLOSSARY)
+     *
+     * - "unsubmitted": 未提交
+     * - "approving": 审批中
+     * - "approved": 审批通过
+     * - "rejected": 审批不通过
+     * - "revoked": 已撤销
+     */
+    type BillStatus = 'unsubmitted' | 'approving' | 'approved' | 'rejected' | 'revoked';
+
+    /**
+     * transfer change type (异动类型)
+     *
+     * - "post": 调岗
+     * - "org": 调部门
+     * - "salary": 调薪
+     * - "company": 调公司
+     * - "other": 其他
+     */
+    type TransferChangeType = 'post' | 'org' | 'salary' | 'company' | 'other';
+
+    /** hrm transfer bill (人事调动单 HR203) */
+    type HrmTransfer = {
+      /** record uuid */
+      uuid: string;
+      /** record creator uuid */
+      createBy: string;
+      /** record updater uuid */
+      updateBy: string;
+      /** 单据编号 HR203-... */
+      billNo: string;
+      /** 单据状态 */
+      status: BillStatus | null;
+      /** 员工档案 uuid */
+      employeeUuid: string;
+      /** 员工工号 */
+      employeeNo: string;
+      /** 员工姓名 */
+      employeeName: string;
+      /** 异动类型 */
+      changeType: TransferChangeType | null;
+      /** 原公司（组织 uuid） */
+      originalCompany: string;
+      /** 原部门（组织 uuid） */
+      originalOrg: string;
+      /** 原职位 */
+      originalPosition: string;
+      /** 原岗位 */
+      originalPost: string;
+      /** 新公司（组织 uuid） */
+      newCompany: string;
+      /** 新部门（组织 uuid） */
+      newOrg: string;
+      /** 新职位 */
+      newPosition: string;
+      /** 新岗位 */
+      newPost: string;
+      /** 调整后薪资（调薪时填写） */
+      newSalary: number;
+      /** 调动原因 */
+      transferReason: string;
+      /** 是否立即生效 1=是 0=否 */
+      effectiveImmediately: number;
+      /** 生效日期 YYYY-MM-DD */
+      effectiveDate: string;
+      /** 生效回写是否已完成 1=是 0=否 */
+      applied: number;
+      /** 申请人 uuid */
+      creatorUuid: string;
+      /** 申请人姓名 */
+      creatorName: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** transfer search params */
+    type TransferSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.HrmTransfer, 'billNo' | 'status' | 'employeeNo'> & Common.CommonSearchParams
+    >;
+
+    /** transfer paginated list */
+    type TransferList = Common.PaginatingQueryRecord<HrmTransfer>;
+
+    /** add transfer request */
+    type AddTransferRequest = {
+      employeeUuid: string;
+      employeeNo: string;
+      employeeName: string;
+      changeType: TransferChangeType | null;
+      originalCompany: string;
+      originalOrg: string;
+      originalPosition: string;
+      originalPost: string;
+      newCompany: string;
+      newOrg: string;
+      newPosition: string;
+      newPost: string;
+      newSalary: number;
+      transferReason: string;
+      effectiveImmediately: number;
+      effectiveDate: string;
+    };
+
+    /** edit transfer request */
+    type EditTransferRequest = AddTransferRequest & {
+      uuid: string;
+    };
+
+    /** shared bill lifecycle action request (提交/审批通过/驳回/撤销) */
+    type BillActionRequest = {
+      /** bill type code, e.g. "203" for 人事调动 */
+      billType: string;
+      /** bill uuid */
+      billUuid: string;
+      /** 审批意见 */
+      opinion?: string;
+    };
+
+    /** shared approval record (审批记录) */
+    type ApprovalRecord = {
+      billNo: string;
+      /** action: submit/approve/reject/revoke */
+      action: string;
+      fromStatus: string;
+      toStatus: string;
+      operatorName: string;
+      opinion: string;
+      createTime: string;
+    };
+
+    /**
      * training session status (培训班次状态)
      *
      * - "1": 未开始

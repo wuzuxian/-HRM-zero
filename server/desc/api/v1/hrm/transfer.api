@@ -1,0 +1,125 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/transfer"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 人事调动单（HR203，GLOSSARY「单据」）：异动类型 调岗/调部门/调薪/调公司/其他，
+// 原/新 公司+部门+岗位+职位，调动原因，是否立即生效与生效日期。
+// 生命周期（提交/审批/撤销/审批记录）走共享单据底座 v1/hrm/bill，类型码 203。
+// 列表默认按「我的单据」过滤（创建人=当前用户），超级管理员可看全部（spec 用户故事 4）。
+type HrmTransfer {
+	Uuid                 string  `json:"uuid"`
+	BillNo               string  `json:"billNo"` // 单据编号 HR203-...
+	Status               string  `json:"status"` // 单据状态 unsubmitted/approving/approved/rejected/revoked
+	EmployeeUuid         string  `json:"employeeUuid"` // 员工档案 uuid
+	EmployeeNo           string  `json:"employeeNo"` // 员工工号
+	EmployeeName         string  `json:"employeeName"` // 员工姓名
+	ChangeType           string  `json:"changeType"` // 异动类型 post/org/salary/company/other
+	OriginalCompany      string  `json:"originalCompany"` // 原公司（组织 uuid）
+	OriginalOrg          string  `json:"originalOrg"` // 原部门（组织 uuid）
+	OriginalPosition     string  `json:"originalPosition"` // 原职位
+	OriginalPost         string  `json:"originalPost"` // 原岗位
+	NewCompany           string  `json:"newCompany"` // 新公司（组织 uuid）
+	NewOrg               string  `json:"newOrg"` // 新部门（组织 uuid）
+	NewPosition          string  `json:"newPosition"` // 新职位
+	NewPost              string  `json:"newPost"` // 新岗位
+	NewSalary            float64 `json:"newSalary"` // 调整后薪资（调薪时填写）
+	TransferReason       string  `json:"transferReason"` // 调动原因
+	EffectiveImmediately int64   `json:"effectiveImmediately"` // 是否立即生效 1=是 0=否
+	EffectiveDate        string  `json:"effectiveDate"` // 生效日期 YYYY-MM-DD
+	Applied              int64   `json:"applied"` // 生效回写是否已完成 1=是 0=否
+	CreatorUuid          string  `json:"creatorUuid"` // 申请人 uuid
+	CreatorName          string  `json:"creatorName"` // 申请人姓名
+	CreateTime           string  `json:"createTime"`
+	UpdateTime           string  `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	BillNo     string `form:"billNo,optional"` // 单据编号（模糊）
+	Status     string `form:"status,optional"` // 单据状态
+	EmployeeNo string `form:"employeeNo,optional"` // 员工工号（模糊）
+	Mine       int64  `form:"mine,optional"` // 1=强制只看我的单据（默认行为即我的单据，管理员可传 0 看全部由后端角色判定兜底）
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmTransfer `json:"records"`
+}
+
+type AddRequest {
+	EmployeeUuid         string  `json:"employeeUuid,optional"`
+	EmployeeNo           string  `json:"employeeNo"`
+	EmployeeName         string  `json:"employeeName"`
+	ChangeType           string  `json:"changeType"`
+	OriginalCompany      string  `json:"originalCompany,optional"`
+	OriginalOrg          string  `json:"originalOrg,optional"`
+	OriginalPosition     string  `json:"originalPosition,optional"`
+	OriginalPost         string  `json:"originalPost,optional"`
+	NewCompany           string  `json:"newCompany,optional"`
+	NewOrg               string  `json:"newOrg,optional"`
+	NewPosition          string  `json:"newPosition,optional"`
+	NewPost              string  `json:"newPost,optional"`
+	NewSalary            float64 `json:"newSalary,optional"`
+	TransferReason       string  `json:"transferReason,optional"`
+	EffectiveImmediately int64   `json:"effectiveImmediately"`
+	EffectiveDate        string  `json:"effectiveDate,optional"` // YYYY-MM-DD，非立即生效时必填
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid                 string  `json:"uuid"`
+	EmployeeUuid         string  `json:"employeeUuid,optional"`
+	EmployeeNo           string  `json:"employeeNo"`
+	EmployeeName         string  `json:"employeeName"`
+	ChangeType           string  `json:"changeType"`
+	OriginalCompany      string  `json:"originalCompany,optional"`
+	OriginalOrg          string  `json:"originalOrg,optional"`
+	OriginalPosition     string  `json:"originalPosition,optional"`
+	OriginalPost         string  `json:"originalPost,optional"`
+	NewCompany           string  `json:"newCompany,optional"`
+	NewOrg               string  `json:"newOrg,optional"`
+	NewPosition          string  `json:"newPosition,optional"`
+	NewPost              string  `json:"newPost,optional"`
+	NewSalary            float64 `json:"newSalary,optional"`
+	TransferReason       string  `json:"transferReason,optional"`
+	EffectiveImmediately int64   `json:"effectiveImmediately"`
+	EffectiveDate        string  `json:"effectiveDate,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/transfer
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getTransferList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addTransfer (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editTransfer (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deleteTransfer (DeleteRequest) returns (DeleteResponse)
+}
+
