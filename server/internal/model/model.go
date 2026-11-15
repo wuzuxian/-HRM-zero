@@ -8,6 +8,8 @@ import (
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_approval_record"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_attendance_config"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_attendance_group"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_bill_sequence"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_education"
@@ -35,6 +37,8 @@ import (
 
 type Model struct {
 	HrmApprovalRecord             hrm_approval_record.HrmApprovalRecordModel
+	HrmAttendanceConfig           hrm_attendance_config.HrmAttendanceConfigModel
+	HrmAttendanceGroup            hrm_attendance_group.HrmAttendanceGroupModel
 	HrmBillSequence               hrm_bill_sequence.HrmBillSequenceModel
 	HrmEmployee                   hrm_employee.HrmEmployeeModel
 	HrmEmployeeEducation          hrm_employee_education.HrmEmployeeEducationModel
@@ -63,6 +67,8 @@ type Model struct {
 func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 	return Model{
 		HrmApprovalRecord:             hrm_approval_record.NewHrmApprovalRecordModel(conn, op...),
+		HrmAttendanceConfig:           hrm_attendance_config.NewHrmAttendanceConfigModel(conn, op...),
+		HrmAttendanceGroup:            hrm_attendance_group.NewHrmAttendanceGroupModel(conn, op...),
 		HrmBillSequence:               hrm_bill_sequence.NewHrmBillSequenceModel(conn, op...),
 		HrmEmployee:                   hrm_employee.NewHrmEmployeeModel(conn, op...),
 		HrmEmployeeEducation:          hrm_employee_education.NewHrmEmployeeEducationModel(conn, op...),

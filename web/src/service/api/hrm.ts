@@ -428,3 +428,106 @@ export function SetSessionParticipants(req: Api.Hrm.SetSessionParticipantsReques
     data: req
   });
 }
+
+/** get 考勤组 paginated list (筛选: 名称/班制/状态) */
+export function GetAttendanceGroupList(params?: Api.Hrm.AttendanceGroupSearchParams) {
+  return request<Api.Hrm.AttendanceGroupList>({
+    url: '/api/v1/hrm/getAttendanceGroupList',
+    method: 'get',
+    params
+  });
+}
+
+/** add 考勤组 */
+export function AddAttendanceGroup(req: Api.Hrm.AddAttendanceGroupRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addAttendanceGroup',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 考勤组 */
+export function EditAttendanceGroup(req: Api.Hrm.EditAttendanceGroupRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editAttendanceGroup',
+    method: 'post',
+    data: req
+  });
+}
+
+/** toggle 考勤组 启用/停用 (停用后三级回退跳过该考勤组) */
+export function ToggleAttendanceGroupStatus(req: { uuid: string; status: Api.Hrm.AttendanceStatus }) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/toggleAttendanceGroupStatus',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 考勤组 */
+export function DeleteAttendanceGroup(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteAttendanceGroup',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** get 考勤组 生效人数 (部门含下级 + 指定人员, 去重); uuid 缺省返回所有启用考勤组并集 */
+export function GetAttendanceGroupMembers(uuid?: string) {
+  return request<Api.Hrm.AttendanceGroupMembersResponse>({
+    url: '/api/v1/hrm/getAttendanceGroupMembers',
+    method: 'get',
+    params: { uuid }
+  });
+}
+
+/** 生效规则查询 (三级回退: 考勤组 > 本部门规则 > 最近上级组织规则); 按员工 uuid 或工号 */
+export function GetEffectiveAttendanceRule(params: { employeeUuid?: string; employeeNo?: string }) {
+  return request<Api.Hrm.EffectiveAttendanceRuleResponse>({
+    url: '/api/v1/hrm/getEffectiveAttendanceRule',
+    method: 'get',
+    params
+  });
+}
+
+/** 班次引用查询 (支撑班次管理页 引用考勤组 列) */
+export function GetAttendanceGroupShiftUsage(shiftUuid?: string) {
+  return request<Api.Hrm.AttendanceGroupShiftUsageResponse>({
+    url: '/api/v1/hrm/getAttendanceGroupShiftUsage',
+    method: 'get',
+    params: { shiftUuid }
+  });
+}
+
+/** get 组织默认规则 paginated list (筛选: 组织名称) */
+export function GetAttendanceConfigList(params?: Api.Hrm.AttendanceConfigSearchParams) {
+  return request<Api.Hrm.AttendanceConfigList>({
+    url: '/api/v1/hrm/getAttendanceConfigList',
+    method: 'get',
+    params
+  });
+}
+
+/** save 组织默认规则 (upsert: 快速开始/新增/编辑共用) */
+export function SaveAttendanceConfig(req: Api.Hrm.SaveAttendanceConfigRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/saveAttendanceConfig',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 组织默认规则 */
+export function DeleteAttendanceConfig(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteAttendanceConfig',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}

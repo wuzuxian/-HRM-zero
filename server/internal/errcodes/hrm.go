@@ -66,6 +66,18 @@ const (
 	TransferEmployeeRequiredCode = 10372
 	// TransferNotEditableCode 单据当前状态不允许修改/删除（仅 未提交/审批不通过/已撤销 可改）
 	TransferNotEditableCode = 10373
+
+	// HRM 考勤组与组织默认规则（HRM-12）业务错误码。
+	// AttendanceGroupNotFoundCode 考勤组不存在
+	AttendanceGroupNotFoundCode = 10380
+	// AttendanceGroupInvalidCode 考勤组参数非法（名称/班制/考勤时间/考勤日/状态等）
+	AttendanceGroupInvalidCode = 10381
+	// AttendanceConfigOrgNotFoundCode 组织默认规则对应的组织不存在
+	AttendanceConfigOrgNotFoundCode = 10382
+	// AttendanceConfigInvalidCode 组织默认规则参数非法（考勤时间/考勤日等）
+	AttendanceConfigInvalidCode = 10383
+	// AttendanceRuleNotFoundCode 未找到生效规则（员工不在考勤组且组织链上无默认规则）
+	AttendanceRuleNotFoundCode = 10384
 )
 
 func init() {
@@ -88,6 +100,12 @@ func init() {
 	status.Register(LeaveTypeCodeDuplicateCode)
 	status.Register(LeaveTypeNotFoundCode)
 	status.Register(LeaveTypeInvalidCode)
+
+	status.Register(AttendanceGroupNotFoundCode)
+	status.Register(AttendanceGroupInvalidCode)
+	status.Register(AttendanceConfigOrgNotFoundCode)
+	status.Register(AttendanceConfigInvalidCode)
+	status.Register(AttendanceRuleNotFoundCode)
 
 	status.Register(TrainingCertificateNotFoundCode)
 	status.Register(TrainingCertificateFileNotFoundCode)

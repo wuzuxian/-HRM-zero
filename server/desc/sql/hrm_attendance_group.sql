@@ -1,0 +1,20 @@
+CREATE TABLE `hrm_attendance_group` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(36) NOT NULL UNIQUE,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `group_name` varchar(100) NOT NULL COMMENT '考勤组名称',
+  `group_type` varchar(1) NOT NULL COMMENT '班制 1=固定班制 2=排班制 3=自由工时',
+  `work_days` varchar(200) NOT NULL DEFAULT '' COMMENT '考勤日（固定班制），如 1,2,3,4,5 表示周一至周五',
+  `start_time` varchar(5) NOT NULL DEFAULT '' COMMENT '上班时间 HH:mm（固定班制考勤时间）',
+  `end_time` varchar(5) NOT NULL DEFAULT '' COMMENT '下班时间 HH:mm（固定班制考勤时间），早于上班时间表示跨天',
+  `flexible_minutes` bigint NOT NULL DEFAULT 0 COMMENT '弹性分钟数（自由工时/固定班制可用，0=不弹性）',
+  `unassigned_shift_uuid` varchar(36) NOT NULL DEFAULT '' COMMENT '排班制未排班兜底班次（hrm_shift.uuid），预留 HRM-13 排班',
+  `default_shift_uuids` varchar(2000) NOT NULL DEFAULT '' COMMENT '考勤组默认班次集合（逗号分隔 hrm_shift.uuid），预留 HRM-13 排班',
+  `org_uuids` varchar(2000) NOT NULL DEFAULT '' COMMENT '适用范围-部门（逗号分隔 hrm_org.uuid，含下级部门）',
+  `member_uuids` varchar(2000) NOT NULL DEFAULT '' COMMENT '适用范围-指定人员（逗号分隔 hrm_employee.uuid）',
+  `managers` varchar(500) NOT NULL DEFAULT '' COMMENT '负责人（逗号分隔姓名/账号）',
+  `status` varchar(1) NOT NULL DEFAULT '1' COMMENT '状态 1=启用 0=停用',
+  `remark` varchar(500) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

@@ -439,6 +439,18 @@ declare namespace App {
             edit: string;
             delete: string;
           };
+          attendancegroup: {
+            add: string;
+            edit: string;
+            delete: string;
+            togglestatus: string;
+            members: string;
+            shiftusage: string;
+          };
+          attendanceconfig: {
+            save: string;
+            delete: string;
+          };
           transfer: {
             add: string;
             edit: string;
@@ -886,6 +898,84 @@ declare namespace App {
                 flexibleMinutes: string;
                 status: string;
                 remark: string;
+              };
+            };
+            group: {
+              title: string;
+              groupName: string;
+              groupType: {
+                title: string;
+                fixed: string;
+                scheduling: string;
+                flexible: string;
+              };
+              workTime: string;
+              workDays: string;
+              scope: string;
+              scopeDepts: string;
+              scopeMembers: string;
+              managers: string;
+              status: string;
+              remark: string;
+              enable: string;
+              disable: string;
+              confirmEnable: string;
+              confirmDisable: string;
+              flexibleNoTime: string;
+              schedulingFallback: string;
+              members: string;
+              noMembers: string;
+              addGroup: string;
+              editGroup: string;
+              weekday: {
+                1: string;
+                2: string;
+                3: string;
+                4: string;
+                5: string;
+                6: string;
+                7: string;
+              };
+              weekdayShort: {
+                1: string;
+                2: string;
+                3: string;
+                4: string;
+                5: string;
+                6: string;
+                7: string;
+              };
+              form: {
+                groupName: string;
+                groupType: string;
+                workDays: string;
+                orgScope: string;
+                memberScope: string;
+                managers: string;
+                status: string;
+                remark: string;
+              };
+            };
+            config: {
+              title: string;
+              org: string;
+              orgName: string;
+              quickStart: string;
+              editConfig: string;
+              recheck: string;
+              fallbackHint: string;
+              noRule: string;
+              sourceGroup: string;
+              sourceOrg: string;
+              healthEmployee: string;
+              healthSource: string;
+              healthyTotal: string;
+              healthyGroup: string;
+              healthyOrg: string;
+              healthyNoRule: string;
+              form: {
+                orgName: string;
+                org: string;
               };
             };
             leaveType: {

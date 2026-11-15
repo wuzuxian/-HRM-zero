@@ -183,6 +183,8 @@ const routeMap: RouteMap = {
   "hrm": "/hrm",
   "hrm_attendance": "/hrm/attendance",
   "hrm_attendance_setting": "/hrm/attendance/setting",
+  "hrm_attendance_setting_attendance-config": "/hrm/attendance/setting/attendance-config",
+  "hrm_attendance_setting_group": "/hrm/attendance/setting/group",
   "hrm_attendance_setting_leave-type": "/hrm/attendance/setting/leave-type",
   "hrm_attendance_setting_shift": "/hrm/attendance/setting/shift",
   "hrm_employee": "/hrm/employee",

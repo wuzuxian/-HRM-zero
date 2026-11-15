@@ -1,0 +1,67 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/attendanceconfig"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+type HrmAttendanceConfig {
+	Uuid       string  `json:"uuid"`
+	OrgUuid    string  `json:"orgUuid"`
+	OrgName    string  `json:"orgName"`
+	StartTime  string  `json:"startTime"`
+	EndTime    string  `json:"endTime"`
+	WorkDays   []int64 `json:"workDays"`
+	Remark     string  `json:"remark"`
+	CreateTime string  `json:"createTime"`
+	UpdateTime string  `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	OrgName string `form:"orgName,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmAttendanceConfig `json:"records"`
+}
+
+type SaveRequest {
+	OrgUuid   string  `json:"orgUuid"`
+	StartTime string  `json:"startTime,optional"`
+	EndTime   string  `json:"endTime,optional"`
+	WorkDays  []int64 `json:"workDays,optional"`
+	Remark    string  `json:"remark,optional"`
+}
+
+type SaveResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/attendanceconfig
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getAttendanceConfigList (ListRequest) returns (ListResponse)
+
+	@handler Save
+	post /hrm/saveAttendanceConfig (SaveRequest) returns (SaveResponse)
+
+	@handler Delete
+	post /hrm/deleteAttendanceConfig (DeleteRequest) returns (DeleteResponse)
+}
+

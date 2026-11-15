@@ -861,5 +861,158 @@ declare namespace Api {
       fileName: string;
       content: string;
     };
+    /**
+     * attendance group 班制 (groupType)
+     *
+     * - "1": 固定班制
+     * - "2": 排班制
+     * - "3": 自由工时
+     */
+    type AttendanceGroupType = '1' | '2' | '3';
+
+    /** hrm attendance group (考勤组, HRM-12) */
+    type AttendanceGroup = {
+      /** record uuid */
+      uuid: string;
+      /** record creator */
+      createBy: string;
+      /** record updater */
+      updateBy: string;
+      /** group name */
+      groupName: string;
+      /** group type: 固定班制/排班制/自由工时 */
+      groupType: AttendanceGroupType | '';
+      /** work days 1-7 (周一至周日) */
+      workDays: number[];
+      /** start time HH:mm (固定班制) */
+      startTime: string;
+      /** end time HH:mm (固定班制) */
+      endTime: string;
+      /** flexible minutes, 0 = not flexible */
+      flexibleMinutes: number;
+      /** 排班制未排班兜底班次 uuid (预留 HRM-13) */
+      unassignedShiftUuid: string;
+      /** 考勤组默认班次集合 (预留 HRM-13) */
+      defaultShiftUuids: string[];
+      /** 适用范围-部门 (含下级) */
+      orgUuids: string[];
+      /** 适用范围-指定人员 */
+      memberUuids: string[];
+      /** 负责人 */
+      managers: string[];
+      /** status: enabled/disabled */
+      status: AttendanceStatus | null;
+      /** remark */
+      remark: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** attendance group search params */
+    type AttendanceGroupSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.AttendanceGroup, 'groupName' | 'groupType' | 'status'> & Common.CommonSearchParams
+    >;
+
+    /** attendance group paginated list */
+    type AttendanceGroupList = Common.PaginatingQueryRecord<AttendanceGroup>;
+
+    /** add attendance group request */
+    type AddAttendanceGroupRequest = {
+      groupName: string;
+      groupType: AttendanceGroupType | '';
+      workDays?: number[];
+      startTime?: string;
+      endTime?: string;
+      flexibleMinutes?: number;
+      unassignedShiftUuid?: string;
+      defaultShiftUuids?: string[];
+      orgUuids?: string[];
+      memberUuids?: string[];
+      managers?: string[];
+      status?: AttendanceStatus;
+      remark?: string;
+    };
+
+    /** edit attendance group request */
+    type EditAttendanceGroupRequest = AddAttendanceGroupRequest & {
+      uuid: string;
+      status: AttendanceStatus;
+    };
+
+    /** effective group member (生效人数) */
+    type EffectiveGroupMember = {
+      uuid: string;
+      employeeNo: string;
+      name: string;
+      orgName: string;
+    };
+
+    /** attendance group members response */
+    type AttendanceGroupMembersResponse = {
+      total: number;
+      members: EffectiveGroupMember[];
+    };
+
+    /** effective attendance rule query response (三级回退: 考勤组 > 本部门 > 最近上级组织) */
+    type EffectiveAttendanceRuleResponse = {
+      found: boolean;
+      /** rule source: "group"=考勤组 "org"=组织默认规则 */
+      source: string;
+      sourceUuid: string;
+      sourceName: string;
+      groupType: AttendanceGroupType | '';
+      startTime: string;
+      endTime: string;
+      workDays: number[];
+      flexibleMinutes: number;
+    };
+
+    /** shift usage response (班次引用查询, 支撑班次页 引用考勤组 列) */
+    type AttendanceGroupShiftUsageResponse = {
+      count: number;
+      groups: {
+        uuid: string;
+        groupName: string;
+        status: AttendanceStatus | null;
+      }[];
+    };
+
+    /** hrm attendance config (组织默认考勤规则, 每组织一条; HRM-12) */
+    type AttendanceConfig = {
+      /** record uuid */
+      uuid: string;
+      /** record creator */
+      createBy: string;
+      /** record updater */
+      updateBy: string;
+      /** org uuid */
+      orgUuid: string;
+      /** org name (derived) */
+      orgName: string;
+      startTime: string;
+      endTime: string;
+      /** work days 1-7 */
+      workDays: number[];
+      remark: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** attendance config search params */
+    type AttendanceConfigSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.AttendanceConfig, 'orgName'> & Common.CommonSearchParams
+    >;
+
+    /** attendance config paginated list */
+    type AttendanceConfigList = Common.PaginatingQueryRecord<AttendanceConfig>;
+
+    /** save attendance config request (upsert: 快速开始/新增/编辑共用) */
+    type SaveAttendanceConfigRequest = {
+      orgUuid: string;
+      startTime?: string;
+      endTime?: string;
+      workDays?: number[];
+      remark?: string;
+    };
   }
 }
