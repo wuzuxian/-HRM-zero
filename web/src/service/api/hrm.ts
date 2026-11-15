@@ -1207,6 +1207,55 @@ export function AdjustLeaveBalance(req: Api.Hrm.LeaveBalanceAdjustRequest) {
   });
 }
 
+// ===== HRM-19 请假销假单 (HR205, 假勤管理域 假勤申请) =====
+
+/** get hrm leave bills (请假销假单 HR205) paginated list — defaults to 「我的单据」 server-side */
+export function GetLeaveList(params?: Api.Hrm.LeaveSearchParams) {
+  return request<Api.Hrm.LeaveList>({
+    url: '/api/v1/hrm/getLeaveList',
+    method: 'get',
+    params
+  });
+}
+
+/** add hrm leave bill (预计天数由后端按 起止时间自动计算, 0.5 天步进) */
+export function AddLeave(req: Api.Hrm.AddLeaveRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addLeave',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit hrm leave bill (only in editable 单据状态; 预计天数随起止时间重算) */
+export function EditLeave(req: Api.Hrm.EditLeaveRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editLeave',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete hrm leave bills (only in editable 单据状态) */
+export function DeleteLeave(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteLeave',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** cancel (销假): 回填实际开始/结束时间, 实际天数自动计算; 余额按差额多退少补 */
+export function CancelLeave(req: Api.Hrm.CancelLeaveRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/cancelLeave',
+    method: 'post',
+    data: req
+  });
+}
+
 // ===== HRM-36 个税管理三件套 (薪酬管理域 个税管理) =====
 
 /** get 员工个税档案 paginated list (员工唯一) */

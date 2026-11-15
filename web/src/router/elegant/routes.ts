@@ -79,6 +79,25 @@ export const generatedRoutes: GeneratedRoute[] = [
         },
         children: [
           {
+            name: 'hrm_attendance_apply',
+            path: '/hrm/attendance/apply',
+            meta: {
+              title: 'hrm_attendance_apply',
+              i18nKey: 'route.hrm_attendance_apply'
+            },
+            children: [
+              {
+                name: 'hrm_attendance_apply_leave-cancel-list',
+                path: '/hrm/attendance/apply/leave-cancel-list',
+                component: 'view.hrm_attendance_apply_leave-cancel-list',
+                meta: {
+                  title: 'hrm_attendance_apply_leave-cancel-list',
+                  i18nKey: 'route.hrm_attendance_apply_leave-cancel-list'
+                }
+              }
+            ]
+          },
+          {
             name: 'hrm_attendance_data',
             path: '/hrm/attendance/data',
             meta: {

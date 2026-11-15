@@ -3862,6 +3862,90 @@ declare namespace Api {
       days: number;
       reason?: string;
     };
+    // ===== HRM-19 请假销假单 (HR205) =====
+
+    /** hrm leave bill (请假销假单 HR205) — 生命周期走共享单据底座 v1/hrm/bill (billType "205") */
+    type HrmLeave = {
+      /** record uuid */
+      uuid: string;
+      /** 单据编号 HR205-... */
+      billNo: string;
+      /** 单据状态 */
+      status: BillStatus;
+      /** 员工档案 uuid */
+      employeeUuid: string;
+      /** 员工工号（快照） */
+      employeeNo: string;
+      /** 员工姓名（快照） */
+      employeeName: string;
+      /** 部门（组织 uuid，快照） */
+      orgUuid: string;
+      /** 部门名称（快照） */
+      orgName: string;
+      /** 假期类型编码 */
+      leaveTypeCode: string;
+      /** 假期类型名称（快照） */
+      leaveTypeName: string;
+      /** 预计开始时间 YYYY-MM-DD HH:MM:SS */
+      planStartTime: string;
+      /** 预计结束时间 YYYY-MM-DD HH:MM:SS */
+      planEndTime: string;
+      /** 预计天数（自动计算, 0.5 天步进） */
+      planDays: number;
+      /** 请假事由 */
+      reason: string;
+      /** 实际开始时间（销假回填） */
+      actualStartTime: string;
+      /** 实际结束时间（销假回填） */
+      actualEndTime: string;
+      /** 实际天数（销假自动计算） */
+      actualDays: number;
+      /** 销假是否已完成 1=是 0=否 */
+      settled: number;
+      /** 申请人 uuid */
+      creatorUuid: string;
+      /** 申请人姓名 */
+      creatorName: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** leave bill search params */
+    type LeaveSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.HrmLeave, 'billNo' | 'status' | 'leaveTypeCode'> & Common.CommonSearchParams
+    >;
+
+    /** leave bill paginated list */
+    type LeaveList = Common.PaginatingQueryRecord<Api.Hrm.HrmLeave>;
+
+    /** add leave bill request (预计天数后端自动计算) */
+    type AddLeaveRequest = {
+      employeeUuid?: string;
+      employeeNo: string;
+      employeeName: string;
+      orgUuid?: string;
+      orgName?: string;
+      leaveTypeCode: string;
+      /** YYYY-MM-DD HH:MM:SS */
+      planStartTime: string;
+      /** YYYY-MM-DD HH:MM:SS */
+      planEndTime: string;
+      reason?: string;
+    };
+
+    /** edit leave bill request (only in editable 单据状态) */
+    type EditLeaveRequest = AddLeaveRequest & {
+      uuid: string;
+    };
+
+    /** cancel leave (销假) request — 实际天数自动计算, 余额差额多退少补 */
+    type CancelLeaveRequest = {
+      uuid: string;
+      /** YYYY-MM-DD HH:MM:SS */
+      actualStartTime: string;
+      /** YYYY-MM-DD HH:MM:SS */
+      actualEndTime: string;
+    };
     // ===== HRM-36 个税管理三件套 =====
 
     /** 居民类型: resident=居民个人 non_resident=非居民个人 */
