@@ -26,6 +26,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   hrm_attendance_setting_group: () => import("@/views/hrm/attendance/setting/group/index.vue"),
   "hrm_attendance_setting_leave-type": () => import("@/views/hrm/attendance/setting/leave-type/index.vue"),
   hrm_attendance_setting_shift: () => import("@/views/hrm/attendance/setting/shift/index.vue"),
+  "hrm_employee-relation_entry-list": () => import("@/views/hrm/employee-relation/entry-list/index.vue"),
   "hrm_employee-relation_transfer-list": () => import("@/views/hrm/employee-relation/transfer-list/index.vue"),
   "hrm_employee_employee-archive-list": () => import("@/views/hrm/employee/employee-archive-list/index.vue"),
   "hrm_org_org-chart": () => import("@/views/hrm/org/org-chart/index.vue"),

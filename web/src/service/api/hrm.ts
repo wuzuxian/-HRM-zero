@@ -779,3 +779,50 @@ export function ImportCandidate(req: Api.Hrm.ImportCandidateRequest) {
   });
 }
 
+
+/** get hrm entry bill (员工入职单 HR201) paginated list — defaults to 「我的单据」 server-side */
+export function GetEntryList(params?: Api.Hrm.EntrySearchParams) {
+  return request<Api.Hrm.EntryList>({
+    url: '/api/v1/hrm/getEntryList',
+    method: 'get',
+    params
+  });
+}
+
+/** get hrm entry bill detail (带三子表快照) */
+export function GetEntryDetail(uuid: string) {
+  return request<Api.Hrm.EntryDetail>({
+    url: '/api/v1/hrm/getEntryDetail',
+    method: 'get',
+    params: { uuid }
+  });
+}
+
+/** add hrm entry bill */
+export function AddEntry(req: Api.Hrm.AddEntryRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addEntry',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit hrm entry bill (only in editable 单据状态; 已建档的不可改) */
+export function EditEntry(req: Api.Hrm.EditEntryRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editEntry',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete hrm entry bills (only in editable 单据状态; 已建档的不可删) */
+export function DeleteEntry(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteEntry',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}

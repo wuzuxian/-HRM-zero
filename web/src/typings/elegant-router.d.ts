@@ -44,6 +44,7 @@ declare module "@elegant-router/types" {
     "hrm_employee": "/hrm/employee";
     "hrm_employee_employee-archive-list": "/hrm/employee/employee-archive-list";
     "hrm_employee-relation": "/hrm/employee-relation";
+    "hrm_employee-relation_entry-list": "/hrm/employee-relation/entry-list";
     "hrm_employee-relation_transfer-list": "/hrm/employee-relation/transfer-list";
     "hrm_org": "/hrm/org";
     "hrm_org_org-chart": "/hrm/org/org-chart";
@@ -154,6 +155,7 @@ declare module "@elegant-router/types" {
     | "hrm_attendance_setting_group"
     | "hrm_attendance_setting_leave-type"
     | "hrm_attendance_setting_shift"
+    | "hrm_employee-relation_entry-list"
     | "hrm_employee-relation_transfer-list"
     | "hrm_employee_employee-archive-list"
     | "hrm_org_org-chart"
