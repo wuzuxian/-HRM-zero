@@ -1714,6 +1714,92 @@
         ]
       }
     },
+    "/api/v1/hrm/addOvertimeBill": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:overtimebill:add",
+        "operationId": "v1/Hrm/OvertimebillAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "dayType": {
+                  "description": "1/2/3",
+                  "type": "string"
+                },
+                "employeeName": {
+                  "type": "string"
+                },
+                "employeeNo": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "endTime": {
+                  "description": "YYYY-MM-DD HH:MM:SS",
+                  "type": "string"
+                },
+                "orgName": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "overtimeDate": {
+                  "description": "YYYY-MM-DD",
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "startTime": {
+                  "description": "YYYY-MM-DD HH:MM:SS",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "employeeNo",
+                "employeeName",
+                "overtimeDate",
+                "dayType",
+                "startTime",
+                "endTime"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/overtimebill"
+        ]
+      }
+    },
     "/api/v1/hrm/addOvertimeRule": {
       "post": {
         "consumes": [
@@ -3703,6 +3789,65 @@
         ]
       }
     },
+    "/api/v1/hrm/confirmOvertimeBill": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:overtimebill:confirm",
+        "operationId": "v1/Hrm/OvertimebillConfirm",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "compType": {
+                  "description": "comp_leave / other",
+                  "type": "string"
+                },
+                "confirmHours": {
+                  "type": "number"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "confirmHours",
+                "compType"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Confirm",
+        "tags": [
+          "v1/hrm/overtimebill"
+        ]
+      }
+    },
     "/api/v1/hrm/copyScheduleWeek": {
       "post": {
         "consumes": [
@@ -4402,6 +4547,59 @@
         "summary": "Delete",
         "tags": [
           "v1/hrm/org"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteOvertimeBill": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:overtimebill:delete",
+        "operationId": "v1/Hrm/OvertimebillDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/overtimebill"
         ]
       }
     },
@@ -6777,6 +6975,92 @@
         "summary": "Edit",
         "tags": [
           "v1/hrm/org"
+        ]
+      }
+    },
+    "/api/v1/hrm/editOvertimeBill": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:overtimebill:edit",
+        "operationId": "v1/Hrm/OvertimebillEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "dayType": {
+                  "type": "string"
+                },
+                "employeeName": {
+                  "type": "string"
+                },
+                "employeeNo": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "endTime": {
+                  "type": "string"
+                },
+                "orgName": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "overtimeDate": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "startTime": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "employeeNo",
+                "employeeName",
+                "overtimeDate",
+                "dayType",
+                "startTime",
+                "endTime"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/overtimebill"
         ]
       }
     },
@@ -13552,6 +13836,222 @@
         ]
       }
     },
+    "/api/v1/hrm/getOvertimeBillList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:overtimebill:list",
+        "operationId": "v1/Hrm/OvertimebillList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据编号（模糊）",
+            "in": "query",
+            "name": "billNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据状态",
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "当天类型 1/2/3",
+            "in": "query",
+            "name": "dayType",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "1=强制只看我的单据",
+            "in": "query",
+            "name": "mine",
+            "type": "integer"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "accrueHours": {
+                        "description": "折算调休入账小时（审批通过落定）",
+                        "type": "number"
+                      },
+                      "applyHours": {
+                        "description": "申请时长（小时，自动计算）",
+                        "type": "number"
+                      },
+                      "billNo": {
+                        "description": "单据编号 HR217-...",
+                        "type": "string"
+                      },
+                      "compMultiplier": {
+                        "description": "调休倍数（提交时快照）",
+                        "type": "number"
+                      },
+                      "compType": {
+                        "description": "补偿方式 comp_leave=调休 other=其他",
+                        "type": "string"
+                      },
+                      "confirmHours": {
+                        "description": "核定时长（小时，0=未核定）",
+                        "type": "number"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "creatorName": {
+                        "description": "申请人姓名",
+                        "type": "string"
+                      },
+                      "creatorUuid": {
+                        "description": "申请人 uuid",
+                        "type": "string"
+                      },
+                      "dayType": {
+                        "description": "当天类型 1=工作日 2=休息日 3=法定节假日",
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "description": "员工姓名（快照）",
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "description": "员工工号（快照）",
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "description": "员工档案 uuid",
+                        "type": "string"
+                      },
+                      "endTime": {
+                        "description": "结束时间 YYYY-MM-DD HH:MM:SS",
+                        "type": "string"
+                      },
+                      "orgName": {
+                        "description": "部门名称（快照）",
+                        "type": "string"
+                      },
+                      "orgUuid": {
+                        "description": "员工所属部门（组织 uuid，快照）",
+                        "type": "string"
+                      },
+                      "overtimeDate": {
+                        "description": "加班日期 YYYY-MM-DD",
+                        "type": "string"
+                      },
+                      "reason": {
+                        "description": "加班事由",
+                        "type": "string"
+                      },
+                      "ruleSource": {
+                        "description": "命中加班规则来源 group/org/global",
+                        "type": "string"
+                      },
+                      "settled": {
+                        "description": "调休入账是否已完成 1=是 0=否",
+                        "type": "integer"
+                      },
+                      "source": {
+                        "description": "来源 employee=员工申请",
+                        "type": "string"
+                      },
+                      "startTime": {
+                        "description": "开始时间 YYYY-MM-DD HH:MM:SS",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "单据状态 unsubmitted/approving/approved/rejected/revoked",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "billNo",
+                      "status",
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "orgUuid",
+                      "orgName",
+                      "overtimeDate",
+                      "dayType",
+                      "startTime",
+                      "endTime",
+                      "applyHours",
+                      "reason",
+                      "source",
+                      "ruleSource",
+                      "compMultiplier",
+                      "confirmHours",
+                      "compType",
+                      "accrueHours",
+                      "settled",
+                      "creatorUuid",
+                      "creatorName",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/overtimebill"
+        ]
+      }
+    },
     "/api/v1/hrm/getOvertimeRuleList": {
       "get": {
         "description": "接口权限编码:v1:hrm:overtimerule:list",
@@ -19144,6 +19644,62 @@
         "summary": "Submit",
         "tags": [
           "v1/hrm/bill"
+        ]
+      }
+    },
+    "/api/v1/hrm/submitOvertimeBill": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:overtimebill:submit",
+        "operationId": "v1/Hrm/OvertimebillSubmit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "status": {
+                  "description": "最终单据状态 approving/approved",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Submit",
+        "tags": [
+          "v1/hrm/overtimebill"
         ]
       }
     },

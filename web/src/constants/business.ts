@@ -61,6 +61,15 @@ export const hrmBillStatusRecord: Record<Api.Hrm.BillStatus, App.I18n.I18nKey> =
 
 export const hrmBillStatusOptions = transformRecordToOption(hrmBillStatusRecord);
 
+/** 加班当天类型 (GLOSSARY「当天类型」, HRM-21 加班申请单) */
+export const hrmOvertimeDayTypeRecord: Record<Api.Hrm.OvertimeDayType, App.I18n.I18nKey> = {
+  '1': 'page.hrm.attendance.overtimeBill.dayTypeWorkday',
+  '2': 'page.hrm.attendance.overtimeBill.dayTypeRestday',
+  '3': 'page.hrm.attendance.overtimeBill.dayTypeHoliday'
+};
+
+export const hrmOvertimeDayTypeOptions = transformRecordToOption(hrmOvertimeDayTypeRecord);
+
 /** 异动类型 (人事调动 HR203) */
 export const hrmTransferChangeTypeRecord: Record<Api.Hrm.TransferChangeType, App.I18n.I18nKey> = {
   post: 'page.hrm.employeeRelation.transfer.changeType.post',

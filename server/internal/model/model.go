@@ -27,6 +27,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_leave_bill"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_leave_type"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_org"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_overtime_bill"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_overtime_rule"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_indicator"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_scheme"
@@ -84,6 +85,7 @@ type Model struct {
 	HrmLeaveBill                  hrm_leave_bill.HrmLeaveBillModel
 	HrmLeaveType                  hrm_leave_type.HrmLeaveTypeModel
 	HrmOrg                        hrm_org.HrmOrgModel
+	HrmOvertimeBill               hrm_overtime_bill.HrmOvertimeBillModel
 	HrmOvertimeRule               hrm_overtime_rule.HrmOvertimeRuleModel
 	HrmPerfIndicator              hrm_perf_indicator.HrmPerfIndicatorModel
 	HrmPerfScheme                 hrm_perf_scheme.HrmPerfSchemeModel
@@ -142,6 +144,7 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmLeaveBill:                  hrm_leave_bill.NewHrmLeaveBillModel(conn, op...),
 		HrmLeaveType:                  hrm_leave_type.NewHrmLeaveTypeModel(conn, op...),
 		HrmOrg:                        hrm_org.NewHrmOrgModel(conn, op...),
+		HrmOvertimeBill:               hrm_overtime_bill.NewHrmOvertimeBillModel(conn, op...),
 		HrmOvertimeRule:               hrm_overtime_rule.NewHrmOvertimeRuleModel(conn, op...),
 		HrmPerfIndicator:              hrm_perf_indicator.NewHrmPerfIndicatorModel(conn, op...),
 		HrmPerfScheme:                 hrm_perf_scheme.NewHrmPerfSchemeModel(conn, op...),

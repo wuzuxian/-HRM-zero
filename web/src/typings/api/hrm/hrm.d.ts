@@ -1582,8 +1582,7 @@ declare namespace Api {
 
     /** position search params (demo-inventory §5: 筛选 岗位名称/来源需求单/岗位类别) */
     type PositionSearchParams = CommonType.RecordNullable<
-      Pick<Api.Hrm.HrmPosition, 'postName' | 'requirementUuid' | 'postCategory' | 'status'> &
-        Common.CommonSearchParams
+      Pick<Api.Hrm.HrmPosition, 'postName' | 'requirementUuid' | 'postCategory' | 'status'> & Common.CommonSearchParams
     >;
 
     /** position paginated list */
@@ -3431,8 +3430,7 @@ declare namespace Api {
 
     /** position search params (demo-inventory §5: 筛选 岗位名称/来源需求单/岗位类别) */
     type PositionSearchParams = CommonType.RecordNullable<
-      Pick<Api.Hrm.HrmPosition, 'postName' | 'requirementUuid' | 'postCategory' | 'status'> &
-        Common.CommonSearchParams
+      Pick<Api.Hrm.HrmPosition, 'postName' | 'requirementUuid' | 'postCategory' | 'status'> & Common.CommonSearchParams
     >;
 
     /** position paginated list */
@@ -4210,6 +4208,102 @@ declare namespace Api {
       actualStartTime: string;
       /** YYYY-MM-DD HH:MM:SS */
       actualEndTime: string;
+    };
+    // ===== HRM-21 加班申请单 (HR217) =====
+
+    /** 加班当天类型 (GLOSSARY「当天类型」) */
+    type OvertimeDayType = '1' | '2' | '3';
+
+    /** 补偿方式 */
+    type OvertimeCompType = 'comp_leave' | 'other';
+
+    /** hrm overtime bill (加班申请单 HR217) — 生命周期走共享单据底座 v1/hrm/bill (billType "217") */
+    type HrmOvertimeBill = {
+      /** record uuid */
+      uuid: string;
+      /** 单据编号 HR217-... */
+      billNo: string;
+      /** 单据状态 */
+      status: BillStatus;
+      /** 员工档案 uuid */
+      employeeUuid: string;
+      /** 员工工号（快照） */
+      employeeNo: string;
+      /** 员工姓名（快照） */
+      employeeName: string;
+      /** 部门（组织 uuid，快照） */
+      orgUuid: string;
+      /** 部门名称（快照） */
+      orgName: string;
+      /** 加班日期 YYYY-MM-DD */
+      overtimeDate: string;
+      /** 当天类型 1=工作日 2=休息日 3=法定节假日 */
+      dayType: OvertimeDayType;
+      /** 开始时间 YYYY-MM-DD HH:MM:SS */
+      startTime: string;
+      /** 结束时间 YYYY-MM-DD HH:MM:SS */
+      endTime: string;
+      /** 申请时长（小时，自动计算） */
+      applyHours: number;
+      /** 加班事由 */
+      reason: string;
+      /** 来源 employee=员工申请 */
+      source: string;
+      /** 命中加班规则来源 group/org/global */
+      ruleSource: string;
+      /** 调休倍数（提交时快照） */
+      compMultiplier: number;
+      /** 核定时长（小时，0=未核定） */
+      confirmHours: number;
+      /** 补偿方式 comp_leave=调休 other=其他 */
+      compType: OvertimeCompType | '';
+      /** 折算调休入账小时（审批通过落定） */
+      accrueHours: number;
+      /** 调休入账是否已完成 1=是 0=否 */
+      settled: number;
+      /** 申请人 uuid */
+      creatorUuid: string;
+      /** 申请人姓名 */
+      creatorName: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** overtime bill search params */
+    type OvertimeBillSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.HrmOvertimeBill, 'billNo' | 'status' | 'dayType'> & Common.CommonSearchParams
+    >;
+
+    /** overtime bill paginated list */
+    type OvertimeBillList = Common.PaginatingQueryRecord<Api.Hrm.HrmOvertimeBill>;
+
+    /** add overtime bill request (申请时长后端按起止时间自动计算, 最小计算单位向下取整) */
+    type AddOvertimeBillRequest = {
+      employeeUuid?: string;
+      employeeNo: string;
+      employeeName: string;
+      orgUuid?: string;
+      orgName?: string;
+      /** YYYY-MM-DD */
+      overtimeDate: string;
+      /** 1/2/3 */
+      dayType: OvertimeDayType;
+      /** YYYY-MM-DD HH:MM:SS */
+      startTime: string;
+      /** YYYY-MM-DD HH:MM:SS */
+      endTime: string;
+      reason?: string;
+    };
+
+    type EditOvertimeBillRequest = AddOvertimeBillRequest & {
+      uuid: string;
+    };
+
+    /** 核定: 核定时长(≤申请时长) + 补偿方式(调休/其他) */
+    type ConfirmOvertimeBillRequest = {
+      uuid: string;
+      confirmHours: number;
+      compType: OvertimeCompType;
     };
     // ===== HRM-36 个税管理三件套 =====
 
