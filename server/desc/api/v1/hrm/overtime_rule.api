@@ -1,0 +1,134 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/overtimerule"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+type DayOvertimePolicy {
+	ApprovalRequired int64   `json:"approvalRequired"`
+	PunchRequired    int64   `json:"punchRequired"`
+	CompMultiplier   float64 `json:"compMultiplier"`
+}
+
+type HrmOvertimeRule {
+	Uuid              string            `json:"uuid"`
+	RuleName          string            `json:"ruleName"`
+	Workday           DayOvertimePolicy `json:"workday"`
+	Restday           DayOvertimePolicy `json:"restday"`
+	Holiday           DayOvertimePolicy `json:"holiday"`
+	MinUnitMinutes    int64             `json:"minUnitMinutes"`
+	MonthlyLimitHours float64           `json:"monthlyLimitHours"`
+	GroupUuids        []string          `json:"groupUuids"`
+	OrgUuid           string            `json:"orgUuid"`
+	Status            string            `json:"status"`
+	Remark            string            `json:"remark"`
+	CreateTime        string            `json:"createTime"`
+	UpdateTime        string            `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	RuleName string `form:"ruleName,optional"`
+	Status   string `form:"status,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmOvertimeRule `json:"records"`
+}
+
+type AddRequest {
+	RuleName          string            `json:"ruleName"`
+	Workday           DayOvertimePolicy `json:"workday"`
+	Restday           DayOvertimePolicy `json:"restday"`
+	Holiday           DayOvertimePolicy `json:"holiday"`
+	MinUnitMinutes    int64             `json:"minUnitMinutes,optional"`
+	MonthlyLimitHours float64           `json:"monthlyLimitHours,optional"`
+	GroupUuids        []string          `json:"groupUuids,optional"`
+	OrgUuid           string            `json:"orgUuid,optional"`
+	Status            string            `json:"status,default=1"`
+	Remark            string            `json:"remark,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid              string            `json:"uuid"`
+	RuleName          string            `json:"ruleName"`
+	Workday           DayOvertimePolicy `json:"workday"`
+	Restday           DayOvertimePolicy `json:"restday"`
+	Holiday           DayOvertimePolicy `json:"holiday"`
+	MinUnitMinutes    int64             `json:"minUnitMinutes,optional"`
+	MonthlyLimitHours float64           `json:"monthlyLimitHours,optional"`
+	GroupUuids        []string          `json:"groupUuids,optional"`
+	OrgUuid           string            `json:"orgUuid,optional"`
+	Status            string            `json:"status"`
+	Remark            string            `json:"remark,optional"`
+}
+
+type EditResponse {}
+
+type ToggleStatusRequest {
+	Uuid   string `json:"uuid"`
+	Status string `json:"status"`
+}
+
+type ToggleStatusResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+type ResolveRequest {
+	GroupUuid string `json:"groupUuid,optional"`
+	OrgUuid   string `json:"orgUuid,optional"`
+	DayType   string `json:"dayType"`
+}
+
+type ResolveResponse {
+	Found             bool    `json:"found"`
+	Source            string  `json:"source"`
+	SourceUuid        string  `json:"sourceUuid"`
+	SourceName        string  `json:"sourceName"`
+	DayType           string  `json:"dayType"`
+	ApprovalRequired  bool    `json:"approvalRequired"`
+	PunchRequired     bool    `json:"punchRequired"`
+	CompMultiplier    float64 `json:"compMultiplier"`
+	MinUnitMinutes    int64   `json:"minUnitMinutes"`
+	MonthlyLimitHours float64 `json:"monthlyLimitHours"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/overtimerule
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getOvertimeRuleList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addOvertimeRule (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editOvertimeRule (EditRequest) returns (EditResponse)
+
+	@handler ToggleStatus
+	post /hrm/toggleOvertimeRuleStatus (ToggleStatusRequest) returns (ToggleStatusResponse)
+
+	@handler Delete
+	post /hrm/deleteOvertimeRule (DeleteRequest) returns (DeleteResponse)
+
+	@handler Resolve
+	get /hrm/resolveOvertimeRule (ResolveRequest) returns (ResolveResponse)
+}
+

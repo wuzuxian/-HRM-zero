@@ -18,6 +18,7 @@ import (
 	v1hrmemployee "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/employee"
 	v1hrmleavetype "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/leavetype"
 	v1hrmorg "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/org"
+	v1hrmovertimerule "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/overtimerule"
 	v1hrmperf_indicator "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_indicator"
 	v1hrmperf_scheme "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_scheme"
 	v1hrmperf_template "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_template"
@@ -466,6 +467,47 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodPost,
 						Path:    "/hrm/importOrg",
 						Handler: v1hrmorg.Import(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addOvertimeRule",
+						Handler: v1hrmovertimerule.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteOvertimeRule",
+						Handler: v1hrmovertimerule.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editOvertimeRule",
+						Handler: v1hrmovertimerule.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getOvertimeRuleList",
+						Handler: v1hrmovertimerule.List(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/resolveOvertimeRule",
+						Handler: v1hrmovertimerule.Resolve(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/toggleOvertimeRuleStatus",
+						Handler: v1hrmovertimerule.ToggleStatus(serverCtx),
 					},
 				}...,
 			),

@@ -130,6 +130,15 @@ const (
 	SalaryItemInvalidCode = 10450
 	// SalaryItemPresetGuardCode 预置薪资项目不可删除（可停用）
 	SalaryItemPresetGuardCode = 10451
+
+	// HRM 假勤设置：加班规则（HRM-13）业务错误码。10462-10464 段
+	// （1044x 已被候选人/薪酬占用，10450-10458 证书模板/发放，10460-10461 员工账号同步）。
+	// OvertimeRuleNotFoundCode 加班规则不存在
+	OvertimeRuleNotFoundCode = 10462
+	// OvertimeRuleInvalidCode 加班规则参数非法（名称/当天策略/调休倍数/最小单位/月上限/考勤组绑定/状态等）
+	OvertimeRuleInvalidCode = 10463
+	// OvertimeRuleDayTypeInvalidCode 加班当天类型非法（须为 工作日/休息日/法定节假日）
+	OvertimeRuleDayTypeInvalidCode = 10464
 )
 
 func init() {
@@ -196,4 +205,8 @@ func init() {
 	status.Register(SalaryItemCodeDuplicateCode)
 	status.Register(SalaryItemInvalidCode)
 	status.Register(SalaryItemPresetGuardCode)
+
+	status.Register(OvertimeRuleNotFoundCode)
+	status.Register(OvertimeRuleInvalidCode)
+	status.Register(OvertimeRuleDayTypeInvalidCode)
 }
