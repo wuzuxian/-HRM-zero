@@ -7,6 +7,7 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/jzero-io/jzero/core/status"
 	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/zeromicro/go-zero/core/logx"
 
@@ -16,7 +17,6 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_punch_record"
 	"github.com/jzero-io/jzero-admin/server/internal/svc"
 	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/punch"
-	"github.com/jzero-io/jzero/core/status"
 )
 
 type MyList struct {

@@ -187,6 +187,8 @@ const local: App.I18n.Schema = {
     hrm_attendance_data: '假期数据',
     hrm_attendance_my: '我的假勤',
     'hrm_attendance_data_leave-balance': '假期余额',
+    hrm_attendance_apply: '假勤申请',
+    'hrm_attendance_apply_leave-cancel-list': '请假销假',
     'hrm_attendance_my_attendance-punch': '考勤打卡',
     'hrm_attendance_data_punch-record': '打卡记录',
     hrm_attendance_scheduling: '排班管理',
@@ -274,6 +276,12 @@ const local: App.I18n.Schema = {
       leavebalance: {
         init: '初始化本年度额度',
         adjust: '调整余额'
+      },
+      leave: {
+        add: '新增请假单',
+        edit: '编辑请假单',
+        delete: '删除请假单',
+        cancel: '销假'
       },
       attendancegroup: {
         add: '新增考勤组',
@@ -1184,6 +1192,14 @@ const local: App.I18n.Schema = {
       attendance: {
         yes: '是',
         no: '否',
+        billStatus: {
+          title: '单据状态',
+          unsubmitted: '未提交',
+          approving: '审批中',
+          approved: '审批通过',
+          rejected: '审批不通过',
+          revoked: '已撤销'
+        },
         status: {
           enabled: '启用',
           disabled: '停用'
@@ -1358,6 +1374,55 @@ const local: App.I18n.Schema = {
             name: '请输入姓名',
             leaveTypeCode: '请选择假期类型',
             reason: '请输入调整原因（选填）'
+          }
+        },
+        leaveCancel: {
+          title: '请假销假',
+          billNo: '单据编号',
+          leaveTypeName: '请假类型',
+          planStartTime: '预计开始时间',
+          planEndTime: '预计结束时间',
+          planDays: '预计天数',
+          actualStartTime: '实际开始时间',
+          actualEndTime: '实际结束时间',
+          actualDays: '实际天数',
+          employeeName: '申请人',
+          employeeNo: '工号',
+          orgName: '部门',
+          createTime: '创建时间',
+          planRange: '预计起止时间',
+          actualRange: '实际起止时间',
+          addLeave: '新增请假单',
+          editLeave: '编辑请假单',
+          cancelLeave: '销假',
+          submit: '提交',
+          approve: '审批通过',
+          reject: '审批驳回',
+          revoke: '撤销',
+          records: '审批记录',
+          noRecords: '暂无审批记录',
+          confirmSubmit: '确认提交该请假单？',
+          confirmApprove: '确认审批通过？审批通过将扣减假期余额（仅余额管理类假期）。',
+          confirmReject: '确认审批驳回？',
+          confirmRevoke: '确认撤销该单据？',
+          cancelSuccess: '销假完成，余额已按差额多退少补',
+          settleHintPrefix: '预计休假',
+          settleHintSuffix: '天；实际天数按 0.5 天步进自动计算',
+          settleRule: '实际少于预计退回差额，实际多于预计补扣差额（可用不足时销假失败）',
+          dayPrecision: '天数口径：时长/8 向上取整到 0.5 天步进，最短 0.5 天',
+          form: {
+            billNo: '请输入单据编号',
+            status: '请选择单据状态',
+            leaveTypeCode: '请选择请假类型',
+            employeeNo: '请输入工号',
+            employeeName: '请输入姓名',
+            planStart: '预计开始时间',
+            planEnd: '预计结束时间',
+            planRangeRequired: '请选择预计起止时间',
+            actualStart: '实际开始时间',
+            actualEnd: '实际结束时间',
+            actualRangeRequired: '请选择实际起止时间',
+            reason: '请输入请假事由（选填）'
           }
         },
         attendancePunch: {

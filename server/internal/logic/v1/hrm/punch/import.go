@@ -15,11 +15,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/jzero-io/jzero/core/status"
+	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
-
-	"github.com/jzero-io/jzero/core/stores/condition"
-	"github.com/jzero-io/jzero/core/status"
 
 	"github.com/jzero-io/jzero-admin/server/internal/errcodes"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee"
@@ -68,15 +67,15 @@ func (l *Import) Import(req *types.ImportRequest) (resp *types.ImportResponse, e
 
 	// 预校验全部行（员工/日期/时间），任一非法即整批拒绝。
 	type pendingRow struct {
-		employee *hrm_employee.HrmEmployee
-		date     string
-		in       sql.NullTime
-		out      sql.NullTime
-		inStatus string
-		inLoc    string
+		employee  *hrm_employee.HrmEmployee
+		date      string
+		in        sql.NullTime
+		out       sql.NullTime
+		inStatus  string
+		inLoc     string
 		outStatus string
-		outLoc   string
-		overtime string
+		outLoc    string
+		overtime  string
 	}
 	var pending []pendingRow
 	seen := map[string]bool{}
@@ -161,7 +160,7 @@ func (l *Import) Import(req *types.ImportRequest) (resp *types.ImportResponse, e
 				Username:     usernameOf(ctx, l.svcCtx, p.employee.UserUuid),
 				EmployeeNo:   p.employee.EmployeeNo,
 				EmployeeName: p.employee.Name,
-				ClockInTime: p.in, ClockInStatus: p.inStatus, ClockInLocation: p.inLoc,
+				ClockInTime:  p.in, ClockInStatus: p.inStatus, ClockInLocation: p.inLoc,
 				ClockOutTime: p.out, ClockOutStatus: p.outStatus, ClockOutLocation: p.outLoc,
 				Overtime: p.overtime,
 				Source:   SourceImport,

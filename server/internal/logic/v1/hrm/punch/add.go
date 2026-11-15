@@ -9,10 +9,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/logx"
-
-	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/jzero-io/jzero/core/status"
+	"github.com/jzero-io/jzero/core/stores/condition"
+	"github.com/zeromicro/go-zero/core/logx"
 
 	"github.com/jzero-io/jzero-admin/server/internal/errcodes"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee"
@@ -64,19 +63,19 @@ func (l *Add) Add(req *types.AddRequest) (resp *types.AddResponse, err error) {
 	}
 
 	row := &hrm_punch_record.HrmPunchRecord{
-		Uuid:         newUuid(),
-		PunchDate:    req.PunchDate,
-		EmployeeUuid: req.EmployeeUuid,
-		UserUuid:     employee.UserUuid,
-		Username:     usernameOf(l.ctx, l.svcCtx, employee.UserUuid),
-		EmployeeNo:   employee.EmployeeNo,
-		EmployeeName: employee.Name,
-		ClockInStatus:  req.ClockInStatus,
-		ClockInLocation: req.ClockInLocation,
-		ClockOutStatus: req.ClockOutStatus,
+		Uuid:             newUuid(),
+		PunchDate:        req.PunchDate,
+		EmployeeUuid:     req.EmployeeUuid,
+		UserUuid:         employee.UserUuid,
+		Username:         usernameOf(l.ctx, l.svcCtx, employee.UserUuid),
+		EmployeeNo:       employee.EmployeeNo,
+		EmployeeName:     employee.Name,
+		ClockInStatus:    req.ClockInStatus,
+		ClockInLocation:  req.ClockInLocation,
+		ClockOutStatus:   req.ClockOutStatus,
 		ClockOutLocation: req.ClockOutLocation,
-		Overtime:   normalizeOvertime(req.Overtime),
-		Source:     SourceAdmin,
+		Overtime:         normalizeOvertime(req.Overtime),
+		Source:           SourceAdmin,
 	}
 	if req.ClockInTime != "" {
 		tm, parseErr := time.ParseInLocation(time.DateTime, req.ClockInTime, time.Local)

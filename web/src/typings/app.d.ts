@@ -443,6 +443,12 @@ declare namespace App {
             init: string;
             adjust: string;
           };
+          leave: {
+            add: string;
+            edit: string;
+            delete: string;
+            cancel: string;
+          };
           attendancegroup: {
             add: string;
             edit: string;
@@ -991,6 +997,14 @@ declare namespace App {
           attendance: {
             yes: string;
             no: string;
+            billStatus: {
+              title: string;
+              unsubmitted: string;
+              approving: string;
+              approved: string;
+              rejected: string;
+              revoked: string;
+            };
             status: {
               enabled: string;
               disabled: string;
@@ -1163,6 +1177,55 @@ declare namespace App {
                 year: string;
                 name: string;
                 leaveTypeCode: string;
+                reason: string;
+              };
+            };
+            leaveCancel: {
+              title: string;
+              billNo: string;
+              leaveTypeName: string;
+              planStartTime: string;
+              planEndTime: string;
+              planDays: string;
+              actualStartTime: string;
+              actualEndTime: string;
+              actualDays: string;
+              employeeName: string;
+              employeeNo: string;
+              orgName: string;
+              createTime: string;
+              planRange: string;
+              actualRange: string;
+              addLeave: string;
+              editLeave: string;
+              cancelLeave: string;
+              submit: string;
+              approve: string;
+              reject: string;
+              revoke: string;
+              records: string;
+              noRecords: string;
+              confirmSubmit: string;
+              confirmApprove: string;
+              confirmReject: string;
+              confirmRevoke: string;
+              cancelSuccess: string;
+              settleHintPrefix: string;
+              settleHintSuffix: string;
+              settleRule: string;
+              dayPrecision: string;
+              form: {
+                billNo: string;
+                status: string;
+                leaveTypeCode: string;
+                employeeNo: string;
+                employeeName: string;
+                planStart: string;
+                planEnd: string;
+                planRangeRequired: string;
+                actualStart: string;
+                actualEnd: string;
+                actualRangeRequired: string;
                 reason: string;
               };
             };

@@ -23,6 +23,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_entry_bill_work"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_leave_balance"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_leave_balance_log"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_leave_bill"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_leave_type"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_org"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_overtime_rule"
@@ -75,6 +76,7 @@ type Model struct {
 	HrmEntryBillWork              hrm_entry_bill_work.HrmEntryBillWorkModel
 	HrmLeaveBalance               hrm_leave_balance.HrmLeaveBalanceModel
 	HrmLeaveBalanceLog            hrm_leave_balance_log.HrmLeaveBalanceLogModel
+	HrmLeaveBill                  hrm_leave_bill.HrmLeaveBillModel
 	HrmLeaveType                  hrm_leave_type.HrmLeaveTypeModel
 	HrmOrg                        hrm_org.HrmOrgModel
 	HrmOvertimeRule               hrm_overtime_rule.HrmOvertimeRuleModel
@@ -128,6 +130,7 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmEntryBillWork:              hrm_entry_bill_work.NewHrmEntryBillWorkModel(conn, op...),
 		HrmLeaveBalance:               hrm_leave_balance.NewHrmLeaveBalanceModel(conn, op...),
 		HrmLeaveBalanceLog:            hrm_leave_balance_log.NewHrmLeaveBalanceLogModel(conn, op...),
+		HrmLeaveBill:                  hrm_leave_bill.NewHrmLeaveBillModel(conn, op...),
 		HrmLeaveType:                  hrm_leave_type.NewHrmLeaveTypeModel(conn, op...),
 		HrmOrg:                        hrm_org.NewHrmOrgModel(conn, op...),
 		HrmOvertimeRule:               hrm_overtime_rule.NewHrmOvertimeRuleModel(conn, op...),

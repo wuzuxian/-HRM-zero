@@ -187,6 +187,8 @@ const local: App.I18n.Schema = {
     hrm_attendance_data: 'Leave Data',
     hrm_attendance_my: 'My Attendance',
     'hrm_attendance_data_leave-balance': 'Leave Balances',
+    hrm_attendance_apply: 'Leave Applications',
+    'hrm_attendance_apply_leave-cancel-list': 'Leave & Cancellation',
     'hrm_attendance_my_attendance-punch': 'Attendance Punch',
     'hrm_attendance_data_punch-record': 'Punch Records',
     hrm_attendance_scheduling: 'Scheduling',
@@ -274,6 +276,12 @@ const local: App.I18n.Schema = {
       leavebalance: {
         init: 'Initialize This Year',
         adjust: 'Adjust Balance'
+      },
+      leave: {
+        add: 'Add Leave Bill',
+        edit: 'Edit Leave Bill',
+        delete: 'Delete Leave Bill',
+        cancel: 'Cancel (Settle)'
       },
       attendancegroup: {
         add: 'Add Attendance Group',
@@ -1184,6 +1192,14 @@ const local: App.I18n.Schema = {
       attendance: {
         yes: 'Yes',
         no: 'No',
+        billStatus: {
+          title: 'Bill Status',
+          unsubmitted: 'Unsubmitted',
+          approving: 'Approving',
+          approved: 'Approved',
+          rejected: 'Rejected',
+          revoked: 'Revoked'
+        },
         status: {
           enabled: 'Enabled',
           disabled: 'Disabled'
@@ -1358,6 +1374,55 @@ const local: App.I18n.Schema = {
             year: 'Please select year',
             name: 'Please enter name',
             leaveTypeCode: 'Please select leave type',
+            reason: 'Please enter reason (optional)'
+          }
+        },
+        leaveCancel: {
+          title: 'Leave & Cancellation',
+          billNo: 'Bill No.',
+          leaveTypeName: 'Leave Type',
+          planStartTime: 'Planned Start',
+          planEndTime: 'Planned End',
+          planDays: 'Planned Days',
+          actualStartTime: 'Actual Start',
+          actualEndTime: 'Actual End',
+          actualDays: 'Actual Days',
+          employeeName: 'Applicant',
+          employeeNo: 'Employee No.',
+          orgName: 'Department',
+          createTime: 'Created At',
+          planRange: 'Planned Range',
+          actualRange: 'Actual Range',
+          addLeave: 'Add Leave Bill',
+          editLeave: 'Edit Leave Bill',
+          cancelLeave: 'Cancel (Settle)',
+          submit: 'Submit',
+          approve: 'Approve',
+          reject: 'Reject',
+          revoke: 'Revoke',
+          records: 'Records',
+          noRecords: 'No approval records',
+          confirmSubmit: 'Submit this leave bill?',
+          confirmApprove: 'Approve? This consumes leave balance (balance-managed types only).',
+          confirmReject: 'Reject this bill?',
+          confirmRevoke: 'Revoke this bill?',
+          cancelSuccess: 'Settled; balance adjusted by the difference',
+          settleHintPrefix: 'Planned',
+          settleHintSuffix: 'days; actual days auto-computed in 0.5-day steps',
+          settleRule: 'Shorter actual leave refunds the difference; longer actual leave consumes more (fails if balance is insufficient)',
+          dayPrecision: 'Days rule: hours/8 rounded up to 0.5-day steps, minimum 0.5 day',
+          form: {
+            billNo: 'Please enter bill no.',
+            status: 'Please select bill status',
+            leaveTypeCode: 'Please select leave type',
+            employeeNo: 'Please enter employee no.',
+            employeeName: 'Please enter employee name',
+            planStart: 'Planned start',
+            planEnd: 'Planned end',
+            planRangeRequired: 'Please select the planned range',
+            actualStart: 'Actual start',
+            actualEnd: 'Actual end',
+            actualRangeRequired: 'Please select the actual range',
             reason: 'Please enter reason (optional)'
           }
         },
