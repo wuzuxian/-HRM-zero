@@ -31,6 +31,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_reward_bill"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_item"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_subject"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_schedule_cycle"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_shift"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_cert_template"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_certificate"
@@ -71,6 +72,7 @@ type Model struct {
 	HrmRewardBill                 hrm_reward_bill.HrmRewardBillModel
 	HrmSalaryItem                 hrm_salary_item.HrmSalaryItemModel
 	HrmSalarySubject              hrm_salary_subject.HrmSalarySubjectModel
+	HrmScheduleCycle              hrm_schedule_cycle.HrmScheduleCycleModel
 	HrmShift                      hrm_shift.HrmShiftModel
 	HrmTrainingCertTemplate       hrm_training_cert_template.HrmTrainingCertTemplateModel
 	HrmTrainingCertificate        hrm_training_certificate.HrmTrainingCertificateModel
@@ -112,6 +114,7 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmRewardBill:                 hrm_reward_bill.NewHrmRewardBillModel(conn, op...),
 		HrmSalaryItem:                 hrm_salary_item.NewHrmSalaryItemModel(conn, op...),
 		HrmSalarySubject:              hrm_salary_subject.NewHrmSalarySubjectModel(conn, op...),
+		HrmScheduleCycle:              hrm_schedule_cycle.NewHrmScheduleCycleModel(conn, op...),
 		HrmShift:                      hrm_shift.NewHrmShiftModel(conn, op...),
 		HrmTrainingCertTemplate:       hrm_training_cert_template.NewHrmTrainingCertTemplateModel(conn, op...),
 		HrmTrainingCertificate:        hrm_training_certificate.NewHrmTrainingCertificateModel(conn, op...),

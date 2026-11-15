@@ -1,0 +1,91 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/schedulecycle"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+type HrmScheduleCycle {
+	Uuid       string   `json:"uuid"`
+	CycleName  string   `json:"cycleName"`
+	ShiftUuids []string `json:"shiftUuids"`
+	GroupUuids []string `json:"groupUuids"`
+	Status     string   `json:"status"`
+	Remark     string   `json:"remark"`
+	CreateTime string   `json:"createTime"`
+	UpdateTime string   `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	CycleName string `form:"cycleName,optional"`
+	Status    string `form:"status,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmScheduleCycle `json:"records"`
+}
+
+type AddRequest {
+	CycleName  string   `json:"cycleName"`
+	ShiftUuids []string `json:"shiftUuids"`
+	GroupUuids []string `json:"groupUuids,optional"`
+	Status     string   `json:"status,default=1"`
+	Remark     string   `json:"remark,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid       string   `json:"uuid"`
+	CycleName  string   `json:"cycleName"`
+	ShiftUuids []string `json:"shiftUuids"`
+	GroupUuids []string `json:"groupUuids,optional"`
+	Status     string   `json:"status"`
+	Remark     string   `json:"remark,optional"`
+}
+
+type EditResponse {}
+
+type ToggleStatusRequest {
+	Uuid   string `json:"uuid"`
+	Status string `json:"status"`
+}
+
+type ToggleStatusResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/schedulecycle
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getScheduleCycleList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addScheduleCycle (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editScheduleCycle (EditRequest) returns (EditResponse)
+
+	@handler ToggleStatus
+	post /hrm/toggleScheduleCycleStatus (ToggleStatusRequest) returns (ToggleStatusResponse)
+
+	@handler Delete
+	post /hrm/deleteScheduleCycle (DeleteRequest) returns (DeleteResponse)
+}
+

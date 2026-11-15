@@ -139,6 +139,16 @@ const (
 	OvertimeRuleInvalidCode = 10463
 	// OvertimeRuleDayTypeInvalidCode 加班当天类型非法（须为 工作日/休息日/法定节假日）
 	OvertimeRuleDayTypeInvalidCode = 10464
+
+	// HRM 排班管理：排班周期（HRM-14）业务错误码。1048x 段（1047x 已被入职单占用）。
+	// ScheduleCycleNotFoundCode 排班周期不存在
+	ScheduleCycleNotFoundCode = 10480
+	// ScheduleCycleInvalidCode 排班周期参数非法（名称/班次序列/考勤组绑定/状态等）
+	ScheduleCycleInvalidCode = 10481
+	// ScheduleCycleShiftInvalidCode 班次序列非法（班次不存在或已停用）
+	ScheduleCycleShiftInvalidCode = 10482
+	// ScheduleCycleGroupInvalidCode 适用考勤组不存在
+	ScheduleCycleGroupInvalidCode = 10483
 )
 
 func init() {
@@ -209,4 +219,9 @@ func init() {
 	status.Register(OvertimeRuleNotFoundCode)
 	status.Register(OvertimeRuleInvalidCode)
 	status.Register(OvertimeRuleDayTypeInvalidCode)
+
+	status.Register(ScheduleCycleNotFoundCode)
+	status.Register(ScheduleCycleInvalidCode)
+	status.Register(ScheduleCycleShiftInvalidCode)
+	status.Register(ScheduleCycleGroupInvalidCode)
 }

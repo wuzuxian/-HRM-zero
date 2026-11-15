@@ -27,6 +27,7 @@ import (
 	v1hrmreward "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/reward"
 	v1hrmsalary_item "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_item"
 	v1hrmsalary_subject "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_subject"
+	v1hrmschedulecycle "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/schedulecycle"
 	v1hrmshift "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/shift"
 	v1hrmtraining "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/training"
 	v1hrmtraining_plan "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/training_plan"
@@ -772,6 +773,42 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodGet,
 						Path:    "/hrm/getSalarySubjectList",
 						Handler: v1hrmsalary_subject.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addScheduleCycle",
+						Handler: v1hrmschedulecycle.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteScheduleCycle",
+						Handler: v1hrmschedulecycle.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editScheduleCycle",
+						Handler: v1hrmschedulecycle.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getScheduleCycleList",
+						Handler: v1hrmschedulecycle.List(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/toggleScheduleCycleStatus",
+						Handler: v1hrmschedulecycle.ToggleStatus(serverCtx),
 					},
 				}...,
 			),
