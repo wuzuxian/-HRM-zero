@@ -35,6 +35,7 @@ var RoutesCodesMap = map[string]string{
 	"POST:/api/v1/hrm/deleteOrg":                        "v1:hrm:org:delete",
 	"POST:/api/v1/hrm/editOrg":                          "v1:hrm:org:edit",
 	"GET:/api/v1/hrm/exportOrg":                         "v1:hrm:org:export",
+	"GET:/api/v1/hrm/getOrgChartTree":                   "v1:hrm:org:orgChart",
 	"GET:/api/v1/hrm/getOrgTree":                        "v1:hrm:org:list",
 	"POST:/api/v1/hrm/importOrg":                        "v1:hrm:org:import",
 	"POST:/api/v1/hrm/addPerfIndicator":                 "v1:hrm:perf_indicator:add",

@@ -765,6 +765,18 @@ declare namespace App {
             importSuccess: string;
             chooseFileTip: string;
             importModalTitle: string;
+            orgChart: {
+              title: string;
+              memberCount: string;
+              memberCountTip: string;
+              totalMemberCount: string;
+              totalMemberCountTip: string;
+              expandAll: string;
+              collapseAll: string;
+              refresh: string;
+              empty: string;
+              noLeader: string;
+            };
           };
           attendance: {
             yes: string;

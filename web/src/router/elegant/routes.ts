@@ -117,6 +117,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         },
         children: [
           {
+            name: 'hrm_org_org-chart',
+            path: '/hrm/org/org-chart',
+            component: 'view.hrm_org_org-chart',
+            meta: {
+              title: 'hrm_org_org-chart',
+              i18nKey: 'route.hrm_org_org-chart'
+            }
+          },
+          {
             name: 'hrm_org_orginfo',
             path: '/hrm/org/orginfo',
             component: 'view.hrm_org_orginfo',

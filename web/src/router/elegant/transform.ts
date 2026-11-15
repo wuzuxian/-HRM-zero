@@ -186,6 +186,7 @@ const routeMap: RouteMap = {
   "hrm_attendance_setting_leave-type": "/hrm/attendance/setting/leave-type",
   "hrm_attendance_setting_shift": "/hrm/attendance/setting/shift",
   "hrm_org": "/hrm/org",
+  "hrm_org_org-chart": "/hrm/org/org-chart",
   "hrm_org_orginfo": "/hrm/org/orginfo",
   "hrm_performance": "/hrm/performance",
   "hrm_performance_setting": "/hrm/performance/setting",

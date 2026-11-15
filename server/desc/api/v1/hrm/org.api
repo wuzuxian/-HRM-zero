@@ -88,6 +88,26 @@ type ExportResponse {
 	Content  string `json:"content"`
 }
 
+// HrmOrgChartNode 组织架构图节点：组织信息 + 负责人 + 本级/汇总人数。
+type HrmOrgChartNode {
+	Uuid       string `json:"uuid"`
+	ParentUuid string `json:"parentUuid"`
+	OrgName    string `json:"orgName"`
+	OrgType    string `json:"orgType"`
+	Leader     string `json:"leader"`
+	OrderNum   int64  `json:"orderNum"`
+	Status     string `json:"status"`
+	// MemberCount 本级人数：直属该组织的在册员工数
+	MemberCount int64 `json:"memberCount"`
+	// TotalMemberCount 汇总人数：本级人数 + 全部下级组织的汇总人数
+	TotalMemberCount int64             `json:"totalMemberCount"`
+	Children         []HrmOrgChartNode `json:"children,optional"`
+}
+
+type OrgChartResponse {
+	Records []HrmOrgChartNode `json:"records"`
+}
+
 @server (
 	prefix:          /api/v1
 	group:           v1/hrm/org
@@ -116,5 +136,8 @@ service server {
 
 	@handler Export
 	get /hrm/exportOrg returns (ExportResponse)
+
+	@handler OrgChart
+	get /hrm/getOrgChartTree returns (OrgChartResponse)
 }
 

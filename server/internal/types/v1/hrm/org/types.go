@@ -74,6 +74,19 @@ type HrmOrg struct {
 	Children   []HrmOrg `json:"children,optional"`
 }
 
+type HrmOrgChartNode struct {
+	Uuid             string            `json:"uuid"`
+	ParentUuid       string            `json:"parentUuid"`
+	OrgName          string            `json:"orgName"`
+	OrgType          string            `json:"orgType"`
+	Leader           string            `json:"leader"`
+	OrderNum         int64             `json:"orderNum"`
+	Status           string            `json:"status"`
+	MemberCount      int64             `json:"memberCount"`
+	TotalMemberCount int64             `json:"totalMemberCount"`
+	Children         []HrmOrgChartNode `json:"children,optional"`
+}
+
 type ImportRequest struct {
 	FileName string `json:"fileName"`
 	Content  string `json:"content"`
@@ -91,6 +104,10 @@ type ListRequest struct {
 
 type ListResponse struct {
 	Records []HrmOrg `json:"records"`
+}
+
+type OrgChartResponse struct {
+	Records []HrmOrgChartNode `json:"records"`
 }
 
 type PageResponse struct {

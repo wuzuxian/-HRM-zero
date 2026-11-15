@@ -176,6 +176,7 @@ const local: App.I18n.Schema = {
     hrm: 'HRM',
     hrm_org: 'Organization',
     hrm_org_orginfo: 'Org Management',
+    'hrm_org_org-chart': 'Org Chart',
     hrm_attendance: 'Attendance',
     hrm_attendance_setting: 'Attendance Settings',
     hrm_attendance_setting_shift: 'Shifts',
@@ -557,7 +558,19 @@ const local: App.I18n.Schema = {
         expand: 'Expand',
         importSuccess: 'Import succeeded',
         chooseFileTip: 'Please select an xlsx file',
-        importModalTitle: 'Import Orgs'
+        importModalTitle: 'Import Orgs',
+        orgChart: {
+          title: 'Org Chart',
+          memberCount: 'Direct',
+          memberCountTip: 'Employees directly under this org',
+          totalMemberCount: 'Total',
+          totalMemberCountTip: 'Employees of this org and all sub-orgs',
+          expandAll: 'Expand all',
+          collapseAll: 'Collapse all',
+          refresh: 'Refresh',
+          empty: 'No org data yet. Please maintain orgs in Org Management first.',
+          noLeader: 'Not set'
+        }
       },
       attendance: {
         yes: 'Yes',

@@ -189,6 +189,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					},
 					{
 						Method:  http.MethodGet,
+						Path:    "/hrm/getOrgChartTree",
+						Handler: v1hrmorg.OrgChart(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
 						Path:    "/hrm/getOrgTree",
 						Handler: v1hrmorg.List(serverCtx),
 					},

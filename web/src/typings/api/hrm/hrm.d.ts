@@ -128,6 +128,31 @@ declare namespace Api {
       fileName: string;
       content: string;
     };
+
+    /**
+     * org chart node (组织架构图节点)
+     *
+     * - memberCount: 本级人数 (direct employees of the org)
+     * - totalMemberCount: 汇总人数 (memberCount + all descendants)
+     */
+    type OrgChartNode = {
+      uuid: string;
+      parentUuid: string;
+      orgName: string;
+      orgType: OrgType;
+      leader: string;
+      orderNum: number;
+      status: OrgStatus | null;
+      memberCount: number;
+      totalMemberCount: number;
+      children?: OrgChartNode[];
+    };
+
+    /** org chart tree */
+    type OrgChartTree = {
+      records: OrgChartNode[];
+    };
+
     /**
      * shift/leave-type status (假勤设置)
      *
