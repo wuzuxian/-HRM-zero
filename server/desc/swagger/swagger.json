@@ -1253,6 +1253,150 @@
         ]
       }
     },
+    "/api/v1/hrm/addTrainingPlan": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:training_plan:add",
+        "operationId": "v1/Hrm/TrainingPlanAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "endDate": {
+                  "type": "string"
+                },
+                "planName": {
+                  "type": "string"
+                },
+                "planType": {
+                  "type": "string"
+                },
+                "planYear": {
+                  "type": "string"
+                },
+                "startDate": {
+                  "type": "string"
+                },
+                "theme": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "planName",
+                "planYear",
+                "planType",
+                "startDate",
+                "endDate"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/training_plan"
+        ]
+      }
+    },
+    "/api/v1/hrm/addTrainingSession": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:training_session:add",
+        "operationId": "v1/Hrm/TrainingSessionAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "endTime": {
+                  "type": "string"
+                },
+                "hours": {
+                  "type": "number"
+                },
+                "lecturer": {
+                  "type": "string"
+                },
+                "location": {
+                  "type": "string"
+                },
+                "planUuid": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "sessionName": {
+                  "type": "string"
+                },
+                "startTime": {
+                  "description": "YYYY-MM-DD HH:mm:ss",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sessionName",
+                "planUuid",
+                "startTime",
+                "endTime"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/training_session"
+        ]
+      }
+    },
     "/api/v1/hrm/addTransfer": {
       "post": {
         "consumes": [
@@ -1780,6 +1924,112 @@
         "summary": "Delete",
         "tags": [
           "v1/hrm/shift"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteTrainingPlan": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:training_plan:delete",
+        "operationId": "v1/Hrm/TrainingPlanDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/training_plan"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteTrainingSession": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:training_session:delete",
+        "operationId": "v1/Hrm/TrainingSessionDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/training_session"
         ]
       }
     },
@@ -2593,6 +2843,157 @@
         ]
       }
     },
+    "/api/v1/hrm/editTrainingPlan": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:training_plan:edit",
+        "operationId": "v1/Hrm/TrainingPlanEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "endDate": {
+                  "type": "string"
+                },
+                "planName": {
+                  "type": "string"
+                },
+                "planType": {
+                  "type": "string"
+                },
+                "planYear": {
+                  "type": "string"
+                },
+                "startDate": {
+                  "type": "string"
+                },
+                "theme": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "planName",
+                "planYear",
+                "planType",
+                "startDate",
+                "endDate"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/training_plan"
+        ]
+      }
+    },
+    "/api/v1/hrm/editTrainingSession": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:training_session:edit",
+        "operationId": "v1/Hrm/TrainingSessionEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "endTime": {
+                  "type": "string"
+                },
+                "hours": {
+                  "type": "number"
+                },
+                "lecturer": {
+                  "type": "string"
+                },
+                "location": {
+                  "type": "string"
+                },
+                "planUuid": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "sessionName": {
+                  "type": "string"
+                },
+                "startTime": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "sessionName",
+                "planUuid",
+                "startTime",
+                "endTime"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/training_session"
+        ]
+      }
+    },
     "/api/v1/hrm/editTransfer": {
       "post": {
         "consumes": [
@@ -2766,6 +3167,56 @@
         "summary": "Export",
         "tags": [
           "v1/hrm/org"
+        ]
+      }
+    },
+    "/api/v1/hrm/finishTrainingSession": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:training_session:finish",
+        "operationId": "v1/Hrm/TrainingSessionFinish",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Finish",
+        "tags": [
+          "v1/hrm/training_session"
         ]
       }
     },
@@ -4836,6 +5287,74 @@
         ]
       }
     },
+    "/api/v1/hrm/getSessionParticipantList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:training_session:getSessionParticipantList",
+        "operationId": "v1/Hrm/TrainingSessionGetSessionParticipantList",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "sessionUuid",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "nickName": {
+                        "description": "学员姓名",
+                        "type": "string"
+                      },
+                      "userUuid": {
+                        "type": "string"
+                      },
+                      "username": {
+                        "description": "学员账号",
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "description": "participant row uuid",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "userUuid",
+                      "username",
+                      "nickName"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "GetSessionParticipantList",
+        "tags": [
+          "v1/hrm/training_session"
+        ]
+      }
+    },
     "/api/v1/hrm/getShiftList": {
       "get": {
         "description": "接口权限编码:v1:hrm:shift:list",
@@ -4963,6 +5482,319 @@
         "summary": "List",
         "tags": [
           "v1/hrm/shift"
+        ]
+      }
+    },
+    "/api/v1/hrm/getTrainingPlanList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:training_plan:list",
+        "operationId": "v1/Hrm/TrainingPlanList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "计划名称（模糊）",
+            "in": "query",
+            "name": "planName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "计划类型",
+            "in": "query",
+            "name": "planType",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据状态",
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "发布状态 0/1",
+            "in": "query",
+            "name": "published",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "billNo": {
+                        "description": "单据编号 HR216-...",
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "creatorName": {
+                        "description": "申请人姓名",
+                        "type": "string"
+                      },
+                      "creatorUuid": {
+                        "description": "申请人 uuid",
+                        "type": "string"
+                      },
+                      "endDate": {
+                        "description": "结束日期 YYYY-MM-DD",
+                        "type": "string"
+                      },
+                      "planName": {
+                        "description": "计划名称",
+                        "type": "string"
+                      },
+                      "planType": {
+                        "description": "计划类型 special/new_hire/safety/skill",
+                        "type": "string"
+                      },
+                      "planYear": {
+                        "description": "年度",
+                        "type": "string"
+                      },
+                      "published": {
+                        "description": "发布状态 0=草稿 1=已发布",
+                        "type": "integer"
+                      },
+                      "startDate": {
+                        "description": "开始日期 YYYY-MM-DD",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "单据状态 unsubmitted/approving/approved/rejected/revoked",
+                        "type": "string"
+                      },
+                      "theme": {
+                        "description": "主题",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "billNo",
+                      "status",
+                      "planName",
+                      "theme",
+                      "planYear",
+                      "planType",
+                      "startDate",
+                      "endDate",
+                      "published",
+                      "creatorUuid",
+                      "creatorName",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/training_plan"
+        ]
+      }
+    },
+    "/api/v1/hrm/getTrainingSessionList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:training_session:list",
+        "operationId": "v1/Hrm/TrainingSessionList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "班次名称（模糊）",
+            "in": "query",
+            "name": "sessionName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "培训计划",
+            "in": "query",
+            "name": "planUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "班次状态",
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "endTime": {
+                        "description": "结束时间",
+                        "type": "string"
+                      },
+                      "hours": {
+                        "description": "学时",
+                        "type": "number"
+                      },
+                      "lecturer": {
+                        "description": "讲师",
+                        "type": "string"
+                      },
+                      "location": {
+                        "description": "地点",
+                        "type": "string"
+                      },
+                      "planName": {
+                        "description": "关联培训计划名称（展示快照）",
+                        "type": "string"
+                      },
+                      "planUuid": {
+                        "description": "关联培训计划 uuid",
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "sessionName": {
+                        "type": "string"
+                      },
+                      "sessionNo": {
+                        "description": "班次编号 PX-年-流水",
+                        "type": "string"
+                      },
+                      "startTime": {
+                        "description": "开始时间",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "1=未开始 2=进行中 3=已结束",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "sessionNo",
+                      "sessionName",
+                      "planUuid",
+                      "planName",
+                      "lecturer",
+                      "location",
+                      "hours",
+                      "startTime",
+                      "endTime",
+                      "status",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/training_session"
         ]
       }
     },
@@ -5412,6 +6244,64 @@
         "summary": "Revoke",
         "tags": [
           "v1/hrm/bill"
+        ]
+      }
+    },
+    "/api/v1/hrm/setSessionParticipants": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:training_session:setSessionParticipants",
+        "operationId": "v1/Hrm/TrainingSessionSetSessionParticipants",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "sessionUuid": {
+                  "type": "string"
+                },
+                "userUuids": {
+                  "description": "全量覆盖（选人结果）",
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "sessionUuid",
+                "userUuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "SetSessionParticipants",
+        "tags": [
+          "v1/hrm/training_session"
         ]
       }
     },

@@ -1,0 +1,95 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/training_plan"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 培训计划单（HR216，GLOSSARY「单据」）：计划名称/主题/年度/计划类型/开始结束日期。
+// 生命周期（提交/审批/撤销/审批记录）走共享单据底座 v1/hrm/bill，类型码 216；
+// 审批通过（OnApproved）后发布状态 published 草稿(0)→已发布(1)。
+// 发布后的培训计划才允许创建培训班次（plan_uuid 关联）。
+type HrmTrainingPlan {
+	Uuid        string `json:"uuid"`
+	BillNo      string `json:"billNo"` // 单据编号 HR216-...
+	Status      string `json:"status"` // 单据状态 unsubmitted/approving/approved/rejected/revoked
+	PlanName    string `json:"planName"` // 计划名称
+	Theme       string `json:"theme"` // 主题
+	PlanYear    string `json:"planYear"` // 年度
+	PlanType    string `json:"planType"` // 计划类型 special/new_hire/safety/skill
+	StartDate   string `json:"startDate"` // 开始日期 YYYY-MM-DD
+	EndDate     string `json:"endDate"` // 结束日期 YYYY-MM-DD
+	Published   int64  `json:"published"` // 发布状态 0=草稿 1=已发布
+	CreatorUuid string `json:"creatorUuid"` // 申请人 uuid
+	CreatorName string `json:"creatorName"` // 申请人姓名
+	CreateTime  string `json:"createTime"`
+	UpdateTime  string `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	PlanName  string `form:"planName,optional"` // 计划名称（模糊）
+	PlanType  string `form:"planType,optional"` // 计划类型
+	Status    string `form:"status,optional"` // 单据状态
+	Published string `form:"published,optional"` // 发布状态 0/1
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmTrainingPlan `json:"records"`
+}
+
+type AddRequest {
+	PlanName  string `json:"planName"`
+	Theme     string `json:"theme,optional"`
+	PlanYear  string `json:"planYear"`
+	PlanType  string `json:"planType"`
+	StartDate string `json:"startDate"`
+	EndDate   string `json:"endDate"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid      string `json:"uuid"`
+	PlanName  string `json:"planName"`
+	Theme     string `json:"theme,optional"`
+	PlanYear  string `json:"planYear"`
+	PlanType  string `json:"planType"`
+	StartDate string `json:"startDate"`
+	EndDate   string `json:"endDate"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/training_plan
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getTrainingPlanList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addTrainingPlan (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editTrainingPlan (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deleteTrainingPlan (DeleteRequest) returns (DeleteResponse)
+}
+
