@@ -191,6 +191,7 @@ const local: App.I18n.Schema = {
     'hrm_attendance_data_punch-record': '打卡记录',
     hrm_attendance_scheduling: '排班管理',
     'hrm_attendance_scheduling_schedule-cycle': '排班周期',
+    'hrm_attendance_scheduling_schedule-board': '排班表',
     'hrm_employee-relation': '人事管理',
     'hrm_employee-relation_transfer-list': '人事调动',
     'hrm_employee-relation_regular-list': '员工转正',
@@ -307,6 +308,15 @@ const local: App.I18n.Schema = {
         edit: '编辑排班周期',
         delete: '删除排班周期',
         togglestatus: '排班周期启停'
+      },
+      scheduleboard: {
+        savecell: '保存排班单元格',
+        batchsave: '批量保存排班',
+        generate: '周期生成排班',
+        copyweek: '复制周排班',
+        import: '导入排班表',
+        export: '导出排班表',
+        publish: '发布本月排班'
       },
       transfer: {
         add: '新增调动',
@@ -1470,6 +1480,44 @@ const local: App.I18n.Schema = {
             status: '请选择状态',
             remark: '请输入备注'
           }
+        },
+        scheduleBoard: {
+          title: '排班表',
+          searchTitle: '排班查询',
+          group: '考勤组',
+          groupPlaceholder: '请选择考勤组',
+          groupLabel: '考勤组：{name}',
+          month: '月份',
+          employeeName: '姓名',
+          employeeNo: '工号',
+          orgName: '部门',
+          selectGroupFirst: '请先选择考勤组',
+          cellHint: '点击单元格切换班次（休 → 各班次循环），已发布日不可编辑',
+          publishedLocked: '该日排班已发布，请先撤销发布',
+          publishedCount: '已发布天数',
+          generate: '周期生成',
+          copyWeek: '复制周',
+          import: '导入',
+          export: '导出',
+          publish: '发布本月',
+          publishSuccess: '已发布 {n} 条排班',
+          generateSuccess: '已写入 {n} 条排班',
+          copySuccess: '已复制 {n} 条排班',
+          importSuccess: '导入 {n} 条排班',
+          importFileRequired: '请选择导入文件',
+          importHint: 'xlsx 模板：第 1 列 employee_no（工号），第 2 列 name（可选），其后列名 1..31 为当月日期序号，值=班次名称（空或“休”=休班）',
+          cycle: '排班周期',
+          cycleDaysUnit: '天',
+          cycleRequired: '请选择排班周期',
+          anchorDate: '相位锚点日',
+          anchorHintLabel: '说明',
+          anchorHint: '锚点日为周期序列第 1 项对应日期；跨月保持绝对相位请传同一历史锚点日，缺省为当月 1 日',
+          overwrite: '覆盖已有排班',
+          sourceWeek: '源周（任选周一）',
+          targetWeek: '目标周（任选周一）',
+          weekHintLabel: '说明',
+          weekHint: '复制按星期对齐（周一↔周一）；源周休班日不复制；目标周已有排班需开启覆盖才会替换',
+          weekRequired: '请选择源周与目标周'
         }
       },
       employeeRelation: {

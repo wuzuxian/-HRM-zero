@@ -188,6 +188,7 @@ const routeMap: RouteMap = {
   "hrm_attendance_my": "/hrm/attendance/my",
   "hrm_attendance_my_attendance-punch": "/hrm/attendance/my/attendance-punch",
   "hrm_attendance_scheduling": "/hrm/attendance/scheduling",
+  "hrm_attendance_scheduling_schedule-board": "/hrm/attendance/scheduling/schedule-board",
   "hrm_attendance_scheduling_schedule-cycle": "/hrm/attendance/scheduling/schedule-cycle",
   "hrm_attendance_setting": "/hrm/attendance/setting",
   "hrm_attendance_setting_attendance-config": "/hrm/attendance/setting/attendance-config",

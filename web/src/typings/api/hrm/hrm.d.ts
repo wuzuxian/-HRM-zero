@@ -4168,5 +4168,140 @@ declare namespace Api {
     type PunchSettleResponse = {
       records: PunchSettleItem[];
     };
+
+    /** hrm schedule board (排班表, HRM-15): 单格 = 员工+日期+班次(空=休) */
+    type ScheduleCell = {
+      /** 员工 uuid */
+      employeeUuid: string;
+      /** 日期 yyyy-MM-dd */
+      date: string;
+      /** 班次 uuid（空=休/未排班） */
+      shiftUuid: string;
+      /** 发布标记 '1' 已发布 / '0' 未发布 */
+      published: string;
+    };
+
+    /** schedule board matrix row (一名员工当月逐日班次) */
+    type ScheduleMatrixRow = {
+      employeeUuid: string;
+      employeeNo: string;
+      employeeName: string;
+      orgName: string;
+      /** 当月每日 yyyy-MM-dd 升序（与 cells 一一对应） */
+      monthDays: string[];
+      cells: ScheduleCell[];
+      /** 当月已发布天数 */
+      publishedCount: number;
+    };
+
+    /** schedule matrix request */
+    type ScheduleMatrixRequest = {
+      /** 考勤组 uuid（必填——排班表按考勤组维护） */
+      groupUuid: string;
+      /** 月份 yyyy-MM */
+      month: string;
+      name?: string;
+      employeeNo?: string;
+      orgName?: string;
+    };
+
+    /** schedule matrix response */
+    type ScheduleMatrixResponse = {
+      groupUuid: string;
+      groupName: string;
+      /** 考勤组类型 1=固定班制 2=排班制 3=自由工时 */
+      groupType: string;
+      month: string;
+      monthDays: string[];
+      rows: ScheduleMatrixRow[];
+    };
+
+    /** schedule cell save request */
+    type ScheduleCellRequest = {
+      groupUuid: string;
+      employeeUuid: string;
+      date: string;
+      /** 空=休/清空 */
+      shiftUuid?: string;
+    };
+
+    /** schedule batch save request */
+    type ScheduleBatchSaveRequest = {
+      groupUuid: string;
+      cells: {
+        employeeUuid: string;
+        date: string;
+        shiftUuid?: string;
+      }[];
+    };
+
+    type ScheduleBatchSaveResponse = {
+      savedCount: number;
+    };
+
+    /** schedule generate from cycle request */
+    type ScheduleGenerateRequest = {
+      groupUuid: string;
+      month: string;
+      cycleUuid: string;
+      /** 相位锚点日 yyyy-MM-dd（可选，缺省=当月 1 日） */
+      anchorDate?: string;
+      /** '1' = 覆盖已有排班 */
+      overwrite?: string;
+    };
+
+    type ScheduleGenerateResponse = {
+      writtenCount: number;
+    };
+
+    /** schedule copy week request */
+    type ScheduleCopyWeekRequest = {
+      groupUuid: string;
+      /** 源周起始日 yyyy-MM-dd（周一） */
+      sourceWeekStart: string;
+      /** 目标周起始日 yyyy-MM-dd（周一） */
+      targetWeekStart: string;
+      /** '1' = 覆盖目标周已有排班 */
+      overwrite?: string;
+    };
+
+    type ScheduleCopyWeekResponse = {
+      writtenCount: number;
+    };
+
+    /** schedule import request (xlsx base64: 行=工号, 列=1..31 班次编码) */
+    type ScheduleImportRequest = {
+      groupUuid: string;
+      month: string;
+      fileName: string;
+      fileContent: string;
+    };
+
+    type ScheduleImportResponse = {
+      successCount: number;
+    };
+
+    /** schedule export request */
+    type ScheduleExportRequest = {
+      groupUuid: string;
+      month: string;
+    };
+
+    type ScheduleExportResponse = {
+      fileName: string;
+      content: string;
+    };
+
+    /** schedule publish month request */
+    type SchedulePublishRequest = {
+      groupUuid: string;
+      month: string;
+      /** '1' = 撤销发布 */
+      unpublish?: string;
+    };
+
+    type SchedulePublishResponse = {
+      publishedCount: number;
+    };
   }
 }

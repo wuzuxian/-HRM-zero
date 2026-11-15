@@ -477,6 +477,15 @@ declare namespace App {
             delete: string;
             togglestatus: string;
           };
+          scheduleboard: {
+            savecell: string;
+            batchsave: string;
+            generate: string;
+            copyweek: string;
+            import: string;
+            export: string;
+            publish: string;
+          };
           transfer: {
             add: string;
             edit: string;
@@ -1276,6 +1285,44 @@ declare namespace App {
                 status: string;
                 remark: string;
               };
+            };
+            scheduleBoard: {
+              title: string;
+              searchTitle: string;
+              group: string;
+              groupPlaceholder: string;
+              groupLabel: string;
+              month: string;
+              employeeName: string;
+              employeeNo: string;
+              orgName: string;
+              selectGroupFirst: string;
+              cellHint: string;
+              publishedLocked: string;
+              publishedCount: string;
+              generate: string;
+              copyWeek: string;
+              import: string;
+              export: string;
+              publish: string;
+              publishSuccess: string;
+              generateSuccess: string;
+              copySuccess: string;
+              importSuccess: string;
+              importFileRequired: string;
+              importHint: string;
+              cycle: string;
+              cycleDaysUnit: string;
+              cycleRequired: string;
+              anchorDate: string;
+              anchorHintLabel: string;
+              anchorHint: string;
+              overwrite: string;
+              sourceWeek: string;
+              targetWeek: string;
+              weekHintLabel: string;
+              weekHint: string;
+              weekRequired: string;
             };
           };
           employeeRelation: {

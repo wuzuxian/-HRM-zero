@@ -191,6 +191,7 @@ const local: App.I18n.Schema = {
     'hrm_attendance_data_punch-record': 'Punch Records',
     hrm_attendance_scheduling: 'Scheduling',
     'hrm_attendance_scheduling_schedule-cycle': 'Schedule Cycles',
+    'hrm_attendance_scheduling_schedule-board': 'Schedule Board',
     'hrm_employee-relation': 'HR Management',
     'hrm_employee-relation_transfer-list': 'Transfer',
     'hrm_employee-relation_regular-list': 'Regularization',
@@ -307,6 +308,15 @@ const local: App.I18n.Schema = {
         edit: 'Edit Schedule Cycle',
         delete: 'Delete Schedule Cycle',
         togglestatus: 'Toggle Schedule Cycle'
+      },
+      scheduleboard: {
+        savecell: 'Save Schedule Cell',
+        batchsave: 'Batch Save Schedule',
+        generate: 'Generate from Cycle',
+        copyweek: 'Copy Week Schedule',
+        import: 'Import Schedule Board',
+        export: 'Export Schedule Board',
+        publish: 'Publish Schedule Month'
       },
       transfer: {
         add: 'Add Transfer',
@@ -1472,6 +1482,44 @@ const local: App.I18n.Schema = {
             status: 'Please select status',
             remark: 'Please enter remark'
           }
+        },
+        scheduleBoard: {
+          title: 'Schedule Board',
+          searchTitle: 'Schedule Query',
+          group: 'Group',
+          groupPlaceholder: 'Select attendance group',
+          groupLabel: 'Group: {name}',
+          month: 'Month',
+          employeeName: 'Name',
+          employeeNo: 'Employee No.',
+          orgName: 'Department',
+          selectGroupFirst: 'Please select an attendance group first',
+          cellHint: 'Click a cell to cycle shifts (rest → shifts), published days are read-only',
+          publishedLocked: 'This day is published; unpublish first to edit',
+          publishedCount: 'Published Days',
+          generate: 'Generate',
+          copyWeek: 'Copy Week',
+          import: 'Import',
+          export: 'Export',
+          publish: 'Publish Month',
+          publishSuccess: 'Published {n} schedule entries',
+          generateSuccess: 'Wrote {n} schedule entries',
+          copySuccess: 'Copied {n} schedule entries',
+          importSuccess: 'Imported {n} schedule entries',
+          importFileRequired: 'Please select an import file',
+          importHint: 'xlsx template: column 1 = employee_no, column 2 = name (optional), then columns 1..31 = day numbers with shift names as values (empty or rest = day off)',
+          cycle: 'Schedule Cycle',
+          cycleDaysUnit: 'd',
+          cycleRequired: 'Please select a schedule cycle',
+          anchorDate: 'Phase Anchor Date',
+          anchorHintLabel: 'Note',
+          anchorHint: 'Anchor date maps to the first item of the cycle sequence; pass the same historical anchor date to keep absolute phase across months. Defaults to the 1st of the month',
+          overwrite: 'Overwrite existing entries',
+          sourceWeek: 'Source week (any Monday)',
+          targetWeek: 'Target week (any Monday)',
+          weekHintLabel: 'Note',
+          weekHint: 'Copy aligns by weekday (Mon↔Mon); rest days in the source week are not copied; enable overwrite to replace existing target entries',
+          weekRequired: 'Please select source and target weeks'
         }
       },
       employeeRelation: {

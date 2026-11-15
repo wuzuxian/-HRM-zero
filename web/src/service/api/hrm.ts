@@ -1447,3 +1447,75 @@ export function SettlePunchDay(req: Api.Hrm.PunchSettleRequest) {
     data: req
   });
 }
+
+/** get schedule board matrix (排班表矩阵: 员工×当月每日班次, 按考勤组维护) */
+export function GetScheduleMatrix(params: Api.Hrm.ScheduleMatrixRequest) {
+  return request<Api.Hrm.ScheduleMatrixResponse>({
+    url: '/api/v1/hrm/getScheduleMatrix',
+    method: 'get',
+    params
+  });
+}
+
+/** save one schedule board cell (矩阵单元格保存; shiftUuid 空=休/清空) */
+export function SaveScheduleCell(req: Api.Hrm.ScheduleCellRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/saveScheduleCell',
+    method: 'post',
+    data: req
+  });
+}
+
+/** batch save schedule board cells (整表保存, 事务) */
+export function BatchSaveSchedule(req: Api.Hrm.ScheduleBatchSaveRequest) {
+  return request<Api.Hrm.ScheduleBatchSaveResponse>({
+    url: '/api/v1/hrm/batchSaveSchedule',
+    method: 'post',
+    data: req
+  });
+}
+
+/** generate schedule from cycle (周期生成: ExpandCycle 相位展开落当月) */
+export function GenerateScheduleFromCycle(req: Api.Hrm.ScheduleGenerateRequest) {
+  return request<Api.Hrm.ScheduleGenerateResponse>({
+    url: '/api/v1/hrm/generateScheduleFromCycle',
+    method: 'post',
+    data: req
+  });
+}
+
+/** copy week schedule (复制周: 源周按星期对齐复制到目标周) */
+export function CopyScheduleWeek(req: Api.Hrm.ScheduleCopyWeekRequest) {
+  return request<Api.Hrm.ScheduleCopyWeekResponse>({
+    url: '/api/v1/hrm/copyScheduleWeek',
+    method: 'post',
+    data: req
+  });
+}
+
+/** import schedule board matrix template (xlsx: 行=工号, 列=1..31 班次编码) */
+export function ImportScheduleBoard(req: Api.Hrm.ScheduleImportRequest) {
+  return request<Api.Hrm.ScheduleImportResponse>({
+    url: '/api/v1/hrm/importScheduleBoard',
+    method: 'post',
+    data: req
+  });
+}
+
+/** export schedule board matrix (xlsx base64) */
+export function ExportScheduleBoard(req: Api.Hrm.ScheduleExportRequest) {
+  return request<Api.Hrm.ScheduleExportResponse>({
+    url: '/api/v1/hrm/exportScheduleBoard',
+    method: 'post',
+    data: req
+  });
+}
+
+/** publish/unpublish schedule month (发布本月/撤销发布) */
+export function PublishScheduleMonth(req: Api.Hrm.SchedulePublishRequest) {
+  return request<Api.Hrm.SchedulePublishResponse>({
+    url: '/api/v1/hrm/publishScheduleMonth',
+    method: 'post',
+    data: req
+  });
+}

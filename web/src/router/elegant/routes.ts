@@ -134,6 +134,15 @@ export const generatedRoutes: GeneratedRoute[] = [
             },
             children: [
               {
+                name: 'hrm_attendance_scheduling_schedule-board',
+                path: '/hrm/attendance/scheduling/schedule-board',
+                component: 'view.hrm_attendance_scheduling_schedule-board',
+                meta: {
+                  title: 'hrm_attendance_scheduling_schedule-board',
+                  i18nKey: 'route.hrm_attendance_scheduling_schedule-board'
+                }
+              },
+              {
                 name: 'hrm_attendance_scheduling_schedule-cycle',
                 path: '/hrm/attendance/scheduling/schedule-cycle',
                 component: 'view.hrm_attendance_scheduling_schedule-cycle',
