@@ -25,6 +25,7 @@ import (
 	v1hrmperf_template "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_template"
 	v1hrmregularization "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/regularization"
 	v1hrmrequirement "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/requirement"
+	v1hrmresignation "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/resignation"
 	v1hrmreward "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/reward"
 	v1hrmsalary_item "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_item"
 	v1hrmsalary_subject "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_subject"
@@ -712,6 +713,37 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodGet,
 						Path:    "/hrm/getRequirementList",
 						Handler: v1hrmrequirement.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addResignation",
+						Handler: v1hrmresignation.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteResignation",
+						Handler: v1hrmresignation.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editResignation",
+						Handler: v1hrmresignation.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getResignationList",
+						Handler: v1hrmresignation.List(serverCtx),
 					},
 				}...,
 			),

@@ -8,6 +8,7 @@ import (
 	"github.com/casbin/casbin/v2"
 
 	"github.com/jzero-io/jzero-admin/server/internal/global"
+	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/resignation"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/transfer"
 	"github.com/jzero-io/jzero-admin/server/internal/model"
 	"github.com/jzero-io/jzero-admin/server/internal/scheduler"
@@ -44,6 +45,7 @@ func (c *Custom) Init() error {
 func (c *Custom) Start() {
 	s := scheduler.New()
 	s.Register(transfer.NewEffectiveScanJob(global.ServiceContext.SqlxConn, time.Now))
+	s.Register(resignation.NewResignedScanJob(global.ServiceContext.SqlxConn, time.Now))
 	c.scheduler = s
 	s.Start()
 }

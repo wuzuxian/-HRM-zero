@@ -159,6 +159,17 @@ const (
 	RegularizationEmployeeRequiredCode = 10467
 	// RegularizationNotEditableCode 单据当前状态不允许修改/删除（仅 未提交/审批不通过/已撤销 可改）
 	RegularizationNotEditableCode = 10468
+
+	// HRM 员工离职单（HRM-10，HR204）业务错误码。1049x 段
+	// （1048x 排班周期，1047x 入职单，10465-10468 转正单）。
+	// ResignationNotFoundCode 离职单不存在
+	ResignationNotFoundCode = 10490
+	// ResignationInvalidCode 离职单参数非法（离职类型/离职日期格式等）
+	ResignationInvalidCode = 10491
+	// ResignationEmployeeRequiredCode 未指定员工（工号与姓名为必填快照）
+	ResignationEmployeeRequiredCode = 10492
+	// ResignationNotEditableCode 单据当前状态不允许修改/删除（仅 未提交/审批不通过/已撤销 可改）
+	ResignationNotEditableCode = 10493
 )
 
 func init() {
@@ -238,4 +249,9 @@ func init() {
 	status.Register(RegularizationInvalidCode)
 	status.Register(RegularizationEmployeeRequiredCode)
 	status.Register(RegularizationNotEditableCode)
+
+	status.Register(ResignationNotFoundCode)
+	status.Register(ResignationInvalidCode)
+	status.Register(ResignationEmployeeRequiredCode)
+	status.Register(ResignationNotEditableCode)
 }
