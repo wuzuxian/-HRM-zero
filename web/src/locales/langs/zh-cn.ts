@@ -172,6 +172,9 @@ const local: App.I18n.Schema = {
     'manage_user-detail': '用户详情',
     manage_role: '角色管理',
     manage_menu: '菜单管理',
+    hrm: '人力资源',
+    hrm_org: '组织',
+    hrm_org_orginfo: '组织管理',
     exception: '异常页',
     exception_403: '403',
     exception_404: '404',
@@ -196,6 +199,16 @@ const local: App.I18n.Schema = {
         add: '新增角色',
         delete: '删除角色',
         edit: '编辑角色'
+      }
+    },
+    hrm: {
+      org: {
+        add: '新增组织',
+        addchild: '新增下级组织',
+        edit: '编辑组织',
+        delete: '删除组织',
+        import: '导入组织',
+        export: '导出组织'
       }
     }
   },
@@ -275,7 +288,7 @@ const local: App.I18n.Schema = {
         desc2: '2024 年 10 月 14 号创建了开源项目 jzero-admin!',
         desc3: '2025 年不断的改进完善ing!',
         desc4: '2025 年 11 月 30 号创建了开源项目 jzero-intellij!',
-        desc5: '2026 年 01 月 01 号发布了 jzero v1.0.0!',
+        desc5: '2026 年 01 月 01 号发布了 jzero v1.0.0!'
       },
       creativity: '创意'
     },
@@ -405,6 +418,46 @@ const local: App.I18n.Schema = {
           iconify: 'iconify图标',
           local: '本地图标'
         }
+      }
+    },
+    hrm: {
+      org: {
+        title: '组织管理',
+        orgName: '组织名称',
+        orgTypeTitle: '组织类型',
+        orgType: {
+          company: '公司',
+          department: '部门'
+        },
+        leader: '负责人',
+        orderNum: '显示顺序',
+        orgStatus: '组织状态',
+        status: {
+          open: '开启',
+          closed: '关闭'
+        },
+        remark: '备注',
+        createTime: '创建时间',
+        parentOrg: '上级组织',
+        form: {
+          orgName: '请输入组织名称',
+          orgType: '请选择组织类型',
+          leader: '请输入负责人',
+          orderNum: '请输入显示顺序',
+          orgStatus: '请选择组织状态',
+          remark: '请输入备注',
+          parentOrg: '上级组织'
+        },
+        addOrg: '新增组织',
+        addChildOrg: '新增下级',
+        editOrg: '编辑组织',
+        importOrg: '导入',
+        exportOrg: '导出',
+        collapse: '收缩',
+        expand: '展开',
+        importSuccess: '导入成功',
+        chooseFileTip: '请选择 xlsx 文件',
+        importModalTitle: '导入组织'
       }
     }
   },

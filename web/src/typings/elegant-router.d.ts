@@ -34,6 +34,9 @@ declare module "@elegant-router/types" {
     "500": "/500";
     "about": "/about";
     "home": "/home";
+    "hrm": "/hrm";
+    "hrm_org": "/hrm/org";
+    "hrm_org_orginfo": "/hrm/org/orginfo";
     "iframe-page": "/iframe-page/:url";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
     "manage": "/manage";
@@ -90,6 +93,7 @@ declare module "@elegant-router/types" {
     | "500"
     | "about"
     | "home"
+    | "hrm"
     | "iframe-page"
     | "login"
     | "manage"
@@ -119,6 +123,7 @@ declare module "@elegant-router/types" {
     | "login"
     | "about"
     | "home"
+    | "hrm_org_orginfo"
     | "manage_menu"
     | "manage_role"
     | "manage_user-detail"

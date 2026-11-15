@@ -172,6 +172,9 @@ const local: App.I18n.Schema = {
     'manage_user-detail': 'User Detail',
     manage_role: 'Role Manage',
     manage_menu: 'Menu Manage',
+    hrm: 'HRM',
+    hrm_org: 'Organization',
+    hrm_org_orginfo: 'Org Management',
     exception: 'Exception',
     exception_403: '403',
     exception_404: '404',
@@ -196,6 +199,16 @@ const local: App.I18n.Schema = {
         add: 'Add Role',
         edit: 'Edit Role',
         delete: 'Delete Role'
+      }
+    },
+    hrm: {
+      org: {
+        add: 'Add Org',
+        addchild: 'Add Child Org',
+        edit: 'Edit Org',
+        delete: 'Delete Org',
+        import: 'Import Orgs',
+        export: 'Export Orgs'
       }
     }
   },
@@ -271,7 +284,7 @@ const local: App.I18n.Schema = {
       projectNews: {
         title: 'Project News',
         moreNews: 'More News',
-         desc1: 'Created the open source project jzero on April 07, 2024!',
+        desc1: 'Created the open source project jzero on April 07, 2024!',
         desc2: 'Created the open source project jzero-admin on October 14, 2024!',
         desc3: 'Continuously improving and perfecting in 2025!',
         desc4: 'Created the open source project jzero-intellij on November 30, 2025!',
@@ -405,6 +418,46 @@ const local: App.I18n.Schema = {
           iconify: 'Iconify Icon',
           local: 'Local Icon'
         }
+      }
+    },
+    hrm: {
+      org: {
+        title: 'Org Management',
+        orgName: 'Org Name',
+        orgTypeTitle: 'Org Type',
+        orgType: {
+          company: 'Company',
+          department: 'Department'
+        },
+        leader: 'Leader',
+        orderNum: 'Display Order',
+        orgStatus: 'Org Status',
+        status: {
+          open: 'Open',
+          closed: 'Closed'
+        },
+        remark: 'Remark',
+        createTime: 'Create Time',
+        parentOrg: 'Parent Org',
+        form: {
+          orgName: 'Please enter org name',
+          orgType: 'Please select org type',
+          leader: 'Please enter leader',
+          orderNum: 'Please enter display order',
+          orgStatus: 'Please select org status',
+          remark: 'Please enter remark',
+          parentOrg: 'Parent Org'
+        },
+        addOrg: 'Add Org',
+        addChildOrg: 'Add Child Org',
+        editOrg: 'Edit Org',
+        importOrg: 'Import',
+        exportOrg: 'Export',
+        collapse: 'Collapse',
+        expand: 'Expand',
+        importSuccess: 'Import succeeded',
+        chooseFileTip: 'Please select an xlsx file',
+        importModalTitle: 'Import Orgs'
       }
     }
   },

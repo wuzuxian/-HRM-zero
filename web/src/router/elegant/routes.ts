@@ -62,6 +62,36 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'hrm',
+    path: '/hrm',
+    component: 'layout.base',
+    meta: {
+      title: 'hrm',
+      i18nKey: 'route.hrm'
+    },
+    children: [
+      {
+        name: 'hrm_org',
+        path: '/hrm/org',
+        meta: {
+          title: 'hrm_org',
+          i18nKey: 'route.hrm_org'
+        },
+        children: [
+          {
+            name: 'hrm_org_orginfo',
+            path: '/hrm/org/orginfo',
+            component: 'view.hrm_org_orginfo',
+            meta: {
+              title: 'hrm_org_orginfo',
+              i18nKey: 'route.hrm_org_orginfo'
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
     name: 'iframe-page',
     path: '/iframe-page/:url',
     component: 'layout.base$view.iframe-page',

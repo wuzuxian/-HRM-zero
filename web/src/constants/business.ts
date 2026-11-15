@@ -28,3 +28,17 @@ export const menuIconTypeRecord: Record<Api.Manage.IconType, App.I18n.I18nKey> =
 };
 
 export const menuIconTypeOptions = transformRecordToOption(menuIconTypeRecord);
+
+export const hrmOrgTypeRecord: Record<Api.Hrm.OrgType, App.I18n.I18nKey> = {
+  '1': 'page.hrm.org.orgType.company',
+  '2': 'page.hrm.org.orgType.department'
+};
+
+export const hrmOrgTypeOptions = transformRecordToOption(hrmOrgTypeRecord);
+
+export const hrmOrgStatusRecord: Record<Api.Hrm.OrgStatus, App.I18n.I18nKey> = {
+  '1': 'page.hrm.org.status.open',
+  '0': 'page.hrm.org.status.closed'
+};
+
+export const hrmOrgStatusOptions = transformRecordToOption(hrmOrgStatusRecord);
