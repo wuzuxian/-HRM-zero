@@ -1,0 +1,368 @@
+{
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/hrm/approveBill": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:bill:approve",
+        "operationId": "v1/Hrm/BillApprove",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "billType": {
+                  "description": "单据类型码（如 201）",
+                  "type": "string"
+                },
+                "billUuid": {
+                  "description": "单据 uuid",
+                  "type": "string"
+                },
+                "opinion": {
+                  "description": "审批意见",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "billType",
+                "billUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Approve",
+        "tags": [
+          "v1/hrm/bill"
+        ]
+      }
+    },
+    "/api/v1/hrm/getApprovalRecordList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:bill:getApprovalRecordList",
+        "operationId": "v1/Hrm/BillGetApprovalRecordList",
+        "parameters": [
+          {
+            "description": "单据类型码（如 201）",
+            "in": "query",
+            "name": "billType",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "单据 uuid",
+            "in": "query",
+            "name": "billUuid",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "action": {
+                        "description": "动作 submit/approve/reject/revoke",
+                        "type": "string"
+                      },
+                      "billNo": {
+                        "description": "单据编号",
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "description": "操作时间",
+                        "type": "string"
+                      },
+                      "fromStatus": {
+                        "description": "动作前单据状态",
+                        "type": "string"
+                      },
+                      "operatorName": {
+                        "description": "操作人姓名",
+                        "type": "string"
+                      },
+                      "opinion": {
+                        "description": "审批意见",
+                        "type": "string"
+                      },
+                      "toStatus": {
+                        "description": "动作后单据状态",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "billNo",
+                      "action",
+                      "fromStatus",
+                      "toStatus",
+                      "operatorName",
+                      "opinion",
+                      "createTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "GetApprovalRecordList",
+        "tags": [
+          "v1/hrm/bill"
+        ]
+      }
+    },
+    "/api/v1/hrm/rejectBill": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:bill:reject",
+        "operationId": "v1/Hrm/BillReject",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "billType": {
+                  "description": "单据类型码（如 201）",
+                  "type": "string"
+                },
+                "billUuid": {
+                  "description": "单据 uuid",
+                  "type": "string"
+                },
+                "opinion": {
+                  "description": "审批意见",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "billType",
+                "billUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Reject",
+        "tags": [
+          "v1/hrm/bill"
+        ]
+      }
+    },
+    "/api/v1/hrm/revokeBill": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:bill:revoke",
+        "operationId": "v1/Hrm/BillRevoke",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "billType": {
+                  "description": "单据类型码（如 201）",
+                  "type": "string"
+                },
+                "billUuid": {
+                  "description": "单据 uuid",
+                  "type": "string"
+                },
+                "opinion": {
+                  "description": "审批意见",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "billType",
+                "billUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Revoke",
+        "tags": [
+          "v1/hrm/bill"
+        ]
+      }
+    },
+    "/api/v1/hrm/submitBill": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:bill:submit",
+        "operationId": "v1/Hrm/BillSubmit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "billType": {
+                  "description": "单据类型码（如 201）",
+                  "type": "string"
+                },
+                "billUuid": {
+                  "description": "单据 uuid",
+                  "type": "string"
+                },
+                "opinion": {
+                  "description": "审批意见",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "billType",
+                "billUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Submit",
+        "tags": [
+          "v1/hrm/bill"
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKey": {
+      "description": "Enter Authorization",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0"
+}
