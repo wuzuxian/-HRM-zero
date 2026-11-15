@@ -1,12 +1,13 @@
 module github.com/jzero-io/jzero-admin/server
 
-go 1.24.5
+go 1.26.0
 
 require (
 	github.com/casbin/casbin/v2 v2.135.0
 	github.com/common-nighthawk/go-figure v0.0.0-20210622060536-734e95fb86be
 	github.com/eddieowens/opts v0.1.0
 	github.com/golang-jwt/jwt/v4 v4.5.2
+	github.com/golang-migrate/migrate/v4 v4.19.1
 	github.com/google/uuid v1.6.0
 	github.com/guregu/null/v5 v5.0.0
 	github.com/huandu/go-sqlbuilder v1.38.2
@@ -16,8 +17,10 @@ require (
 	github.com/samber/lo v1.52.0
 	github.com/spf13/cast v1.10.0
 	github.com/spf13/cobra v1.10.2
+	github.com/xuri/excelize/v2 v2.11.1
 	github.com/zeromicro/go-zero v1.9.3
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
+	modernc.org/sqlite v1.42.2
 )
 
 require (
@@ -64,7 +67,6 @@ require (
 	github.com/go-sql-driver/mysql v1.9.3 // indirect
 	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
-	github.com/golang-migrate/migrate/v4 v4.19.1 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
@@ -113,6 +115,8 @@ require (
 	github.com/prometheus/procfs v0.16.1 // indirect
 	github.com/redis/go-redis/v9 v9.17.0 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
+	github.com/richardlehane/mscfb v1.0.9 // indirect
+	github.com/richardlehane/msoleps v1.0.6 // indirect
 	github.com/rinchsan/gosimports v0.3.8 // indirect
 	github.com/sagikazarmark/locafero v0.11.0 // indirect
 	github.com/sergi/go-diff v1.3.2-0.20230802210424-5b0b94c5c0d3 // indirect
@@ -124,9 +128,12 @@ require (
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/spf13/viper v1.21.0 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
+	github.com/tiendc/go-deepcopy v1.7.2 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
 	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
+	github.com/xuri/efp v0.0.3-0.20260924042702-217b81952dec // indirect
+	github.com/xuri/nfp v0.0.2-0.20250530014748-2ddeb826f9a9 // indirect
 	github.com/yosida95/uritemplate/v3 v3.0.2 // indirect
 	github.com/yuin/gopher-lua v1.1.1 // indirect
 	github.com/zeromicro/antlr v0.0.1 // indirect
@@ -153,14 +160,14 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.24.0 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
-	golang.org/x/crypto v0.45.0 // indirect
+	golang.org/x/crypto v0.58.0 // indirect
 	golang.org/x/exp v0.0.0-20251023183803-a4bb9ffd2546 // indirect
-	golang.org/x/mod v0.29.0 // indirect
-	golang.org/x/net v0.47.0 // indirect
-	golang.org/x/sync v0.18.0 // indirect
-	golang.org/x/sys v0.38.0 // indirect
-	golang.org/x/text v0.31.0 // indirect
-	golang.org/x/tools v0.38.0 // indirect
+	golang.org/x/mod v0.41.0 // indirect
+	golang.org/x/net v0.62.0 // indirect
+	golang.org/x/sync v0.24.0 // indirect
+	golang.org/x/sys v0.49.0 // indirect
+	golang.org/x/text v0.43.0 // indirect
+	golang.org/x/tools v0.51.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20250929231259-57b25ae835d4 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250929231259-57b25ae835d4 // indirect
 	google.golang.org/grpc v1.75.1 // indirect
@@ -172,7 +179,6 @@ require (
 	modernc.org/libc v1.67.0 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
-	modernc.org/sqlite v1.42.2 // indirect
 )
 
 tool github.com/jzero-io/jzero/cmd/jzero

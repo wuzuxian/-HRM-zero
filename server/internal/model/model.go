@@ -7,6 +7,7 @@ import (
 	"github.com/jzero-io/jzero/core/stores/modelx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_org"
 	"github.com/jzero-io/jzero-admin/server/internal/model/manage_email"
 	"github.com/jzero-io/jzero-admin/server/internal/model/manage_menu"
 	"github.com/jzero-io/jzero-admin/server/internal/model/manage_role"
@@ -16,6 +17,7 @@ import (
 )
 
 type Model struct {
+	HrmOrg         hrm_org.HrmOrgModel
 	ManageEmail    manage_email.ManageEmailModel
 	ManageMenu     manage_menu.ManageMenuModel
 	ManageRole     manage_role.ManageRoleModel
@@ -26,6 +28,7 @@ type Model struct {
 
 func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 	return Model{
+		HrmOrg:         hrm_org.NewHrmOrgModel(conn, op...),
 		ManageEmail:    manage_email.NewManageEmailModel(conn, op...),
 		ManageMenu:     manage_menu.NewManageMenuModel(conn, op...),
 		ManageRole:     manage_role.NewManageRoleModel(conn, op...),
