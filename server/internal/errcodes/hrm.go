@@ -149,6 +149,16 @@ const (
 	ScheduleCycleShiftInvalidCode = 10482
 	// ScheduleCycleGroupInvalidCode 适用考勤组不存在
 	ScheduleCycleGroupInvalidCode = 10483
+	// HRM 员工转正单（HRM-08，HR202）业务错误码。10465+ 段
+	// （10462-10464 加班规则，10450-10458 证书模板/发放，10460-10461 员工账号同步）。
+	// RegularizationNotFoundCode 转正单不存在
+	RegularizationNotFoundCode = 10465
+	// RegularizationInvalidCode 转正单参数非法（员工快照/转正日期格式等）
+	RegularizationInvalidCode = 10466
+	// RegularizationEmployeeRequiredCode 未指定员工（工号与姓名为必填快照）
+	RegularizationEmployeeRequiredCode = 10467
+	// RegularizationNotEditableCode 单据当前状态不允许修改/删除（仅 未提交/审批不通过/已撤销 可改）
+	RegularizationNotEditableCode = 10468
 )
 
 func init() {
@@ -224,4 +234,8 @@ func init() {
 	status.Register(ScheduleCycleInvalidCode)
 	status.Register(ScheduleCycleShiftInvalidCode)
 	status.Register(ScheduleCycleGroupInvalidCode)
+	status.Register(RegularizationNotFoundCode)
+	status.Register(RegularizationInvalidCode)
+	status.Register(RegularizationEmployeeRequiredCode)
+	status.Register(RegularizationNotEditableCode)
 }

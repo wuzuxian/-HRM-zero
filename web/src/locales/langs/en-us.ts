@@ -188,6 +188,7 @@ const local: App.I18n.Schema = {
     'hrm_attendance_scheduling_schedule-cycle': 'Schedule Cycles',
     'hrm_employee-relation': 'HR Management',
     'hrm_employee-relation_transfer-list': 'Transfer',
+    'hrm_employee-relation_regular-list': 'Regularization',
     'hrm_employee-relation_entry-list': 'Entry',
     hrm_performance: 'Performance',
     hrm_performance_setting: 'Settings',
@@ -284,6 +285,11 @@ const local: App.I18n.Schema = {
         add: 'Add Transfer',
         edit: 'Edit Transfer',
         delete: 'Delete Transfer'
+      },
+      regularization: {
+        add: 'Add Regularization Bill',
+        edit: 'Edit Regularization Bill',
+        delete: 'Delete Regularization Bill'
       },
       entry: {
         add: 'Add Entry Bill',
@@ -1282,6 +1288,47 @@ const local: App.I18n.Schema = {
             org: 'Please select org',
             transferReason: 'Please enter reason',
             effectiveDateRequired: 'Effective date is required when not effective immediately'
+          }
+        },
+        regularization: {
+          title: 'Regularization',
+          billNo: 'Bill No.',
+          employeeNo: 'Employee No.',
+          employeeName: 'Employee Name',
+          selectEmployee: 'Select Employee',
+          orgUuid: 'Department',
+          companyUuid: 'Company',
+          position: 'Position Title',
+          post: 'Post',
+          personStatus: 'Person Status',
+          hireDate: 'Hire Date',
+          formalDate: 'Formal Date',
+          expectedFormalDate: 'Expected Formal Date',
+          remark: 'Remark',
+          creatorName: 'Applicant',
+          createTime: 'Created At',
+          submit: 'Submit',
+          approve: 'Approve',
+          reject: 'Reject',
+          revoke: 'Revoke',
+          records: 'Records',
+          noRecords: 'No approval records yet',
+          confirmSubmit: 'Submit this regularization bill for approval?',
+          confirmApprove: 'Approve this bill? The employee will become regular and the formal date written back.',
+          confirmReject: 'Reject this regularization bill?',
+          confirmRevoke: 'Revoke this regularization bill?',
+          addRegularization: 'Add Regularization Bill',
+          editRegularization: 'Edit Regularization Bill',
+          sectionEmployee: 'Employee',
+          sectionSnapshot: 'Archive Snapshot (auto)',
+          sectionRegular: 'Regularization Info',
+          form: {
+            billNo: 'Please enter bill no.',
+            status: 'Please select bill status',
+            employeeNo: 'Please enter employee no.',
+            selectEmployee: 'Please select an employee',
+            remark: 'Please enter remark',
+            none: 'Auto-filled after selecting an employee'
           }
         },
         entry: {

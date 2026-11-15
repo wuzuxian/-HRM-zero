@@ -195,6 +195,44 @@ export function DeleteTransfer(req: string[]) {
   });
 }
 
+/** get hrm regularization bill (员工转正单 HR202) paginated list — defaults to 「我的单据」 server-side */
+export function GetRegularizationList(params?: Api.Hrm.RegularizationSearchParams) {
+  return request<Api.Hrm.RegularizationList>({
+    url: '/api/v1/hrm/getRegularizationList',
+    method: 'get',
+    params
+  });
+}
+
+/** add hrm regularization bill (选择员工带出档案快照) */
+export function AddRegularization(req: Api.Hrm.AddRegularizationRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addRegularization',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit hrm regularization bill (only in editable 单据状态) */
+export function EditRegularization(req: Api.Hrm.EditRegularizationRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editRegularization',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete hrm regularization bills (only in editable 单据状态) */
+export function DeleteRegularization(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteRegularization',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
 /** submit a bill (单据提交, shared approval base; billType "203" = 人事调动) */
 export function SubmitBill(req: Api.Hrm.BillActionRequest) {
   return request<Api.Common.Empty>({

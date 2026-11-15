@@ -1785,6 +1785,91 @@
         ]
       }
     },
+    "/api/v1/hrm/addRegularization": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:regularization:add",
+        "operationId": "v1/Hrm/RegularizationAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "companyUuid": {
+                  "type": "string"
+                },
+                "employeeName": {
+                  "type": "string"
+                },
+                "employeeNo": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "expectedFormalDate": {
+                  "type": "string"
+                },
+                "formalDate": {
+                  "description": "实际转正日期 YYYY-MM-DD",
+                  "type": "string"
+                },
+                "hireDate": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "personStatus": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string"
+                },
+                "post": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "employeeNo",
+                "employeeName"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/regularization"
+        ]
+      }
+    },
     "/api/v1/hrm/addRequirement": {
       "post": {
         "consumes": [
@@ -3249,6 +3334,59 @@
         "summary": "Delete",
         "tags": [
           "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteRegularization": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:regularization:delete",
+        "operationId": "v1/Hrm/RegularizationDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/regularization"
         ]
       }
     },
@@ -5070,6 +5208,94 @@
         "summary": "Edit",
         "tags": [
           "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/editRegularization": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:regularization:edit",
+        "operationId": "v1/Hrm/RegularizationEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "companyUuid": {
+                  "type": "string"
+                },
+                "employeeName": {
+                  "type": "string"
+                },
+                "employeeNo": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "expectedFormalDate": {
+                  "type": "string"
+                },
+                "formalDate": {
+                  "type": "string"
+                },
+                "hireDate": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "personStatus": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string"
+                },
+                "post": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "employeeNo",
+                "employeeName"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/regularization"
         ]
       }
     },
@@ -9880,6 +10106,197 @@
         "summary": "List",
         "tags": [
           "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/getRegularizationList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:regularization:list",
+        "operationId": "v1/Hrm/RegularizationList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据编号（模糊）",
+            "in": "query",
+            "name": "billNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据状态",
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "员工工号（模糊）",
+            "in": "query",
+            "name": "employeeNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "1=强制只看我的单据（默认行为即我的单据，管理员可传 0 看全部由后端角色判定兜底）",
+            "in": "query",
+            "name": "mine",
+            "type": "integer"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "applied": {
+                        "description": "审批回写是否已完成 1=是 0=否",
+                        "type": "integer"
+                      },
+                      "billNo": {
+                        "description": "单据编号 HR202-...",
+                        "type": "string"
+                      },
+                      "companyUuid": {
+                        "description": "员工所属公司（组织 uuid，快照）",
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "creatorName": {
+                        "description": "申请人姓名",
+                        "type": "string"
+                      },
+                      "creatorUuid": {
+                        "description": "申请人 uuid",
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "description": "员工姓名（快照）",
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "description": "员工工号（快照）",
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "description": "员工档案 uuid",
+                        "type": "string"
+                      },
+                      "expectedFormalDate": {
+                        "description": "预计转正日期 YYYY-MM-DD（快照）",
+                        "type": "string"
+                      },
+                      "formalDate": {
+                        "description": "实际转正日期 YYYY-MM-DD",
+                        "type": "string"
+                      },
+                      "hireDate": {
+                        "description": "入职日期 YYYY-MM-DD（快照）",
+                        "type": "string"
+                      },
+                      "orgUuid": {
+                        "description": "员工所属部门（组织 uuid，快照）",
+                        "type": "string"
+                      },
+                      "personStatus": {
+                        "description": "人员状态（快照，制单时档案值）",
+                        "type": "string"
+                      },
+                      "position": {
+                        "description": "职位（快照）",
+                        "type": "string"
+                      },
+                      "post": {
+                        "description": "职务（快照）",
+                        "type": "string"
+                      },
+                      "remark": {
+                        "description": "备注",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "单据状态 unsubmitted/approving/approved/rejected/revoked",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "billNo",
+                      "status",
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "orgUuid",
+                      "companyUuid",
+                      "position",
+                      "post",
+                      "personStatus",
+                      "hireDate",
+                      "expectedFormalDate",
+                      "formalDate",
+                      "remark",
+                      "applied",
+                      "creatorUuid",
+                      "creatorName",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/regularization"
         ]
       }
     },
