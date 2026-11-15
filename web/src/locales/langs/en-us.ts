@@ -179,6 +179,8 @@ const local: App.I18n.Schema = {
     'hrm_org_org-chart': 'Org Chart',
     hrm_attendance: 'Attendance',
     hrm_attendance_setting: 'Attendance Settings',
+    hrm_attendance_setting_group: 'Attendance Groups',
+    'hrm_attendance_setting_attendance-config': 'Org Default Rules',
     hrm_attendance_setting_shift: 'Shifts',
     'hrm_attendance_setting_leave-type': 'Leave Types',
     'hrm_employee-relation': 'HR Management',
@@ -235,6 +237,18 @@ const local: App.I18n.Schema = {
         add: 'Add Leave Type',
         edit: 'Edit Leave Type',
         delete: 'Delete Leave Type'
+      },
+      attendancegroup: {
+        add: 'Add Attendance Group',
+        edit: 'Edit Attendance Group',
+        delete: 'Delete Attendance Group',
+        togglestatus: 'Toggle Attendance Group',
+        members: 'View Effective Members',
+        shiftusage: 'View Shift Usage'
+      },
+      attendanceconfig: {
+        save: 'Save Org Rule',
+        delete: 'Delete Org Rule'
       },
       transfer: {
         add: 'Add Transfer',
@@ -712,6 +726,85 @@ const local: App.I18n.Schema = {
         status: {
           enabled: 'Enabled',
           disabled: 'Disabled'
+        },
+        group: {
+          title: 'Attendance Groups',
+          groupName: 'Group Name',
+          groupType: {
+            title: 'Group Type',
+            fixed: 'Fixed',
+            scheduling: 'Scheduling',
+            flexible: 'Flexible Hours'
+          },
+          workTime: 'Work Time',
+          workDays: 'Work Days',
+          scope: 'Scope',
+          scopeDepts: 'Depts×{n}',
+          scopeMembers: 'Members×{n}',
+          managers: 'Managers',
+          status: 'Status',
+          remark: 'Remark',
+          enable: 'Enable',
+          disable: 'Disable',
+          confirmEnable: 'Enable this attendance group?',
+          confirmDisable: 'Attendance will fall back to the org default rule after disabling. Continue?',
+          flexibleNoTime: 'Flexible hours (no clock)',
+          schedulingFallback: 'By schedule',
+          members: 'Effective Members',
+          noMembers: 'No effective members',
+          addGroup: 'Add Attendance Group',
+          editGroup: 'Edit Attendance Group',
+          weekday: {
+            1: 'Mon',
+            2: 'Tue',
+            3: 'Wed',
+            4: 'Thu',
+            5: 'Fri',
+            6: 'Sat',
+            7: 'Sun'
+          },
+          weekdayShort: {
+            1: 'Mon',
+            2: 'Tue',
+            3: 'Wed',
+            4: 'Thu',
+            5: 'Fri',
+            6: 'Sat',
+            7: 'Sun'
+          },
+          form: {
+            groupName: 'Please enter group name',
+            groupType: 'Please select group type',
+            workDays: 'Please select work days',
+            orgScope: 'Departments (incl. children)',
+            memberScope: 'Designated members',
+            managers: 'Managers (press Enter to add)',
+            status: 'Please select status',
+            remark: 'Please enter remark'
+          }
+        },
+        config: {
+          title: 'Org Default Rules',
+          org: 'Organization',
+          orgName: 'Organization',
+          quickStart: 'Quick Start',
+          editConfig: 'Edit Org Default Rule',
+          recheck: 'Re-check',
+          fallbackHint:
+            "Rule priority: attendance group > org default rule; employees not in any group follow their own department's rule; if unset, the nearest ancestor organization's rule applies.",
+          noRule: 'No rule',
+          sourceGroup: 'Group',
+          sourceOrg: 'Org rule',
+          healthEmployee: 'Employee',
+          healthSource: 'Rule Source',
+          healthyTotal: '{n} in total',
+          healthyGroup: 'Group hit {n}',
+          healthyOrg: 'Org rule {n}',
+          healthyNoRule: 'No rule {n}',
+          form: {
+            orgName: 'Please enter organization name',
+            org: 'Please select organization'
+          }
         },
         shift: {
           title: 'Shifts',

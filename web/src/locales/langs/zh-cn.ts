@@ -179,6 +179,8 @@ const local: App.I18n.Schema = {
     'hrm_org_org-chart': '组织架构图',
     hrm_attendance: '假勤管理',
     hrm_attendance_setting: '假勤设置',
+    hrm_attendance_setting_group: '考勤组',
+    'hrm_attendance_setting_attendance-config': '组织默认规则',
     hrm_attendance_setting_shift: '班次管理',
     'hrm_attendance_setting_leave-type': '假期类型',
     'hrm_employee-relation': '人事管理',
@@ -235,6 +237,18 @@ const local: App.I18n.Schema = {
         add: '新增假期类型',
         edit: '编辑假期类型',
         delete: '删除假期类型'
+      },
+      attendancegroup: {
+        add: '新增考勤组',
+        edit: '编辑考勤组',
+        delete: '删除考勤组',
+        togglestatus: '考勤组启停',
+        members: '生效人数查询',
+        shiftusage: '班次引用查询'
+      },
+      attendanceconfig: {
+        save: '保存组织规则',
+        delete: '删除组织规则'
       },
       transfer: {
         add: '新增调动',
@@ -712,6 +726,85 @@ const local: App.I18n.Schema = {
         status: {
           enabled: '启用',
           disabled: '停用'
+        },
+        group: {
+          title: '考勤组',
+          groupName: '考勤组名称',
+          groupType: {
+            title: '班制',
+            fixed: '固定班制',
+            scheduling: '排班制',
+            flexible: '自由工时'
+          },
+          workTime: '考勤时间',
+          workDays: '考勤日',
+          scope: '适用范围',
+          scopeDepts: '部门×{n}',
+          scopeMembers: '人员×{n}',
+          managers: '负责人',
+          status: '状态',
+          remark: '备注',
+          enable: '启用',
+          disable: '停用',
+          confirmEnable: '确认启用该考勤组？',
+          confirmDisable: '停用后考勤回退到组织默认规则，确认停用？',
+          flexibleNoTime: '自由工时（不打卡）',
+          schedulingFallback: '按排班表执行',
+          members: '生效人数',
+          noMembers: '暂无生效人员',
+          addGroup: '新增考勤组',
+          editGroup: '编辑考勤组',
+          weekday: {
+            1: '周一',
+            2: '周二',
+            3: '周三',
+            4: '周四',
+            5: '周五',
+            6: '周六',
+            7: '周日'
+          },
+          weekdayShort: {
+            1: '一',
+            2: '二',
+            3: '三',
+            4: '四',
+            5: '五',
+            6: '六',
+            7: '日'
+          },
+          form: {
+            groupName: '请输入考勤组名称',
+            groupType: '请选择班制',
+            workDays: '请选择考勤日',
+            orgScope: '适用部门（含下级）',
+            memberScope: '指定人员',
+            managers: '负责人（回车添加）',
+            status: '请选择状态',
+            remark: '请输入备注'
+          }
+        },
+        config: {
+          title: '组织默认规则',
+          org: '组织',
+          orgName: '组织名称',
+          quickStart: '快速开始',
+          editConfig: '编辑组织默认规则',
+          recheck: '重新体检',
+          fallbackHint:
+            '规则优先级：考勤组 > 组织默认规则；未加入考勤组的员工按本部门规则执行；本部门没设置则用最近上级组织的规则。',
+          noRule: '无规则',
+          sourceGroup: '考勤组',
+          sourceOrg: '组织规则',
+          healthEmployee: '员工',
+          healthSource: '规则来源',
+          healthyTotal: '共 {n} 人',
+          healthyGroup: '考勤组命中 {n}',
+          healthyOrg: '组织规则 {n}',
+          healthyNoRule: '无规则 {n}',
+          form: {
+            orgName: '请输入组织名称',
+            org: '请选择组织'
+          }
         },
         shift: {
           title: '班次管理',
