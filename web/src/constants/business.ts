@@ -336,3 +336,25 @@ export const hrmTaxDeductionSourceRecord: Record<Api.Hrm.TaxDeductionSource, App
 };
 
 export const hrmTaxDeductionSourceOptions = transformRecordToOption(hrmTaxDeductionSourceRecord);
+
+/** 职位状态 (招聘职位 HRM-25) */
+export const hrmPositionStatusRecord: Record<Api.Hrm.PositionStatus, App.I18n.I18nKey> = {
+  open: 'page.hrm.position.status.open',
+  full: 'page.hrm.position.status.full',
+  closed: 'page.hrm.position.status.closed'
+};
+
+export const hrmPositionStatusOptions = transformRecordToOption(hrmPositionStatusRecord);
+
+/** 岗位类别 (招聘职位 HRM-25，与招聘需求单同枚举) */
+export const hrmPositionPostCategoryRecord: Record<Api.Hrm.RequirementPostCategory, App.I18n.I18nKey> = {
+  tech: 'page.hrm.position.postCategory.tech',
+  product: 'page.hrm.position.postCategory.product',
+  design: 'page.hrm.position.postCategory.design',
+  operation: 'page.hrm.position.postCategory.operation',
+  market: 'page.hrm.position.postCategory.market',
+  function: 'page.hrm.position.postCategory.function',
+  other: 'page.hrm.position.postCategory.other'
+};
+
+export const hrmPositionPostCategoryOptions = transformRecordToOption(hrmPositionPostCategoryRecord);

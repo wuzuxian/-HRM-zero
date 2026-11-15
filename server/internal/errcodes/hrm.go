@@ -182,6 +182,21 @@ const (
 	ResignationEmployeeRequiredCode = 10492
 	// ResignationNotEditableCode 单据当前状态不允许修改/删除（仅 未提交/审批不通过/已撤销 可改）
 	ResignationNotEditableCode = 10493
+
+	// HRM 招聘职位（HRM-25）业务错误码。1058x 段
+	// （1056x 请假销假，1057x 预留；uuid 段 25xx，迁移 39）。
+	// PositionNotFoundCode 招聘职位不存在
+	PositionNotFoundCode = 10580
+	// PositionInvalidCode 招聘职位参数非法（岗位名称/岗位类别/招聘人数/发布日期等）
+	PositionInvalidCode = 10581
+	// PositionRequirementNotApproved 来源需求单未审批通过，不可发布职位（仅 status=approved 可引用）
+	PositionRequirementNotApprovedCode = 10582
+	// PositionRequirementRequired 来源需求单必填
+	PositionRequirementRequiredCode = 10583
+	// PositionStatusTransitionInvalidCode 职位状态流转非法（已满/已关闭 不可手工改动；closed 终态）
+	PositionStatusTransitionInvalidCode = 10584
+	// PositionHiredCountExceeded 已录用人数超出招聘人数（递增后将超过 headcount）
+	PositionHiredCountExceededCode = 10585
 )
 
 func init() {
@@ -272,4 +287,11 @@ func init() {
 	status.Register(ResignationInvalidCode)
 	status.Register(ResignationEmployeeRequiredCode)
 	status.Register(ResignationNotEditableCode)
+
+	status.Register(PositionNotFoundCode)
+	status.Register(PositionInvalidCode)
+	status.Register(PositionRequirementNotApprovedCode)
+	status.Register(PositionRequirementRequiredCode)
+	status.Register(PositionStatusTransitionInvalidCode)
+	status.Register(PositionHiredCountExceededCode)
 }

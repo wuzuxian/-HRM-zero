@@ -2087,6 +2087,81 @@
         ]
       }
     },
+    "/api/v1/hrm/addPosition": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:position:add",
+        "operationId": "v1/Hrm/PositionAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "headcount": {
+                  "type": "integer"
+                },
+                "ownerName": {
+                  "type": "string"
+                },
+                "ownerUuid": {
+                  "type": "string"
+                },
+                "postCategory": {
+                  "type": "string"
+                },
+                "postName": {
+                  "type": "string"
+                },
+                "publishDate": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "requirementUuid": {
+                  "description": "必填，仅 approved 需求单可引用",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "postName",
+                "requirementUuid",
+                "postCategory",
+                "headcount"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/position"
+        ]
+      }
+    },
     "/api/v1/hrm/addPunchRecord": {
       "post": {
         "consumes": [
@@ -4431,6 +4506,59 @@
         "summary": "Delete",
         "tags": [
           "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/deletePosition": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:position:delete",
+        "operationId": "v1/Hrm/PositionDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/position"
         ]
       }
     },
@@ -6869,6 +6997,84 @@
         "summary": "Edit",
         "tags": [
           "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/editPosition": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:position:edit",
+        "operationId": "v1/Hrm/PositionEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "headcount": {
+                  "type": "integer"
+                },
+                "ownerName": {
+                  "type": "string"
+                },
+                "ownerUuid": {
+                  "type": "string"
+                },
+                "postCategory": {
+                  "type": "string"
+                },
+                "postName": {
+                  "type": "string"
+                },
+                "publishDate": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "requirementUuid": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "postName",
+                "requirementUuid",
+                "postCategory",
+                "headcount"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/position"
         ]
       }
     },
@@ -13618,6 +13824,167 @@
         ]
       }
     },
+    "/api/v1/hrm/getPositionList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:position:list",
+        "operationId": "v1/Hrm/PositionList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "岗位名称（模糊）",
+            "in": "query",
+            "name": "postName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "来源需求单",
+            "in": "query",
+            "name": "requirementUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "岗位类别",
+            "in": "query",
+            "name": "postCategory",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "职位状态",
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "headcount": {
+                        "description": "招聘人数",
+                        "type": "integer"
+                      },
+                      "hiredCount": {
+                        "description": "已录用人数",
+                        "type": "integer"
+                      },
+                      "ownerName": {
+                        "description": "招聘负责人姓名",
+                        "type": "string"
+                      },
+                      "ownerUuid": {
+                        "description": "招聘负责人 uuid",
+                        "type": "string"
+                      },
+                      "postCategory": {
+                        "description": "岗位类别 tech/product/design/operation/market/function/other",
+                        "type": "string"
+                      },
+                      "postName": {
+                        "description": "岗位名称",
+                        "type": "string"
+                      },
+                      "publishDate": {
+                        "description": "发布日期 YYYY-MM-DD",
+                        "type": "string"
+                      },
+                      "remark": {
+                        "description": "备注",
+                        "type": "string"
+                      },
+                      "requirementBillNo": {
+                        "description": "来源需求单单据编号快照（列表展示）",
+                        "type": "string"
+                      },
+                      "requirementUuid": {
+                        "description": "来源需求单 uuid（approved）",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "职位状态 open=招聘中 full=已满 closed=已关闭",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "postName",
+                      "requirementUuid",
+                      "requirementBillNo",
+                      "postCategory",
+                      "ownerUuid",
+                      "ownerName",
+                      "headcount",
+                      "hiredCount",
+                      "publishDate",
+                      "status",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/position"
+        ]
+      }
+    },
     "/api/v1/hrm/getPunchList": {
       "get": {
         "description": "接口权限编码:v1:hrm:punch:list",
@@ -18146,6 +18513,60 @@
         "summary": "UpdateStatus",
         "tags": [
           "v1/hrm/candidate"
+        ]
+      }
+    },
+    "/api/v1/hrm/updatePositionStatus": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:position:updateStatus",
+        "operationId": "v1/Hrm/PositionUpdateStatus",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "UpdateStatus",
+        "tags": [
+          "v1/hrm/position"
         ]
       }
     },

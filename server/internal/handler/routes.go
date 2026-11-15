@@ -28,6 +28,7 @@ import (
 	v1hrmperf_indicator "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_indicator"
 	v1hrmperf_scheme "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_scheme"
 	v1hrmperf_template "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_template"
+	v1hrmposition "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/position"
 	v1hrmpunch "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/punch"
 	v1hrmregularization "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/regularization"
 	v1hrmrequirement "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/requirement"
@@ -831,6 +832,42 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodGet,
 						Path:    "/hrm/getPerfTemplateList",
 						Handler: v1hrmperf_template.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addPosition",
+						Handler: v1hrmposition.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deletePosition",
+						Handler: v1hrmposition.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editPosition",
+						Handler: v1hrmposition.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getPositionList",
+						Handler: v1hrmposition.List(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/updatePositionStatus",
+						Handler: v1hrmposition.UpdateStatus(serverCtx),
 					},
 				}...,
 			),

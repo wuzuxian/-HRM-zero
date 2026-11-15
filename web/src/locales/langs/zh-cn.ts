@@ -212,6 +212,7 @@ const local: App.I18n.Schema = {
     hrm_recruitment: '招聘管理',
     'hrm_recruitment_requirement-list': '招聘需求',
     'hrm_recruitment_candidate-list': '候选人中心',
+    'hrm_recruitment_position-list': '招聘职位',
     hrm_salary: '薪酬管理',
     hrm_salary_setting: '薪酬设置',
     hrm_salary_setting_subject: '薪酬主体',
@@ -368,6 +369,12 @@ const local: App.I18n.Schema = {
         delete: '删除候选人',
         import: '导入候选人',
         updatestatus: '候选人状态流转'
+      },
+      position: {
+        add: '新增职位',
+        edit: '编辑职位',
+        delete: '删除职位',
+        updatestatus: '职位状态流转'
       },
       bill: {
         submit: '提交单据',
@@ -784,6 +791,45 @@ const local: App.I18n.Schema = {
           urgency: '请选择紧急度',
           org: '请选择所属部门',
           requirementDesc: '请输入需求说明/任职要求'
+        }
+      },
+      position: {
+        title: '招聘职位',
+        postName: '岗位名称',
+        requirement: '来源需求单',
+        requirementBillNo: '需求编号',
+        postCategory: {
+          title: '岗位类别',
+          tech: '技术类',
+          product: '产品类',
+          design: '设计类',
+          operation: '运营类',
+          market: '市场类',
+          function: '职能类',
+          other: '其他'
+        },
+        ownerName: '招聘负责人',
+        status: {
+          title: '状态',
+          open: '招聘中',
+          full: '已满',
+          closed: '已关闭'
+        },
+        headcount: '招聘人数',
+        hiredCount: '已录用人数',
+        publishDate: '发布日期',
+        createTime: '创建时间',
+        close: '关闭职位',
+        confirmClose: '确认关闭该职位？关闭后不可再录用。',
+        addPosition: '新增职位',
+        editPosition: '编辑职位',
+        form: {
+          postName: '请输入岗位名称',
+          requirement: '请选择审批通过的需求单',
+          postCategory: '请选择岗位类别',
+          owner: '请输入招聘负责人',
+          status: '请选择职位状态',
+          remark: '请输入备注'
         }
       },
       candidate: {

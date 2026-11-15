@@ -1538,6 +1538,80 @@ declare namespace Api {
       successCount: number;
     };
 
+    /**
+     * recruitment position status (职位状态, demo-inventory §5)
+     *
+     * - "open": 招聘中
+     * - "full": 已满
+     * - "closed": 已关闭
+     */
+
+    type PositionStatus = 'open' | 'full' | 'closed';
+
+    /** recruitment position (招聘职位, demo-inventory §5) */
+    type HrmPosition = {
+      /** record uuid */
+      uuid: string;
+      /** 岗位名称 */
+      postName: string;
+      /** 来源需求单 uuid (仅 status=approved 可引用, HRM-24 seam) */
+      requirementUuid: string;
+      /** 来源需求单单据编号快照 (列表展示) */
+      requirementBillNo: string;
+      /** 岗位类别 */
+      postCategory: RequirementPostCategory | null;
+      /** 招聘负责人 uuid */
+      ownerUuid: string;
+      /** 招聘负责人姓名 */
+      ownerName: string;
+      /** 招聘人数 */
+      headcount: number;
+      /** 已录用人数 (HRM-27 IncreaseHiredCount 联动) */
+      hiredCount: number;
+      /** 发布日期 YYYY-MM-DD */
+      publishDate: string;
+      /** 职位状态 */
+      status: PositionStatus | null;
+      /** 备注 */
+      remark: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** position search params (demo-inventory §5: 筛选 岗位名称/来源需求单/岗位类别) */
+    type PositionSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.HrmPosition, 'postName' | 'requirementUuid' | 'postCategory' | 'status'> &
+        Common.CommonSearchParams
+    >;
+
+    /** position paginated list */
+    type PositionList = Common.PaginatingQueryRecord<HrmPosition>;
+
+    /** add position request (初始状态 招聘中, hiredCount=0) */
+    type AddPositionRequest = {
+      postName: string;
+      requirementUuid: string;
+      postCategory: RequirementPostCategory | null;
+      ownerUuid: string;
+      ownerName: string;
+      headcount: number;
+      publishDate: string;
+      remark: string;
+    };
+
+    /** edit position request (普通实体，任意状态可改；headcount 不得小于已录用人数) */
+    type EditPositionRequest = AddPositionRequest & {
+      uuid: string;
+    };
+
+    /** update position status request (open→full/closed；closed 终态) */
+    type UpdatePositionStatusRequest = {
+      uuid: string;
+      status: PositionStatus;
+    };
+
     /** 工作经历子表行 (入职单快照, demo-inventory §3.1) */
     type EntryBillWork = {
       uuid?: string;
@@ -3186,6 +3260,80 @@ declare namespace Api {
 
     type ImportCandidateResponse = {
       successCount: number;
+    };
+
+    /**
+     * recruitment position status (职位状态, demo-inventory §5)
+     *
+     * - "open": 招聘中
+     * - "full": 已满
+     * - "closed": 已关闭
+     */
+
+    type PositionStatus = 'open' | 'full' | 'closed';
+
+    /** recruitment position (招聘职位, demo-inventory §5) */
+    type HrmPosition = {
+      /** record uuid */
+      uuid: string;
+      /** 岗位名称 */
+      postName: string;
+      /** 来源需求单 uuid (仅 status=approved 可引用, HRM-24 seam) */
+      requirementUuid: string;
+      /** 来源需求单单据编号快照 (列表展示) */
+      requirementBillNo: string;
+      /** 岗位类别 */
+      postCategory: RequirementPostCategory | null;
+      /** 招聘负责人 uuid */
+      ownerUuid: string;
+      /** 招聘负责人姓名 */
+      ownerName: string;
+      /** 招聘人数 */
+      headcount: number;
+      /** 已录用人数 (HRM-27 IncreaseHiredCount 联动) */
+      hiredCount: number;
+      /** 发布日期 YYYY-MM-DD */
+      publishDate: string;
+      /** 职位状态 */
+      status: PositionStatus | null;
+      /** 备注 */
+      remark: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** position search params (demo-inventory §5: 筛选 岗位名称/来源需求单/岗位类别) */
+    type PositionSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.HrmPosition, 'postName' | 'requirementUuid' | 'postCategory' | 'status'> &
+        Common.CommonSearchParams
+    >;
+
+    /** position paginated list */
+    type PositionList = Common.PaginatingQueryRecord<HrmPosition>;
+
+    /** add position request (初始状态 招聘中, hiredCount=0) */
+    type AddPositionRequest = {
+      postName: string;
+      requirementUuid: string;
+      postCategory: RequirementPostCategory | null;
+      ownerUuid: string;
+      ownerName: string;
+      headcount: number;
+      publishDate: string;
+      remark: string;
+    };
+
+    /** edit position request (普通实体，任意状态可改；headcount 不得小于已录用人数) */
+    type EditPositionRequest = AddPositionRequest & {
+      uuid: string;
+    };
+
+    /** update position status request (open→full/closed；closed 终态) */
+    type UpdatePositionStatusRequest = {
+      uuid: string;
+      status: PositionStatus;
     };
 
     /** 工作经历子表行 (入职单快照, demo-inventory §3.1) */
