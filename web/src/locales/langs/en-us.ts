@@ -180,6 +180,8 @@ const local: App.I18n.Schema = {
     hrm_attendance_setting: 'Attendance Settings',
     hrm_attendance_setting_shift: 'Shifts',
     'hrm_attendance_setting_leave-type': 'Leave Types',
+    'hrm_employee-relation': 'HR Management',
+    'hrm_employee-relation_transfer-list': 'Transfer',
     hrm_performance: 'Performance',
     hrm_performance_setting: 'Settings',
     hrm_performance_setting_indicator: 'Indicator Library',
@@ -228,6 +230,17 @@ const local: App.I18n.Schema = {
         add: 'Add Leave Type',
         edit: 'Edit Leave Type',
         delete: 'Delete Leave Type'
+      },
+      transfer: {
+        add: 'Add Transfer',
+        edit: 'Edit Transfer',
+        delete: 'Delete Transfer'
+      },
+      bill: {
+        submit: 'Submit Bill',
+        approve: 'Approve',
+        reject: 'Reject',
+        revoke: 'Revoke'
       },
       performance: {
         indicator: {
@@ -618,6 +631,73 @@ const local: App.I18n.Schema = {
             typeValue: 'Please enter type value',
             status: 'Please select status',
             remark: 'Please enter remark'
+          }
+        }
+      },
+      employeeRelation: {
+        billStatus: {
+          title: 'Bill Status',
+          unsubmitted: 'Unsubmitted',
+          approving: 'Approving',
+          approved: 'Approved',
+          rejected: 'Rejected',
+          revoked: 'Revoked'
+        },
+        transfer: {
+          title: 'Transfer',
+          billNo: 'Bill No.',
+          employeeNo: 'Employee No.',
+          employeeName: 'Employee Name',
+          changeType: {
+            title: 'Change Type',
+            post: 'Position',
+            org: 'Department',
+            salary: 'Salary',
+            company: 'Company',
+            other: 'Other'
+          },
+          originalCompany: 'Original Company',
+          originalOrg: 'Original Department',
+          originalPosition: 'Original Position Title',
+          originalPost: 'Original Post',
+          newCompany: 'New Company',
+          newOrg: 'New Department',
+          newPosition: 'New Position Title',
+          newPost: 'New Post',
+          newSalary: 'New Salary',
+          transferReason: 'Reason',
+          effectiveImmediately: 'Effective Immediately',
+          effectiveDate: 'Effective Date',
+          applied: 'Applied',
+          creatorName: 'Applicant',
+          createTime: 'Created At',
+          yes: 'Yes',
+          no: 'No',
+          submit: 'Submit',
+          approve: 'Approve',
+          reject: 'Reject',
+          revoke: 'Revoke',
+          records: 'Records',
+          noRecords: 'No approval records yet',
+          confirmSubmit: 'Submit this transfer bill for approval?',
+          confirmApprove: 'Approve this bill? Immediately-effective transfers update the employee archive at once.',
+          confirmReject: 'Reject this transfer bill?',
+          confirmRevoke: 'Revoke this transfer bill?',
+          addTransfer: 'Add Transfer',
+          editTransfer: 'Edit Transfer',
+          sectionEmployee: 'Employee',
+          sectionOriginal: 'Original (before)',
+          sectionNew: 'New (after)',
+          sectionEffect: 'Effectiveness',
+          form: {
+            billNo: 'Please enter bill no.',
+            status: 'Please select bill status',
+            employeeNo: 'Please enter employee no.',
+            employeeName: 'Please enter employee name',
+            changeType: 'Please select change type',
+            org: 'Please select org',
+            transferReason: 'Please enter reason',
+            effectiveDateRequired: 'Effective date is required when not effective immediately'
           }
         }
       }

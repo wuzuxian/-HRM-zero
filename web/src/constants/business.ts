@@ -49,3 +49,25 @@ export const hrmAttendanceStatusRecord: Record<Api.Hrm.AttendanceStatus, App.I18
 };
 
 export const hrmAttendanceStatusOptions = transformRecordToOption(hrmAttendanceStatusRecord);
+
+/** 单据状态 (shared approval state machine, GLOSSARY) */
+export const hrmBillStatusRecord: Record<Api.Hrm.BillStatus, App.I18n.I18nKey> = {
+  unsubmitted: 'page.hrm.employeeRelation.billStatus.unsubmitted',
+  approving: 'page.hrm.employeeRelation.billStatus.approving',
+  approved: 'page.hrm.employeeRelation.billStatus.approved',
+  rejected: 'page.hrm.employeeRelation.billStatus.rejected',
+  revoked: 'page.hrm.employeeRelation.billStatus.revoked'
+};
+
+export const hrmBillStatusOptions = transformRecordToOption(hrmBillStatusRecord);
+
+/** 异动类型 (人事调动 HR203) */
+export const hrmTransferChangeTypeRecord: Record<Api.Hrm.TransferChangeType, App.I18n.I18nKey> = {
+  post: 'page.hrm.employeeRelation.transfer.changeType.post',
+  org: 'page.hrm.employeeRelation.transfer.changeType.org',
+  salary: 'page.hrm.employeeRelation.transfer.changeType.salary',
+  company: 'page.hrm.employeeRelation.transfer.changeType.company',
+  other: 'page.hrm.employeeRelation.transfer.changeType.other'
+};
+
+export const hrmTransferChangeTypeOptions = transformRecordToOption(hrmTransferChangeTypeRecord);

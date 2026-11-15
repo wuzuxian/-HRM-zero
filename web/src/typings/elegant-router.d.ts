@@ -39,6 +39,8 @@ declare module "@elegant-router/types" {
     "hrm_attendance_setting": "/hrm/attendance/setting";
     "hrm_attendance_setting_leave-type": "/hrm/attendance/setting/leave-type";
     "hrm_attendance_setting_shift": "/hrm/attendance/setting/shift";
+    "hrm_employee-relation": "/hrm/employee-relation";
+    "hrm_employee-relation_transfer-list": "/hrm/employee-relation/transfer-list";
     "hrm_org": "/hrm/org";
     "hrm_org_org-chart": "/hrm/org/org-chart";
     "hrm_org_orginfo": "/hrm/org/orginfo";
@@ -134,6 +136,7 @@ declare module "@elegant-router/types" {
     | "home"
     | "hrm_attendance_setting_leave-type"
     | "hrm_attendance_setting_shift"
+    | "hrm_employee-relation_transfer-list"
     | "hrm_org_org-chart"
     | "hrm_org_orginfo"
     | "hrm_performance_setting_indicator"

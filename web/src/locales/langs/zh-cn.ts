@@ -180,6 +180,8 @@ const local: App.I18n.Schema = {
     hrm_attendance_setting: '假勤设置',
     hrm_attendance_setting_shift: '班次管理',
     'hrm_attendance_setting_leave-type': '假期类型',
+    'hrm_employee-relation': '人事管理',
+    'hrm_employee-relation_transfer-list': '人事调动',
     hrm_performance: '绩效管理',
     hrm_performance_setting: '绩效设置',
     hrm_performance_setting_indicator: '指标库',
@@ -228,6 +230,17 @@ const local: App.I18n.Schema = {
         add: '新增假期类型',
         edit: '编辑假期类型',
         delete: '删除假期类型'
+      },
+      transfer: {
+        add: '新增调动',
+        edit: '编辑调动',
+        delete: '删除调动'
+      },
+      bill: {
+        submit: '提交单据',
+        approve: '审批通过',
+        reject: '审批驳回',
+        revoke: '撤销单据'
       },
       performance: {
         indicator: {
@@ -618,6 +631,73 @@ const local: App.I18n.Schema = {
             typeValue: '请输入类型值',
             status: '请选择状态',
             remark: '请输入备注'
+          }
+        }
+      },
+      employeeRelation: {
+        billStatus: {
+          title: '单据状态',
+          unsubmitted: '未提交',
+          approving: '审批中',
+          approved: '审批通过',
+          rejected: '审批不通过',
+          revoked: '已撤销'
+        },
+        transfer: {
+          title: '人事调动',
+          billNo: '单据编号',
+          employeeNo: '员工工号',
+          employeeName: '员工姓名',
+          changeType: {
+            title: '异动类型',
+            post: '调岗',
+            org: '调部门',
+            salary: '调薪',
+            company: '调公司',
+            other: '其他'
+          },
+          originalCompany: '原公司',
+          originalOrg: '原部门',
+          originalPosition: '原职位',
+          originalPost: '原岗位',
+          newCompany: '变更为公司',
+          newOrg: '变更为部门',
+          newPosition: '变更为职位',
+          newPost: '变更为岗位',
+          newSalary: '调整后薪资',
+          transferReason: '调动原因',
+          effectiveImmediately: '是否立即生效',
+          effectiveDate: '生效日期',
+          applied: '已生效',
+          creatorName: '申请人',
+          createTime: '创建时间',
+          yes: '是',
+          no: '否',
+          submit: '提交',
+          approve: '通过',
+          reject: '驳回',
+          revoke: '撤销',
+          records: '审批记录',
+          noRecords: '暂无审批记录',
+          confirmSubmit: '确认提交该调动单进入审批？',
+          confirmApprove: '确认审批通过？立即生效的调动单将同步更新员工档案。',
+          confirmReject: '确认驳回该调动单？',
+          confirmRevoke: '确认撤销该调动单？',
+          addTransfer: '新增调动',
+          editTransfer: '编辑调动',
+          sectionEmployee: '员工信息',
+          sectionOriginal: '原（变动前）',
+          sectionNew: '新（变动后）',
+          sectionEffect: '生效设置',
+          form: {
+            billNo: '请输入单据编号',
+            status: '请选择单据状态',
+            employeeNo: '请输入员工工号',
+            employeeName: '请输入员工姓名',
+            changeType: '请选择异动类型',
+            org: '请选择组织',
+            transferReason: '请输入调动原因',
+            effectiveDateRequired: '非立即生效时必须选择生效日期'
           }
         }
       }

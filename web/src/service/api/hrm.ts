@@ -147,3 +147,86 @@ export function DeleteLeaveType(req: string[]) {
     }
   });
 }
+
+/** get hrm transfer bill (人事调动单 HR203) paginated list — defaults to 「我的单据」 server-side */
+export function GetTransferList(params?: Api.Hrm.TransferSearchParams) {
+  return request<Api.Hrm.TransferList>({
+    url: '/api/v1/hrm/getTransferList',
+    method: 'get',
+    params
+  });
+}
+
+/** add hrm transfer bill */
+export function AddTransfer(req: Api.Hrm.AddTransferRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addTransfer',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit hrm transfer bill (only in editable 单据状态) */
+export function EditTransfer(req: Api.Hrm.EditTransferRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editTransfer',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete hrm transfer bills (only in editable 单据状态) */
+export function DeleteTransfer(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteTransfer',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** submit a bill (单据提交, shared approval base; billType "203" = 人事调动) */
+export function SubmitBill(req: Api.Hrm.BillActionRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/submitBill',
+    method: 'post',
+    data: req
+  });
+}
+
+/** approve a bill (审批通过) */
+export function ApproveBill(req: Api.Hrm.BillActionRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/approveBill',
+    method: 'post',
+    data: req
+  });
+}
+
+/** reject a bill (审批驳回) */
+export function RejectBill(req: Api.Hrm.BillActionRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/rejectBill',
+    method: 'post',
+    data: req
+  });
+}
+
+/** revoke a bill (撤销) */
+export function RevokeBill(req: Api.Hrm.BillActionRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/revokeBill',
+    method: 'post',
+    data: req
+  });
+}
+
+/** get shared approval records (审批记录) of one bill */
+export function GetApprovalRecordList(params: { billType: string; billUuid: string }) {
+  return request<{ records: Api.Hrm.ApprovalRecord[] }>({
+    url: '/api/v1/hrm/getApprovalRecordList',
+    method: 'get',
+    params
+  });
+}
