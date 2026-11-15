@@ -1,0 +1,445 @@
+{
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/hrm/addEmployeeContract": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:contract:add",
+        "operationId": "v1/Hrm/ContractAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "contractNo": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "description": "员工档案 uuid（必填，带出快照）",
+                  "type": "string"
+                },
+                "endDate": {
+                  "description": "合同到期日 YYYY-MM-DD",
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "startDate": {
+                  "description": "合同生效日 YYYY-MM-DD",
+                  "type": "string"
+                },
+                "status": {
+                  "description": "合同状态，缺省 1=有效",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "employeeUuid",
+                "startDate",
+                "endDate"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/contract"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteEmployeeContract": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:contract:delete",
+        "operationId": "v1/Hrm/ContractDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/contract"
+        ]
+      }
+    },
+    "/api/v1/hrm/editEmployeeContract": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:contract:edit",
+        "operationId": "v1/Hrm/ContractEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "contractNo": {
+                  "type": "string"
+                },
+                "endDate": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "startDate": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "startDate",
+                "endDate"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/contract"
+        ]
+      }
+    },
+    "/api/v1/hrm/getEmployeeContractList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:contract:list",
+        "operationId": "v1/Hrm/ContractList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "员工姓名（模糊）",
+            "in": "query",
+            "name": "employeeName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "员工工号（模糊）",
+            "in": "query",
+            "name": "employeeNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "到期范围起 YYYY-MM-DD（end_date \u003e= 起）",
+            "in": "query",
+            "name": "startDate",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "到期范围止 YYYY-MM-DD（end_date \u003c= 止）",
+            "in": "query",
+            "name": "endDate",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "预警状态筛选 normal/warning/expired/terminated",
+            "in": "query",
+            "name": "expiryState",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "contractNo": {
+                        "description": "合同编号",
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "daysToExpiry": {
+                        "description": "距到期天数（负数=已过期 N 天）",
+                        "type": "integer"
+                      },
+                      "employeeName": {
+                        "description": "员工姓名（快照）",
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "description": "员工工号（快照）",
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "description": "员工档案 uuid",
+                        "type": "string"
+                      },
+                      "endDate": {
+                        "description": "合同到期日 YYYY-MM-DD",
+                        "type": "string"
+                      },
+                      "expiryState": {
+                        "description": "预警状态 normal/warning(≤90天)/expired/terminated",
+                        "type": "string"
+                      },
+                      "orgUuid": {
+                        "description": "员工所属部门（组织 uuid，快照）",
+                        "type": "string"
+                      },
+                      "remark": {
+                        "description": "备注",
+                        "type": "string"
+                      },
+                      "renewCount": {
+                        "description": "续签次数",
+                        "type": "integer"
+                      },
+                      "startDate": {
+                        "description": "合同生效日 YYYY-MM-DD",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "合同状态 1=有效 2=已到期 3=已解除",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "orgUuid",
+                      "contractNo",
+                      "startDate",
+                      "endDate",
+                      "renewCount",
+                      "status",
+                      "daysToExpiry",
+                      "expiryState",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/contract"
+        ]
+      }
+    },
+    "/api/v1/hrm/renewEmployeeContract": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:contract:renew",
+        "operationId": "v1/Hrm/ContractRenew",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "endDate": {
+                  "description": "新到期日；缺省=原到期日+1 年",
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Renew",
+        "tags": [
+          "v1/hrm/contract"
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKey": {
+      "description": "Enter Authorization",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0"
+}

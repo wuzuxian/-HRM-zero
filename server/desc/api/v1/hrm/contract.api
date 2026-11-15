@@ -1,0 +1,108 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/contract"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 员工劳动合同（HRM-05，spec 用户故事 14/15/17）：在员工档案上下文维护合同
+// （生效日/到期日/续签次数/合同状态），join hrm_employee.uuid；
+// 到期预警/待续签页共享同一列表端点（按筛选口径区分）。
+// 距到期天数 = end_date - today（纯函数 DaysUntilDate）。
+// 状态列语义（演示站）：有效 / 即将到期(≤90天) / 已到期 / 已解除。
+type HrmEmployeeContract {
+	Uuid         string `json:"uuid"`
+	EmployeeUuid string `json:"employeeUuid"` // 员工档案 uuid
+	EmployeeNo   string `json:"employeeNo"` // 员工工号（快照）
+	EmployeeName string `json:"employeeName"` // 员工姓名（快照）
+	OrgUuid      string `json:"orgUuid"` // 员工所属部门（组织 uuid，快照）
+	ContractNo   string `json:"contractNo"` // 合同编号
+	StartDate    string `json:"startDate"` // 合同生效日 YYYY-MM-DD
+	EndDate      string `json:"endDate"` // 合同到期日 YYYY-MM-DD
+	RenewCount   int64  `json:"renewCount"` // 续签次数
+	Status       string `json:"status"` // 合同状态 1=有效 2=已到期 3=已解除
+	DaysToExpiry int64  `json:"daysToExpiry"` // 距到期天数（负数=已过期 N 天）
+	ExpiryState  string `json:"expiryState"` // 预警状态 normal/warning(≤90天)/expired/terminated
+	Remark       string `json:"remark"` // 备注
+	CreateTime   string `json:"createTime"`
+	UpdateTime   string `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	EmployeeName string `form:"employeeName,optional"` // 员工姓名（模糊）
+	EmployeeNo   string `form:"employeeNo,optional"` // 员工工号（模糊）
+	StartDate    string `form:"startDate,optional"` // 到期范围起 YYYY-MM-DD（end_date >= 起）
+	EndDate      string `form:"endDate,optional"` // 到期范围止 YYYY-MM-DD（end_date <= 止）
+	ExpiryState  string `form:"expiryState,optional"` // 预警状态筛选 normal/warning/expired/terminated
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmEmployeeContract `json:"records"`
+}
+
+type AddRequest {
+	EmployeeUuid string `json:"employeeUuid"` // 员工档案 uuid（必填，带出快照）
+	ContractNo   string `json:"contractNo,optional"`
+	StartDate    string `json:"startDate"` // 合同生效日 YYYY-MM-DD
+	EndDate      string `json:"endDate"` // 合同到期日 YYYY-MM-DD
+	Status       string `json:"status,optional"` // 合同状态，缺省 1=有效
+	Remark       string `json:"remark,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid       string `json:"uuid"`
+	ContractNo string `json:"contractNo,optional"`
+	StartDate  string `json:"startDate"`
+	EndDate    string `json:"endDate"`
+	Status     string `json:"status,optional"`
+	Remark     string `json:"remark,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+// Renew 合同续签（spec 用户故事 15）：续签次数+1、生成新到期日（指定或当前到期日+1年）。
+type RenewRequest {
+	Uuid    string `json:"uuid"`
+	EndDate string `json:"endDate,optional"` // 新到期日；缺省=原到期日+1 年
+}
+
+type RenewResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/contract
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getEmployeeContractList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addEmployeeContract (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editEmployeeContract (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deleteEmployeeContract (DeleteRequest) returns (DeleteResponse)
+
+	@handler Renew
+	post /hrm/renewEmployeeContract (RenewRequest) returns (RenewResponse)
+}
+

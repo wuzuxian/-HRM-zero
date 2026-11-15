@@ -150,6 +150,19 @@ const (
 	RegularizationEmployeeRequiredCode = 10467
 	// RegularizationNotEditableCode 单据当前状态不允许修改/删除（仅 未提交/审批不通过/已撤销 可改）
 	RegularizationNotEditableCode = 10468
+
+	// HRM 劳动合同与证照（HRM-05）业务错误码。1048x 段
+	// （1047x 员工入职，10500 绩效方案；1032x-1047x 已占用，见各 errcode 文件声明）。
+	// ContractNotFoundCode 劳动合同不存在
+	ContractNotFoundCode = 10480
+	// ContractInvalidCode 劳动合同参数非法（员工档案必填/日期格式/到期日早于生效日/状态非法等）
+	ContractInvalidCode = 10481
+	// ContractNotRenewableCode 合同当前状态不允许续签（仅 有效/已到期 可续签，已解除不可续签）
+	ContractNotRenewableCode = 10482
+	// EmployeeCertificateNotFoundCode 员工证照不存在
+	EmployeeCertificateNotFoundCode = 10483
+	// EmployeeCertificateInvalidCode 员工证照参数非法（员工档案/证书类型/证号必填等）
+	EmployeeCertificateInvalidCode = 10484
 )
 
 func init() {
@@ -225,4 +238,10 @@ func init() {
 	status.Register(RegularizationInvalidCode)
 	status.Register(RegularizationEmployeeRequiredCode)
 	status.Register(RegularizationNotEditableCode)
+
+	status.Register(ContractNotFoundCode)
+	status.Register(ContractInvalidCode)
+	status.Register(ContractNotRenewableCode)
+	status.Register(EmployeeCertificateNotFoundCode)
+	status.Register(EmployeeCertificateInvalidCode)
 }

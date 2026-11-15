@@ -1,0 +1,379 @@
+{
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/hrm/addEmployeeCertificate": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:empcert:add",
+        "operationId": "v1/Hrm/EmpcertAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "certNo": {
+                  "description": "证号（明文提交）",
+                  "type": "string"
+                },
+                "certType": {
+                  "description": "证书类型",
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "description": "员工档案 uuid（必填，带出快照）",
+                  "type": "string"
+                },
+                "expiryDate": {
+                  "type": "string"
+                },
+                "issueDate": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "employeeUuid",
+                "certType",
+                "certNo"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/empcert"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteEmployeeCertificate": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:empcert:delete",
+        "operationId": "v1/Hrm/EmpcertDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/empcert"
+        ]
+      }
+    },
+    "/api/v1/hrm/editEmployeeCertificate": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:empcert:edit",
+        "operationId": "v1/Hrm/EmpcertEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "certNo": {
+                  "description": "明文提交（若与脱敏值相同则视为未修改）",
+                  "type": "string"
+                },
+                "certType": {
+                  "type": "string"
+                },
+                "expiryDate": {
+                  "type": "string"
+                },
+                "issueDate": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "certType",
+                "certNo"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/empcert"
+        ]
+      }
+    },
+    "/api/v1/hrm/getEmployeeCertificateList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:empcert:list",
+        "operationId": "v1/Hrm/EmpcertList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "员工姓名（模糊）",
+            "in": "query",
+            "name": "employeeName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "员工工号（模糊）",
+            "in": "query",
+            "name": "employeeNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "证书类型（模糊）",
+            "in": "query",
+            "name": "certType",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "预警状态筛选 normal/warning/expired",
+            "in": "query",
+            "name": "expiryState",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "certNo": {
+                        "description": "证号（出参脱敏，如 4408**************12）",
+                        "type": "string"
+                      },
+                      "certType": {
+                        "description": "证书类型（身份证/学历证书/职业资格证等）",
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "daysToExpiry": {
+                        "description": "距到期天数（负数=已过期 N 天）",
+                        "type": "integer"
+                      },
+                      "employeeName": {
+                        "description": "员工姓名（快照）",
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "description": "员工工号（快照）",
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "description": "员工档案 uuid",
+                        "type": "string"
+                      },
+                      "expiryDate": {
+                        "description": "到期日 YYYY-MM-DD",
+                        "type": "string"
+                      },
+                      "expiryState": {
+                        "description": "预警状态 normal/warning(≤90天)/expired",
+                        "type": "string"
+                      },
+                      "issueDate": {
+                        "description": "发证日期 YYYY-MM-DD",
+                        "type": "string"
+                      },
+                      "orgUuid": {
+                        "description": "员工所属部门（组织 uuid，快照）",
+                        "type": "string"
+                      },
+                      "remark": {
+                        "description": "备注",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "orgUuid",
+                      "certType",
+                      "certNo",
+                      "issueDate",
+                      "expiryDate",
+                      "daysToExpiry",
+                      "expiryState",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/empcert"
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKey": {
+      "description": "Enter Authorization",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0"
+}
