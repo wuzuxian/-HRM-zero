@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@elegant-router/core':
+    hash: vautzs336ua5fc7mgaw6kmi2sa
+    path: patches/@elegant-router__core.patch
+
 importers:
 
   .:
@@ -5686,7 +5691,7 @@ snapshots:
     dependencies:
       vue: 3.5.11(typescript@5.6.3)
 
-  '@elegant-router/core@0.3.8':
+  '@elegant-router/core@0.3.8(patch_hash=vautzs336ua5fc7mgaw6kmi2sa)':
     dependencies:
       chokidar: 3.6.0
       consola: 3.2.3
@@ -5696,7 +5701,7 @@ snapshots:
 
   '@elegant-router/vue@0.3.8':
     dependencies:
-      '@elegant-router/core': 0.3.8
+      '@elegant-router/core': 0.3.8(patch_hash=vautzs336ua5fc7mgaw6kmi2sa)
       consola: 3.2.3
       kolorist: 1.8.0
       magic-string: 0.30.11

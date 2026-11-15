@@ -240,6 +240,34 @@ export const generatedRoutes: GeneratedRoute[] = [
         ]
       },
       {
+        name: 'hrm_recruitment',
+        path: '/hrm/recruitment',
+        meta: {
+          title: 'hrm_recruitment',
+          i18nKey: 'route.hrm_recruitment'
+        },
+        children: [
+          {
+            name: 'hrm_recruitment_candidate-list',
+            path: '/hrm/recruitment/candidate-list',
+            component: 'view.hrm_recruitment_candidate-list',
+            meta: {
+              title: 'hrm_recruitment_candidate-list',
+              i18nKey: 'route.hrm_recruitment_candidate-list'
+            }
+          },
+          {
+            name: 'hrm_recruitment_requirement-list',
+            path: '/hrm/recruitment/requirement-list',
+            component: 'view.hrm_recruitment_requirement-list',
+            meta: {
+              title: 'hrm_recruitment_requirement-list',
+              i18nKey: 'route.hrm_recruitment_requirement-list'
+            }
+          }
+        ]
+      },
+      {
         name: 'hrm_reward',
         path: '/hrm/reward',
         meta: {
@@ -254,34 +282,6 @@ export const generatedRoutes: GeneratedRoute[] = [
             meta: {
               title: 'hrm_reward_bill',
               i18nKey: 'route.hrm_reward_bill'
-            }
-          }
-        ]
-      },
-      {
-        name: 'hrm_recruitment',
-        path: '/hrm/recruitment',
-        meta: {
-          title: 'hrm_recruitment',
-          i18nKey: 'route.hrm_recruitment'
-        },
-        children: [
-          {
-            name: 'hrm_recruitment_requirement-list',
-            path: '/hrm/recruitment/requirement-list',
-            component: 'view.hrm_recruitment_requirement-list',
-            meta: {
-              title: 'hrm_recruitment_requirement-list',
-              i18nKey: 'route.hrm_recruitment_requirement-list'
-            }
-          },
-          {
-            name: 'hrm_recruitment_candidate-list',
-            path: '/hrm/recruitment/candidate-list',
-            component: 'view.hrm_recruitment_candidate-list',
-            meta: {
-              title: 'hrm_recruitment_candidate-list',
-              i18nKey: 'route.hrm_recruitment_candidate-list'
             }
           }
         ]

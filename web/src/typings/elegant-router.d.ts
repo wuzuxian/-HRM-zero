@@ -53,11 +53,11 @@ declare module "@elegant-router/types" {
     "hrm_performance_setting": "/hrm/performance/setting";
     "hrm_performance_setting_indicator": "/hrm/performance/setting/indicator";
     "hrm_performance_setting_template": "/hrm/performance/setting/template";
-    "hrm_reward": "/hrm/reward";
-    "hrm_reward_bill": "/hrm/reward/bill";
     "hrm_recruitment": "/hrm/recruitment";
     "hrm_recruitment_candidate-list": "/hrm/recruitment/candidate-list";
     "hrm_recruitment_requirement-list": "/hrm/recruitment/requirement-list";
+    "hrm_reward": "/hrm/reward";
+    "hrm_reward_bill": "/hrm/reward/bill";
     "hrm_training": "/hrm/training";
     "hrm_training_cert-issue": "/hrm/training/cert-issue";
     "hrm_training_cert-template": "/hrm/training/cert-template";
@@ -161,11 +161,11 @@ declare module "@elegant-router/types" {
     | "hrm_performance_scheme"
     | "hrm_performance_setting_indicator"
     | "hrm_performance_setting_template"
-    | "hrm_training_cert-issue"
-    | "hrm_training_cert-template"
-    | "hrm_reward_bill"
     | "hrm_recruitment_candidate-list"
     | "hrm_recruitment_requirement-list"
+    | "hrm_reward_bill"
+    | "hrm_training_cert-issue"
+    | "hrm_training_cert-template"
     | "hrm_training_my"
     | "hrm_training_plan"
     | "hrm_training_session"
