@@ -182,7 +182,8 @@ watch(visible, () => {
             />
           </NFormItemGi>
           <NFormItemGi span="24" :label="$t('page.hrm.requirement.requirementDesc')" path="requirementDesc">
-            <NTextarea
+            <NInput
+  type="textarea"
               v-model:value="model.requirementDesc"
               :rows="2"
               :placeholder="$t('page.hrm.requirement.form.requirementDesc')"

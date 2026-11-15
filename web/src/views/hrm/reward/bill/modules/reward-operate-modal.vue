@@ -155,7 +155,8 @@ watch(visible, () => {
             <NInput v-model:value="model.salaryMonth" :placeholder="$t('page.hrm.reward.form.salaryMonth')" />
           </NFormItemGi>
           <NFormItemGi span="24" :label="$t('page.hrm.reward.reason')" path="reason">
-            <NTextarea v-model:value="model.reason" :rows="2" :placeholder="$t('page.hrm.reward.form.reason')" />
+            <NInput
+  type="textarea" v-model:value="model.reason" :rows="2" :placeholder="$t('page.hrm.reward.form.reason')" />
           </NFormItemGi>
         </NGrid>
       </NForm>

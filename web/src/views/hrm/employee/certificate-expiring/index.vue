@@ -462,7 +462,8 @@ watch(operateVisible, () => {
               />
             </NFormItemGi>
             <NFormItemGi span="24" :label="$t('page.hrm.employee.certExpiring.remark')" path="remark">
-              <NTextarea v-model:value="certModel.remark" :rows="2" />
+              <NInput
+  type="textarea" v-model:value="certModel.remark" :rows="2" />
             </NFormItemGi>
           </NGrid>
         </NForm>

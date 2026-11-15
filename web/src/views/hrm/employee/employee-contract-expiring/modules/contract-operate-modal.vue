@@ -189,7 +189,8 @@ watch(visible, () => {
             <NSelect v-model:value="model.status" :options="statusOptions" />
           </NFormItemGi>
           <NFormItemGi span="24" :label="$t('page.hrm.employee.contractExpiring.remark')" path="remark">
-            <NTextarea
+            <NInput
+  type="textarea"
               v-model:value="model.remark"
               :rows="2"
               :placeholder="$t('page.hrm.employee.contractExpiring.form.remark')"
