@@ -172,6 +172,11 @@ const local: App.I18n.Schema = {
     'manage_user-detail': '用户详情',
     manage_role: '角色管理',
     manage_menu: '菜单管理',
+    hrm: '人力',
+    hrm_performance: '绩效管理',
+    hrm_performance_setting: '绩效设置',
+    hrm_performance_setting_indicator: '指标库',
+    hrm_performance_setting_template: '模板管理',
     exception: '异常页',
     exception_403: '403',
     exception_404: '404',
@@ -196,6 +201,20 @@ const local: App.I18n.Schema = {
         add: '新增角色',
         delete: '删除角色',
         edit: '编辑角色'
+      }
+    },
+    hrm: {
+      performance: {
+        indicator: {
+          add: '新增指标',
+          edit: '编辑指标',
+          delete: '删除指标'
+        },
+        template: {
+          add: '新增模板',
+          edit: '编辑模板',
+          delete: '删除模板'
+        }
       }
     }
   },
@@ -275,7 +294,7 @@ const local: App.I18n.Schema = {
         desc2: '2024 年 10 月 14 号创建了开源项目 jzero-admin!',
         desc3: '2025 年不断的改进完善ing!',
         desc4: '2025 年 11 月 30 号创建了开源项目 jzero-intellij!',
-        desc5: '2026 年 01 月 01 号发布了 jzero v1.0.0!',
+        desc5: '2026 年 01 月 01 号发布了 jzero v1.0.0!'
       },
       creativity: '创意'
     },
@@ -404,6 +423,72 @@ const local: App.I18n.Schema = {
         iconType: {
           iconify: 'iconify图标',
           local: '本地图标'
+        }
+      }
+    },
+    hrm: {
+      performance: {
+        common: {
+          status: {
+            enable: '启用',
+            disable: '停用'
+          }
+        },
+        indicatorType: {
+          kpi: '结果指标(KPI)',
+          behavior: '行为能力'
+        },
+        scoreRule: {
+          formula: '公式评分',
+          manual: '手工评分'
+        },
+        dataSource: {
+          system: '系统取数',
+          manual: '手工填报'
+        },
+        indicator: {
+          title: '指标库',
+          code: '指标编码',
+          name: '指标名称',
+          indicatorType: '指标类型',
+          unit: '计量单位',
+          scoreRule: '评分规则',
+          dataSource: '数据来源',
+          defaultWeight: '默认权重',
+          status: '状态',
+          remark: '备注',
+          form: {
+            code: '请输入指标编码',
+            name: '请输入指标名称',
+            indicatorType: '请选择指标类型',
+            unit: '请输入计量单位',
+            scoreRule: '请选择评分规则',
+            dataSource: '请选择数据来源',
+            status: '请选择状态',
+            remark: '请输入备注'
+          },
+          addIndicator: '新增指标',
+          editIndicator: '编辑指标'
+        },
+        template: {
+          title: '考核模板',
+          name: '模板名称',
+          status: '状态',
+          remark: '备注',
+          createTime: '创建时间',
+          form: {
+            name: '请输入模板名称',
+            status: '请选择状态',
+            remark: '请输入备注'
+          },
+          configItems: '指标权重配置',
+          indicatorPlaceholder: '请选择指标',
+          addIndicatorItem: '添加指标',
+          weightSumLabel: '权重之和',
+          weightSumError: '模板内指标权重之和必须等于 100%',
+          itemIncomplete: '请为每条指标配置选择指标并填写大于 0 的权重',
+          addTemplate: '新增模板',
+          editTemplate: '编辑模板'
         }
       }
     }

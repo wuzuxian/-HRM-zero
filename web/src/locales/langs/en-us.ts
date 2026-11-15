@@ -172,6 +172,11 @@ const local: App.I18n.Schema = {
     'manage_user-detail': 'User Detail',
     manage_role: 'Role Manage',
     manage_menu: 'Menu Manage',
+    hrm: 'HRM',
+    hrm_performance: 'Performance',
+    hrm_performance_setting: 'Settings',
+    hrm_performance_setting_indicator: 'Indicator Library',
+    hrm_performance_setting_template: 'Template Management',
     exception: 'Exception',
     exception_403: '403',
     exception_404: '404',
@@ -196,6 +201,20 @@ const local: App.I18n.Schema = {
         add: 'Add Role',
         edit: 'Edit Role',
         delete: 'Delete Role'
+      }
+    },
+    hrm: {
+      performance: {
+        indicator: {
+          add: 'Add Indicator',
+          edit: 'Edit Indicator',
+          delete: 'Delete Indicator'
+        },
+        template: {
+          add: 'Add Template',
+          edit: 'Edit Template',
+          delete: 'Delete Template'
+        }
       }
     }
   },
@@ -271,7 +290,7 @@ const local: App.I18n.Schema = {
       projectNews: {
         title: 'Project News',
         moreNews: 'More News',
-         desc1: 'Created the open source project jzero on April 07, 2024!',
+        desc1: 'Created the open source project jzero on April 07, 2024!',
         desc2: 'Created the open source project jzero-admin on October 14, 2024!',
         desc3: 'Continuously improving and perfecting in 2025!',
         desc4: 'Created the open source project jzero-intellij on November 30, 2025!',
@@ -404,6 +423,72 @@ const local: App.I18n.Schema = {
         iconType: {
           iconify: 'Iconify Icon',
           local: 'Local Icon'
+        }
+      }
+    },
+    hrm: {
+      performance: {
+        common: {
+          status: {
+            enable: 'Enabled',
+            disable: 'Disabled'
+          }
+        },
+        indicatorType: {
+          kpi: 'KPI',
+          behavior: 'Behavior Competency'
+        },
+        scoreRule: {
+          formula: 'Formula Scoring',
+          manual: 'Manual Scoring'
+        },
+        dataSource: {
+          system: 'System Data',
+          manual: 'Manual Input'
+        },
+        indicator: {
+          title: 'Indicator Library',
+          code: 'Indicator Code',
+          name: 'Indicator Name',
+          indicatorType: 'Indicator Type',
+          unit: 'Unit',
+          scoreRule: 'Scoring Rule',
+          dataSource: 'Data Source',
+          defaultWeight: 'Default Weight',
+          status: 'Status',
+          remark: 'Remark',
+          form: {
+            code: 'Please enter indicator code',
+            name: 'Please enter indicator name',
+            indicatorType: 'Please select indicator type',
+            unit: 'Please enter unit',
+            scoreRule: 'Please select scoring rule',
+            dataSource: 'Please select data source',
+            status: 'Please select status',
+            remark: 'Please enter remark'
+          },
+          addIndicator: 'Add Indicator',
+          editIndicator: 'Edit Indicator'
+        },
+        template: {
+          title: 'Assessment Template',
+          name: 'Template Name',
+          status: 'Status',
+          remark: 'Remark',
+          createTime: 'Create Time',
+          form: {
+            name: 'Please enter template name',
+            status: 'Please select status',
+            remark: 'Please enter remark'
+          },
+          configItems: 'Indicator Weight Configuration',
+          indicatorPlaceholder: 'Please select indicator',
+          addIndicatorItem: 'Add Indicator',
+          weightSumLabel: 'Weight Sum',
+          weightSumError: 'The sum of indicator weights in a template must equal 100%',
+          itemIncomplete: 'Please select an indicator and enter a weight greater than 0 for each row',
+          addTemplate: 'Add Template',
+          editTemplate: 'Edit Template'
         }
       }
     }
