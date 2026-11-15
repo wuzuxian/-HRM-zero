@@ -33,9 +33,9 @@ func TestSubmitRequiresApprovalThenConfirmAccrues(t *testing.T) {
 		t.Fatalf("status after submit = %q, want approving (需审批)", st)
 	}
 
-	// 审批前核定校验: 核定 > 申请 → 10573
-	if err := confirmAndApprove(t, env, svcCtx, billUuid, 3, CompTypeLeave); errCode(err) != 10573 {
-		t.Fatalf("confirm > apply err code = %v, want 10573", errCode(err))
+	// 审批前核定校验: 核定 > 申请 → 10603
+	if err := confirmAndApprove(t, env, svcCtx, billUuid, 3, CompTypeLeave); errCode(err) != 10603 {
+		t.Fatalf("confirm > apply err code = %v, want 10603", errCode(err))
 	}
 	// 非审批中不可核定: 单据仍在 审批中，正常核定 2h
 	if err := confirmAndApprove(t, env, svcCtx, billUuid, 2, CompTypeLeave); err != nil {
@@ -122,7 +122,7 @@ func TestSubmitFreeApprovalAutoApproves(t *testing.T) {
 }
 
 // TestMonthlyLimitGuardRollsBack 月上限守卫: 上限 6h，第一单折算 6h 通过，
-// 第二单折算 3h 超限 → 10574 审批整体回滚（状态保持 审批中，无第二条 accrue 流水）.
+// 第二单折算 3h 超限 → 10604 审批整体回滚（状态保持 审批中，无第二条 accrue 流水）.
 func TestMonthlyLimitGuardRollsBack(t *testing.T) {
 	env := svctest.New(t)
 	svcCtx := newSvcCtx(t, env)
@@ -140,14 +140,14 @@ func TestMonthlyLimitGuardRollsBack(t *testing.T) {
 		t.Fatalf("bill1 approve: %v", err)
 	}
 
-	// 第二单: 3/9 工作日 3h → 折算 3h, 6+3 > 6 → 10574
+	// 第二单: 3/9 工作日 3h → 折算 3h, 6+3 > 6 → 10604
 	bill2 := addOvertime(t, svcCtx, ctx, "2026-03-09", "1",
 		"2026-03-09 18:00:00", "2026-03-09 21:00:00", nil)
 	if st := submitOvertime(t, env, svcCtx, bill2); st != StatusApproving {
 		t.Fatalf("bill2 submit status = %q", st)
 	}
-	if err := confirmAndApprove(t, env, svcCtx, bill2, 3, CompTypeLeave); errCode(err) != 10574 {
-		t.Fatalf("bill2 approve err code = %v, want 10574", errCode(err))
+	if err := confirmAndApprove(t, env, svcCtx, bill2, 3, CompTypeLeave); errCode(err) != 10604 {
+		t.Fatalf("bill2 approve err code = %v, want 10604", errCode(err))
 	}
 
 	// 状态保持 审批中（回滚），流水只有 1 条 accrue
@@ -253,20 +253,20 @@ func TestLifecycleGuardsAndFilters(t *testing.T) {
 		Uuid: billUuid, EmployeeNo: "00000001", EmployeeName: "张三",
 		OvertimeDate: "2026-03-02", DayType: "1",
 		StartTime: "2026-03-02 18:00:00", EndTime: "2026-03-02 21:00:00",
-	}); errCode(err) != 10572 {
-		t.Fatalf("edit approving err code = %v, want 10572", errCode(err))
+	}); errCode(err) != 10602 {
+		t.Fatalf("edit approving err code = %v, want 10602", errCode(err))
 	}
-	// 核定 0 小时 → 10571
+	// 核定 0 小时 → 10601
 	if _, err := NewConfirm(context.Background(), svcCtx, nil).Confirm(&types.ConfirmRequest{
 		Uuid: billUuid, ConfirmHours: 0, CompType: CompTypeLeave,
-	}); errCode(err) != 10571 {
-		t.Fatalf("confirm 0 hours err code = %v, want 10571", errCode(err))
+	}); errCode(err) != 10601 {
+		t.Fatalf("confirm 0 hours err code = %v, want 10601", errCode(err))
 	}
 	if err := confirmAndApprove(t, env, svcCtx, billUuid, 2, CompTypeLeave); err != nil {
 		t.Fatalf("approve: %v", err)
 	}
-	if _, err := NewDelete(ctx, svcCtx, nil).Delete(&types.DeleteRequest{Uuids: []string{billUuid}}); errCode(err) != 10572 {
-		t.Fatalf("delete approved err code = %v, want 10572", errCode(err))
+	if _, err := NewDelete(ctx, svcCtx, nil).Delete(&types.DeleteRequest{Uuids: []string{billUuid}}); errCode(err) != 10602 {
+		t.Fatalf("delete approved err code = %v, want 10602", errCode(err))
 	}
 
 	// 第二个普通用户看不到 user-1 的单据（mine-by-default）

@@ -6,15 +6,15 @@ import "github.com/jzero-io/jzero/core/status"
 
 const (
 	// OvertimeNotFoundCode 加班单不存在
-	OvertimeNotFoundCode = 10570
+	OvertimeNotFoundCode = 10600
 	// OvertimeInvalidCode 加班单参数非法（加班日期/当天类型/起止时间等）
-	OvertimeInvalidCode = 10571
+	OvertimeInvalidCode = 10601
 	// OvertimeNotEditableCode 单据当前状态不允许修改/删除/核定（仅允许状态集之外拒绝）
-	OvertimeNotEditableCode = 10572
+	OvertimeNotEditableCode = 10602
 	// OvertimeConfirmHoursExceededCode 核定时长超过申请时长
-	OvertimeConfirmHoursExceededCode = 10573
+	OvertimeConfirmHoursExceededCode = 10603
 	// OvertimeMonthlyLimitExceededCode 折算调休小时超出该员工当月加班月上限
-	OvertimeMonthlyLimitExceededCode = 10574
+	OvertimeMonthlyLimitExceededCode = 10604
 )
 
 func init() {

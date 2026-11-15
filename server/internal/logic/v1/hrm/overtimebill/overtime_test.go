@@ -27,9 +27,9 @@ import (
 //  2. Add: 单据编号 HR217-, 未提交, 申请时长落库.
 //  3. SubmitOvertimeRule 判定: 命中规则 需审批 → 审批中; 免审批 → 自动通过
 //     (issues: 规则判定 需审批 vs 免审批 logic 测试).
-//  4. 核定: confirmHours ≤ applyHours 校验（>→10573）; 审批通过事务内按 CompMultiplier
+//  4. 核定: confirmHours ≤ applyHours 校验（>→10603）; 审批通过事务内按 CompMultiplier
 //     折算调休入账（余额表 granted+ + accrue 流水 with multiplier）(issues: 调休入账流水 logic 测试).
-//  5. 月上限守卫: 超月上限 → 10574 审批整体回滚（单据状态保持 审批中，无流水）.
+//  5. 月上限守卫: 超月上限 → 10604 审批整体回滚（单据状态保持 审批中，无流水）.
 //  6. 幂等: settled=1 后重复 ApproveBill 不重复入账.
 //  7. 生命周期守卫: edit/delete 仅可编辑状态; confirm 仅 审批中.
 //  8. 「我的单据」默认过滤 + 筛选（编号/状态/当天类型）.
