@@ -409,5 +409,169 @@ declare namespace Api {
       fileName: string;
       content: string;
     };
+
+    // ---- HRM 员工档案 (HRM-03) ----
+
+    /** 性别 1=男 2=女 */
+    type Gender = '1' | '2';
+
+    /** 婚姻状况 1=未婚 2=已婚 3=离异 4=丧偶 */
+    type MaritalStatus = '1' | '2' | '3' | '4';
+
+    /** 人员状态 1=正式 2=试用期 3=实习生 4=临时工 5=离职 6=退休 (5/6 = 不在册口径) */
+    type PersonStatus = '1' | '2' | '3' | '4' | '5' | '6';
+
+    /** 用户状态 1=已生成系统账号 0=未生成 (由 user_uuid 派生) */
+    type UserStatus = '0' | '1';
+
+    /** 教育经历从表行 */
+    type EmployeeEducation = {
+      uuid?: string;
+      school: string;
+      major: string;
+      education: string;
+      startDate: string;
+      endDate: string;
+      remark: string;
+    };
+
+    /** 工作经历从表行 */
+    type EmployeeWork = {
+      uuid?: string;
+      company: string;
+      position: string;
+      startDate: string;
+      endDate: string;
+      remark: string;
+    };
+
+    /** 家属从表行 */
+    type EmployeeFamily = {
+      uuid?: string;
+      name: string;
+      relation: string;
+      phone: string;
+      workUnit: string;
+      remark: string;
+    };
+
+    /** 员工档案主表行 (列表不带从表, 详情带) */
+    type Employee = {
+      /** record uuid */
+      uuid: string;
+      /** record creator */
+      createBy: string;
+      /** record create time */
+      createTime: string;
+      /** record updater */
+      updateBy: string;
+      /** record update time */
+      updateTime: string;
+      /** employeeNo */
+      employeeNo: string;
+      name: string;
+      gender: Gender | '';
+      birthday: string;
+      nation: string;
+      politicalStatus: string;
+      maritalStatus: MaritalStatus | '';
+      nativePlace: string;
+      bloodType: string;
+      idCard: string;
+      height: string;
+      weight: string;
+      householdAddress: string;
+      address: string;
+      emergencyContact: string;
+      emergencyPhone: string;
+      phone: string;
+      email: string;
+      avatar: string;
+      bankName: string;
+      bankAccount: string;
+      companyUuid: string;
+      orgUuid: string;
+      position: string;
+      post: string;
+      personStatus: PersonStatus;
+      hireDate: string;
+      formalDate: string;
+      /** 用户状态: 是否已生成系统账号 (1=已生成 0=未生成) */
+      userStatus: UserStatus;
+      remark: string;
+      educations?: EmployeeEducation[];
+      works?: EmployeeWork[];
+      families?: EmployeeFamily[];
+    };
+
+    /** 员工档案 search params */
+    type EmployeeSearchParams = CommonType.RecordNullable<
+      Pick<Employee, 'employeeNo' | 'name' | 'orgUuid' | 'personStatus'> & Common.CommonSearchParams
+    >;
+
+    /** 员工档案 paginated list */
+    type EmployeeList = Common.PaginatingQueryRecord<Employee>;
+
+    /** add employee request; employeeNo 为空时后端按 最大工号+1 自动生成 */
+    type AddEmployeeRequest = {
+      employeeNo?: string;
+      name: string;
+      gender?: Gender | '';
+      birthday?: string;
+      nation?: string;
+      politicalStatus?: string;
+      maritalStatus?: MaritalStatus | '';
+      nativePlace?: string;
+      bloodType?: string;
+      idCard?: string;
+      height?: string;
+      weight?: string;
+      householdAddress?: string;
+      address?: string;
+      emergencyContact?: string;
+      emergencyPhone?: string;
+      phone?: string;
+      email?: string;
+      avatar?: string;
+      bankName?: string;
+      bankAccount?: string;
+      companyUuid?: string;
+      orgUuid?: string;
+      position?: string;
+      post?: string;
+      personStatus?: PersonStatus;
+      hireDate?: string;
+      formalDate?: string;
+      remark?: string;
+      educations?: EmployeeEducation[];
+      works?: EmployeeWork[];
+      families?: EmployeeFamily[];
+    };
+
+    /** edit employee request (从表全删全插) */
+    type EditEmployeeRequest = AddEmployeeRequest & {
+      uuid: string;
+    };
+
+    /** employee detail response */
+    type EmployeeDetailResponse = {
+      employee: Employee;
+    };
+
+    /** import employees request (base64 xlsx, mirrors org import) */
+    type ImportEmployeeRequest = {
+      fileName: string;
+      content: string;
+    };
+
+    type ImportEmployeeResponse = {
+      successCount: number;
+    };
+
+    /** export employees response (base64 xlsx, mirrors org export) */
+    type ExportEmployeeResponse = {
+      fileName: string;
+      content: string;
+    };
   }
 }

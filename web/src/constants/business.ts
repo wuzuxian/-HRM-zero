@@ -65,3 +65,41 @@ export const hrmTrainingCertificateStatusRecord: Record<Api.Hrm.TrainingCertific
 };
 
 export const hrmTrainingCertificateStatusOptions = transformRecordToOption(hrmTrainingCertificateStatusRecord);
+
+// ---- HRM 员工档案 (HRM-03) ----
+
+/** 性别 1=男 2=女 */
+export const hrmEmployeeGenderRecord: Record<Api.Hrm.Gender, App.I18n.I18nKey> = {
+  '1': 'page.hrm.employee.gender.male',
+  '2': 'page.hrm.employee.gender.female'
+};
+
+export const hrmEmployeeGenderOptions = transformRecordToOption(hrmEmployeeGenderRecord);
+
+/** 婚姻状况 1=未婚 2=已婚 3=离异 4=丧偶 */
+export const hrmEmployeeMaritalStatusRecord: Record<Api.Hrm.MaritalStatus, App.I18n.I18nKey> = {
+  '1': 'page.hrm.employee.maritalStatus.unmarried',
+  '2': 'page.hrm.employee.maritalStatus.married',
+  '3': 'page.hrm.employee.maritalStatus.divorced',
+  '4': 'page.hrm.employee.maritalStatus.widowed'
+};
+
+export const hrmEmployeeMaritalStatusOptions = transformRecordToOption(hrmEmployeeMaritalStatusRecord);
+
+/** 人员状态 1=正式 2=试用期 3=实习生 4=临时工 5=离职 6=退休 */
+export const hrmEmployeePersonStatusRecord: Record<Api.Hrm.PersonStatus, App.I18n.I18nKey> = {
+  '1': 'page.hrm.employee.personStatus.regular',
+  '2': 'page.hrm.employee.personStatus.probation',
+  '3': 'page.hrm.employee.personStatus.intern',
+  '4': 'page.hrm.employee.personStatus.temp',
+  '5': 'page.hrm.employee.personStatus.resigned',
+  '6': 'page.hrm.employee.personStatus.retired'
+};
+
+export const hrmEmployeePersonStatusOptions = transformRecordToOption(hrmEmployeePersonStatusRecord);
+
+/** 用户状态 1=已生成系统账号 0=未生成 */
+export const hrmEmployeeUserStatusRecord: Record<Api.Hrm.UserStatus, App.I18n.I18nKey> = {
+  '1': 'page.hrm.employee.userStatus.created',
+  '0': 'page.hrm.employee.userStatus.none'
+};

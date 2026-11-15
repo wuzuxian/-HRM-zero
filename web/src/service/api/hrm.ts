@@ -174,3 +174,67 @@ export function DownloadMyCertificateFile(uuid: string) {
     params: { uuid }
   });
 }
+
+/** get 员工档案 paginated list (筛选: 工号/姓名/部门/人员状态) */
+export function GetEmployeeList(params?: Api.Hrm.EmployeeSearchParams) {
+  return request<Api.Hrm.EmployeeList>({
+    url: '/api/v1/hrm/getEmployeeList',
+    method: 'get',
+    params
+  });
+}
+
+/** get 员工档案 detail incl. 教育经历/工作经历/家属 sub-tables */
+export function GetEmployeeDetail(uuid: string) {
+  return request<Api.Hrm.EmployeeDetailResponse>({
+    url: '/api/v1/hrm/getEmployeeDetail',
+    method: 'get',
+    params: { uuid }
+  });
+}
+
+/** add 员工档案; employeeNo 为空时后端按 最大工号+1 (8位补零) 自动生成 */
+export function AddEmployee(req: Api.Hrm.AddEmployeeRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addEmployee',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 员工档案 (从表全删全插) */
+export function EditEmployee(req: Api.Hrm.EditEmployeeRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editEmployee',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 员工档案 (级联删除三个从表) */
+export function DeleteEmployee(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteEmployee',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** import 员工档案 from a base64-encoded xlsx file */
+export function ImportEmployee(req: Api.Hrm.ImportEmployeeRequest) {
+  return request<Api.Hrm.ImportEmployeeResponse>({
+    url: '/api/v1/hrm/importEmployee',
+    method: 'post',
+    data: req
+  });
+}
+
+/** export 员工档案 as a base64-encoded xlsx file */
+export function ExportEmployee() {
+  return request<Api.Hrm.ExportEmployeeResponse>({
+    url: '/api/v1/hrm/exportEmployee',
+    method: 'get'
+  });
+}

@@ -109,6 +109,25 @@ export const generatedRoutes: GeneratedRoute[] = [
         ]
       },
       {
+        name: 'hrm_employee',
+        path: '/hrm/employee',
+        meta: {
+          title: 'hrm_employee',
+          i18nKey: 'route.hrm_employee'
+        },
+        children: [
+          {
+            name: 'hrm_employee_employee-archive-list',
+            path: '/hrm/employee/employee-archive-list',
+            component: 'view.hrm_employee_employee-archive-list',
+            meta: {
+              title: 'hrm_employee_employee-archive-list',
+              i18nKey: 'route.hrm_employee_employee-archive-list'
+            }
+          }
+        ]
+      },
+      {
         name: 'hrm_org',
         path: '/hrm/org',
         meta: {
