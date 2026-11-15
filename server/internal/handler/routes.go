@@ -21,6 +21,8 @@ import (
 	v1hrmreward "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/reward"
 	v1hrmshift "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/shift"
 	v1hrmtraining "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/training"
+	v1hrmtraining_plan "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/training_plan"
+	v1hrmtraining_session "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/training_session"
 	v1hrmtransfer "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/transfer"
 	v1managemenu "github.com/jzero-io/jzero-admin/server/internal/handler/v1/manage/menu"
 	v1managerole "github.com/jzero-io/jzero-admin/server/internal/handler/v1/manage/role"
@@ -521,6 +523,83 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodGet,
 						Path:    "/hrm/getMyTrainingSessionList",
 						Handler: v1hrmtraining.GetMySessionList(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addTrainingPlan",
+						Handler: v1hrmtraining_plan.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteTrainingPlan",
+						Handler: v1hrmtraining_plan.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editTrainingPlan",
+						Handler: v1hrmtraining_plan.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getTrainingPlanList",
+						Handler: v1hrmtraining_plan.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addTrainingSession",
+						Handler: v1hrmtraining_session.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteTrainingSession",
+						Handler: v1hrmtraining_session.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editTrainingSession",
+						Handler: v1hrmtraining_session.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/finishTrainingSession",
+						Handler: v1hrmtraining_session.Finish(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getSessionParticipantList",
+						Handler: v1hrmtraining_session.GetSessionParticipantList(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getTrainingSessionList",
+						Handler: v1hrmtraining_session.List(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/setSessionParticipants",
+						Handler: v1hrmtraining_session.SetSessionParticipants(serverCtx),
 					},
 				}...,
 			),

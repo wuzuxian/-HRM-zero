@@ -194,6 +194,8 @@ const local: App.I18n.Schema = {
     hrm_training_my: '我的培训',
     hrm_reward: '奖惩管理',
     hrm_reward_bill: '奖惩单',
+    hrm_training_plan: '培训计划',
+    hrm_training_session: '培训班次',
     hrm_employee: '人事档案',
     'hrm_employee_employee-archive-list': '员工档案',
     exception: '异常页',
@@ -270,7 +272,18 @@ const local: App.I18n.Schema = {
         revoke: '撤销单据'
       },
       training: {
-        downloadCert: '下载/预览证书扫描件'
+        downloadCert: '下载/预览证书扫描件',
+        plan: {
+          add: '新增计划',
+          edit: '编辑计划',
+          delete: '删除计划'
+        },
+        session: {
+          add: '新增班次',
+          edit: '编辑班次',
+          delete: '删除班次',
+          participants: '班次学员'
+        }
       },
       employee: {
         add: '新增员工',
@@ -1059,7 +1072,72 @@ const local: App.I18n.Schema = {
         },
         scanFile: '扫描件',
         preview: '预览',
-        noFile: '无扫描件'
+        noFile: '无扫描件',
+        planType: {
+          special: '专项',
+          newHire: '新员工培养',
+          safety: '安全培训',
+          skill: '技能提升'
+        },
+        published: {
+          draft: '草稿',
+          published: '已发布'
+        },
+        plan: {
+          title: '培训计划',
+          billNo: '单据编号',
+          billStatusLabel: '单据状态',
+          planName: '计划名称',
+          theme: '主题',
+          planYear: '年度',
+          planType: '计划类型',
+          startDate: '开始日期',
+          endDate: '结束日期',
+          published: '发布状态',
+          creatorName: '申请人',
+          addPlan: '新增计划',
+          editPlan: '编辑计划',
+          submit: '提交',
+          approve: '审批通过',
+          reject: '审批驳回',
+          revoke: '撤销',
+          records: '审批记录',
+          confirmSubmit: '确认提交该培训计划进入审批？',
+          confirmApprove: '确认审批通过？通过后计划将发布（草稿→已发布）。',
+          confirmReject: '确认审批驳回？',
+          confirmRevoke: '确认撤销该单据？',
+          form: {
+            planName: '请输入计划名称',
+            theme: '请输入主题',
+            planYear: '请输入年度（如 2026）',
+            planType: '请选择计划类型',
+            status: '请选择单据状态',
+            published: '请选择发布状态',
+            endDateBeforeStart: '结束日期不能早于开始日期'
+          }
+        },
+        session: {
+          title: '培训班次',
+          sessionName: '班次名称',
+          planName: '培训计划',
+          lecturer: '讲师',
+          remark: '备注',
+          addSession: '新增班次',
+          editSession: '编辑班次',
+          participants: '选人',
+          finish: '结束',
+          confirmFinish: '确认结束该班次？结束后不可恢复。',
+          participantsTip: '保存将全量覆盖班次学员（选人结果即最终名单）。',
+          form: {
+            sessionName: '请输入班次名称',
+            planUuid: '请选择培训计划（仅已发布）',
+            lecturer: '请输入讲师',
+            location: '请输入地点',
+            status: '请选择状态',
+            participantsPlaceholder: '搜索并选择学员（账号/姓名）',
+            endTimeBeforeStart: '结束时间必须晚于开始时间'
+          }
+        }
       }
     }
   },

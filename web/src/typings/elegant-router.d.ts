@@ -57,6 +57,8 @@ declare module "@elegant-router/types" {
     "hrm_reward_bill": "/hrm/reward/bill";
     "hrm_training": "/hrm/training";
     "hrm_training_my": "/hrm/training/my";
+    "hrm_training_plan": "/hrm/training/plan";
+    "hrm_training_session": "/hrm/training/session";
     "iframe-page": "/iframe-page/:url";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
     "manage": "/manage";
@@ -156,6 +158,8 @@ declare module "@elegant-router/types" {
     | "hrm_performance_setting_template"
     | "hrm_reward_bill"
     | "hrm_training_my"
+    | "hrm_training_plan"
+    | "hrm_training_session"
     | "manage_menu"
     | "manage_role"
     | "manage_user-detail"

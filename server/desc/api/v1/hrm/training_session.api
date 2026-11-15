@@ -1,0 +1,139 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/training_session"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 培训班次（管理端 CRUD，复用 HRM-31 规范表 hrm_training_session）：
+// 班次名称/讲师/地点/学时/开始结束时间/关联培训计划/状态。
+// 班次编号 PX-年-流水 由后端按当日流水自动生成（GLOSSARY 单据编号：PX 独立编号体系）。
+// 约束：关联的培训计划（plan_uuid）必须已发布（published=1）才可建班次；
+// 状态 1=未开始 2=进行中 3=已结束；班次结束置已结束（finish）。
+// 签到（HRM-29）与证书发放（HRM-32）为后续工单，只保留 participant/证书表关联缝隙。
+type HrmTrainingSession {
+	Uuid        string  `json:"uuid"`
+	SessionNo   string  `json:"sessionNo"` // 班次编号 PX-年-流水
+	SessionName string  `json:"sessionName"`
+	PlanUuid    string  `json:"planUuid"` // 关联培训计划 uuid
+	PlanName    string  `json:"planName"` // 关联培训计划名称（展示快照）
+	Lecturer    string  `json:"lecturer"` // 讲师
+	Location    string  `json:"location"` // 地点
+	Hours       float64 `json:"hours"` // 学时
+	StartTime   string  `json:"startTime"` // 开始时间
+	EndTime     string  `json:"endTime"` // 结束时间
+	Status      string  `json:"status"` // 1=未开始 2=进行中 3=已结束
+	Remark      string  `json:"remark"`
+	CreateTime  string  `json:"createTime"`
+	UpdateTime  string  `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	SessionName string `form:"sessionName,optional"` // 班次名称（模糊）
+	PlanUuid    string `form:"planUuid,optional"` // 培训计划
+	Status      string `form:"status,optional"` // 班次状态
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmTrainingSession `json:"records"`
+}
+
+type AddRequest {
+	SessionName string  `json:"sessionName"`
+	PlanUuid    string  `json:"planUuid"`
+	Lecturer    string  `json:"lecturer,optional"`
+	Location    string  `json:"location,optional"`
+	Hours       float64 `json:"hours,optional"`
+	StartTime   string  `json:"startTime"` // YYYY-MM-DD HH:mm:ss
+	EndTime     string  `json:"endTime"`
+	Remark      string  `json:"remark,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid        string  `json:"uuid"`
+	SessionName string  `json:"sessionName"`
+	PlanUuid    string  `json:"planUuid"`
+	Lecturer    string  `json:"lecturer,optional"`
+	Location    string  `json:"location,optional"`
+	Hours       float64 `json:"hours,optional"`
+	StartTime   string  `json:"startTime"`
+	EndTime     string  `json:"endTime"`
+	Remark      string  `json:"remark,optional"`
+}
+
+type EditResponse {}
+
+type FinishRequest {
+	Uuid string `json:"uuid"`
+}
+
+type FinishResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+type SessionParticipant {
+	Uuid     string `json:"uuid"` // participant row uuid
+	UserUuid string `json:"userUuid"`
+	Username string `json:"username"` // 学员账号
+	NickName string `json:"nickName"` // 学员姓名
+}
+
+type GetSessionParticipantListRequest {
+	SessionUuid string `form:"sessionUuid"`
+}
+
+type GetSessionParticipantListResponse {
+	Records []SessionParticipant `json:"records"`
+}
+
+type SetSessionParticipantsRequest {
+	SessionUuid string   `json:"sessionUuid"`
+	UserUuids   []string `json:"userUuids"` // 全量覆盖（选人结果）
+}
+
+type SetSessionParticipantsResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/training_session
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getTrainingSessionList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addTrainingSession (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editTrainingSession (EditRequest) returns (EditResponse)
+
+	// 班次结束：状态置 3=已结束（行操作，签到/证书发放的后续流转缝隙）
+	@handler Finish
+	post /hrm/finishTrainingSession (FinishRequest) returns (FinishResponse)
+
+	@handler Delete
+	post /hrm/deleteTrainingSession (DeleteRequest) returns (DeleteResponse)
+
+	@handler GetSessionParticipantList
+	get /hrm/getSessionParticipantList (GetSessionParticipantListRequest) returns (GetSessionParticipantListResponse)
+
+	// 选人：全量覆盖班次学员（hrm_training_session_participant）
+	@handler SetSessionParticipants
+	post /hrm/setSessionParticipants (SetSessionParticipantsRequest) returns (SetSessionParticipantsResponse)
+}
+
