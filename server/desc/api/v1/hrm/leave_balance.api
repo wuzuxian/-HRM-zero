@@ -1,0 +1,133 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/leavebalance"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+type HrmLeaveBalance {
+	Uuid          string  `json:"uuid"`
+	Year          int64   `json:"year"`
+	EmployeeUuid  string  `json:"employeeUuid"`
+	EmployeeNo    string  `json:"employeeNo"`
+	EmployeeName  string  `json:"employeeName"`
+	OrgUuid       string  `json:"orgUuid"`
+	OrgName       string  `json:"orgName"`
+	HireDate      string  `json:"hireDate"`
+	LeaveTypeCode string  `json:"leaveTypeCode"`
+	LeaveTypeName string  `json:"leaveTypeName"`
+	Granted       float64 `json:"granted"`
+	Used          float64 `json:"used"`
+	Frozen        float64 `json:"frozen"`
+	Available     float64 `json:"available"`
+	CreateTime    string  `json:"createTime"`
+	UpdateTime    string  `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	Year          int64  `form:"year,optional"`
+	Name          string `form:"name,optional"`
+	OrgUuid       string `form:"orgUuid,optional"`
+	LeaveTypeCode string `form:"leaveTypeCode,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmLeaveBalance `json:"records"`
+}
+
+type LogListRequest {
+	PageRequest
+	BalanceUuid   string `form:"balanceUuid,optional"`
+	Year          int64  `form:"year,optional"`
+	EmployeeUuid  string `form:"employeeUuid,optional"`
+	LeaveTypeCode string `form:"leaveTypeCode,optional"`
+}
+
+type HrmLeaveBalanceLog {
+	Uuid          string  `json:"uuid"`
+	BalanceUuid   string  `json:"balanceUuid"`
+	Year          int64   `json:"year"`
+	EmployeeUuid  string  `json:"employeeUuid"`
+	LeaveTypeCode string  `json:"leaveTypeCode"`
+	LeaveTypeName string  `json:"leaveTypeName"`
+	ChangeType    string  `json:"changeType"`
+	Days          float64 `json:"days"`
+	GrantedAfter  float64 `json:"grantedAfter"`
+	UsedAfter     float64 `json:"usedAfter"`
+	FrozenAfter   float64 `json:"frozenAfter"`
+	Reason        string  `json:"reason"`
+	BillUuid      string  `json:"billUuid"`
+	OperatorUuid  string  `json:"operatorUuid"`
+	OperatorName  string  `json:"operatorName"`
+	CreateTime    string  `json:"createTime"`
+}
+
+type LogListResponse {
+	PageResponse
+	Records []HrmLeaveBalanceLog `json:"records"`
+}
+
+type InitRequest {
+	Year          int64    `json:"year"`
+	EmployeeUuids []string `json:"employeeUuids,optional"`
+}
+
+type InitResponse {}
+
+type InitPreviewRequest {
+	Year          int64    `json:"year"`
+	EmployeeUuids []string `json:"employeeUuids,optional"`
+}
+
+type HrmInitPreviewItem {
+	EmployeeUuid  string  `json:"employeeUuid"`
+	EmployeeNo    string  `json:"employeeNo"`
+	EmployeeName  string  `json:"employeeName"`
+	LeaveTypeCode string  `json:"leaveTypeCode"`
+	LeaveTypeName string  `json:"leaveTypeName"`
+	DefaultDays   float64 `json:"defaultDays"`
+	Skipped       int64   `json:"skipped"`
+}
+
+type InitPreviewResponse {
+	Records []HrmInitPreviewItem `json:"records"`
+}
+
+type AdjustRequest {
+	BalanceUuid string  `json:"balanceUuid"`
+	Days        float64 `json:"days"`
+	Reason      string  `json:"reason,optional"`
+}
+
+type AdjustResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/leavebalance
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getLeaveBalanceList (ListRequest) returns (ListResponse)
+
+	@handler LogList
+	get /hrm/getLeaveBalanceLogList (LogListRequest) returns (LogListResponse)
+
+	@handler InitPreview
+	post /hrm/previewLeaveBalanceInit (InitPreviewRequest) returns (InitPreviewResponse)
+
+	@handler Init
+	post /hrm/initLeaveBalance (InitRequest) returns (InitResponse)
+
+	@handler Adjust
+	post /hrm/adjustLeaveBalance (AdjustRequest) returns (AdjustResponse)
+}
+

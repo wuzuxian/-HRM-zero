@@ -2666,6 +2666,63 @@
         ]
       }
     },
+    "/api/v1/hrm/adjustLeaveBalance": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:leavebalance:adjust",
+        "operationId": "v1/Hrm/LeavebalanceAdjust",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "balanceUuid": {
+                  "type": "string"
+                },
+                "days": {
+                  "type": "number"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "balanceUuid",
+                "days"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Adjust",
+        "tags": [
+          "v1/hrm/leavebalance"
+        ]
+      }
+    },
     "/api/v1/hrm/approveBill": {
       "post": {
         "consumes": [
@@ -8979,6 +9036,314 @@
         ]
       }
     },
+    "/api/v1/hrm/getLeaveBalanceList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:leavebalance:list",
+        "operationId": "v1/Hrm/LeavebalanceList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "year",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "orgUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "leaveTypeCode",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "available": {
+                        "type": "number"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "frozen": {
+                        "type": "number"
+                      },
+                      "granted": {
+                        "type": "number"
+                      },
+                      "hireDate": {
+                        "type": "string"
+                      },
+                      "leaveTypeCode": {
+                        "type": "string"
+                      },
+                      "leaveTypeName": {
+                        "type": "string"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "orgUuid": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "used": {
+                        "type": "number"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "year": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "year",
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "orgUuid",
+                      "orgName",
+                      "hireDate",
+                      "leaveTypeCode",
+                      "leaveTypeName",
+                      "granted",
+                      "used",
+                      "frozen",
+                      "available",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/leavebalance"
+        ]
+      }
+    },
+    "/api/v1/hrm/getLeaveBalanceLogList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:leavebalance:logList",
+        "operationId": "v1/Hrm/LeavebalanceLogList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "balanceUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "year",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "leaveTypeCode",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "balanceUuid": {
+                        "type": "string"
+                      },
+                      "billUuid": {
+                        "type": "string"
+                      },
+                      "changeType": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "days": {
+                        "type": "number"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "frozenAfter": {
+                        "type": "number"
+                      },
+                      "grantedAfter": {
+                        "type": "number"
+                      },
+                      "leaveTypeCode": {
+                        "type": "string"
+                      },
+                      "leaveTypeName": {
+                        "type": "string"
+                      },
+                      "operatorName": {
+                        "type": "string"
+                      },
+                      "operatorUuid": {
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string"
+                      },
+                      "usedAfter": {
+                        "type": "number"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "year": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "balanceUuid",
+                      "year",
+                      "employeeUuid",
+                      "leaveTypeCode",
+                      "leaveTypeName",
+                      "changeType",
+                      "days",
+                      "grantedAfter",
+                      "usedAfter",
+                      "frozenAfter",
+                      "reason",
+                      "billUuid",
+                      "operatorUuid",
+                      "operatorName",
+                      "createTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "LogList",
+        "tags": [
+          "v1/hrm/leavebalance"
+        ]
+      }
+    },
     "/api/v1/hrm/getLeaveTypeList": {
       "get": {
         "description": "接口权限编码:v1:hrm:leavetype:list",
@@ -12464,6 +12829,62 @@
         ]
       }
     },
+    "/api/v1/hrm/initLeaveBalance": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:leavebalance:init",
+        "operationId": "v1/Hrm/LeavebalanceInit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "employeeUuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "year": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "year"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Init",
+        "tags": [
+          "v1/hrm/leavebalance"
+        ]
+      }
+    },
     "/api/v1/hrm/issueCertificates": {
       "post": {
         "consumes": [
@@ -12514,6 +12935,102 @@
         "summary": "Issue",
         "tags": [
           "v1/hrm/certificate"
+        ]
+      }
+    },
+    "/api/v1/hrm/previewLeaveBalanceInit": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:leavebalance:initPreview",
+        "operationId": "v1/Hrm/LeavebalanceInitPreview",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "employeeUuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "year": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "year"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "defaultDays": {
+                        "type": "number"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "leaveTypeCode": {
+                        "type": "string"
+                      },
+                      "leaveTypeName": {
+                        "type": "string"
+                      },
+                      "skipped": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "leaveTypeCode",
+                      "leaveTypeName",
+                      "defaultDays",
+                      "skipped"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "InitPreview",
+        "tags": [
+          "v1/hrm/leavebalance"
         ]
       }
     },
