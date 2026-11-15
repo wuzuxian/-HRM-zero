@@ -4,7 +4,7 @@ package punch
 // CSV 列约定（首行为表头）:
 //   date,employee_no,clock_in_time,clock_in_status,clock_in_location,
 //   clock_out_time,clock_out_status,clock_out_location,overtime
-// 单行非法 → 整批拒绝 10524（事务回滚，不落任何行）。
+// 单行非法 → 整批拒绝 10544（事务回滚，不落任何行）。
 
 import (
 	"context"

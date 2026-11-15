@@ -1,7 +1,7 @@
 package punch
 
 // Add 管理端手动新增打卡记录（demo-inventory 4.4 工具栏「新增」，补录外部数据单行）：
-// (punch_date, employee_uuid) 唯一 → 重复新增 10523；新增后即时日结。
+// (punch_date, employee_uuid) 唯一 → 重复新增 10543；新增后即时日结。
 
 import (
 	"context"

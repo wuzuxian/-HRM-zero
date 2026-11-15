@@ -12,7 +12,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/errcodes"
 )
 
-// TestPunchClockInIdempotent 打卡幂等: 同日重复上班卡拒绝（10523），下班卡可正常打。
+// TestPunchClockInIdempotent 打卡幂等: 同日重复上班卡拒绝（10543），下班卡可正常打。
 func TestPunchClockInIdempotent(t *testing.T) {
 	svcCtx := newSvcCtx(t)
 	ctx := context.Background()
@@ -33,7 +33,7 @@ func TestPunchClockInIdempotent(t *testing.T) {
 		t.Fatalf("clockInTime empty")
 	}
 
-	// B: 同日重复上班卡 → 10523 拒绝
+	// B: 同日重复上班卡 → 10543 拒绝
 	_, err = NewPunch(ctx, svcCtx, nil).Punch(&types.PunchRequest{
 		Type: PunchTypeClockIn, Location: "公司", EmployeeUuid: s.empZhang,
 	})
@@ -41,7 +41,7 @@ func TestPunchClockInIdempotent(t *testing.T) {
 		t.Fatalf("duplicate clockIn should fail")
 	}
 	if sc := status.FromError(err); sc == nil || sc.Code() != errcodes.PunchDuplicateCode {
-		t.Fatalf("duplicate clockIn error = %v, want code 10523", err)
+		t.Fatalf("duplicate clockIn error = %v, want code 10543", err)
 	}
 
 	// C: 下班卡正常
@@ -61,17 +61,17 @@ func TestPunchClockInIdempotent(t *testing.T) {
 	// D: 重复下班卡 → 拒绝
 	_, err = NewPunch(ctx, svcCtx, nil).Punch(&types.PunchRequest{Type: PunchTypeClockOut, EmployeeUuid: s.empZhang})
 	if sc := status.FromError(err); sc == nil || sc.Code() != errcodes.PunchDuplicateCode {
-		t.Fatalf("duplicate clockOut error = %v, want code 10523", err)
+		t.Fatalf("duplicate clockOut error = %v, want code 10543", err)
 	}
 
 	// E: 参数校验 — 非法 type / 员工不存在
 	_, err = NewPunch(ctx, svcCtx, nil).Punch(&types.PunchRequest{Type: "lunch", EmployeeUuid: s.empZhang})
 	if sc := status.FromError(err); sc == nil || sc.Code() != errcodes.PunchInvalidCode {
-		t.Fatalf("bad type error = %v, want code 10521", err)
+		t.Fatalf("bad type error = %v, want code 10541", err)
 	}
 	_, err = NewPunch(ctx, svcCtx, nil).Punch(&types.PunchRequest{Type: PunchTypeClockIn, EmployeeUuid: "no-such"})
 	if sc := status.FromError(err); sc == nil || sc.Code() != errcodes.PunchEmployeeNotFoundCode {
-		t.Fatalf("bad employee error = %v, want code 10522", err)
+		t.Fatalf("bad employee error = %v, want code 10542", err)
 	}
 }
 

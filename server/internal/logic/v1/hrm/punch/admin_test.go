@@ -146,12 +146,12 @@ func TestAdminAddEditDelete(t *testing.T) {
 		t.Fatalf("added row should be settled immediately")
 	}
 
-	// Add 重复 (punch_date, employee_uuid) → 10523
+	// Add 重复 (punch_date, employee_uuid) → 10543
 	_, err = NewAdd(ctx, svcCtx, nil).Add(&types.AddRequest{
 		EmployeeUuid: zhang, PunchDate: "2026-11-16", ClockInTime: "2026-11-16 09:00:00",
 	})
 	if sc := status.FromError(err); sc == nil || sc.Code() != errcodes.PunchDuplicateCode {
-		t.Fatalf("duplicate add error = %v, want 10523", err)
+		t.Fatalf("duplicate add error = %v, want 10543", err)
 	}
 
 	// Edit: 补签退
@@ -253,14 +253,14 @@ func TestManualSettle(t *testing.T) {
 		t.Fatalf("missing day result = %+v, want missing", resp.Records)
 	}
 
-	// 日期校验: 非法日期 → 10525
+	// 日期校验: 非法日期 → 10545
 	_, err = NewSettle(ctx, svcCtx, nil).Settle(&types.SettleRequest{StartDate: "2026-13-99"})
 	if sc := status.FromError(err); sc == nil || sc.Code() != errcodes.SettleInvalidCode {
-		t.Fatalf("bad date error = %v, want 10525", err)
+		t.Fatalf("bad date error = %v, want 10545", err)
 	}
 }
 
-// TestImportPunch 导入外部考勤数据（CSV）: 成功计数 + 非法行整批拒绝（10524）。
+// TestImportPunch 导入外部考勤数据（CSV）: 成功计数 + 非法行整批拒绝（10544）。
 func TestImportPunch(t *testing.T) {
 	svcCtx := newSvcCtx(t)
 	ctx := context.Background()
@@ -291,13 +291,13 @@ func TestImportPunch(t *testing.T) {
 		t.Fatalf("source = %q, want import", row.Source)
 	}
 
-	// 非法行（未知工号）→ 整批拒绝 10524，且不落任何行
+	// 非法行（未知工号）→ 整批拒绝 10544，且不落任何行
 	badCsv := "date,employee_no,clock_in_time,clock_in_status,clock_in_location,clock_out_time,clock_out_status,clock_out_location,overtime\n" +
 		"2026-11-17,E0001,2026-11-17 09:00:00,normal,,2026-11-17 18:00:00,normal,,0\n" +
 		"2026-11-17,E9999,2026-11-17 09:00:00,normal,,,,,\n"
 	_, err = NewImport(ctx, svcCtx, nil).Import(&types.ImportRequest{FileName: "bad.csv", FileContent: badCsv})
 	if sc := status.FromError(err); sc == nil || sc.Code() != errcodes.PunchImportInvalidCode {
-		t.Fatalf("bad import error = %v, want 10524", err)
+		t.Fatalf("bad import error = %v, want 10544", err)
 	}
 	rows, err := svcCtx.Model.HrmPunchRecord.FindByCondition(ctx, nil,
 		condition.NewChain().Equal(hrm_punch_record.PunchDate, "2026-11-17").Build()...)

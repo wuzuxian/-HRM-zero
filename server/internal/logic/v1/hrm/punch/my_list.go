@@ -36,7 +36,7 @@ func NewMyList(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request)
 }
 
 func (l *MyList) MyList(req *types.MyListRequest) (resp *types.MyListResponse, err error) {
-	// 当前登录人 → 员工档案（未关联 → 10522）
+	// 当前登录人 → 员工档案（未关联 (10542)
 	user := hrmuser.Current(l.ctx)
 	if user.Uuid == "" {
 		return nil, status.ErrorMessage(errcodes.PunchEmployeeNotFoundCode, "当前登录人未关联员工档案")
