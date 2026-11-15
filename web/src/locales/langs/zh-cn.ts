@@ -192,6 +192,8 @@ const local: App.I18n.Schema = {
     hrm_performance_scheme: '绩效方案',
     hrm_training: '培训管理',
     hrm_training_my: '我的培训',
+    hrm_reward: '奖惩管理',
+    hrm_reward_bill: '奖惩单',
     hrm_employee: '人事档案',
     'hrm_employee_employee-archive-list': '员工档案',
     exception: '异常页',
@@ -255,6 +257,11 @@ const local: App.I18n.Schema = {
         add: '新增调动',
         edit: '编辑调动',
         delete: '删除调动'
+      },
+      reward: {
+        add: '新增奖惩单',
+        edit: '编辑奖惩单',
+        delete: '删除奖惩单'
       },
       bill: {
         submit: '提交单据',
@@ -501,6 +508,62 @@ const local: App.I18n.Schema = {
       }
     },
     hrm: {
+      reward: {
+        title: '奖惩单',
+        billNo: '单据编号',
+        billStatus: {
+          title: '单据状态'
+        },
+        employeeNo: '员工工号',
+        employeeName: '员工姓名',
+        rewardType: {
+          title: '奖惩类型',
+          reward: '奖励',
+          punishment: '处分'
+        },
+        rewardLevel: {
+          title: '奖惩级别',
+          company: '公司级',
+          dept: '部门级',
+          notice: '通报',
+          other: '其他'
+        },
+        docNo: '文号',
+        occurDate: '发生日期',
+        amount: '金额',
+        reason: '奖惩原因',
+        salaryMonth: '入账薪资年月',
+        synced: '薪资同步',
+        creatorName: '申请人',
+        createTime: '创建时间',
+        yes: '是',
+        no: '否',
+        submit: '提交',
+        approve: '通过',
+        reject: '驳回',
+        revoke: '撤销',
+        records: '审批记录',
+        noRecords: '暂无审批记录',
+        confirmSubmit: '确认提交该奖惩单进入审批？',
+        confirmApprove: '确认审批通过？通过后将同步为薪资项目的奖惩奖励/奖惩扣款数据源。',
+        confirmReject: '确认驳回该奖惩单？',
+        confirmRevoke: '确认撤销该奖惩单？',
+        addReward: '新增奖惩单',
+        editReward: '编辑奖惩单',
+        sectionEmployee: '员工信息',
+        sectionReward: '奖惩信息',
+        form: {
+          billNo: '请输入单据编号',
+          status: '请选择单据状态',
+          rewardType: '请选择奖惩类型',
+          rewardLevel: '请选择奖惩级别',
+          employeeNo: '请输入员工工号',
+          employeeName: '请输入员工姓名',
+          docNo: '请输入文号',
+          salaryMonth: '入账薪资年月 YYYY-MM，留空默认为发生日期所在月',
+          reason: '请输入奖惩原因'
+        }
+      },
       performance: {
         common: {
           status: {

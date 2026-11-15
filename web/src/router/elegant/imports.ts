@@ -33,6 +33,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   hrm_performance_scheme: () => import("@/views/hrm/performance/scheme/index.vue"),
   hrm_performance_setting_indicator: () => import("@/views/hrm/performance/setting/indicator/index.vue"),
   hrm_performance_setting_template: () => import("@/views/hrm/performance/setting/template/index.vue"),
+  hrm_reward_bill: () => import("@/views/hrm/reward/bill/index.vue"),
   hrm_training_my: () => import("@/views/hrm/training/my/index.vue"),
   manage_menu: () => import("@/views/manage/menu/index.vue"),
   manage_role: () => import("@/views/manage/role/index.vue"),

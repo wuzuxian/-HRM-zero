@@ -240,6 +240,25 @@ export const generatedRoutes: GeneratedRoute[] = [
         ]
       },
       {
+        name: 'hrm_reward',
+        path: '/hrm/reward',
+        meta: {
+          title: 'hrm_reward',
+          i18nKey: 'route.hrm_reward'
+        },
+        children: [
+          {
+            name: 'hrm_reward_bill',
+            path: '/hrm/reward/bill',
+            component: 'view.hrm_reward_bill',
+            meta: {
+              title: 'hrm_reward_bill',
+              i18nKey: 'route.hrm_reward_bill'
+            }
+          }
+        ]
+      },
+      {
         name: 'hrm_training',
         path: '/hrm/training',
         meta: {

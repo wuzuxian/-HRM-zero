@@ -456,6 +456,11 @@ declare namespace App {
             edit: string;
             delete: string;
           };
+          reward: {
+            add: string;
+            edit: string;
+            delete: string;
+          };
           bill: {
             submit: string;
             approve: string;
@@ -1054,6 +1059,62 @@ declare namespace App {
                 transferReason: string;
                 effectiveDateRequired: string;
               };
+            };
+          };
+          reward: {
+            title: string;
+            billNo: string;
+            billStatus: {
+              title: string;
+            };
+            employeeNo: string;
+            employeeName: string;
+            rewardType: {
+              title: string;
+              reward: string;
+              punishment: string;
+            };
+            rewardLevel: {
+              title: string;
+              company: string;
+              dept: string;
+              notice: string;
+              other: string;
+            };
+            docNo: string;
+            occurDate: string;
+            amount: string;
+            reason: string;
+            salaryMonth: string;
+            synced: string;
+            creatorName: string;
+            createTime: string;
+            yes: string;
+            no: string;
+            submit: string;
+            approve: string;
+            reject: string;
+            revoke: string;
+            records: string;
+            noRecords: string;
+            confirmSubmit: string;
+            confirmApprove: string;
+            confirmReject: string;
+            confirmRevoke: string;
+            addReward: string;
+            editReward: string;
+            sectionEmployee: string;
+            sectionReward: string;
+            form: {
+              billNo: string;
+              status: string;
+              rewardType: string;
+              rewardLevel: string;
+              employeeNo: string;
+              employeeName: string;
+              docNo: string;
+              salaryMonth: string;
+              reason: string;
             };
           };
           training: {

@@ -72,6 +72,24 @@ export const hrmTransferChangeTypeRecord: Record<Api.Hrm.TransferChangeType, App
 
 export const hrmTransferChangeTypeOptions = transformRecordToOption(hrmTransferChangeTypeRecord);
 
+/** 奖惩类型 (奖惩单 HR215) */
+export const hrmRewardTypeRecord: Record<Api.Hrm.RewardType, App.I18n.I18nKey> = {
+  reward: 'page.hrm.reward.rewardType.reward',
+  punishment: 'page.hrm.reward.rewardType.punishment'
+};
+
+export const hrmRewardTypeOptions = transformRecordToOption(hrmRewardTypeRecord);
+
+/** 奖惩级别 (奖惩单 HR215) */
+export const hrmRewardLevelRecord: Record<Api.Hrm.RewardLevel, App.I18n.I18nKey> = {
+  company: 'page.hrm.reward.rewardLevel.company',
+  dept: 'page.hrm.reward.rewardLevel.dept',
+  notice: 'page.hrm.reward.rewardLevel.notice',
+  other: 'page.hrm.reward.rewardLevel.other'
+};
+
+export const hrmRewardLevelOptions = transformRecordToOption(hrmRewardLevelRecord);
+
 export const hrmTrainingSessionStatusRecord: Record<Api.Hrm.TrainingSessionStatus, App.I18n.I18nKey> = {
   '1': 'page.hrm.training.sessionStatus.notStarted',
   '2': 'page.hrm.training.sessionStatus.ongoing',

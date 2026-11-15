@@ -424,3 +424,43 @@ export function DeleteAttendanceConfig(req: string[]) {
     }
   });
 }
+
+// ---- 奖惩单（HRM-07, HR215）----
+
+/** get hrm reward bill (奖惩单 HR215) paginated list — defaults to 「我的单据」 server-side */
+export function GetRewardList(params?: Api.Hrm.RewardSearchParams) {
+  return request<Api.Hrm.RewardList>({
+    url: '/api/v1/hrm/getRewardList',
+    method: 'get',
+    params
+  });
+}
+
+/** add hrm reward bill */
+export function AddReward(req: Api.Hrm.AddRewardRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addReward',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit hrm reward bill (only in editable 单据状态) */
+export function EditReward(req: Api.Hrm.EditRewardRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editReward',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete hrm reward bills (only in editable 单据状态) */
+export function DeleteReward(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteReward',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}

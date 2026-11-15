@@ -859,5 +859,90 @@ declare namespace Api {
       workDays?: number[];
       remark?: string;
     };
+    /**
+     * reward type (奖惩类型, demo-inventory §7)
+     *
+     * - "reward": 奖励 → 薪资「奖惩奖励」(应发项数据源)
+     * - "punishment": 处分 → 薪资「奖惩扣款」(应扣项数据源)
+     */
+    type RewardType = 'reward' | 'punishment';
+
+    /**
+     * reward level (奖惩级别, demo-inventory §7)
+     *
+     * - "company": 公司级
+     * - "dept": 部门级
+     * - "notice": 通报
+     * - "other": 其他
+     */
+    type RewardLevel = 'company' | 'dept' | 'notice' | 'other';
+
+    /** hrm reward bill (奖惩单 HR215) */
+    type HrmReward = {
+      /** record uuid */
+      uuid: string;
+      /** 单据编号 HR215-... */
+      billNo: string;
+      /** 单据状态 */
+      status: BillStatus | null;
+      /** 员工档案 uuid */
+      employeeUuid: string;
+      /** 员工工号 */
+      employeeNo: string;
+      /** 员工姓名 */
+      employeeName: string;
+      /** 奖惩类型 */
+      rewardType: RewardType | null;
+      /** 奖惩级别 */
+      rewardLevel: RewardLevel | null;
+      /** 文号 */
+      docNo: string;
+      /** 发生日期 YYYY-MM-DD */
+      occurDate: string;
+      /** 金额（奖励为发放金额，处分/扣款为正数金额，0=不涉及） */
+      amount: number;
+      /** 奖惩原因/事由 */
+      reason: string;
+      /** 入账薪资年月 YYYY-MM（薪资数据源契约） */
+      salaryMonth: string;
+      /** 薪资数据源同步标记 1=已同步 */
+      synced: number;
+      /** 申请人 uuid */
+      creatorUuid: string;
+      /** 申请人姓名 */
+      creatorName: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** reward search params */
+    type RewardSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.HrmReward, 'billNo' | 'status' | 'rewardType' | 'employeeNo'> & Common.CommonSearchParams
+    >;
+
+    /** reward paginated list */
+    type RewardList = Common.PaginatingQueryRecord<HrmReward>;
+
+    /** add reward request */
+    type AddRewardRequest = {
+      employeeUuid: string;
+      employeeNo: string;
+      employeeName: string;
+      rewardType: RewardType | null;
+      rewardLevel: RewardLevel | null;
+      docNo: string;
+      occurDate: string;
+      amount: number;
+      reason: string;
+      /** YYYY-MM，空=发生日期所在月 */
+      salaryMonth: string;
+    };
+
+    /** edit reward request */
+    type EditRewardRequest = AddRewardRequest & {
+      uuid: string;
+    };
   }
 }

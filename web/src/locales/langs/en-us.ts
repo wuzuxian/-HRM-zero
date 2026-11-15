@@ -192,6 +192,8 @@ const local: App.I18n.Schema = {
     hrm_performance_scheme: 'Scheme',
     hrm_training: 'Training',
     hrm_training_my: 'My Training',
+    hrm_reward: 'Reward & Discipline',
+    hrm_reward_bill: 'Reward Bill',
     hrm_employee: 'HR Archive',
     'hrm_employee_employee-archive-list': 'Employee Archive',
     exception: 'Exception',
@@ -255,6 +257,11 @@ const local: App.I18n.Schema = {
         add: 'Add Transfer',
         edit: 'Edit Transfer',
         delete: 'Delete Transfer'
+      },
+      reward: {
+        add: 'Add Reward Bill',
+        edit: 'Edit Reward Bill',
+        delete: 'Delete Reward Bill'
       },
       bill: {
         submit: 'Submit Bill',
@@ -501,6 +508,62 @@ const local: App.I18n.Schema = {
       }
     },
     hrm: {
+      reward: {
+        title: 'Reward Bill',
+        billNo: 'Bill No.',
+        billStatus: {
+          title: 'Bill Status'
+        },
+        employeeNo: 'Employee No.',
+        employeeName: 'Employee Name',
+        rewardType: {
+          title: 'Type',
+          reward: 'Reward',
+          punishment: 'Discipline'
+        },
+        rewardLevel: {
+          title: 'Level',
+          company: 'Company Level',
+          dept: 'Department Level',
+          notice: 'Notice',
+          other: 'Other'
+        },
+        docNo: 'Document No.',
+        occurDate: 'Occur Date',
+        amount: 'Amount',
+        reason: 'Reason',
+        salaryMonth: 'Salary Month',
+        synced: 'Salary Synced',
+        creatorName: 'Applicant',
+        createTime: 'Created At',
+        yes: 'Yes',
+        no: 'No',
+        submit: 'Submit',
+        approve: 'Approve',
+        reject: 'Reject',
+        revoke: 'Revoke',
+        records: 'Records',
+        noRecords: 'No approval records',
+        confirmSubmit: 'Submit this reward bill for approval?',
+        confirmApprove: 'Approve this bill? Once approved it becomes the 奖惩奖励/奖惩扣款 salary-item data source.',
+        confirmReject: 'Reject this reward bill?',
+        confirmRevoke: 'Revoke this reward bill?',
+        addReward: 'Add Reward Bill',
+        editReward: 'Edit Reward Bill',
+        sectionEmployee: 'Employee Info',
+        sectionReward: 'Reward Info',
+        form: {
+          billNo: 'Please enter bill no.',
+          status: 'Please select bill status',
+          rewardType: 'Please select reward type',
+          rewardLevel: 'Please select reward level',
+          employeeNo: 'Please enter employee no.',
+          employeeName: 'Please enter employee name',
+          docNo: 'Please enter document no.',
+          salaryMonth: 'Salary month YYYY-MM, defaults to the occur-date month',
+          reason: 'Please enter reason'
+        }
+      },
       performance: {
         common: {
           status: {
