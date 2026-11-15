@@ -1,0 +1,132 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/dashboard"
+)
+
+import (
+	"../../common/request.api"
+)
+
+// 个人看板（demo-inventory 4.1 我的假勤-个人看板）：单端点返回
+// 今日卡片 + 本月统计 + 锁定日提示 + 考勤日历 payload。
+// 统计口径：全部从 hrm_punch_record settle_* 列聚合（HRM-16 落库契约），
+// 年假可用从 hrm_leave_balance（granted - used - frozen）聚合。
+// 今日卡片：考勤组名/今天是否休息/上/下班打卡状态/去打卡提示。
+type DashboardTodayCard {
+	// GroupName 生效考勤组名（规则来源为组织默认规则时为规则备注，无规则时为空）
+	GroupName string `json:"groupName"`
+	// RuleSource 生效规则来源 group|org|""（空=无规则）
+	RuleSource string `json:"ruleSource"`
+	// IsRestDay 今天是否休息日
+	IsRestDay bool `json:"isRestDay"`
+	// NoRule 无生效规则兜底（未判定，消费方按提示引导）
+	NoRule bool `json:"noRule"`
+	// ClockInTime 上班打卡时间（空=未打）
+	ClockInTime string `json:"clockInTime"`
+	// ClockInStatus 上班卡状态 normal|field|missing
+	ClockInStatus string `json:"clockInStatus"`
+	// ClockOutTime 下班打卡时间（空=未打）
+	ClockOutTime string `json:"clockOutTime"`
+	// ClockOutStatus 下班卡状态 normal|field|missing
+	ClockOutStatus string `json:"clockOutStatus"`
+	// SettleStatus 今日日结状态 normal|late|early|missing|rest|no_rule|""（未日结）
+	SettleStatus string `json:"settleStatus"`
+	// LateMinutes 迟到分钟
+	LateMinutes int64 `json:"lateMinutes"`
+	// EarlyMinutes 早退分钟
+	EarlyMinutes int64 `json:"earlyMinutes"`
+	// WorkHours 实打工时（小时）
+	WorkHours float64 `json:"workHours"`
+	// ScheduledStart 规则上班时间 HH:mm（无规则为空）
+	ScheduledStart string `json:"scheduledStart"`
+	// ScheduledEnd 规则下班时间 HH:mm
+	ScheduledEnd string `json:"scheduledEnd"`
+}
+
+// 本月统计卡（当月 1 日~今日/月末，按 settle_* 聚合）。
+type DashboardMonthStats {
+	// ExpectedDays 应出勤天数（当月工作日数：date 在当月且 weekday ∈ WorkDays；无规则=已落行工作日数）
+	ExpectedDays int64 `json:"expectedDays"`
+	// AttendedDays 已出勤天数（settle_status ∈ normal/late/early 的天数）
+	AttendedDays int64 `json:"attendedDays"`
+	// LateTimes 迟到次数
+	LateTimes int64 `json:"lateTimes"`
+	// EarlyTimes 早退次数
+	EarlyTimes int64 `json:"earlyTimes"`
+	// MissingTimes 缺卡次数（settle_status = missing）
+	MissingTimes int64 `json:"missingTimes"`
+	// AbsentTimes 缺勤次数（缺卡天数，同 missing 口径——HRM-16 契约：缺勤直接扫 settle_status='missing'）
+	AbsentTimes int64 `json:"absentTimes"`
+	// OvertimeTimes 加班次数（overtime='1' 天数）
+	OvertimeTimes int64 `json:"overtimeTimes"`
+	// OvertimeHours 加班时长（已审批通过加班单 confirm_hours 合计，小时；无单据=0）
+	OvertimeHours float64 `json:"overtimeHours"`
+	// AnnualLeaveAvailable 年假可用（天，granted - used - frozen）
+	AnnualLeaveAvailable float64 `json:"annualLeaveAvailable"`
+	// AnnualLeaveYear 年假余额年度
+	AnnualLeaveYear int64 `json:"annualLeaveYear"`
+}
+
+// 日历单日。
+type DashboardCalendarDay {
+	// Date yyyy-MM-dd
+	Date string `json:"date"`
+	// Weekday 周一..周日
+	Weekday string `json:"weekday"`
+	// Status rest|normal|late|early|missing|no_rule|future（future=未来日期未判定）
+	Status string `json:"status"`
+	// ClockInTime 上班打卡时间（空=未打）
+	ClockInTime string `json:"clockInTime"`
+	// ClockOutTime 下班打卡时间
+	ClockOutTime string `json:"clockOutTime"`
+	// LateMinutes 迟到分钟
+	LateMinutes int64 `json:"lateMinutes"`
+	// EarlyMinutes 早退分钟
+	EarlyMinutes int64 `json:"earlyMinutes"`
+}
+
+// 考勤锁定日提示（HRM-23 月报未落地：展示配置口径值）。
+type DashboardLockHint {
+	// LockDay 考勤锁定日（每月几号，1-28；默认 5）
+	LockDay int64 `json:"lockDay"`
+	// LockMonth 锁定月份 yyyy-MM（=当前月）
+	LockMonth string `json:"lockMonth"`
+	// HintText 提示文案（如「11月考勤将于12-05锁定」——按次月 LockDay 口径）
+	HintText string `json:"hintText"`
+}
+
+type GetMyDashboardRequest {
+	// Month 统计/日历月份 yyyy-MM（缺省=当前月）
+	Month string `form:"month,optional"`
+	// EmployeeUuid 员工档案 uuid（管理端代查时指定；员工端缺省取当前登录人）
+	EmployeeUuid string `form:"employeeUuid,optional"`
+}
+
+type GetMyDashboardResponse {
+	// EmployeeUuid 员工档案 uuid（未建档时为空）
+	EmployeeUuid string `json:"employeeUuid"`
+	// EmployeeName 员工姓名
+	EmployeeName string `json:"employeeName"`
+	// EmployeeNo 工号
+	EmployeeNo string `json:"employeeNo"`
+	// Registered 当前登录人是否已建员工档案（false=前端展示引导提示）
+	Registered bool                   `json:"registered"`
+	Today      DashboardTodayCard     `json:"today"`
+	Stats      DashboardMonthStats    `json:"stats"`
+	Lock       DashboardLockHint      `json:"lock"`
+	Calendar   []DashboardCalendarDay `json:"calendar"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/dashboard
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler GetMyDashboard
+	get /hrm/getMyDashboard (GetMyDashboardRequest) returns (GetMyDashboardResponse)
+}
+

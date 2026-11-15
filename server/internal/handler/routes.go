@@ -17,6 +17,7 @@ import (
 	v1hrmcert_template "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/cert_template"
 	v1hrmcertificate "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/certificate"
 	v1hrmcontract "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/contract"
+	v1hrmdashboard "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/dashboard"
 	v1hrmempcert "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/empcert"
 	v1hrmemployee "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/employee"
 	v1hrmentry "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/entry"
@@ -417,6 +418,22 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodPost,
 						Path:    "/hrm/renewEmployeeContract",
 						Handler: v1hrmcontract.Renew(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getMyDashboard",
+						Handler: v1hrmdashboard.GetMyDashboard(serverCtx),
 					},
 				}...,
 			),
