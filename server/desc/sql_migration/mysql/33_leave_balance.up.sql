@@ -57,7 +57,7 @@ CREATE TABLE `hrm_leave_balance_log` (
 -- 假期余额 page (假勤管理 dir aaa...000101 下, order 6; 假勤设置页 order 1-5 已占用)
 INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
-    ('aaa10000-1111-4000-8000-000000001801','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000000101','2','假期余额',0,'',6,'hrm_attendance_data_leave-balance','/hrm/attendance/data/leave-balance','view.hrm_attendance_data_leave-balance','mdi:wallet-outline','1','route.hrm_attendance_data_leave-balance',0,'',0,0,'[]','[{"code":"v1:hrm:leavebalance:list","desc":"假期余额列表"},{"code":"v1:hrm:leavebalance:logList","desc":"假期余额流水查询"}]',0,'');
+    ('aaa10000-1111-4000-8000-000000001801','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000000101','2','假期余额',0,'',6,'hrm_attendance_data_leave-balance','/hrm/attendance/data/leave-balance','view.hrm_attendance_data_leave-balance','mdi:wallet-outline','1','route.hrm_attendance_data_leave-balance',0,'',0,0,'[]','[{"code":"v1:hrm:leavebalance:list","desc":"假期余额列表"},{"code":"v1:hrm:leavebalance:logList","desc":"假期余额流水查询"},{"code":"v1:hrm:leavebalance:initPreview","desc":"初始化预览"}]',0,'');
 
 -- 假期余额 buttons
 INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
