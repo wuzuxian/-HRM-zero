@@ -201,6 +201,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         },
         children: [
           {
+            name: 'hrm_performance_scheme',
+            path: '/hrm/performance/scheme',
+            component: 'view.hrm_performance_scheme',
+            meta: {
+              title: 'hrm_performance_scheme',
+              i18nKey: 'route.hrm_performance_scheme'
+            }
+          },
+          {
             name: 'hrm_performance_setting',
             path: '/hrm/performance/setting',
             meta: {

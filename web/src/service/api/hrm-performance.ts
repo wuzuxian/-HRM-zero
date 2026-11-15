@@ -96,3 +96,41 @@ export function DeletePerfTemplates(uuids: string[]) {
     data: { uuids }
   });
 }
+
+// ---- 绩效方案（HRM-41，演示站 9.1 绩效方案） ----
+
+/** get performance scheme list */
+export function GetPerfSchemeList(params?: Api.Hrm.Performance.SchemeSearchParams) {
+  return request<Api.Hrm.Performance.SchemeList>({
+    url: '/api/v1/hrm/getPerfSchemeList',
+    method: 'get',
+    params
+  });
+}
+
+/** add performance scheme（关联模板须已存在；周期/评估/评分/联薪为枚举字段） */
+export function AddPerfScheme(req: Api.Hrm.Performance.AddSchemeRequest) {
+  return request<Api.Hrm.Performance.AddSchemeResponse>({
+    url: '/api/v1/hrm/addPerfScheme',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit performance scheme */
+export function EditPerfScheme(req: Api.Hrm.Performance.EditSchemeRequest) {
+  return request<Api.Hrm.Performance.EditSchemeResponse>({
+    url: '/api/v1/hrm/editPerfScheme',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete performance schemes */
+export function DeletePerfSchemes(uuids: string[]) {
+  return request<Api.Hrm.Performance.DeleteSchemeResponse>({
+    url: '/api/v1/hrm/deletePerfScheme',
+    method: 'post',
+    data: { uuids }
+  });
+}

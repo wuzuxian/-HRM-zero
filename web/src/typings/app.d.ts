@@ -484,6 +484,11 @@ declare namespace App {
               edit: string;
               delete: string;
             };
+            scheme: {
+              add: string;
+              edit: string;
+              delete: string;
+            };
           };
         };
       };
@@ -714,6 +719,25 @@ declare namespace App {
               system: string;
               manual: string;
             };
+            schemePeriodType: {
+              month: string;
+              quarter: string;
+              half_year: string;
+              year: string;
+            };
+            schemeAssessmentMode: {
+              kpi: string;
+              kpi_behavior: string;
+            };
+            schemeScoreMode: {
+              percent: string;
+              grade: string;
+              amount: string;
+            };
+            schemePayLinkMode: {
+              coefficient: string;
+              amount: string;
+            };
             indicator: {
               title: string;
               code: string;
@@ -757,6 +781,29 @@ declare namespace App {
               itemIncomplete: string;
               addTemplate: string;
               editTemplate: string;
+            };
+            scheme: {
+              title: string;
+              name: string;
+              templateName: string;
+              periodType: string;
+              assessmentMode: string;
+              scoreMode: string;
+              payLinkMode: string;
+              status: string;
+              remark: string;
+              form: {
+                name: string;
+                templateUuid: string;
+                periodType: string;
+                assessmentMode: string;
+                scoreMode: string;
+                payLinkMode: string;
+                status: string;
+                remark: string;
+              };
+              addScheme: string;
+              editScheme: string;
             };
           };
           org: {
