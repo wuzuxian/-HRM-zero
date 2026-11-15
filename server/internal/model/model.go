@@ -37,6 +37,9 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_subject"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_schedule_cycle"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_shift"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_tax_opening"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_tax_profile"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_tax_special_deduction"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_cert_template"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_certificate"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_plan"
@@ -82,6 +85,9 @@ type Model struct {
 	HrmSalarySubject              hrm_salary_subject.HrmSalarySubjectModel
 	HrmScheduleCycle              hrm_schedule_cycle.HrmScheduleCycleModel
 	HrmShift                      hrm_shift.HrmShiftModel
+	HrmTaxOpening                 hrm_tax_opening.HrmTaxOpeningModel
+	HrmTaxProfile                 hrm_tax_profile.HrmTaxProfileModel
+	HrmTaxSpecialDeduction        hrm_tax_special_deduction.HrmTaxSpecialDeductionModel
 	HrmTrainingCertTemplate       hrm_training_cert_template.HrmTrainingCertTemplateModel
 	HrmTrainingCertificate        hrm_training_certificate.HrmTrainingCertificateModel
 	HrmTrainingPlan               hrm_training_plan.HrmTrainingPlanModel
@@ -128,6 +134,9 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmSalarySubject:              hrm_salary_subject.NewHrmSalarySubjectModel(conn, op...),
 		HrmScheduleCycle:              hrm_schedule_cycle.NewHrmScheduleCycleModel(conn, op...),
 		HrmShift:                      hrm_shift.NewHrmShiftModel(conn, op...),
+		HrmTaxOpening:                 hrm_tax_opening.NewHrmTaxOpeningModel(conn, op...),
+		HrmTaxProfile:                 hrm_tax_profile.NewHrmTaxProfileModel(conn, op...),
+		HrmTaxSpecialDeduction:        hrm_tax_special_deduction.NewHrmTaxSpecialDeductionModel(conn, op...),
 		HrmTrainingCertTemplate:       hrm_training_cert_template.NewHrmTrainingCertTemplateModel(conn, op...),
 		HrmTrainingCertificate:        hrm_training_certificate.NewHrmTrainingCertificateModel(conn, op...),
 		HrmTrainingPlan:               hrm_training_plan.NewHrmTrainingPlanModel(conn, op...),

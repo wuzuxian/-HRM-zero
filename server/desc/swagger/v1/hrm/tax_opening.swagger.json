@@ -1,0 +1,506 @@
+{
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/hrm/addTaxOpening": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_opening:add",
+        "operationId": "v1/Hrm/TaxOpeningAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "exemptTotal": {
+                  "type": "number"
+                },
+                "incomeTotal": {
+                  "type": "number"
+                },
+                "otherDeductionTotal": {
+                  "type": "number"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "specialDeductionTotal": {
+                  "type": "number"
+                },
+                "specialExtraTotal": {
+                  "type": "number"
+                },
+                "subjectUuid": {
+                  "type": "string"
+                },
+                "taxPaidTotal": {
+                  "type": "number"
+                },
+                "taxYear": {
+                  "type": "string"
+                },
+                "taxableIncomeTotal": {
+                  "type": "number"
+                },
+                "untilMonth": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "employeeUuid",
+                "taxYear",
+                "untilMonth"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/tax_opening"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteTaxOpening": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_opening:delete",
+        "operationId": "v1/Hrm/TaxOpeningDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/tax_opening"
+        ]
+      }
+    },
+    "/api/v1/hrm/editTaxOpening": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_opening:edit",
+        "operationId": "v1/Hrm/TaxOpeningEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "exemptTotal": {
+                  "type": "number"
+                },
+                "incomeTotal": {
+                  "type": "number"
+                },
+                "otherDeductionTotal": {
+                  "type": "number"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "specialDeductionTotal": {
+                  "type": "number"
+                },
+                "specialExtraTotal": {
+                  "type": "number"
+                },
+                "subjectUuid": {
+                  "type": "string"
+                },
+                "taxPaidTotal": {
+                  "type": "number"
+                },
+                "taxYear": {
+                  "type": "string"
+                },
+                "taxableIncomeTotal": {
+                  "type": "number"
+                },
+                "untilMonth": {
+                  "type": "integer"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "employeeUuid",
+                "taxYear",
+                "untilMonth"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/tax_opening"
+        ]
+      }
+    },
+    "/api/v1/hrm/exportTaxOpening": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:tax_opening:export",
+        "operationId": "v1/Hrm/TaxOpeningExport",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Export",
+        "tags": [
+          "v1/hrm/tax_opening"
+        ]
+      }
+    },
+    "/api/v1/hrm/getTaxOpeningList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:tax_opening:list",
+        "operationId": "v1/Hrm/TaxOpeningList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "subjectUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "taxYear",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "exemptTotal": {
+                        "type": "number"
+                      },
+                      "idCard": {
+                        "type": "string"
+                      },
+                      "incomeTotal": {
+                        "type": "number"
+                      },
+                      "otherDeductionTotal": {
+                        "type": "number"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "specialDeductionTotal": {
+                        "type": "number"
+                      },
+                      "specialExtraTotal": {
+                        "type": "number"
+                      },
+                      "subjectName": {
+                        "type": "string"
+                      },
+                      "subjectUuid": {
+                        "type": "string"
+                      },
+                      "taxPaidTotal": {
+                        "type": "number"
+                      },
+                      "taxYear": {
+                        "type": "string"
+                      },
+                      "taxableIncomeTotal": {
+                        "type": "number"
+                      },
+                      "untilMonth": {
+                        "type": "integer"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "employeeUuid",
+                      "employeeName",
+                      "idCard",
+                      "subjectUuid",
+                      "subjectName",
+                      "taxYear",
+                      "untilMonth",
+                      "incomeTotal",
+                      "specialDeductionTotal",
+                      "specialExtraTotal",
+                      "exemptTotal",
+                      "otherDeductionTotal",
+                      "taxableIncomeTotal",
+                      "taxPaidTotal",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/tax_opening"
+        ]
+      }
+    },
+    "/api/v1/hrm/importTaxOpening": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_opening:import",
+        "operationId": "v1/Hrm/TaxOpeningImport",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fileName",
+                "content"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "successCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Import",
+        "tags": [
+          "v1/hrm/tax_opening"
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKey": {
+      "description": "Enter Authorization",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0"
+}

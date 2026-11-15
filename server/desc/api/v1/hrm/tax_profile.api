@@ -1,0 +1,98 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/tax_profile"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// HrmTaxProfile 员工个税档案（GLOSSARY「个税档案」）: 员工的个税申报基础信息，员工唯一。
+// resident_type 居民类型: resident=居民个人 / non_resident=非居民个人
+// default_special_extra 默认专项附加: 逗号分隔的扣除项编码（子女教育等 7 类）
+type HrmTaxProfile {
+	Uuid                string `json:"uuid"`
+	EmployeeUuid        string `json:"employeeUuid"`
+	EmployeeName        string `json:"employeeName"`
+	IdCard              string `json:"idCard"`
+	ResidentType        string `json:"residentType"`
+	TaxCity             string `json:"taxCity"`
+	DefaultSpecialExtra string `json:"defaultSpecialExtra"`
+	Status              string `json:"status"`
+	Remark              string `json:"remark"`
+	CreateTime          string `json:"createTime"`
+	UpdateTime          string `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	EmployeeName string `form:"employeeName,optional"`
+	ResidentType string `form:"residentType,optional"`
+	Status       string `form:"status,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmTaxProfile `json:"records"`
+}
+
+type AddRequest {
+	EmployeeUuid        string `json:"employeeUuid"`
+	ResidentType        string `json:"residentType"`
+	TaxCity             string `json:"taxCity,optional"`
+	DefaultSpecialExtra string `json:"defaultSpecialExtra,optional"`
+	Status              string `json:"status,default=1"`
+	Remark              string `json:"remark,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid                string `json:"uuid"`
+	EmployeeUuid        string `json:"employeeUuid"`
+	ResidentType        string `json:"residentType"`
+	TaxCity             string `json:"taxCity,optional"`
+	DefaultSpecialExtra string `json:"defaultSpecialExtra,optional"`
+	Status              string `json:"status"`
+	Remark              string `json:"remark,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+type ExportResponse {
+	FileName string `json:"fileName"`
+	Content  string `json:"content"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/tax_profile
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getTaxProfileList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addTaxProfile (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editTaxProfile (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deleteTaxProfile (DeleteRequest) returns (DeleteResponse)
+
+	@handler Export
+	get /hrm/exportTaxProfile returns (ExportResponse)
+}
+
