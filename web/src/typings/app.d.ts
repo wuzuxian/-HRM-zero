@@ -473,6 +473,11 @@ declare namespace App {
             edit: string;
             delete: string;
           };
+          resignation: {
+            add: string;
+            edit: string;
+            delete: string;
+          };
           entry: {
             add: string;
             edit: string;
@@ -1228,6 +1233,57 @@ declare namespace App {
                 selectEmployee: string;
                 remark: string;
                 none: string;
+              };
+            };
+            resignation: {
+              title: string;
+              billNo: string;
+              employeeNo: string;
+              employeeName: string;
+              selectEmployee: string;
+              orgUuid: string;
+              companyUuid: string;
+              position: string;
+              post: string;
+              resignType: {
+                title: string;
+                voluntary: string;
+                involuntary: string;
+                contract_end: string;
+                retirement: string;
+              };
+              resignReason: string;
+              applyDate: string;
+              resignDate: string;
+              lastWorkDate: string;
+              handoverPerson: string;
+              salarySettleDate: string;
+              creatorName: string;
+              createTime: string;
+              submit: string;
+              approve: string;
+              reject: string;
+              revoke: string;
+              records: string;
+              noRecords: string;
+              confirmSubmit: string;
+              confirmApprove: string;
+              confirmReject: string;
+              confirmRevoke: string;
+              addResignation: string;
+              editResignation: string;
+              sectionEmployee: string;
+              sectionSnapshot: string;
+              sectionResign: string;
+              form: {
+                billNo: string;
+                status: string;
+                employeeNo: string;
+                selectEmployee: string;
+                remark: string;
+                none: string;
+                resignType: string;
+                handoverPerson: string;
               };
             };
             entry: {

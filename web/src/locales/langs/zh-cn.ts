@@ -189,6 +189,7 @@ const local: App.I18n.Schema = {
     'hrm_employee-relation': '人事管理',
     'hrm_employee-relation_transfer-list': '人事调动',
     'hrm_employee-relation_regular-list': '员工转正',
+    'hrm_employee-relation_resignation-list': '员工离职',
     'hrm_employee-relation_entry-list': '员工入职',
     hrm_performance: '绩效管理',
     hrm_performance_setting: '绩效设置',
@@ -290,6 +291,11 @@ const local: App.I18n.Schema = {
         add: '新增转正单',
         edit: '编辑转正单',
         delete: '删除转正单'
+      },
+      resignation: {
+        add: '新增离职单',
+        edit: '编辑离职单',
+        delete: '删除离职单'
       },
       entry: {
         add: '新增入职单',
@@ -1329,6 +1335,57 @@ const local: App.I18n.Schema = {
             selectEmployee: '请选择员工',
             remark: '请输入备注',
             none: '选择员工后自动带出'
+          }
+        },
+        resignation: {
+          title: '员工离职',
+          billNo: '单据编号',
+          employeeNo: '员工工号',
+          employeeName: '员工姓名',
+          selectEmployee: '选择员工',
+          orgUuid: '员工所属部门',
+          companyUuid: '员工所属公司',
+          position: '职位',
+          post: '职务',
+          resignType: {
+            title: '离职类型',
+            voluntary: '自愿离职',
+            involuntary: '被动离职',
+            contract_end: '合同到期',
+            retirement: '退休'
+          },
+          resignReason: '离职原因',
+          applyDate: '申请日期',
+          resignDate: '离职日期',
+          lastWorkDate: '最后工作日期',
+          handoverPerson: '交接人',
+          salarySettleDate: '薪资结算日期',
+          creatorName: '申请人',
+          createTime: '创建时间',
+          submit: '提交',
+          approve: '通过',
+          reject: '驳回',
+          revoke: '撤销',
+          records: '审批记录',
+          noRecords: '暂无审批记录',
+          confirmSubmit: '确认提交该离职单进入审批？',
+          confirmApprove: '确认审批通过？通过后仅记录单据，定时任务将在离职日当天统一将员工置为离职。',
+          confirmReject: '确认驳回该离职单？',
+          confirmRevoke: '确认撤销该离职单？',
+          addResignation: '新增离职单',
+          editResignation: '编辑离职单',
+          sectionEmployee: '员工信息',
+          sectionSnapshot: '档案快照（自动带出）',
+          sectionResign: '离职信息',
+          form: {
+            billNo: '请输入单据编号',
+            status: '请选择单据状态',
+            employeeNo: '请输入员工工号',
+            selectEmployee: '请选择员工',
+            remark: '请输入备注',
+            none: '选择员工后自动带出',
+            resignType: '请选择离职类型',
+            handoverPerson: '请输入交接人'
           }
         },
         entry: {

@@ -1034,3 +1034,41 @@ export function ToggleScheduleCycleStatus(req: { uuid: string; status: Api.Hrm.A
     data: req
   });
 }
+
+/** get hrm resignation bill (员工离职单 HR204) paginated list — defaults to 「我的单据」 server-side */
+export function GetResignationList(params?: Api.Hrm.ResignationSearchParams) {
+  return request<Api.Hrm.ResignationList>({
+    url: '/api/v1/hrm/getResignationList',
+    method: 'get',
+    params
+  });
+}
+
+/** add hrm resignation bill (选择员工带出档案快照) */
+export function AddResignation(req: Api.Hrm.AddResignationRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addResignation',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit hrm resignation bill (only in editable 单据状态) */
+export function EditResignation(req: Api.Hrm.EditResignationRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editResignation',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete hrm resignation bills (only in editable 单据状态) */
+export function DeleteResignation(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteResignation',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}

@@ -491,6 +491,88 @@ declare namespace Api {
       uuid: string;
     };
 
+    /** 离职类型 (spec 用户故事 22 / demo-inventory §3.4) */
+    type ResignType = 'voluntary' | 'involuntary' | 'contract_end' | 'retirement';
+
+    /** hrm resignation bill (员工离职单 HR204) */
+    type HrmResignation = {
+      /** record uuid */
+      uuid: string;
+      /** 单据编号 HR204-... */
+      billNo: string;
+      /** 单据状态 */
+      status: BillStatus | null;
+      /** 员工档案 uuid */
+      employeeUuid: string;
+      /** 员工工号（快照） */
+      employeeNo: string;
+      /** 员工姓名（快照） */
+      employeeName: string;
+      /** 员工所属部门（组织 uuid，快照） */
+      orgUuid: string;
+      /** 员工所属公司（组织 uuid，快照） */
+      companyUuid: string;
+      /** 职位（快照） */
+      position: string;
+      /** 职务（快照） */
+      post: string;
+      /** 离职类型 voluntary=自愿离职 involuntary=被动离职 contract_end=合同到期 retirement=退休 */
+      resignType: ResignType | '';
+      /** 离职原因 */
+      resignReason: string;
+      /** 申请日期 YYYY-MM-DD */
+      applyDate: string;
+      /** 离职日期 YYYY-MM-DD（定时任务在当日统一置离职） */
+      resignDate: string;
+      /** 最后工作日期 YYYY-MM-DD */
+      lastWorkDate: string;
+      /** 交接人 */
+      handoverPerson: string;
+      /** 薪资结算日期 YYYY-MM-DD */
+      salarySettleDate: string;
+      /** 离职生效是否已完成 1=是 0=否 */
+      applied: number;
+      /** 申请人 uuid */
+      creatorUuid: string;
+      /** 申请人姓名 */
+      creatorName: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** resignation search params (筛选: 单据编号/单据状态/员工工号, demo-inventory §3.4) */
+    type ResignationSearchParams = CommonType.RecordNullable<
+      Pick<HrmResignation, 'billNo' | 'status' | 'employeeNo'> & Common.CommonSearchParams
+    >;
+
+    /** resignation paginated list */
+    type ResignationList = Common.PaginatingQueryRecord<HrmResignation>;
+
+    /** add resignation request (选择员工带出档案快照) */
+    type AddResignationRequest = {
+      employeeUuid: string;
+      employeeNo: string;
+      employeeName: string;
+      orgUuid: string;
+      companyUuid: string;
+      position: string;
+      post: string;
+      resignType: ResignType | '';
+      resignReason: string;
+      applyDate: string;
+      resignDate: string;
+      lastWorkDate: string;
+      handoverPerson: string;
+      salarySettleDate: string;
+    };
+
+    /** edit resignation request (only in editable 单据状态) */
+    type EditResignationRequest = AddResignationRequest & {
+      uuid: string;
+    };
+
     /** shared bill lifecycle action request (提交/审批通过/驳回/撤销) */
     type BillActionRequest = {
       /** bill type code, e.g. "203" for 人事调动 */

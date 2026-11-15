@@ -203,6 +203,16 @@ export const hrmEmployeePersonStatusRecord: Record<Api.Hrm.PersonStatus, App.I18
 
 export const hrmEmployeePersonStatusOptions = transformRecordToOption(hrmEmployeePersonStatusRecord);
 
+/** 离职类型 (HRM-10 员工离职单 HR204): 自愿离职/被动离职/合同到期/退休 */
+export const hrmResignTypeRecord: Record<Api.Hrm.ResignType, App.I18n.I18nKey> = {
+  voluntary: 'page.hrm.employeeRelation.resignation.resignType.voluntary',
+  involuntary: 'page.hrm.employeeRelation.resignation.resignType.involuntary',
+  contract_end: 'page.hrm.employeeRelation.resignation.resignType.contract_end',
+  retirement: 'page.hrm.employeeRelation.resignation.resignType.retirement'
+};
+
+export const hrmResignTypeOptions = transformRecordToOption(hrmResignTypeRecord);
+
 /** 用户状态 1=已生成系统账号 0=未生成 */
 export const hrmEmployeeUserStatusRecord: Record<Api.Hrm.UserStatus, App.I18n.I18nKey> = {
   '1': 'page.hrm.employee.userStatus.created',

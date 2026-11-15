@@ -189,6 +189,7 @@ const local: App.I18n.Schema = {
     'hrm_employee-relation': 'HR Management',
     'hrm_employee-relation_transfer-list': 'Transfer',
     'hrm_employee-relation_regular-list': 'Regularization',
+    'hrm_employee-relation_resignation-list': 'Resignation',
     'hrm_employee-relation_entry-list': 'Entry',
     hrm_performance: 'Performance',
     hrm_performance_setting: 'Settings',
@@ -290,6 +291,11 @@ const local: App.I18n.Schema = {
         add: 'Add Regularization Bill',
         edit: 'Edit Regularization Bill',
         delete: 'Delete Regularization Bill'
+      },
+      resignation: {
+        add: 'Add Resignation Bill',
+        edit: 'Edit Resignation Bill',
+        delete: 'Delete Resignation Bill'
       },
       entry: {
         add: 'Add Entry Bill',
@@ -1329,6 +1335,57 @@ const local: App.I18n.Schema = {
             selectEmployee: 'Please select an employee',
             remark: 'Please enter remark',
             none: 'Auto-filled after selecting an employee'
+          }
+        },
+        resignation: {
+          title: 'Resignation',
+          billNo: 'Bill No.',
+          employeeNo: 'Employee No.',
+          employeeName: 'Employee Name',
+          selectEmployee: 'Select Employee',
+          orgUuid: 'Department',
+          companyUuid: 'Company',
+          position: 'Position',
+          post: 'Job Post',
+          resignType: {
+            title: 'Resign Type',
+            voluntary: 'Voluntary',
+            involuntary: 'Involuntary',
+            contract_end: 'Contract End',
+            retirement: 'Retirement'
+          },
+          resignReason: 'Resign Reason',
+          applyDate: 'Apply Date',
+          resignDate: 'Resign Date',
+          lastWorkDate: 'Last Work Date',
+          handoverPerson: 'Handover Person',
+          salarySettleDate: 'Salary Settle Date',
+          creatorName: 'Applicant',
+          createTime: 'Created At',
+          submit: 'Submit',
+          approve: 'Approve',
+          reject: 'Reject',
+          revoke: 'Revoke',
+          records: 'Records',
+          noRecords: 'No approval records yet',
+          confirmSubmit: 'Submit this resignation bill for approval?',
+          confirmApprove: 'Approve this bill? It is recorded only — the scheduled job will set the employee to resigned on the resign date.',
+          confirmReject: 'Reject this resignation bill?',
+          confirmRevoke: 'Revoke this resignation bill?',
+          addResignation: 'Add Resignation Bill',
+          editResignation: 'Edit Resignation Bill',
+          sectionEmployee: 'Employee',
+          sectionSnapshot: 'Archive Snapshot (auto)',
+          sectionResign: 'Resignation Info',
+          form: {
+            billNo: 'Please enter bill no.',
+            status: 'Please select bill status',
+            employeeNo: 'Please enter employee no.',
+            selectEmployee: 'Please select an employee',
+            remark: 'Please enter remark',
+            none: 'Auto-filled after selecting an employee',
+            resignType: 'Please select a resign type',
+            handoverPerson: 'Please enter the handover person'
           }
         },
         entry: {

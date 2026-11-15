@@ -182,6 +182,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         },
         children: [
           {
+            name: 'hrm_employee-relation_entry-list',
+            path: '/hrm/employee-relation/entry-list',
+            component: 'view.hrm_employee-relation_entry-list',
+            meta: {
+              title: 'hrm_employee-relation_entry-list',
+              i18nKey: 'route.hrm_employee-relation_entry-list'
+            }
+          },
+          {
             name: 'hrm_employee-relation_regular-list',
             path: '/hrm/employee-relation/regular-list',
             component: 'view.hrm_employee-relation_regular-list',
@@ -191,12 +200,12 @@ export const generatedRoutes: GeneratedRoute[] = [
             }
           },
           {
-            name: 'hrm_employee-relation_entry-list',
-            path: '/hrm/employee-relation/entry-list',
-            component: 'view.hrm_employee-relation_entry-list',
+            name: 'hrm_employee-relation_resignation-list',
+            path: '/hrm/employee-relation/resignation-list',
+            component: 'view.hrm_employee-relation_resignation-list',
             meta: {
-              title: 'hrm_employee-relation_entry-list',
-              i18nKey: 'route.hrm_employee-relation_entry-list'
+              title: 'hrm_employee-relation_resignation-list',
+              i18nKey: 'route.hrm_employee-relation_resignation-list'
             }
           },
           {
