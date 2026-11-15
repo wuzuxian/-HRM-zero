@@ -38,6 +38,9 @@ declare module "@elegant-router/types" {
     "hrm_attendance": "/hrm/attendance";
     "hrm_attendance_data": "/hrm/attendance/data";
     "hrm_attendance_data_leave-balance": "/hrm/attendance/data/leave-balance";
+    "hrm_attendance_data_punch-record": "/hrm/attendance/data/punch-record";
+    "hrm_attendance_my": "/hrm/attendance/my";
+    "hrm_attendance_my_attendance-punch": "/hrm/attendance/my/attendance-punch";
     "hrm_attendance_scheduling": "/hrm/attendance/scheduling";
     "hrm_attendance_scheduling_schedule-cycle": "/hrm/attendance/scheduling/schedule-cycle";
     "hrm_attendance_setting": "/hrm/attendance/setting";
@@ -166,6 +169,8 @@ declare module "@elegant-router/types" {
     | "about"
     | "home"
     | "hrm_attendance_data_leave-balance"
+    | "hrm_attendance_data_punch-record"
+    | "hrm_attendance_my_attendance-punch"
     | "hrm_attendance_scheduling_schedule-cycle"
     | "hrm_attendance_setting_attendance-config"
     | "hrm_attendance_setting_group"

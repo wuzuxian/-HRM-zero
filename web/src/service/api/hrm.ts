@@ -1206,3 +1206,86 @@ export function AdjustLeaveBalance(req: Api.Hrm.LeaveBalanceAdjustRequest) {
     data: req
   });
 }
+
+/** punch (上/下班打卡 HRM-16): type=clockIn|clockOut, location 外勤打卡地点 */
+export function Punch(req: Api.Hrm.PunchRequest) {
+  return request<Api.Hrm.PunchResponse>({
+    url: '/api/v1/hrm/punch',
+    method: 'post',
+    data: req
+  });
+}
+
+/** get my punch records (我的打卡记录, 考勤打卡页) paginated list */
+export function GetMyPunchList(params?: Api.Hrm.PunchSearchParams) {
+  return request<Api.Hrm.PunchList>({
+    url: '/api/v1/hrm/getMyPunchList',
+    method: 'get',
+    params
+  });
+}
+
+/** get punch records (管理端打卡记录页) paginated list — 筛选日期区间/姓名/签到状态 */
+export function GetPunchList(params?: Api.Hrm.PunchSearchParams) {
+  return request<Api.Hrm.PunchList>({
+    url: '/api/v1/hrm/getPunchList',
+    method: 'get',
+    params
+  });
+}
+
+/** add punch record (管理端手动新增/补录) */
+export function AddPunchRecord(req: Api.Hrm.AddPunchRecordRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addPunchRecord',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit punch record (管理端修改) */
+export function EditPunchRecord(req: Api.Hrm.EditPunchRecordRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editPunchRecord',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete punch records */
+export function DeletePunchRecord(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deletePunchRecord',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** export punch records (同筛选条件导出 xlsx, base64) */
+export function ExportPunchRecord(req: Api.Hrm.PunchSearchParams) {
+  return request<Api.Hrm.PunchExportResponse>({
+    url: '/api/v1/hrm/exportPunchRecord',
+    method: 'post',
+    data: req
+  });
+}
+
+/** import external punch records (CSV, 整批原子) */
+export function ImportPunchRecord(req: Api.Hrm.PunchImportRequest) {
+  return request<Api.Hrm.PunchImportResponse>({
+    url: '/api/v1/hrm/importPunchRecord',
+    method: 'post',
+    data: req
+  });
+}
+
+/** manual day settle (手动日结: 批量员工 × 日期区间) */
+export function SettlePunchDay(req: Api.Hrm.PunchSettleRequest) {
+  return request<Api.Hrm.PunchSettleResponse>({
+    url: '/api/v1/hrm/settlePunchDay',
+    method: 'post',
+    data: req
+  });
+}

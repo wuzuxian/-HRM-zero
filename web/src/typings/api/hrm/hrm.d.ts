@@ -3862,5 +3862,135 @@ declare namespace Api {
       days: number;
       reason?: string;
     };
+
+    /** punch request (HRM-16 上/下班打卡) */
+    type PunchRequest = {
+      /** clockIn=上班卡 clockOut=下班卡 */
+      type: 'clockIn' | 'clockOut';
+      /** 打卡地点（外勤时填 GPS 地址文本） */
+      location?: string;
+      /** 管理端代打卡指定员工；员工端缺省取当前登录人 */
+      employeeUuid?: string;
+    };
+
+    /** punch response (打卡后即时日结状态) */
+    type PunchResponse = {
+      punchDate: string;
+      clockInTime: string;
+      clockOutTime: string;
+      settleStatus: string;
+    };
+
+    /** punch record row (我的打卡/管理端打卡记录共用) */
+    type Punch = {
+      uuid: string;
+      punchDate: string;
+      employeeUuid: string;
+      userUuid: string;
+      username: string;
+      employeeNo: string;
+      employeeName: string;
+      orgName: string;
+      /** 周一..周日 */
+      weekday: string;
+      clockInTime: string;
+      /** normal 正常 / field 外勤 / missing 缺卡 */
+      clockInStatus: string;
+      clockInLocation: string;
+      clockOutTime: string;
+      clockOutStatus: string;
+      clockOutLocation: string;
+      /** 1=是 0=否 */
+      overtime: string;
+      /** app/admin/import/card_replacement */
+      source: string;
+      /** group/org/'' */
+      ruleSource: string;
+      /** normal/late/early/missing/rest/no_rule */
+      settleStatus: string;
+      settleLateMinutes: number;
+      settleEarlyMinutes: number;
+      settleWorkHours: number;
+      settleTime: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** punch search params (日期区间/姓名/签到状态) */
+    type PunchSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.Punch, 'punchDate' | 'employeeName' | 'clockInStatus'> & Common.CommonSearchParams
+    > & {
+      startDate?: string;
+      endDate?: string;
+      name?: string;
+    };
+
+    /** punch paginated list */
+    type PunchList = Common.PaginatingQueryRecord<Punch>;
+
+    /** add punch record (管理端补录单行) */
+    type AddPunchRecordRequest = {
+      employeeUuid: string;
+      punchDate: string;
+      clockInTime?: string;
+      clockInStatus?: string;
+      clockInLocation?: string;
+      clockOutTime?: string;
+      clockOutStatus?: string;
+      clockOutLocation?: string;
+      overtime?: string;
+    };
+
+    /** edit punch record (未传时间=该侧不改动) */
+    type EditPunchRecordRequest = {
+      uuid: string;
+      clockInTime?: string;
+      clockInStatus?: string;
+      clockInLocation?: string;
+      clockOutTime?: string;
+      clockOutStatus?: string;
+      clockOutLocation?: string;
+      overtime?: string;
+    };
+
+    /** export punch response (base64 xlsx) */
+    type PunchExportResponse = {
+      fileName: string;
+      content: string;
+    };
+
+    /** import external punch request (CSV) */
+    type PunchImportRequest = {
+      fileName: string;
+      fileContent: string;
+    };
+
+    /** import external punch response */
+    type PunchImportResponse = {
+      successCount: number;
+    };
+
+    /** manual day settle request (员工为空=全体) */
+    type PunchSettleRequest = {
+      employeeUuids?: string[];
+      startDate: string;
+      endDate?: string;
+    };
+
+    /** manual day settle result row */
+    type PunchSettleItem = {
+      employeeUuid: string;
+      employeeName: string;
+      punchDate: string;
+      settleStatus: string;
+      lateMinutes: number;
+      earlyMinutes: number;
+      workHours: number;
+    };
+
+    /** manual day settle response */
+    type PunchSettleResponse = {
+      records: PunchSettleItem[];
+    };
   }
 }
