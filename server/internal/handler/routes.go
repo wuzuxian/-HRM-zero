@@ -19,6 +19,7 @@ import (
 	v1hrmempcert "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/empcert"
 	v1hrmemployee "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/employee"
 	v1hrmentry "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/entry"
+	v1hrmleave "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/leave"
 	v1hrmleavebalance "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/leavebalance"
 	v1hrmleavetype "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/leavetype"
 	v1hrmorg "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/org"
@@ -498,6 +499,42 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodGet,
 						Path:    "/hrm/getEntryList",
 						Handler: v1hrmentry.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addLeave",
+						Handler: v1hrmleave.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/cancelLeave",
+						Handler: v1hrmleave.Cancel(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteLeave",
+						Handler: v1hrmleave.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editLeave",
+						Handler: v1hrmleave.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getLeaveList",
+						Handler: v1hrmleave.List(serverCtx),
 					},
 				}...,
 			),

@@ -1,0 +1,126 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/leave"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 请假销假单（HR205，GLOSSARY「单据」）：请假类型（9 类预置 hrm_leave_type）、
+// 预计开始/结束时间与预计天数（自动计算：0.5 天步进，同日内不足 0.5 天按 0.5 天计，
+// 8 小时 = 1 天口径）、事由。审批通过事务内扣减假期余额（仅余额管理类型，
+// leavebalance.ConsumeLeave；非余额管理类型直接通过不扣减）。
+// 销假：审批通过后回填 实际开始/结束时间 + 实际天数（同口径自动计算），
+// 余额按差额多退少补（实际<预计 RefundLeave 退回；实际>预计 ConsumeLeave 再扣）。
+// 生命周期（提交/审批/撤销/审批记录）走共享单据底座 v1/hrm/bill，类型码 205。
+// 列表默认按「我的单据」过滤（创建人=当前用户），超级管理员可看全部（spec 用户故事 4）。
+type HrmLeave {
+	Uuid            string  `json:"uuid"`
+	BillNo          string  `json:"billNo"` // 单据编号 HR205-...
+	Status          string  `json:"status"` // 单据状态 unsubmitted/approving/approved/rejected/revoked
+	EmployeeUuid    string  `json:"employeeUuid"` // 员工档案 uuid
+	EmployeeNo      string  `json:"employeeNo"` // 员工工号（快照）
+	EmployeeName    string  `json:"employeeName"` // 员工姓名（快照）
+	OrgUuid         string  `json:"orgUuid"` // 员工所属部门（组织 uuid，快照）
+	OrgName         string  `json:"orgName"` // 部门名称（快照）
+	LeaveTypeCode   string  `json:"leaveTypeCode"` // 假期类型编码 (hrm_leave_type.type_code)
+	LeaveTypeName   string  `json:"leaveTypeName"` // 假期类型名称（快照）
+	PlanStartTime   string  `json:"planStartTime"` // 预计开始时间 YYYY-MM-DD HH:MM:SS
+	PlanEndTime     string  `json:"planEndTime"` // 预计结束时间 YYYY-MM-DD HH:MM:SS
+	PlanDays        float64 `json:"planDays"` // 预计天数（自动计算）
+	Reason          string  `json:"reason"` // 请假事由
+	ActualStartTime string  `json:"actualStartTime"` // 实际开始时间（销假回填）
+	ActualEndTime   string  `json:"actualEndTime"` // 实际结束时间（销假回填）
+	ActualDays      float64 `json:"actualDays"` // 实际天数（销假自动计算）
+	Settled         int64   `json:"settled"` // 销假是否已完成 1=是 0=否
+	CreatorUuid     string  `json:"creatorUuid"` // 申请人 uuid
+	CreatorName     string  `json:"creatorName"` // 申请人姓名
+	CreateTime      string  `json:"createTime"`
+	UpdateTime      string  `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	BillNo        string `form:"billNo,optional"` // 单据编号（模糊）
+	Status        string `form:"status,optional"` // 单据状态
+	LeaveTypeCode string `form:"leaveTypeCode,optional"` // 假期类型编码
+	Mine          int64  `form:"mine,optional"` // 1=强制只看我的单据
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmLeave `json:"records"`
+}
+
+type AddRequest {
+	EmployeeUuid  string `json:"employeeUuid,optional"`
+	EmployeeNo    string `json:"employeeNo"`
+	EmployeeName  string `json:"employeeName"`
+	OrgUuid       string `json:"orgUuid,optional"`
+	OrgName       string `json:"orgName,optional"`
+	LeaveTypeCode string `json:"leaveTypeCode"`
+	PlanStartTime string `json:"planStartTime"` // YYYY-MM-DD HH:MM:SS
+	PlanEndTime   string `json:"planEndTime"` // YYYY-MM-DD HH:MM:SS
+	Reason        string `json:"reason,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid          string `json:"uuid"`
+	EmployeeUuid  string `json:"employeeUuid,optional"`
+	EmployeeNo    string `json:"employeeNo"`
+	EmployeeName  string `json:"employeeName"`
+	OrgUuid       string `json:"orgUuid,optional"`
+	OrgName       string `json:"orgName,optional"`
+	LeaveTypeCode string `json:"leaveTypeCode"`
+	PlanStartTime string `json:"planStartTime"`
+	PlanEndTime   string `json:"planEndTime"`
+	Reason        string `json:"reason,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+// CancelRequest 销假：审批通过后回填实际开始/结束时间，实际天数自动计算，
+// 余额按差额多退少补（幂等：settled=1 后再次销假拒绝）。
+type CancelRequest {
+	Uuid            string `json:"uuid"`
+	ActualStartTime string `json:"actualStartTime"` // YYYY-MM-DD HH:MM:SS
+	ActualEndTime   string `json:"actualEndTime"` // YYYY-MM-DD HH:MM:SS
+}
+
+type CancelResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/leave
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getLeaveList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addLeave (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editLeave (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deleteLeave (DeleteRequest) returns (DeleteResponse)
+
+	@handler Cancel
+	post /hrm/cancelLeave (CancelRequest) returns (CancelResponse)
+}
+

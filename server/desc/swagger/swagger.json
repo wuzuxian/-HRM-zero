@@ -1326,6 +1326,86 @@
         ]
       }
     },
+    "/api/v1/hrm/addLeave": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:leave:add",
+        "operationId": "v1/Hrm/LeaveAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "employeeName": {
+                  "type": "string"
+                },
+                "employeeNo": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "leaveTypeCode": {
+                  "type": "string"
+                },
+                "orgName": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "planEndTime": {
+                  "description": "YYYY-MM-DD HH:MM:SS",
+                  "type": "string"
+                },
+                "planStartTime": {
+                  "description": "YYYY-MM-DD HH:MM:SS",
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "employeeNo",
+                "employeeName",
+                "leaveTypeCode",
+                "planStartTime",
+                "planEndTime"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/leave"
+        ]
+      }
+    },
     "/api/v1/hrm/addLeaveType": {
       "post": {
         "consumes": [
@@ -2564,6 +2644,160 @@
         ]
       }
     },
+    "/api/v1/hrm/addTaxOpening": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_opening:add",
+        "operationId": "v1/Hrm/TaxOpeningAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "exemptTotal": {
+                  "type": "number"
+                },
+                "incomeTotal": {
+                  "type": "number"
+                },
+                "otherDeductionTotal": {
+                  "type": "number"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "specialDeductionTotal": {
+                  "type": "number"
+                },
+                "specialExtraTotal": {
+                  "type": "number"
+                },
+                "subjectUuid": {
+                  "type": "string"
+                },
+                "taxPaidTotal": {
+                  "type": "number"
+                },
+                "taxYear": {
+                  "type": "string"
+                },
+                "taxableIncomeTotal": {
+                  "type": "number"
+                },
+                "untilMonth": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "employeeUuid",
+                "taxYear",
+                "untilMonth"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/tax_opening"
+        ]
+      }
+    },
+    "/api/v1/hrm/addTaxProfile": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_profile:add",
+        "operationId": "v1/Hrm/TaxProfileAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "defaultSpecialExtra": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "residentType": {
+                  "type": "string"
+                },
+                "status": {
+                  "default": "1",
+                  "example": "1",
+                  "type": "string"
+                },
+                "taxCity": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "employeeUuid",
+                "residentType",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/tax_profile"
+        ]
+      }
+    },
     "/api/v1/hrm/addTrainingPlan": {
       "post": {
         "consumes": [
@@ -2993,6 +3227,66 @@
         ]
       }
     },
+    "/api/v1/hrm/cancelLeave": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:leave:cancel",
+        "operationId": "v1/Hrm/LeaveCancel",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "actualEndTime": {
+                  "description": "YYYY-MM-DD HH:MM:SS",
+                  "type": "string"
+                },
+                "actualStartTime": {
+                  "description": "YYYY-MM-DD HH:MM:SS",
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "actualStartTime",
+                "actualEndTime"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Cancel",
+        "tags": [
+          "v1/hrm/leave"
+        ]
+      }
+    },
     "/api/v1/hrm/deleteAttendanceConfig": {
       "post": {
         "consumes": [
@@ -3414,6 +3708,59 @@
         "summary": "Delete",
         "tags": [
           "v1/hrm/entry"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteLeave": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:leave:delete",
+        "operationId": "v1/Hrm/LeaveDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/leave"
         ]
       }
     },
@@ -4156,6 +4503,165 @@
         "summary": "Delete",
         "tags": [
           "v1/hrm/shift"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteTaxOpening": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_opening:delete",
+        "operationId": "v1/Hrm/TaxOpeningDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/tax_opening"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteTaxProfile": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_profile:delete",
+        "operationId": "v1/Hrm/TaxProfileDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/tax_profile"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteTaxSpecialDeduction": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_special_deduction:delete",
+        "operationId": "v1/Hrm/TaxSpecialDeductionDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/tax_special_deduction"
         ]
       }
     },
@@ -5262,6 +5768,88 @@
         "summary": "Edit",
         "tags": [
           "v1/hrm/entry"
+        ]
+      }
+    },
+    "/api/v1/hrm/editLeave": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:leave:edit",
+        "operationId": "v1/Hrm/LeaveEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "employeeName": {
+                  "type": "string"
+                },
+                "employeeNo": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "leaveTypeCode": {
+                  "type": "string"
+                },
+                "orgName": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "planEndTime": {
+                  "type": "string"
+                },
+                "planStartTime": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "employeeNo",
+                "employeeName",
+                "leaveTypeCode",
+                "planStartTime",
+                "planEndTime"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/leave"
         ]
       }
     },
@@ -6454,6 +7042,166 @@
         ]
       }
     },
+    "/api/v1/hrm/editTaxOpening": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_opening:edit",
+        "operationId": "v1/Hrm/TaxOpeningEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "exemptTotal": {
+                  "type": "number"
+                },
+                "incomeTotal": {
+                  "type": "number"
+                },
+                "otherDeductionTotal": {
+                  "type": "number"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "specialDeductionTotal": {
+                  "type": "number"
+                },
+                "specialExtraTotal": {
+                  "type": "number"
+                },
+                "subjectUuid": {
+                  "type": "string"
+                },
+                "taxPaidTotal": {
+                  "type": "number"
+                },
+                "taxYear": {
+                  "type": "string"
+                },
+                "taxableIncomeTotal": {
+                  "type": "number"
+                },
+                "untilMonth": {
+                  "type": "integer"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "employeeUuid",
+                "taxYear",
+                "untilMonth"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/tax_opening"
+        ]
+      }
+    },
+    "/api/v1/hrm/editTaxProfile": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_profile:edit",
+        "operationId": "v1/Hrm/TaxProfileEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "defaultSpecialExtra": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "residentType": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "taxCity": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "employeeUuid",
+                "residentType",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/tax_profile"
+        ]
+      }
+    },
     "/api/v1/hrm/editTrainingPlan": {
       "post": {
         "consumes": [
@@ -6778,6 +7526,117 @@
         "summary": "Export",
         "tags": [
           "v1/hrm/org"
+        ]
+      }
+    },
+    "/api/v1/hrm/exportTaxOpening": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:tax_opening:export",
+        "operationId": "v1/Hrm/TaxOpeningExport",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Export",
+        "tags": [
+          "v1/hrm/tax_opening"
+        ]
+      }
+    },
+    "/api/v1/hrm/exportTaxProfile": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:tax_profile:export",
+        "operationId": "v1/Hrm/TaxProfileExport",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Export",
+        "tags": [
+          "v1/hrm/tax_profile"
+        ]
+      }
+    },
+    "/api/v1/hrm/exportTaxSpecialDeduction": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:tax_special_deduction:export",
+        "operationId": "v1/Hrm/TaxSpecialDeductionExport",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Export",
+        "tags": [
+          "v1/hrm/tax_special_deduction"
         ]
       }
     },
@@ -10060,6 +10919,207 @@
         ]
       }
     },
+    "/api/v1/hrm/getLeaveList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:leave:list",
+        "operationId": "v1/Hrm/LeaveList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据编号（模糊）",
+            "in": "query",
+            "name": "billNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据状态",
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "假期类型编码",
+            "in": "query",
+            "name": "leaveTypeCode",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "1=强制只看我的单据",
+            "in": "query",
+            "name": "mine",
+            "type": "integer"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "actualDays": {
+                        "description": "实际天数（销假自动计算）",
+                        "type": "number"
+                      },
+                      "actualEndTime": {
+                        "description": "实际结束时间（销假回填）",
+                        "type": "string"
+                      },
+                      "actualStartTime": {
+                        "description": "实际开始时间（销假回填）",
+                        "type": "string"
+                      },
+                      "billNo": {
+                        "description": "单据编号 HR205-...",
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "creatorName": {
+                        "description": "申请人姓名",
+                        "type": "string"
+                      },
+                      "creatorUuid": {
+                        "description": "申请人 uuid",
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "description": "员工姓名（快照）",
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "description": "员工工号（快照）",
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "description": "员工档案 uuid",
+                        "type": "string"
+                      },
+                      "leaveTypeCode": {
+                        "description": "假期类型编码 (hrm_leave_type.type_code)",
+                        "type": "string"
+                      },
+                      "leaveTypeName": {
+                        "description": "假期类型名称（快照）",
+                        "type": "string"
+                      },
+                      "orgName": {
+                        "description": "部门名称（快照）",
+                        "type": "string"
+                      },
+                      "orgUuid": {
+                        "description": "员工所属部门（组织 uuid，快照）",
+                        "type": "string"
+                      },
+                      "planDays": {
+                        "description": "预计天数（自动计算）",
+                        "type": "number"
+                      },
+                      "planEndTime": {
+                        "description": "预计结束时间 YYYY-MM-DD HH:MM:SS",
+                        "type": "string"
+                      },
+                      "planStartTime": {
+                        "description": "预计开始时间 YYYY-MM-DD HH:MM:SS",
+                        "type": "string"
+                      },
+                      "reason": {
+                        "description": "请假事由",
+                        "type": "string"
+                      },
+                      "settled": {
+                        "description": "销假是否已完成 1=是 0=否",
+                        "type": "integer"
+                      },
+                      "status": {
+                        "description": "单据状态 unsubmitted/approving/approved/rejected/revoked",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "billNo",
+                      "status",
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "orgUuid",
+                      "orgName",
+                      "leaveTypeCode",
+                      "leaveTypeName",
+                      "planStartTime",
+                      "planEndTime",
+                      "planDays",
+                      "reason",
+                      "actualStartTime",
+                      "actualEndTime",
+                      "actualDays",
+                      "settled",
+                      "creatorUuid",
+                      "creatorName",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/leave"
+        ]
+      }
+    },
     "/api/v1/hrm/getLeaveTypeList": {
       "get": {
         "description": "接口权限编码:v1:hrm:leavetype:list",
@@ -12772,6 +13832,428 @@
         ]
       }
     },
+    "/api/v1/hrm/getTaxOpeningList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:tax_opening:list",
+        "operationId": "v1/Hrm/TaxOpeningList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "subjectUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "taxYear",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "exemptTotal": {
+                        "type": "number"
+                      },
+                      "idCard": {
+                        "type": "string"
+                      },
+                      "incomeTotal": {
+                        "type": "number"
+                      },
+                      "otherDeductionTotal": {
+                        "type": "number"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "specialDeductionTotal": {
+                        "type": "number"
+                      },
+                      "specialExtraTotal": {
+                        "type": "number"
+                      },
+                      "subjectName": {
+                        "type": "string"
+                      },
+                      "subjectUuid": {
+                        "type": "string"
+                      },
+                      "taxPaidTotal": {
+                        "type": "number"
+                      },
+                      "taxYear": {
+                        "type": "string"
+                      },
+                      "taxableIncomeTotal": {
+                        "type": "number"
+                      },
+                      "untilMonth": {
+                        "type": "integer"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "employeeUuid",
+                      "employeeName",
+                      "idCard",
+                      "subjectUuid",
+                      "subjectName",
+                      "taxYear",
+                      "untilMonth",
+                      "incomeTotal",
+                      "specialDeductionTotal",
+                      "specialExtraTotal",
+                      "exemptTotal",
+                      "otherDeductionTotal",
+                      "taxableIncomeTotal",
+                      "taxPaidTotal",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/tax_opening"
+        ]
+      }
+    },
+    "/api/v1/hrm/getTaxProfileList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:tax_profile:list",
+        "operationId": "v1/Hrm/TaxProfileList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "residentType",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "defaultSpecialExtra": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "idCard": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "residentType": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "taxCity": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "employeeUuid",
+                      "employeeName",
+                      "idCard",
+                      "residentType",
+                      "taxCity",
+                      "defaultSpecialExtra",
+                      "status",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/tax_profile"
+        ]
+      }
+    },
+    "/api/v1/hrm/getTaxSpecialDeductionList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:tax_special_deduction:list",
+        "operationId": "v1/Hrm/TaxSpecialDeductionList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "deductYear",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "deductType",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "source",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "amount": {
+                        "type": "number"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "deductMonth": {
+                        "type": "integer"
+                      },
+                      "deductType": {
+                        "type": "string"
+                      },
+                      "deductYear": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "idCard": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "source": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "employeeUuid",
+                      "employeeName",
+                      "idCard",
+                      "deductYear",
+                      "deductMonth",
+                      "deductType",
+                      "amount",
+                      "source",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/tax_special_deduction"
+        ]
+      }
+    },
     "/api/v1/hrm/getTrainingPlanList": {
       "get": {
         "description": "接口权限编码:v1:hrm:training_plan:list",
@@ -13545,6 +15027,124 @@
         ]
       }
     },
+    "/api/v1/hrm/importTaxOpening": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_opening:import",
+        "operationId": "v1/Hrm/TaxOpeningImport",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fileName",
+                "content"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "successCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Import",
+        "tags": [
+          "v1/hrm/tax_opening"
+        ]
+      }
+    },
+    "/api/v1/hrm/importTaxSpecialDeduction": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_special_deduction:import",
+        "operationId": "v1/Hrm/TaxSpecialDeductionImport",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fileName",
+                "content"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "successCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Import",
+        "tags": [
+          "v1/hrm/tax_special_deduction"
+        ]
+      }
+    },
     "/api/v1/hrm/initLeaveBalance": {
       "post": {
         "consumes": [
@@ -13651,6 +15251,161 @@
         "summary": "Issue",
         "tags": [
           "v1/hrm/certificate"
+        ]
+      }
+    },
+    "/api/v1/hrm/maintainTaxSpecialDeduction": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_special_deduction:maintain",
+        "operationId": "v1/Hrm/TaxSpecialDeductionMaintain",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "deductYear": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "rows": {
+                  "items": {
+                    "properties": {
+                      "amount": {
+                        "type": "number"
+                      },
+                      "deductMonth": {
+                        "type": "integer"
+                      },
+                      "deductType": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "deductMonth",
+                      "deductType",
+                      "amount"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "employeeUuid",
+                "deductYear",
+                "rows"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "saved": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Maintain",
+        "tags": [
+          "v1/hrm/tax_special_deduction"
+        ]
+      }
+    },
+    "/api/v1/hrm/maintainTaxSpecialDeductionYear": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:tax_special_deduction:maintainYear",
+        "operationId": "v1/Hrm/TaxSpecialDeductionMaintainYear",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "amount": {
+                  "type": "number"
+                },
+                "deductType": {
+                  "type": "string"
+                },
+                "deductYear": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "months": {
+                  "items": {
+                    "type": "integer"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "employeeUuid",
+                "deductYear",
+                "deductType",
+                "amount"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "saved": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "MaintainYear",
+        "tags": [
+          "v1/hrm/tax_special_deduction"
         ]
       }
     },
