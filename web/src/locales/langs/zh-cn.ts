@@ -175,6 +175,7 @@ const local: App.I18n.Schema = {
     hrm: '人力资源',
     hrm_org: '组织',
     hrm_org_orginfo: '组织管理',
+    'hrm_org_org-chart': '组织架构图',
     hrm_performance: '绩效管理',
     hrm_performance_setting: '绩效设置',
     hrm_performance_setting_indicator: '指标库',
@@ -537,7 +538,19 @@ const local: App.I18n.Schema = {
         expand: '展开',
         importSuccess: '导入成功',
         chooseFileTip: '请选择 xlsx 文件',
-        importModalTitle: '导入组织'
+        importModalTitle: '导入组织',
+        orgChart: {
+          title: '组织架构图',
+          memberCount: '本级人数',
+          memberCountTip: '直属本组织的在册员工数',
+          totalMemberCount: '汇总人数',
+          totalMemberCountTip: '本级及全部下级组织的在册员工数',
+          expandAll: '展开全部',
+          collapseAll: '全部收起',
+          refresh: '刷新',
+          empty: '暂无组织数据，请先在组织管理中维护组织',
+          noLeader: '未设置'
+        }
       }
     }
   },

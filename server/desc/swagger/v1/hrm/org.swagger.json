@@ -317,6 +317,135 @@
         ]
       }
     },
+    "/api/v1/hrm/getOrgChartTree": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:org:orgChart",
+        "operationId": "v1/Hrm/OrgOrgChart",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "children": {
+                        "items": {
+                          "properties": {
+                            "children": {
+                              "items": {
+                                "type": "object"
+                              },
+                              "type": "array"
+                            },
+                            "leader": {
+                              "type": "string"
+                            },
+                            "memberCount": {
+                              "type": "integer"
+                            },
+                            "orderNum": {
+                              "type": "integer"
+                            },
+                            "orgName": {
+                              "type": "string"
+                            },
+                            "orgType": {
+                              "type": "string"
+                            },
+                            "parentUuid": {
+                              "type": "string"
+                            },
+                            "status": {
+                              "type": "string"
+                            },
+                            "totalMemberCount": {
+                              "type": "integer"
+                            },
+                            "uuid": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "uuid",
+                            "parentUuid",
+                            "orgName",
+                            "orgType",
+                            "leader",
+                            "orderNum",
+                            "status",
+                            "memberCount",
+                            "totalMemberCount"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "leader": {
+                        "type": "string"
+                      },
+                      "memberCount": {
+                        "type": "integer"
+                      },
+                      "orderNum": {
+                        "type": "integer"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "orgType": {
+                        "type": "string"
+                      },
+                      "parentUuid": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "totalMemberCount": {
+                        "type": "integer"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "parentUuid",
+                      "orgName",
+                      "orgType",
+                      "leader",
+                      "orderNum",
+                      "status",
+                      "memberCount",
+                      "totalMemberCount"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "OrgChart",
+        "tags": [
+          "v1/hrm/org"
+        ]
+      }
+    },
     "/api/v1/hrm/getOrgTree": {
       "get": {
         "description": "接口权限编码:v1:hrm:org:list",

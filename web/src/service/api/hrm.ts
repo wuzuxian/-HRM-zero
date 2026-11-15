@@ -63,3 +63,11 @@ export function ExportOrg() {
     method: 'get'
   });
 }
+
+/** get the 可视化组织架构图 tree (负责人/本级人数/汇总人数) */
+export function GetOrgChartTree() {
+  return request<Api.Hrm.OrgChartTree>({
+    url: '/api/v1/hrm/getOrgChartTree',
+    method: 'get'
+  });
+}
