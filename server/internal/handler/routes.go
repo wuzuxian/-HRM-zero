@@ -9,6 +9,7 @@ import (
 
 	swagger "github.com/jzero-io/jzero-admin/server/internal/handler/swagger"
 	v1auth "github.com/jzero-io/jzero-admin/server/internal/handler/v1/auth"
+	v1hrmbill "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/bill"
 	v1hrmorg "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/org"
 	v1managemenu "github.com/jzero-io/jzero-admin/server/internal/handler/v1/manage/menu"
 	v1managerole "github.com/jzero-io/jzero-admin/server/internal/handler/v1/manage/role"
@@ -80,6 +81,42 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Handler: v1auth.GetUserInfo(serverCtx),
 				},
 			},
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/approveBill",
+						Handler: v1hrmbill.Approve(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getApprovalRecordList",
+						Handler: v1hrmbill.GetApprovalRecordList(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/rejectBill",
+						Handler: v1hrmbill.Reject(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/revokeBill",
+						Handler: v1hrmbill.Revoke(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/submitBill",
+						Handler: v1hrmbill.Submit(serverCtx),
+					},
+				}...,
+			),
 			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
 			rest.WithPrefix("/api/v1"),
 		)
