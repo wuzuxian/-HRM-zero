@@ -414,6 +414,83 @@ declare namespace Api {
       uuid: string;
     };
 
+    /** hrm regularization bill (员工转正单 HR202) */
+    type HrmRegularization = {
+      /** record uuid */
+      uuid: string;
+      /** 单据编号 HR202-... */
+      billNo: string;
+      /** 单据状态 */
+      status: BillStatus | null;
+      /** 员工档案 uuid */
+      employeeUuid: string;
+      /** 员工工号（快照） */
+      employeeNo: string;
+      /** 员工姓名（快照） */
+      employeeName: string;
+      /** 员工所属部门（组织 uuid，快照） */
+      orgUuid: string;
+      /** 员工所属公司（组织 uuid，快照） */
+      companyUuid: string;
+      /** 职位（快照） */
+      position: string;
+      /** 职务（快照） */
+      post: string;
+      /** 人员状态（快照，制单时档案值） */
+      personStatus: PersonStatus | '';
+      /** 入职日期 YYYY-MM-DD（快照） */
+      hireDate: string;
+      /** 预计转正日期 YYYY-MM-DD（快照） */
+      expectedFormalDate: string;
+      /** 实际转正日期 YYYY-MM-DD */
+      formalDate: string;
+      /** 备注 */
+      remark: string;
+      /** 审批回写是否已完成 1=是 0=否 */
+      applied: number;
+      /** 申请人 uuid */
+      creatorUuid: string;
+      /** 申请人姓名 */
+      creatorName: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+      /** record creator uuid (NaiveUI.TableData) */
+      createBy: string;
+      /** record update time (NaiveUI.TableData) */
+      updateBy: string;
+    };
+
+    /** regularization search params (筛选: 单据编号/单据状态/员工工号, demo-inventory §3.2) */
+    type RegularizationSearchParams = CommonType.RecordNullable<
+      Pick<HrmRegularization, 'billNo' | 'status' | 'employeeNo'> & Common.CommonSearchParams
+    >;
+
+    /** regularization paginated list */
+    type RegularizationList = Common.PaginatingQueryRecord<HrmRegularization>;
+
+    /** add regularization request (选择员工带出档案快照) */
+    type AddRegularizationRequest = {
+      employeeUuid: string;
+      employeeNo: string;
+      employeeName: string;
+      orgUuid: string;
+      companyUuid: string;
+      position: string;
+      post: string;
+      personStatus: PersonStatus | '';
+      hireDate: string;
+      expectedFormalDate: string;
+      formalDate: string;
+      remark: string;
+    };
+
+    /** edit regularization request (only in editable 单据状态) */
+    type EditRegularizationRequest = AddRegularizationRequest & {
+      uuid: string;
+    };
+
     /** shared bill lifecycle action request (提交/审批通过/驳回/撤销) */
     type BillActionRequest = {
       /** bill type code, e.g. "203" for 人事调动 */

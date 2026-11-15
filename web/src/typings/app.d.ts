@@ -462,6 +462,11 @@ declare namespace App {
             edit: string;
             delete: string;
           };
+          regularization: {
+            add: string;
+            edit: string;
+            delete: string;
+          };
           reward: {
             add: string;
             edit: string;
@@ -1147,6 +1152,47 @@ declare namespace App {
                 org: string;
                 transferReason: string;
                 effectiveDateRequired: string;
+              };
+            };
+            regularization: {
+              title: string;
+              billNo: string;
+              employeeNo: string;
+              employeeName: string;
+              selectEmployee: string;
+              orgUuid: string;
+              companyUuid: string;
+              position: string;
+              post: string;
+              personStatus: string;
+              hireDate: string;
+              formalDate: string;
+              expectedFormalDate: string;
+              remark: string;
+              creatorName: string;
+              createTime: string;
+              submit: string;
+              approve: string;
+              reject: string;
+              revoke: string;
+              records: string;
+              noRecords: string;
+              confirmSubmit: string;
+              confirmApprove: string;
+              confirmReject: string;
+              confirmRevoke: string;
+              addRegularization: string;
+              editRegularization: string;
+              sectionEmployee: string;
+              sectionSnapshot: string;
+              sectionRegular: string;
+              form: {
+                billNo: string;
+                status: string;
+                employeeNo: string;
+                selectEmployee: string;
+                remark: string;
+                none: string;
               };
             };
           };

@@ -163,6 +163,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         },
         children: [
           {
+            name: 'hrm_employee-relation_regular-list',
+            path: '/hrm/employee-relation/regular-list',
+            component: 'view.hrm_employee-relation_regular-list',
+            meta: {
+              title: 'hrm_employee-relation_regular-list',
+              i18nKey: 'route.hrm_employee-relation_regular-list'
+            }
+          },
+          {
             name: 'hrm_employee-relation_transfer-list',
             path: '/hrm/employee-relation/transfer-list',
             component: 'view.hrm_employee-relation_transfer-list',

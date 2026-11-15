@@ -186,6 +186,7 @@ const local: App.I18n.Schema = {
     'hrm_attendance_setting_overtime-rule': '加班规则',
     'hrm_employee-relation': '人事管理',
     'hrm_employee-relation_transfer-list': '人事调动',
+    'hrm_employee-relation_regular-list': '员工转正',
     hrm_performance: '绩效管理',
     hrm_performance_setting: '绩效设置',
     hrm_performance_setting_indicator: '指标库',
@@ -275,6 +276,11 @@ const local: App.I18n.Schema = {
         add: '新增调动',
         edit: '编辑调动',
         delete: '删除调动'
+      },
+      regularization: {
+        add: '新增转正单',
+        edit: '编辑转正单',
+        delete: '删除转正单'
       },
       reward: {
         add: '新增奖惩单',
@@ -1244,6 +1250,47 @@ const local: App.I18n.Schema = {
             org: '请选择组织',
             transferReason: '请输入调动原因',
             effectiveDateRequired: '非立即生效时必须选择生效日期'
+          }
+        },
+        regularization: {
+          title: '员工转正',
+          billNo: '单据编号',
+          employeeNo: '员工工号',
+          employeeName: '员工姓名',
+          selectEmployee: '选择员工',
+          orgUuid: '员工所属部门',
+          companyUuid: '员工所属公司',
+          position: '职位',
+          post: '职务',
+          personStatus: '人员状态',
+          hireDate: '入职日期',
+          formalDate: '转正日期',
+          expectedFormalDate: '预计转正日期',
+          remark: '备注',
+          creatorName: '申请人',
+          createTime: '创建时间',
+          submit: '提交',
+          approve: '通过',
+          reject: '驳回',
+          revoke: '撤销',
+          records: '审批记录',
+          noRecords: '暂无审批记录',
+          confirmSubmit: '确认提交该转正单进入审批？',
+          confirmApprove: '确认审批通过？通过后将把员工人员状态更新为正式并写入转正日期。',
+          confirmReject: '确认驳回该转正单？',
+          confirmRevoke: '确认撤销该转正单？',
+          addRegularization: '新增转正单',
+          editRegularization: '编辑转正单',
+          sectionEmployee: '员工信息',
+          sectionSnapshot: '档案快照（自动带出）',
+          sectionRegular: '转正信息',
+          form: {
+            billNo: '请输入单据编号',
+            status: '请选择单据状态',
+            employeeNo: '请输入员工工号',
+            selectEmployee: '请选择员工',
+            remark: '请输入备注',
+            none: '选择员工后自动带出'
           }
         }
       },
