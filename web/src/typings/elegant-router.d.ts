@@ -45,6 +45,8 @@ declare module "@elegant-router/types" {
     "hrm_performance_setting": "/hrm/performance/setting";
     "hrm_performance_setting_indicator": "/hrm/performance/setting/indicator";
     "hrm_performance_setting_template": "/hrm/performance/setting/template";
+    "hrm_training": "/hrm/training";
+    "hrm_training_my": "/hrm/training/my";
     "iframe-page": "/iframe-page/:url";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
     "manage": "/manage";
@@ -136,6 +138,7 @@ declare module "@elegant-router/types" {
     | "hrm_org_orginfo"
     | "hrm_performance_setting_indicator"
     | "hrm_performance_setting_template"
+    | "hrm_training_my"
     | "manage_menu"
     | "manage_role"
     | "manage_user-detail"

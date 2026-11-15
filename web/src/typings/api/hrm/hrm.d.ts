@@ -277,5 +277,112 @@ declare namespace Api {
       status: AttendanceStatus | null;
       remark: string;
     };
+
+    /**
+     * training session status (培训班次状态)
+     *
+     * - "1": 未开始
+     * - "2": 进行中
+     * - "3": 已结束
+     */
+    type TrainingSessionStatus = '1' | '2' | '3';
+
+    /**
+     * training certificate status (培训证书状态)
+     *
+     * - "0": 待发
+     * - "1": 已发
+     * - "2": 已撤销
+     */
+    type TrainingCertificateStatus = '0' | '1' | '2';
+
+    /**
+     * training certificate source (证书来源)
+     *
+     * - "1": 班次结业
+     * - "2": 外部导入
+     */
+    type TrainingCertificateSource = '1' | '2';
+
+    /** my training session (我的班次, read-only view of hrm_training_session) */
+    type MyTrainingSession = {
+      /** record uuid */
+      uuid: string;
+      /** record creator */
+      createBy: string;
+      /** record updater */
+      updateBy: string;
+      /** 班次编号 PX-年-流水 */
+      sessionNo: string;
+      /** 班次名称 */
+      sessionName: string;
+      /** 讲师 */
+      lecturer: string;
+      /** 地点 */
+      location: string;
+      /** 学时 */
+      hours: number;
+      /** 开始时间 */
+      startTime: string;
+      /** 结束时间 */
+      endTime: string;
+      /** 状态 */
+      status: TrainingSessionStatus | null;
+      remark: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** my training session search params */
+    type MyTrainingSessionSearchParams = CommonType.RecordNullable<
+      Pick<MyTrainingSession, 'status'> & Common.CommonSearchParams
+    >;
+
+    /** my training session paginated list */
+    type MyTrainingSessionList = Common.PaginatingQueryRecord<MyTrainingSession>;
+
+    /** my training certificate (我的培训证书, read-only view of hrm_training_certificate) */
+    type MyTrainingCertificate = {
+      /** record uuid */
+      uuid: string;
+      /** record creator */
+      createBy: string;
+      /** record updater */
+      updateBy: string;
+      /** 证书号 前缀-年-流水（如 JN-2026-000001） */
+      certNo: string;
+      /** 证书名称 */
+      certName: string;
+      /** 证书类型 */
+      certType: string;
+      /** 来源 1=班次结业 2=外部导入 */
+      source: TrainingCertificateSource;
+      /** 来源班次 uuid */
+      sessionUuid: string;
+      /** 发证时间, empty for 待发 */
+      issueTime: string;
+      /** 状态 0=待发 1=已发 2=已撤销 */
+      status: TrainingCertificateStatus | null;
+      /** 扫描件文件名, empty when absent */
+      fileName: string;
+      /** whether a scan file can be previewed/downloaded */
+      hasFile: boolean;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** my training certificate search params */
+    type MyTrainingCertificateSearchParams = CommonType.RecordNullable<
+      Pick<MyTrainingCertificate, 'status'> & Common.CommonSearchParams
+    >;
+
+    /** my training certificate paginated list */
+    type MyTrainingCertificateList = Common.PaginatingQueryRecord<MyTrainingCertificate>;
+
+    /** certificate scan file response: content encoded as base64 (mirrors org export) */
+    type DownloadMyCertificateFileResponse = {
+      fileName: string;
+      content: string;
+    };
   }
 }

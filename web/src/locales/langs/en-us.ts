@@ -22,6 +22,7 @@ const local: App.I18n.Schema = {
     delete: 'Delete',
     deleteSuccess: 'Delete Success',
     confirmDelete: 'Are you sure you want to delete?',
+    download: 'Download',
     edit: 'Edit',
     editSuccess: 'Edit Success',
     editHomeSuccess: 'Edit Role Home Success',
@@ -183,6 +184,8 @@ const local: App.I18n.Schema = {
     hrm_performance_setting: 'Settings',
     hrm_performance_setting_indicator: 'Indicator Library',
     hrm_performance_setting_template: 'Template Management',
+    hrm_training: 'Training',
+    hrm_training_my: 'My Training',
     exception: 'Exception',
     exception_403: '403',
     exception_404: '404',
@@ -227,6 +230,9 @@ const local: App.I18n.Schema = {
         add: 'Add Leave Type',
         edit: 'Edit Leave Type',
         delete: 'Delete Leave Type'
+      },
+      training: {
+        downloadCert: 'Download/Preview Cert Scan'
       },
       performance: {
         indicator: {
@@ -607,6 +613,35 @@ const local: App.I18n.Schema = {
             remark: 'Please enter remark'
           }
         }
+      },
+      training: {
+        mySessionTitle: 'My Sessions',
+        myCertTitle: 'My Certificates',
+        sessionNo: 'Session No.',
+        sessionName: 'Session',
+        location: 'Location',
+        lecturer: 'Lecturer',
+        hours: 'Hours',
+        startTime: 'Start Time',
+        endTime: 'End Time',
+        sessionStatusLabel: 'Status',
+        sessionStatus: {
+          notStarted: 'Not Started',
+          ongoing: 'Ongoing',
+          finished: 'Finished'
+        },
+        certName: 'Certificate Name',
+        certNo: 'Certificate No.',
+        issueTime: 'Issue Time',
+        certStatusLabel: 'Status',
+        certStatus: {
+          pending: 'Pending',
+          issued: 'Issued',
+          revoked: 'Revoked'
+        },
+        scanFile: 'Scan File',
+        preview: 'Preview',
+        noFile: 'No scan file'
       }
     }
   },

@@ -139,3 +139,30 @@ export function DeleteLeaveType(req: string[]) {
     }
   });
 }
+
+/** get my training session (我的班次) paginated list, scoped to current login user */
+export function GetMyTrainingSessionList(params?: Api.Hrm.MyTrainingSessionSearchParams) {
+  return request<Api.Hrm.MyTrainingSessionList>({
+    url: '/api/v1/hrm/getMyTrainingSessionList',
+    method: 'get',
+    params
+  });
+}
+
+/** get my training certificate (我的培训证书) paginated list, scoped to current login user */
+export function GetMyTrainingCertificateList(params?: Api.Hrm.MyTrainingCertificateSearchParams) {
+  return request<Api.Hrm.MyTrainingCertificateList>({
+    url: '/api/v1/hrm/getMyTrainingCertificateList',
+    method: 'get',
+    params
+  });
+}
+
+/** download/preview my certificate scan file as base64 content */
+export function DownloadMyCertificateFile(uuid: string) {
+  return request<Api.Hrm.DownloadMyCertificateFileResponse>({
+    url: '/api/v1/hrm/downloadMyTrainingCertificateFile',
+    method: 'get',
+    params: { uuid }
+  });
+}

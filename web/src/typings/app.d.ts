@@ -303,6 +303,7 @@ declare namespace App {
         delete: string;
         deleteSuccess: string;
         confirmDelete: string;
+        download: string;
         edit: string;
         editSuccess: string;
         editHomeSuccess: string;
@@ -437,6 +438,9 @@ declare namespace App {
             add: string;
             edit: string;
             delete: string;
+          };
+          training: {
+            downloadCert: string;
           };
           performance: {
             indicator: {
@@ -816,6 +820,35 @@ declare namespace App {
                 remark: string;
               };
             };
+          };
+          training: {
+            mySessionTitle: string;
+            myCertTitle: string;
+            sessionNo: string;
+            sessionName: string;
+            location: string;
+            lecturer: string;
+            hours: string;
+            startTime: string;
+            endTime: string;
+            sessionStatusLabel: string;
+            sessionStatus: {
+              notStarted: string;
+              ongoing: string;
+              finished: string;
+            };
+            certName: string;
+            certNo: string;
+            issueTime: string;
+            certStatusLabel: string;
+            certStatus: {
+              pending: string;
+              issued: string;
+              revoked: string;
+            };
+            scanFile: string;
+            preview: string;
+            noFile: string;
           };
         };
       };

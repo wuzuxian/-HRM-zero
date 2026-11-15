@@ -191,6 +191,8 @@ const routeMap: RouteMap = {
   "hrm_performance_setting": "/hrm/performance/setting",
   "hrm_performance_setting_indicator": "/hrm/performance/setting/indicator",
   "hrm_performance_setting_template": "/hrm/performance/setting/template",
+  "hrm_training": "/hrm/training",
+  "hrm_training_my": "/hrm/training/my",
   "iframe-page": "/iframe-page/:url",
   "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?",
   "manage": "/manage",
