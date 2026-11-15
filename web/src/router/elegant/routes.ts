@@ -94,6 +94,15 @@ export const generatedRoutes: GeneratedRoute[] = [
                   title: 'hrm_attendance_apply_leave-cancel-list',
                   i18nKey: 'route.hrm_attendance_apply_leave-cancel-list'
                 }
+              },
+              {
+                name: 'hrm_attendance_apply_overtime-bill-list',
+                path: '/hrm/attendance/apply/overtime-bill-list',
+                component: 'view.hrm_attendance_apply_overtime-bill-list',
+                meta: {
+                  title: 'hrm_attendance_apply_overtime-bill-list',
+                  i18nKey: 'route.hrm_attendance_apply_overtime-bill-list'
+                }
               }
             ]
           },

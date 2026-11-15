@@ -189,6 +189,7 @@ const local: App.I18n.Schema = {
     'hrm_attendance_data_leave-balance': 'Leave Balances',
     hrm_attendance_apply: 'Leave Applications',
     'hrm_attendance_apply_leave-cancel-list': 'Leave & Cancellation',
+    'hrm_attendance_apply_overtime-bill-list': 'Overtime Requests',
     'hrm_attendance_my_attendance-punch': 'Attendance Punch',
     'hrm_attendance_data_punch-record': 'Punch Records',
     hrm_attendance_scheduling: 'Scheduling',
@@ -283,6 +284,13 @@ const local: App.I18n.Schema = {
         edit: 'Edit Leave Bill',
         delete: 'Delete Leave Bill',
         cancel: 'Cancel (Settle)'
+      },
+      overtimebill: {
+        add: 'Add Overtime Bill',
+        edit: 'Edit Overtime Bill',
+        delete: 'Delete Overtime Bill',
+        confirm: 'Confirm Overtime Bill',
+        submit: 'Submit Overtime Bill'
       },
       attendancegroup: {
         add: 'Add Attendance Group',
@@ -1455,7 +1463,8 @@ const local: App.I18n.Schema = {
           cancelSuccess: 'Settled; balance adjusted by the difference',
           settleHintPrefix: 'Planned',
           settleHintSuffix: 'days; actual days auto-computed in 0.5-day steps',
-          settleRule: 'Shorter actual leave refunds the difference; longer actual leave consumes more (fails if balance is insufficient)',
+          settleRule:
+            'Shorter actual leave refunds the difference; longer actual leave consumes more (fails if balance is insufficient)',
           dayPrecision: 'Days rule: hours/8 rounded up to 0.5-day steps, minimum 0.5 day',
           form: {
             billNo: 'Please enter bill no.',
@@ -1469,6 +1478,63 @@ const local: App.I18n.Schema = {
             actualStart: 'Actual start',
             actualEnd: 'Actual end',
             actualRangeRequired: 'Please select the actual range',
+            reason: 'Please enter reason (optional)'
+          }
+        },
+        overtimeBill: {
+          title: 'Overtime Requests',
+          billNo: 'Bill No.',
+          overtimeDate: 'Overtime Date',
+          dayType: 'Day Type',
+          dayTypeWorkday: 'Workday',
+          dayTypeRestday: 'Rest Day',
+          dayTypeHoliday: 'Public Holiday',
+          startTime: 'Start Time',
+          endTime: 'End Time',
+          timeRange: 'Overtime Range',
+          applyHours: 'Applied Hours',
+          confirmHours: 'Confirmed Hours',
+          compType: 'Compensation',
+          compTypeLeave: 'Comp Leave',
+          compTypeOther: 'Other',
+          source: 'Source',
+          sourceEmployee: 'Employee',
+          employeeName: 'Applicant',
+          employeeNo: 'Employee No.',
+          orgName: 'Department',
+          createTime: 'Created At',
+          addBill: 'Add Overtime Bill',
+          editBill: 'Edit Overtime Bill',
+          confirm: 'Confirm',
+          confirmSuccess: 'Confirmed. Hours will be converted to comp leave on approval',
+          submit: 'Submit',
+          approve: 'Approve',
+          reject: 'Reject',
+          revoke: 'Revoke',
+          records: 'Approval Records',
+          noRecords: 'No approval records',
+          confirmSubmit:
+            'Submit this overtime bill? Bills requiring approval enter approving; free-approval bills are auto-approved.',
+          confirmApprove: 'Approve? Comp leave will be credited by the multiplier (when compensation = comp leave).',
+          confirmReject: 'Reject this bill?',
+          confirmRevoke: 'Revoke this bill?',
+          confirmHintPrefix: 'Applied',
+          confirmHintSuffix: 'hours; confirmed hours must not exceed applied hours',
+          confirmRule:
+            'On approval: converted hours = confirmed hours (or applied if unconfirmed) × multiplier, floored to the rule min unit; credited to comp leave when compensation = comp leave',
+          hoursPrecision: 'Hours rule: floored to the rule min unit (default 30 minutes)',
+          form: {
+            billNo: 'Please enter bill no.',
+            status: 'Please select status',
+            dayType: 'Please select day type',
+            employeeNo: 'Please enter employee no.',
+            employeeName: 'Please enter name',
+            start: 'Start',
+            end: 'End',
+            overtimeDateRequired: 'Please select the overtime date',
+            timeRangeRequired: 'Please select the overtime range',
+            confirmHoursRequired: 'Confirmed hours must be greater than 0',
+            confirmHoursExceeded: 'Confirmed hours must not exceed applied hours',
             reason: 'Please enter reason (optional)'
           }
         },
@@ -1618,18 +1684,21 @@ const local: App.I18n.Schema = {
           copySuccess: 'Copied {n} schedule entries',
           importSuccess: 'Imported {n} schedule entries',
           importFileRequired: 'Please select an import file',
-          importHint: 'xlsx template: column 1 = employee_no, column 2 = name (optional), then columns 1..31 = day numbers with shift names as values (empty or rest = day off)',
+          importHint:
+            'xlsx template: column 1 = employee_no, column 2 = name (optional), then columns 1..31 = day numbers with shift names as values (empty or rest = day off)',
           cycle: 'Schedule Cycle',
           cycleDaysUnit: 'd',
           cycleRequired: 'Please select a schedule cycle',
           anchorDate: 'Phase Anchor Date',
           anchorHintLabel: 'Note',
-          anchorHint: 'Anchor date maps to the first item of the cycle sequence; pass the same historical anchor date to keep absolute phase across months. Defaults to the 1st of the month',
+          anchorHint:
+            'Anchor date maps to the first item of the cycle sequence; pass the same historical anchor date to keep absolute phase across months. Defaults to the 1st of the month',
           overwrite: 'Overwrite existing entries',
           sourceWeek: 'Source week (any Monday)',
           targetWeek: 'Target week (any Monday)',
           weekHintLabel: 'Note',
-          weekHint: 'Copy aligns by weekday (Mon↔Mon); rest days in the source week are not copied; enable overwrite to replace existing target entries',
+          weekHint:
+            'Copy aligns by weekday (Mon↔Mon); rest days in the source week are not copied; enable overwrite to replace existing target entries',
           weekRequired: 'Please select source and target weeks'
         }
       },

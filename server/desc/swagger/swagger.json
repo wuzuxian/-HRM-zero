@@ -18341,6 +18341,62 @@
         ]
       }
     },
+    "/api/v1/hrm/submitOvertimeBill": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:overtimebill:submit",
+        "operationId": "v1/Hrm/OvertimebillSubmit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "status": {
+                  "description": "最终单据状态 approving/approved",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Submit",
+        "tags": [
+          "v1/hrm/overtimebill"
+        ]
+      }
+    },
     "/api/v1/hrm/toggleAttendanceGroupStatus": {
       "post": {
         "consumes": [

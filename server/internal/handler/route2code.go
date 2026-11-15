@@ -104,6 +104,7 @@ var RoutesCodesMap = map[string]string{
 	"POST:/api/v1/hrm/deleteOvertimeBill":               "v1:hrm:overtimebill:delete",
 	"POST:/api/v1/hrm/editOvertimeBill":                 "v1:hrm:overtimebill:edit",
 	"GET:/api/v1/hrm/getOvertimeBillList":               "v1:hrm:overtimebill:list",
+	"POST:/api/v1/hrm/submitOvertimeBill":               "v1:hrm:overtimebill:submit",
 	"POST:/api/v1/hrm/addOvertimeRule":                  "v1:hrm:overtimerule:add",
 	"POST:/api/v1/hrm/deleteOvertimeRule":               "v1:hrm:overtimerule:delete",
 	"POST:/api/v1/hrm/editOvertimeRule":                 "v1:hrm:overtimerule:edit",

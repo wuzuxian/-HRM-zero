@@ -1256,6 +1256,64 @@ export function CancelLeave(req: Api.Hrm.CancelLeaveRequest) {
   });
 }
 
+// ===== HRM-21 加班申请单 (HR217, 假勤管理域 假勤申请) =====
+
+/** get hrm overtime bills (加班申请单 HR217) paginated list — defaults to 「我的单据」 server-side */
+export function GetOvertimeBillList(params?: Api.Hrm.OvertimeBillSearchParams) {
+  return request<Api.Hrm.OvertimeBillList>({
+    url: '/api/v1/hrm/getOvertimeBillList',
+    method: 'get',
+    params
+  });
+}
+
+/** add hrm overtime bill (申请时长由后端按起止时间自动计算, 最小计算单位向下取整) */
+export function AddOvertimeBill(req: Api.Hrm.AddOvertimeBillRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addOvertimeBill',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit hrm overtime bill (only in editable 单据状态; 申请时长随起止时间重算, 原核定作废) */
+export function EditOvertimeBill(req: Api.Hrm.EditOvertimeBillRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editOvertimeBill',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete hrm overtime bills (only in editable 单据状态) */
+export function DeleteOvertimeBill(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteOvertimeBill',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** submit hrm overtime bill (提交加班单: 后端按加班规则判定 需审批→审批中 / 免审批→自动通过) */
+export function SubmitOvertimeBill(req: { uuid: string }) {
+  return request<{ status: string }>({
+    url: '/api/v1/hrm/submitOvertimeBill',
+    method: 'post',
+    data: req
+  });
+}
+
+/** confirm (核定): 核定时长(≤申请时长) + 补偿方式(调休/其他), 仅 审批中 状态 */
+export function ConfirmOvertimeBill(req: Api.Hrm.ConfirmOvertimeBillRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/confirmOvertimeBill',
+    method: 'post',
+    data: req
+  });
+}
+
 // ===== HRM-36 个税管理三件套 (薪酬管理域 个税管理) =====
 
 /** get 员工个税档案 paginated list (员工唯一) */

@@ -107,6 +107,16 @@ type ConfirmRequest {
 
 type ConfirmResponse {}
 
+// SubmitRequest 提交加班单：按命中加班规则判定 需审批（进 审批中）/
+// 免审批（同一事务内底座自动通过 → 审批通过）.
+type SubmitRequest {
+	Uuid string `json:"uuid"`
+}
+
+type SubmitResponse {
+	Status string `json:"status"` // 最终单据状态 approving/approved
+}
+
 @server (
 	prefix:          /api/v1
 	group:           v1/hrm/overtimebill
@@ -129,5 +139,8 @@ service server {
 
 	@handler Confirm
 	post /hrm/confirmOvertimeBill (ConfirmRequest) returns (ConfirmResponse)
+
+	@handler Submit
+	post /hrm/submitOvertimeBill (SubmitRequest) returns (SubmitResponse)
 }
 

@@ -694,6 +694,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Path:    "/hrm/getOvertimeBillList",
 						Handler: v1hrmovertimebill.List(serverCtx),
 					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/submitOvertimeBill",
+						Handler: v1hrmovertimebill.Submit(serverCtx),
+					},
 				}...,
 			),
 			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),

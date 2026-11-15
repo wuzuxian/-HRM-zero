@@ -109,3 +109,11 @@ type PageResponse struct {
 	Size    int   `json:"size"`
 	Total   int64 `json:"total"`
 }
+
+type SubmitRequest struct {
+	Uuid string `json:"uuid"`
+}
+
+type SubmitResponse struct {
+	Status string `json:"status"` // 最终单据状态 approving/approved
+}
