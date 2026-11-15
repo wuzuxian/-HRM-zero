@@ -261,13 +261,13 @@ func TestDashboardLockHint(t *testing.T) {
 	}
 }
 
-// TestDashboardInvalidMonth 非法月份格式 → 10611。
+// TestDashboardInvalidMonth 非法月份格式 → 10631。
 func TestDashboardInvalidMonth(t *testing.T) {
 	svcCtx := newDashboardCtx(t)
 	ctx := context.WithValue(context.Background(), "uuid", "test-user-uuid")
 	_, err := NewGetMyDashboard(ctx, svcCtx, nil).GetMyDashboard(&types.GetMyDashboardRequest{Month: "2026/01"})
 	if sc := status.FromError(err); sc == nil || sc.Code() != errcodes.DashboardInvalidCode {
-		t.Fatalf("err = %v, want code 10611", err)
+		t.Fatalf("err = %v, want code 10631", err)
 	}
 }
 

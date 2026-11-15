@@ -6,9 +6,9 @@ import "github.com/jzero-io/jzero/core/status"
 
 const (
 	// DashboardEmployeeNotFoundCode 当前登录人未关联员工档案（看板给出建档引导）
-	DashboardEmployeeNotFoundCode = 10610
+	DashboardEmployeeNotFoundCode = 10630
 	// DashboardInvalidCode 看板参数非法（月份格式等）
-	DashboardInvalidCode = 10611
+	DashboardInvalidCode = 10631
 )
 
 func init() {
