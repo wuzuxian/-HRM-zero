@@ -189,6 +189,7 @@ const local: App.I18n.Schema = {
     'hrm_attendance_data_leave-balance': '假期余额',
     hrm_attendance_apply: '假勤申请',
     'hrm_attendance_apply_leave-cancel-list': '请假销假',
+    'hrm_attendance_apply_card-replacement-list': '补卡管理',
     'hrm_attendance_my_attendance-punch': '考勤打卡',
     'hrm_attendance_data_punch-record': '打卡记录',
     hrm_attendance_scheduling: '排班管理',
@@ -282,6 +283,11 @@ const local: App.I18n.Schema = {
         edit: '编辑请假单',
         delete: '删除请假单',
         cancel: '销假'
+      },
+      cardreplacement: {
+        add: '新增补卡单',
+        edit: '编辑补卡单',
+        delete: '删除补卡单'
       },
       attendancegroup: {
         add: '新增考勤组',
@@ -1423,6 +1429,48 @@ const local: App.I18n.Schema = {
             actualEnd: '实际结束时间',
             actualRangeRequired: '请选择实际起止时间',
             reason: '请输入请假事由（选填）'
+          }
+        },
+        cardReplacement: {
+          title: '补卡管理',
+          billNo: '单据编号',
+          employeeNo: '员工工号',
+          employeeName: '员工姓名',
+          orgName: '部门',
+          punchDate: '补卡日期',
+          cardType: '补卡类型',
+          clockIn: '上班卡',
+          clockOut: '下班卡',
+          punchTime: '补卡时间',
+          origClockInTime: '原上班打卡',
+          origClockOutTime: '原下班打卡',
+          reason: '补卡原因',
+          creatorName: '申请人',
+          createTime: '创建时间',
+          selectEmployee: '选择员工',
+          addTitle: '新增补卡单',
+          editTitle: '编辑补卡单',
+          submit: '提交',
+          approve: '审批通过',
+          reject: '审批驳回',
+          revoke: '撤销',
+          records: '审批记录',
+          noRecords: '暂无审批记录',
+          confirmSubmit: '确认提交该补卡单？',
+          confirmApprove: '确认审批通过？通过后补卡时间将写入当日打卡记录并重算该日日结。',
+          confirmReject: '确认审批驳回？',
+          confirmRevoke: '确认撤销该单据？',
+          form: {
+            billNo: '请输入单据编号',
+            status: '请选择单据状态',
+            employeeNo: '请输入员工工号',
+            cardType: '请选择补卡类型',
+            selectEmployee: '请选择员工',
+            punchDate: '请选择补卡日期',
+            punchDateRequired: '请选择补卡日期',
+            punchTime: '请选择补卡时间',
+            punchTimeRequired: '请选择补卡时间',
+            reason: '请输入补卡原因（选填）'
           }
         },
         attendancePunch: {

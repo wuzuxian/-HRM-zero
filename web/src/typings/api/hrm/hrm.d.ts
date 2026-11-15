@@ -4387,5 +4387,75 @@ declare namespace Api {
     type SchedulePublishResponse = {
       publishedCount: number;
     };
+
+    // ===== HRM-20 补卡单 (HR206, 假勤管理域 假勤申请) =====
+
+    /** 补卡类型: clockIn 上班卡 / clockOut 下班卡 */
+    type CardReplacementType = 'clockIn' | 'clockOut';
+
+    /** hrm card replacement bill (补卡单 HR206) */
+    type HrmCardReplacement = {
+      /** record uuid */
+      uuid: string;
+      /** 单据编号 HR206-... */
+      billNo: string;
+      /** 单据状态 */
+      status: BillStatus;
+      /** 员工档案 uuid */
+      employeeUuid: string;
+      /** 员工工号（快照） */
+      employeeNo: string;
+      /** 员工姓名（快照） */
+      employeeName: string;
+      /** 部门名称（快照） */
+      orgName: string;
+      /** 补卡日期 yyyy-MM-dd */
+      punchDate: string;
+      /** 补卡类型 */
+      cardType: CardReplacementType;
+      /** 补卡时间 YYYY-MM-DD HH:MM:SS */
+      punchTime: string;
+      /** 补卡原因 */
+      reason: string;
+      /** 原上班打卡（提交时快照，空=缺卡） */
+      origClockInTime: string;
+      /** 原下班打卡（提交时快照，空=缺卡） */
+      origClockOutTime: string;
+      /** 申请人 uuid */
+      creatorUuid: string;
+      /** 申请人姓名 */
+      creatorName: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** card replacement search params */
+    type CardReplacementSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.HrmCardReplacement, 'billNo' | 'status' | 'employeeNo' | 'cardType'> &
+        Common.CommonSearchParams
+    >;
+
+    /** card replacement paginated list */
+    type CardReplacementList = Common.PaginatingQueryRecord<Api.Hrm.HrmCardReplacement>;
+
+    /** add card replacement request (原打卡快照由后端取) */
+    type AddCardReplacementRequest = {
+      employeeUuid: string;
+      employeeNo: string;
+      employeeName: string;
+      orgUuid?: string;
+      orgName?: string;
+      /** yyyy-MM-dd */
+      punchDate: string;
+      cardType: CardReplacementType;
+      /** YYYY-MM-DD HH:MM:SS */
+      punchTime: string;
+      reason?: string;
+    };
+
+    /** edit card replacement request (only in editable 单据状态) */
+    type EditCardReplacementRequest = AddCardReplacementRequest & {
+      uuid: string;
+    };
   }
 }

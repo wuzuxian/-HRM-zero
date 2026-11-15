@@ -183,6 +183,7 @@ const routeMap: RouteMap = {
   "hrm": "/hrm",
   "hrm_attendance": "/hrm/attendance",
   "hrm_attendance_apply": "/hrm/attendance/apply",
+  "hrm_attendance_apply_card-replacement-list": "/hrm/attendance/apply/card-replacement-list",
   "hrm_attendance_apply_leave-cancel-list": "/hrm/attendance/apply/leave-cancel-list",
   "hrm_attendance_data": "/hrm/attendance/data",
   "hrm_attendance_data_leave-balance": "/hrm/attendance/data/leave-balance",

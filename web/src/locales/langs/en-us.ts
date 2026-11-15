@@ -189,6 +189,7 @@ const local: App.I18n.Schema = {
     'hrm_attendance_data_leave-balance': 'Leave Balances',
     hrm_attendance_apply: 'Leave Applications',
     'hrm_attendance_apply_leave-cancel-list': 'Leave & Cancellation',
+    'hrm_attendance_apply_card-replacement-list': 'Card Replacement',
     'hrm_attendance_my_attendance-punch': 'Attendance Punch',
     'hrm_attendance_data_punch-record': 'Punch Records',
     hrm_attendance_scheduling: 'Scheduling',
@@ -282,6 +283,11 @@ const local: App.I18n.Schema = {
         edit: 'Edit Leave Bill',
         delete: 'Delete Leave Bill',
         cancel: 'Cancel (Settle)'
+      },
+      cardreplacement: {
+        add: 'Add Card Replacement',
+        edit: 'Edit Card Replacement',
+        delete: 'Delete Card Replacement'
       },
       attendancegroup: {
         add: 'Add Attendance Group',
@@ -1423,6 +1429,48 @@ const local: App.I18n.Schema = {
             actualStart: 'Actual start',
             actualEnd: 'Actual end',
             actualRangeRequired: 'Please select the actual range',
+            reason: 'Please enter reason (optional)'
+          }
+        },
+        cardReplacement: {
+          title: 'Card Replacement',
+          billNo: 'Bill No.',
+          employeeNo: 'Employee No.',
+          employeeName: 'Employee Name',
+          orgName: 'Department',
+          punchDate: 'Replacement Date',
+          cardType: 'Card Type',
+          clockIn: 'Clock-in Card',
+          clockOut: 'Clock-out Card',
+          punchTime: 'Replacement Time',
+          origClockInTime: 'Original Clock-in',
+          origClockOutTime: 'Original Clock-out',
+          reason: 'Reason',
+          creatorName: 'Applicant',
+          createTime: 'Created At',
+          selectEmployee: 'Select Employee',
+          addTitle: 'Add Card Replacement',
+          editTitle: 'Edit Card Replacement',
+          submit: 'Submit',
+          approve: 'Approve',
+          reject: 'Reject',
+          revoke: 'Revoke',
+          records: 'Approval Records',
+          noRecords: 'No approval records',
+          confirmSubmit: 'Submit this card replacement bill?',
+          confirmApprove: 'Approve? The replacement time will be written into the day\'s punch record and the day settle will be recalculated.',
+          confirmReject: 'Reject this bill?',
+          confirmRevoke: 'Revoke this bill?',
+          form: {
+            billNo: 'Please enter bill no.',
+            status: 'Please select bill status',
+            employeeNo: 'Please enter employee no.',
+            cardType: 'Please select card type',
+            selectEmployee: 'Please select employee',
+            punchDate: 'Please select replacement date',
+            punchDateRequired: 'Please select the replacement date',
+            punchTime: 'Please select replacement time',
+            punchTimeRequired: 'Please select the replacement time',
             reason: 'Please enter reason (optional)'
           }
         },

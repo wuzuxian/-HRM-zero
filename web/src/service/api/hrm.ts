@@ -1568,3 +1568,43 @@ export function PublishScheduleMonth(req: Api.Hrm.SchedulePublishRequest) {
     data: req
   });
 }
+
+// ===== HRM-20 补卡单 (HR206, 假勤管理域 假勤申请) =====
+
+/** get hrm card replacement bills (补卡单 HR206) paginated list — defaults to 「我的单据」 server-side */
+export function GetCardReplacementList(params?: Api.Hrm.CardReplacementSearchParams) {
+  return request<Api.Hrm.CardReplacementList>({
+    url: '/api/v1/hrm/getCardReplacementList',
+    method: 'get',
+    params
+  });
+}
+
+/** add hrm card replacement bill (原上班/下班打卡由后端按提交时打卡行快照) */
+export function AddCardReplacement(req: Api.Hrm.AddCardReplacementRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addCardReplacement',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit hrm card replacement bill (only in editable 单据状态; 日期变更时后端重取快照) */
+export function EditCardReplacement(req: Api.Hrm.EditCardReplacementRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editCardReplacement',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete hrm card replacement bills (only in editable 单据状态) */
+export function DeleteCardReplacement(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteCardReplacement',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
