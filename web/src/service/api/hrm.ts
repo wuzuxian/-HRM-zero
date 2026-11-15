@@ -322,8 +322,6 @@ export function ExportEmployee() {
   });
 }
 
-// ---- HRM 培训计划单 (HRM-28, HR216) ----
-
 /** get 培训计划单 paginated list */
 export function GetTrainingPlanList(params?: Api.Hrm.TrainingPlanSearchParams) {
   return request<Api.Hrm.TrainingPlanList>({
@@ -361,8 +359,6 @@ export function DeleteTrainingPlan(req: string[]) {
     }
   });
 }
-
-// ---- HRM 培训班次 (HRM-28, 管理端 CRUD) ----
 
 /** get 培训班次 paginated list */
 export function GetTrainingSessionList(params?: Api.Hrm.TrainingSessionSearchParams) {
@@ -532,8 +528,6 @@ export function DeleteAttendanceConfig(req: string[]) {
   });
 }
 
-// ---- HRM 证书模板 (HRM-30) ----
-
 /** get 证书模板 paginated list (筛选: 模板名称/证书类型/来源/状态) */
 export function GetCertTemplateList(params?: Api.Hrm.CertTemplateSearchParams) {
   return request<Api.Hrm.CertTemplateList>({
@@ -580,8 +574,6 @@ export function DeleteCertTemplate(req: string[]) {
     }
   });
 }
-
-// ---- HRM 证书发放 (HRM-30) ----
 
 /** get 证书发放 paginated list (筛选: 证书号/名称/类型/状态/来源/班次) */
 export function GetCertificateList(params?: Api.Hrm.TrainingCertificateSearchParams) {
@@ -645,3 +637,136 @@ export function DownloadCertificateFile(uuid: string) {
     params: { uuid }
   });
 }
+
+/** get hrm reward bill (奖惩单 HR215) paginated list — defaults to 「我的单据」 server-side */
+export function GetRewardList(params?: Api.Hrm.RewardSearchParams) {
+  return request<Api.Hrm.RewardList>({
+    url: '/api/v1/hrm/getRewardList',
+    method: 'get',
+    params
+  });
+}
+
+/** add hrm reward bill */
+export function AddReward(req: Api.Hrm.AddRewardRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addReward',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit hrm reward bill (only in editable 单据状态) */
+export function EditReward(req: Api.Hrm.EditRewardRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editReward',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete hrm reward bills (only in editable 单据状态) */
+export function DeleteReward(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteReward',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** get recruitment requirement (招聘需求单 HR207) paginated list — defaults to 「我的单据」 server-side */
+export function GetRequirementList(params?: Api.Hrm.RequirementSearchParams) {
+  return request<Api.Hrm.RequirementList>({
+    url: '/api/v1/hrm/getRequirementList',
+    method: 'get',
+    params
+  });
+}
+
+/** add recruitment requirement bill */
+export function AddRequirement(req: Api.Hrm.AddRequirementRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addRequirement',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit recruitment requirement bill (only in editable 单据状态) */
+export function EditRequirement(req: Api.Hrm.EditRequirementRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editRequirement',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete recruitment requirement bills (only in editable 单据状态) */
+export function DeleteRequirement(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteRequirement',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** get 候选人 paginated list (筛选 姓名/手机号/来源渠道/状态) */
+export function GetCandidateList(params?: Api.Hrm.CandidateSearchParams) {
+  return request<Api.Hrm.CandidateList>({
+    url: '/api/v1/hrm/getCandidateList',
+    method: 'get',
+    params
+  });
+}
+
+/** add 候选人 (初始状态 新线索) */
+export function AddCandidate(req: Api.Hrm.AddCandidateRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addCandidate',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 候选人 (状态走 updateCandidateStatus 流转) */
+export function EditCandidate(req: Api.Hrm.EditCandidateRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editCandidate',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 候选人 (普通实体, 不限状态) */
+export function DeleteCandidate(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteCandidate',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** 候选人状态流转 (新线索→已投递→…→录用通过; 不可跳级/不可回退) */
+export function UpdateCandidateStatus(req: Api.Hrm.UpdateCandidateStatusRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/updateCandidateStatus',
+    method: 'post',
+    data: req
+  });
+}
+
+/** import 候选人 from a base64-encoded xlsx file (AI 入库通道按 ADR-0002 裁剪) */
+export function ImportCandidate(req: Api.Hrm.ImportCandidateRequest) {
+  return request<Api.Hrm.ImportCandidateResponse>({
+    url: '/api/v1/hrm/importCandidate',
+    method: 'post',
+    data: req
+  });
+}
+

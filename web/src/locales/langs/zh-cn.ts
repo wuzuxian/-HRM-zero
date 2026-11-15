@@ -192,6 +192,11 @@ const local: App.I18n.Schema = {
     hrm_performance_scheme: '绩效方案',
     hrm_training: '培训管理',
     hrm_training_my: '我的培训',
+    hrm_reward: '奖惩管理',
+    hrm_reward_bill: '奖惩单',
+    hrm_recruitment: '招聘管理',
+    'hrm_recruitment_requirement-list': '招聘需求',
+    'hrm_recruitment_candidate-list': '候选人中心',
     hrm_training_plan: '培训计划',
     hrm_training_session: '培训班次',
     'hrm_training_cert-template': '证书模板',
@@ -259,6 +264,23 @@ const local: App.I18n.Schema = {
         add: '新增调动',
         edit: '编辑调动',
         delete: '删除调动'
+      },
+      reward: {
+        add: '新增奖惩单',
+        edit: '编辑奖惩单',
+        delete: '删除奖惩单'
+      },
+      requirement: {
+        add: '新增招聘需求',
+        edit: '编辑招聘需求',
+        delete: '删除招聘需求'
+      },
+      candidate: {
+        add: '新增候选人',
+        edit: '编辑候选人',
+        delete: '删除候选人',
+        import: '导入候选人',
+        updatestatus: '候选人状态流转'
       },
       bill: {
         submit: '提交单据',
@@ -529,6 +551,173 @@ const local: App.I18n.Schema = {
       }
     },
     hrm: {
+      reward: {
+        title: '奖惩单',
+        billNo: '单据编号',
+        billStatus: {
+          title: '单据状态'
+        },
+        employeeNo: '员工工号',
+        employeeName: '员工姓名',
+        rewardType: {
+          title: '奖惩类型',
+          reward: '奖励',
+          punishment: '处分'
+        },
+        rewardLevel: {
+          title: '奖惩级别',
+          company: '公司级',
+          dept: '部门级',
+          notice: '通报',
+          other: '其他'
+        },
+        docNo: '文号',
+        occurDate: '发生日期',
+        amount: '金额',
+        reason: '奖惩原因',
+        salaryMonth: '入账薪资年月',
+        synced: '薪资同步',
+        creatorName: '申请人',
+        createTime: '创建时间',
+        yes: '是',
+        no: '否',
+        submit: '提交',
+        approve: '通过',
+        reject: '驳回',
+        revoke: '撤销',
+        records: '审批记录',
+        noRecords: '暂无审批记录',
+        confirmSubmit: '确认提交该奖惩单进入审批？',
+        confirmApprove: '确认审批通过？通过后将同步为薪资项目的奖惩奖励/奖惩扣款数据源。',
+        confirmReject: '确认驳回该奖惩单？',
+        confirmRevoke: '确认撤销该奖惩单？',
+        addReward: '新增奖惩单',
+        editReward: '编辑奖惩单',
+        sectionEmployee: '员工信息',
+        sectionReward: '奖惩信息',
+        form: {
+          billNo: '请输入单据编号',
+          status: '请选择单据状态',
+          rewardType: '请选择奖惩类型',
+          rewardLevel: '请选择奖惩级别',
+          employeeNo: '请输入员工工号',
+          employeeName: '请输入员工姓名',
+          docNo: '请输入文号',
+          salaryMonth: '入账薪资年月 YYYY-MM，留空默认为发生日期所在月',
+          reason: '请输入奖惩原因'
+        }
+      },
+      requirement: {
+        title: '招聘需求',
+        billNo: '需求编号',
+        billStatus: {
+          title: '单据状态'
+        },
+        postName: '岗位名称',
+        postCategory: {
+          title: '岗位类别',
+          tech: '技术类',
+          product: '产品类',
+          design: '设计类',
+          operation: '运营类',
+          market: '市场类',
+          function: '职能类',
+          other: '其他'
+        },
+        headcount: '需求人数',
+        urgency: {
+          title: '紧急度',
+          normal: '普通',
+          urgent: '紧急'
+        },
+        expectDate: '期望到岗日期',
+        orgName: '所属部门',
+        requirementDesc: '需求说明',
+        creatorName: '申请人',
+        createTime: '创建时间',
+        submit: '提交',
+        approve: '通过',
+        reject: '驳回',
+        revoke: '撤销',
+        records: '审批记录',
+        noRecords: '暂无审批记录',
+        confirmSubmit: '确认提交该招聘需求单进入审批？',
+        confirmApprove: '确认审批通过？通过后该需求可被招聘职位引用发布。',
+        confirmReject: '确认驳回该招聘需求单？',
+        confirmRevoke: '确认撤销该招聘需求单？',
+        addRequirement: '新增招聘需求',
+        editRequirement: '编辑招聘需求',
+        sectionPost: '岗位信息',
+        form: {
+          billNo: '请输入需求编号',
+          status: '请选择单据状态',
+          postName: '请输入岗位名称',
+          postCategory: '请选择岗位类别',
+          urgency: '请选择紧急度',
+          org: '请选择所属部门',
+          requirementDesc: '请输入需求说明/任职要求'
+        }
+      },
+      candidate: {
+        title: '候选人中心',
+        name: '姓名',
+        phone: '手机号',
+        email: '邮箱',
+        sourceChannel: {
+          title: '来源渠道',
+          recommend: '内部推荐',
+          website: '招聘网站',
+          campus: '校园招聘',
+          headhunter: '猎头',
+          other: '其他'
+        },
+        education: {
+          title: '最高学历',
+          doctor: '博士',
+          master: '硕士',
+          bachelor: '本科',
+          associate: '大专',
+          senior: '高中',
+          other: '其他'
+        },
+        currentCompany: '当前公司',
+        currentPosition: '当前岗位',
+        expectSalary: '期望薪资',
+        remark: '备注',
+        status: {
+          title: '状态',
+          new: '新线索',
+          delivered: '已投递',
+          interviewing: '面试中',
+          offer: '已发Offer',
+          hired: '录用通过',
+          rejected: '不通过'
+        },
+        createTime: '创建时间',
+        advanceTo: '推进到{status}',
+        confirmAdvance: '确认将该候选人的状态推进到 {status}？',
+        confirmReject: '确认标记该候选人不通过？',
+        reject: '不通过',
+        import: 'Excel导入',
+        importModalTitle: '导入候选人',
+        importSuccess: '导入成功',
+        importTemplateTip:
+          '模板列：姓名、手机号、邮箱、来源渠道（内部推荐/招聘网站/校园招聘/猎头/其他）、最高学历（博士/硕士/本科/大专/高中/其他）、当前公司、当前岗位、期望薪资',
+        chooseFileTip: '请选择 xlsx 文件',
+        addCandidate: '新增候选人',
+        editCandidate: '编辑候选人',
+        form: {
+          name: '请输入姓名',
+          phone: '请输入手机号',
+          email: '请输入邮箱',
+          sourceChannel: '请选择来源渠道',
+          education: '请选择最高学历',
+          currentCompany: '请输入当前公司',
+          currentPosition: '请输入当前岗位',
+          expectSalary: '请输入期望薪资（如 20k-30k）',
+          remark: '请输入备注'
+        }
+      },
       performance: {
         common: {
           status: {

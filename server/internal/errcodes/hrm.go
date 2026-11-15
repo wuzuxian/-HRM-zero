@@ -78,6 +78,39 @@ const (
 	AttendanceConfigInvalidCode = 10383
 	// AttendanceRuleNotFoundCode 未找到生效规则（员工不在考勤组且组织链上无默认规则）
 	AttendanceRuleNotFoundCode = 10384
+
+	// HRM 奖惩单（HRM-07，HR215）业务错误码。1042x 段（1039x 为绩效重编号预留；
+	// 1040x/1041x 已被 HRM-28 培训计划/班次占用，见 hrm_training.go）。
+	// RewardNotFoundCode 奖惩单不存在
+	RewardNotFoundCode = 10420
+	// RewardInvalidCode 奖惩单参数非法（奖惩类型/级别/发生日期/入账年月等）
+	RewardInvalidCode = 10421
+	// RewardEmployeeRequiredCode 未指定员工（工号与姓名为必填快照）
+	RewardEmployeeRequiredCode = 10422
+	// RewardNotEditableCode 单据当前状态不允许修改/删除（仅 未提交/审批不通过/已撤销 可改）
+	RewardNotEditableCode = 10423
+
+	// HRM 招聘需求单（HRM-24，HR207）业务错误码。1043x 段（1042x 已被奖惩单占用）。
+	// RequirementNotFoundCode 招聘需求单不存在
+	RequirementNotFoundCode = 10430
+	// RequirementInvalidCode 招聘需求单参数非法（岗位名称/类别/人数/紧急度/日期等）
+	RequirementInvalidCode = 10431
+	// RequirementOrgRequiredCode 未指定所属部门
+	RequirementOrgRequiredCode = 10432
+	// RequirementNotEditableCode 单据当前状态不允许修改/删除（仅 未提交/审批不通过/已撤销 可改）
+	RequirementNotEditableCode = 10433
+
+	// HRM 候选人中心（HRM-26）业务错误码。10440-10441（10441 与 HRM-24 seam 注释中
+	// 「需求未审批通过不可发布职位」候选码重叠，最终归属以合并两侧声明为准；
+	// 10442+ 预留给 HRM-25 录用审批）。
+	// CandidateNotFoundCode 候选人不存在
+	CandidateNotFoundCode = 10440
+	// CandidateInvalidCode 候选人参数非法（姓名/来源渠道/最高学历等）
+	CandidateInvalidCode = 10441
+	// CandidateStatusTransitionInvalidCode 候选人状态流转非法（不可跳级/不可回退）
+	CandidateStatusTransitionInvalidCode = 10442
+	// CandidateImportInvalidCode 导入候选人文件非法
+	CandidateImportInvalidCode = 10443
 )
 
 func init() {
@@ -120,4 +153,19 @@ func init() {
 	status.Register(TransferInvalidCode)
 	status.Register(TransferEmployeeRequiredCode)
 	status.Register(TransferNotEditableCode)
+
+	status.Register(RewardNotFoundCode)
+	status.Register(RewardInvalidCode)
+	status.Register(RewardEmployeeRequiredCode)
+	status.Register(RewardNotEditableCode)
+
+	status.Register(RequirementNotFoundCode)
+	status.Register(RequirementInvalidCode)
+	status.Register(RequirementOrgRequiredCode)
+	status.Register(RequirementNotEditableCode)
+
+	status.Register(CandidateNotFoundCode)
+	status.Register(CandidateInvalidCode)
+	status.Register(CandidateStatusTransitionInvalidCode)
+	status.Register(CandidateImportInvalidCode)
 }

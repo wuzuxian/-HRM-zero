@@ -1,0 +1,125 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/candidate"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 候选人（HRM-26，demo-inventory §5 候选人中心）：姓名/手机号/邮箱/来源渠道/最高学历/
+// 当前公司/当前岗位/期望薪资 + 状态流转（新线索→已投递→…→录用通过）。
+// 普通实体 CRUD（非单据底座）：无 bill_no/审批状态，状态由本模块 updateCandidateStatus
+// 按流转规则推进；删除不限状态。
+// AI 入库通道（邮箱线索入库/文本识别补录）按 ADR-0002 裁剪，仅保留 Excel 导入 + 手工新增。
+// 录用衔接接缝（HRM-25 录用审批 HR208）：录用审批单通过 candidateUuid 引用本表；
+// 候选人状态被推到 hired（录用通过）后的编辑/删除语义由 HRM-25 侧按需约束，本模块不锁。
+type HrmCandidate {
+	Uuid            string `json:"uuid"`
+	Name            string `json:"name"` // 姓名
+	Phone           string `json:"phone"` // 手机号
+	Email           string `json:"email"` // 邮箱
+	SourceChannel   string `json:"sourceChannel"` // 来源渠道 recommend/website/campus/headhunter/other
+	Education       string `json:"education"` // 最高学历 doctor/master/bachelor/associate/senior/other
+	CurrentCompany  string `json:"currentCompany"` // 当前公司
+	CurrentPosition string `json:"currentPosition"` // 当前岗位
+	ExpectSalary    string `json:"expectSalary"` // 期望薪资（自由文本，如 20k-30k）
+	Status          string `json:"status"` // 候选人状态 new/delivered/interviewing/offer/hired/rejected
+	CreateTime      string `json:"createTime"`
+	UpdateTime      string `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	Name          string `form:"name,optional"` // 姓名（模糊）
+	Phone         string `form:"phone,optional"` // 手机号（模糊）
+	SourceChannel string `form:"sourceChannel,optional"` // 来源渠道
+	Status        string `form:"status,optional"` // 候选人状态
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmCandidate `json:"records"`
+}
+
+type AddRequest {
+	Name            string `json:"name"`
+	Phone           string `json:"phone,optional"`
+	Email           string `json:"email,optional"`
+	SourceChannel   string `json:"sourceChannel,optional"`
+	Education       string `json:"education,optional"`
+	CurrentCompany  string `json:"currentCompany,optional"`
+	CurrentPosition string `json:"currentPosition,optional"`
+	ExpectSalary    string `json:"expectSalary,optional"`
+	Remark          string `json:"remark,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid            string `json:"uuid"`
+	Name            string `json:"name"`
+	Phone           string `json:"phone,optional"`
+	Email           string `json:"email,optional"`
+	SourceChannel   string `json:"sourceChannel,optional"`
+	Education       string `json:"education,optional"`
+	CurrentCompany  string `json:"currentCompany,optional"`
+	CurrentPosition string `json:"currentPosition,optional"`
+	ExpectSalary    string `json:"expectSalary,optional"`
+	Remark          string `json:"remark,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+// UpdateStatusRequest 状态流转（新线索→已投递→…→录用通过；不可跳级/不可回退）
+type UpdateStatusRequest {
+	Uuid   string `json:"uuid"`
+	Status string `json:"status"`
+}
+
+type UpdateStatusResponse {}
+
+type ImportRequest {
+	FileName string `json:"fileName"`
+	Content  string `json:"content"`
+}
+
+type ImportResponse {
+	SuccessCount int64 `json:"successCount"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/candidate
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getCandidateList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addCandidate (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editCandidate (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deleteCandidate (DeleteRequest) returns (DeleteResponse)
+
+	@handler UpdateStatus
+	post /hrm/updateCandidateStatus (UpdateStatusRequest) returns (UpdateStatusResponse)
+
+	@handler Import
+	post /hrm/importCandidate (ImportRequest) returns (ImportResponse)
+}
+

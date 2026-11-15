@@ -456,6 +456,23 @@ declare namespace App {
             edit: string;
             delete: string;
           };
+          reward: {
+            add: string;
+            edit: string;
+            delete: string;
+          };
+          requirement: {
+            add: string;
+            edit: string;
+            delete: string;
+          };
+          candidate: {
+            add: string;
+            edit: string;
+            delete: string;
+            import: string;
+            updatestatus: string;
+          };
           bill: {
             submit: string;
             approve: string;
@@ -1078,6 +1095,172 @@ declare namespace App {
                 transferReason: string;
                 effectiveDateRequired: string;
               };
+            };
+          };
+          reward: {
+            title: string;
+            billNo: string;
+            billStatus: {
+              title: string;
+            };
+            employeeNo: string;
+            employeeName: string;
+            rewardType: {
+              title: string;
+              reward: string;
+              punishment: string;
+            };
+            rewardLevel: {
+              title: string;
+              company: string;
+              dept: string;
+              notice: string;
+              other: string;
+            };
+            docNo: string;
+            occurDate: string;
+            amount: string;
+            reason: string;
+            salaryMonth: string;
+            synced: string;
+            creatorName: string;
+            createTime: string;
+            yes: string;
+            no: string;
+            submit: string;
+            approve: string;
+            reject: string;
+            revoke: string;
+            records: string;
+            noRecords: string;
+            confirmSubmit: string;
+            confirmApprove: string;
+            confirmReject: string;
+            confirmRevoke: string;
+            addReward: string;
+            editReward: string;
+            sectionEmployee: string;
+            sectionReward: string;
+            form: {
+              billNo: string;
+              status: string;
+              rewardType: string;
+              rewardLevel: string;
+              employeeNo: string;
+              employeeName: string;
+              docNo: string;
+              salaryMonth: string;
+              reason: string;
+            };
+          };
+          requirement: {
+            title: string;
+            billNo: string;
+            billStatus: {
+              title: string;
+            };
+            postName: string;
+            postCategory: {
+              title: string;
+              tech: string;
+              product: string;
+              design: string;
+              operation: string;
+              market: string;
+              function: string;
+              other: string;
+            };
+            headcount: string;
+            urgency: {
+              title: string;
+              normal: string;
+              urgent: string;
+            };
+            expectDate: string;
+            orgName: string;
+            requirementDesc: string;
+            creatorName: string;
+            createTime: string;
+            submit: string;
+            approve: string;
+            reject: string;
+            revoke: string;
+            records: string;
+            noRecords: string;
+            confirmSubmit: string;
+            confirmApprove: string;
+            confirmReject: string;
+            confirmRevoke: string;
+            addRequirement: string;
+            editRequirement: string;
+            sectionPost: string;
+            form: {
+              billNo: string;
+              status: string;
+              postName: string;
+              postCategory: string;
+              urgency: string;
+              org: string;
+              requirementDesc: string;
+            };
+          };
+          candidate: {
+            title: string;
+            name: string;
+            phone: string;
+            email: string;
+            sourceChannel: {
+              title: string;
+              recommend: string;
+              website: string;
+              campus: string;
+              headhunter: string;
+              other: string;
+            };
+            education: {
+              title: string;
+              doctor: string;
+              master: string;
+              bachelor: string;
+              associate: string;
+              senior: string;
+              other: string;
+            };
+            currentCompany: string;
+            currentPosition: string;
+            expectSalary: string;
+            remark: string;
+            status: {
+              title: string;
+              new: string;
+              delivered: string;
+              interviewing: string;
+              offer: string;
+              hired: string;
+              rejected: string;
+            };
+            createTime: string;
+            advanceTo: string;
+            confirmAdvance: string;
+            confirmReject: string;
+            reject: string;
+            import: string;
+            importModalTitle: string;
+            importSuccess: string;
+            importTemplateTip: string;
+            chooseFileTip: string;
+            addCandidate: string;
+            editCandidate: string;
+            form: {
+              name: string;
+              phone: string;
+              email: string;
+              sourceChannel: string;
+              education: string;
+              currentCompany: string;
+              currentPosition: string;
+              expectSalary: string;
+              remark: string;
             };
           };
           training: {

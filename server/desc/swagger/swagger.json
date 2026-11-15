@@ -579,13 +579,13 @@
         ]
       }
     },
-    "/api/v1/hrm/addCertTemplate": {
+    "/api/v1/hrm/addCandidate": {
       "post": {
         "consumes": [
           "application/json"
         ],
-        "description": "接口权限编码:v1:hrm:cert_template:add",
-        "operationId": "v1/Hrm/CertTemplateAdd",
+        "description": "接口权限编码:v1:hrm:candidate:add",
+        "operationId": "v1/Hrm/CandidateAdd",
         "parameters": [
           {
             "in": "body",
@@ -593,28 +593,36 @@
             "required": true,
             "schema": {
               "properties": {
-                "certType": {
+                "currentCompany": {
                   "type": "string"
                 },
-                "noPrefix": {
+                "currentPosition": {
+                  "type": "string"
+                },
+                "education": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "expectSalary": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "phone": {
                   "type": "string"
                 },
                 "remark": {
                   "type": "string"
                 },
-                "source": {
-                  "description": "1=系统 2=企业",
-                  "type": "string"
-                },
-                "templateName": {
+                "sourceChannel": {
                   "type": "string"
                 }
               },
               "required": [
-                "templateName",
-                "certType",
-                "source",
-                "noPrefix"
+                "name"
               ],
               "type": "object"
             }
@@ -641,7 +649,7 @@
         ],
         "summary": "Add",
         "tags": [
-          "v1/hrm/cert_template"
+          "v1/hrm/candidate"
         ]
       }
     },
@@ -1348,6 +1356,164 @@
         ]
       }
     },
+    "/api/v1/hrm/addRequirement": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:requirement:add",
+        "operationId": "v1/Hrm/RequirementAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "expectDate": {
+                  "type": "string"
+                },
+                "headcount": {
+                  "type": "integer"
+                },
+                "orgName": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "postCategory": {
+                  "type": "string"
+                },
+                "postName": {
+                  "type": "string"
+                },
+                "requirementDesc": {
+                  "type": "string"
+                },
+                "urgency": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "postName",
+                "postCategory",
+                "headcount",
+                "urgency",
+                "expectDate"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/requirement"
+        ]
+      }
+    },
+    "/api/v1/hrm/addReward": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:reward:add",
+        "operationId": "v1/Hrm/RewardAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "amount": {
+                  "type": "number"
+                },
+                "docNo": {
+                  "type": "string"
+                },
+                "employeeName": {
+                  "type": "string"
+                },
+                "employeeNo": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "occurDate": {
+                  "description": "YYYY-MM-DD",
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "rewardLevel": {
+                  "type": "string"
+                },
+                "rewardType": {
+                  "type": "string"
+                },
+                "salaryMonth": {
+                  "description": "YYYY-MM，空=发生日期所在月",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "employeeNo",
+                "employeeName",
+                "rewardType",
+                "rewardLevel",
+                "occurDate"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/reward"
+        ]
+      }
+    },
     "/api/v1/hrm/addShift": {
       "post": {
         "consumes": [
@@ -1727,75 +1893,6 @@
         ]
       }
     },
-    "/api/v1/hrm/batchIssueCertificates": {
-      "post": {
-        "consumes": [
-          "application/json"
-        ],
-        "description": "接口权限编码:v1:hrm:certificate:batchIssue",
-        "operationId": "v1/Hrm/CertificateBatchIssue",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "properties": {
-                "sessionUuid": {
-                  "type": "string"
-                },
-                "templateUuid": {
-                  "type": "string"
-                },
-                "userUuids": {
-                  "description": "缺省=班次全部学员",
-                  "items": {
-                    "type": "string"
-                  },
-                  "type": "array"
-                }
-              },
-              "required": [
-                "sessionUuid",
-                "templateUuid"
-              ],
-              "type": "object"
-            }
-          }
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "properties": {
-                "issuedCount": {
-                  "type": "integer"
-                },
-                "skippedCount": {
-                  "type": "integer"
-                }
-              },
-              "type": "object"
-            }
-          }
-        },
-        "schemes": [
-          "https"
-        ],
-        "security": [
-          {
-            "apiKey": []
-          }
-        ],
-        "summary": "BatchIssue",
-        "tags": [
-          "v1/hrm/certificate"
-        ]
-      }
-    },
     "/api/v1/hrm/deleteAttendanceConfig": {
       "post": {
         "consumes": [
@@ -1902,13 +1999,13 @@
         ]
       }
     },
-    "/api/v1/hrm/deleteCertTemplate": {
+    "/api/v1/hrm/deleteCandidate": {
       "post": {
         "consumes": [
           "application/json"
         ],
-        "description": "接口权限编码:v1:hrm:cert_template:delete",
-        "operationId": "v1/Hrm/CertTemplateDelete",
+        "description": "接口权限编码:v1:hrm:candidate:delete",
+        "operationId": "v1/Hrm/CandidateDelete",
         "parameters": [
           {
             "in": "body",
@@ -1951,7 +2048,7 @@
         ],
         "summary": "Delete",
         "tags": [
-          "v1/hrm/cert_template"
+          "v1/hrm/candidate"
         ]
       }
     },
@@ -2273,6 +2370,112 @@
         ]
       }
     },
+    "/api/v1/hrm/deleteRequirement": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:requirement:delete",
+        "operationId": "v1/Hrm/RequirementDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/requirement"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteReward": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:reward:delete",
+        "operationId": "v1/Hrm/RewardDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/reward"
+        ]
+      }
+    },
     "/api/v1/hrm/deleteShift": {
       "post": {
         "consumes": [
@@ -2485,51 +2688,6 @@
         ]
       }
     },
-    "/api/v1/hrm/downloadCertificateFile": {
-      "get": {
-        "description": "接口权限编码:v1:hrm:certificate:downloadFile",
-        "operationId": "v1/Hrm/CertificateDownloadFile",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "uuid",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "properties": {
-                "content": {
-                  "type": "string"
-                },
-                "fileName": {
-                  "type": "string"
-                }
-              },
-              "type": "object"
-            }
-          }
-        },
-        "schemes": [
-          "https"
-        ],
-        "security": [
-          {
-            "apiKey": []
-          }
-        ],
-        "summary": "DownloadFile",
-        "tags": [
-          "v1/hrm/certificate"
-        ]
-      }
-    },
     "/api/v1/hrm/downloadMyTrainingCertificateFile": {
       "get": {
         "description": "接口权限编码:v1:hrm:training:downloadMyCertificateFile",
@@ -2682,13 +2840,13 @@
         ]
       }
     },
-    "/api/v1/hrm/editCertTemplate": {
+    "/api/v1/hrm/editCandidate": {
       "post": {
         "consumes": [
           "application/json"
         ],
-        "description": "接口权限编码:v1:hrm:cert_template:edit",
-        "operationId": "v1/Hrm/CertTemplateEdit",
+        "description": "接口权限编码:v1:hrm:candidate:edit",
+        "operationId": "v1/Hrm/CandidateEdit",
         "parameters": [
           {
             "in": "body",
@@ -2696,19 +2854,31 @@
             "required": true,
             "schema": {
               "properties": {
-                "certType": {
+                "currentCompany": {
                   "type": "string"
                 },
-                "noPrefix": {
+                "currentPosition": {
+                  "type": "string"
+                },
+                "education": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "expectSalary": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "phone": {
                   "type": "string"
                 },
                 "remark": {
                   "type": "string"
                 },
-                "source": {
-                  "type": "string"
-                },
-                "templateName": {
+                "sourceChannel": {
                   "type": "string"
                 },
                 "uuid": {
@@ -2717,10 +2887,7 @@
               },
               "required": [
                 "uuid",
-                "templateName",
-                "certType",
-                "source",
-                "noPrefix"
+                "name"
               ],
               "type": "object"
             }
@@ -2747,7 +2914,7 @@
         ],
         "summary": "Edit",
         "tags": [
-          "v1/hrm/cert_template"
+          "v1/hrm/candidate"
         ]
       }
     },
@@ -3382,6 +3549,170 @@
         "summary": "Edit",
         "tags": [
           "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/editRequirement": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:requirement:edit",
+        "operationId": "v1/Hrm/RequirementEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "expectDate": {
+                  "type": "string"
+                },
+                "headcount": {
+                  "type": "integer"
+                },
+                "orgName": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "postCategory": {
+                  "type": "string"
+                },
+                "postName": {
+                  "type": "string"
+                },
+                "requirementDesc": {
+                  "type": "string"
+                },
+                "urgency": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "postName",
+                "postCategory",
+                "headcount",
+                "urgency",
+                "expectDate"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/requirement"
+        ]
+      }
+    },
+    "/api/v1/hrm/editReward": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:reward:edit",
+        "operationId": "v1/Hrm/RewardEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "amount": {
+                  "type": "number"
+                },
+                "docNo": {
+                  "type": "string"
+                },
+                "employeeName": {
+                  "type": "string"
+                },
+                "employeeNo": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "occurDate": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "rewardLevel": {
+                  "type": "string"
+                },
+                "rewardType": {
+                  "type": "string"
+                },
+                "salaryMonth": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "employeeNo",
+                "employeeName",
+                "rewardType",
+                "rewardLevel",
+                "occurDate"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/reward"
         ]
       }
     },
@@ -4535,10 +4866,10 @@
         ]
       }
     },
-    "/api/v1/hrm/getCertTemplateList": {
+    "/api/v1/hrm/getCandidateList": {
       "get": {
-        "description": "接口权限编码:v1:hrm:cert_template:list",
-        "operationId": "v1/Hrm/CertTemplateList",
+        "description": "接口权限编码:v1:hrm:candidate:list",
+        "operationId": "v1/Hrm/CandidateList",
         "parameters": [
           {
             "allowEmptyValue": true,
@@ -4556,28 +4887,28 @@
           },
           {
             "allowEmptyValue": true,
-            "description": "模板名称（模糊）",
+            "description": "姓名（模糊）",
             "in": "query",
-            "name": "templateName",
+            "name": "name",
             "type": "string"
           },
           {
             "allowEmptyValue": true,
-            "description": "证书类型",
+            "description": "手机号（模糊）",
             "in": "query",
-            "name": "certType",
+            "name": "phone",
             "type": "string"
           },
           {
             "allowEmptyValue": true,
-            "description": "来源",
+            "description": "来源渠道",
             "in": "query",
-            "name": "source",
+            "name": "sourceChannel",
             "type": "string"
           },
           {
             "allowEmptyValue": true,
-            "description": "状态",
+            "description": "候选人状态",
             "in": "query",
             "name": "status",
             "type": "string"
@@ -4597,30 +4928,43 @@
                 "records": {
                   "items": {
                     "properties": {
-                      "certType": {
-                        "description": "证书类型（合格证/继续教育/荣誉/安全培训证/结业证/技能证明/上岗证/企业…）",
-                        "type": "string"
-                      },
                       "createTime": {
                         "type": "string"
                       },
-                      "noPrefix": {
-                        "description": "编号前缀（HF/CE/YX/XF/RZ/JN/SG/AQ/HG/JX…）",
+                      "currentCompany": {
+                        "description": "当前公司",
                         "type": "string"
                       },
-                      "remark": {
+                      "currentPosition": {
+                        "description": "当前岗位",
                         "type": "string"
                       },
-                      "source": {
-                        "description": "来源 1=系统 2=企业",
+                      "education": {
+                        "description": "最高学历 doctor/master/bachelor/associate/senior/other",
+                        "type": "string"
+                      },
+                      "email": {
+                        "description": "邮箱",
+                        "type": "string"
+                      },
+                      "expectSalary": {
+                        "description": "期望薪资（自由文本，如 20k-30k）",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "姓名",
+                        "type": "string"
+                      },
+                      "phone": {
+                        "description": "手机号",
+                        "type": "string"
+                      },
+                      "sourceChannel": {
+                        "description": "来源渠道 recommend/website/campus/headhunter/other",
                         "type": "string"
                       },
                       "status": {
-                        "description": "1=启用 2=停用",
-                        "type": "string"
-                      },
-                      "templateName": {
-                        "description": "模板名称",
+                        "description": "候选人状态 new/delivered/interviewing/offer/hired/rejected",
                         "type": "string"
                       },
                       "updateTime": {
@@ -4632,12 +4976,15 @@
                     },
                     "required": [
                       "uuid",
-                      "templateName",
-                      "certType",
-                      "source",
-                      "noPrefix",
+                      "name",
+                      "phone",
+                      "email",
+                      "sourceChannel",
+                      "education",
+                      "currentCompany",
+                      "currentPosition",
+                      "expectSalary",
                       "status",
-                      "remark",
                       "createTime",
                       "updateTime"
                     ],
@@ -4666,199 +5013,7 @@
         ],
         "summary": "List",
         "tags": [
-          "v1/hrm/cert_template"
-        ]
-      }
-    },
-    "/api/v1/hrm/getCertificateList": {
-      "get": {
-        "description": "接口权限编码:v1:hrm:certificate:list",
-        "operationId": "v1/Hrm/CertificateList",
-        "parameters": [
-          {
-            "allowEmptyValue": true,
-            "default": 1,
-            "in": "query",
-            "name": "current",
-            "type": "integer"
-          },
-          {
-            "allowEmptyValue": true,
-            "default": 10,
-            "in": "query",
-            "name": "size",
-            "type": "integer"
-          },
-          {
-            "allowEmptyValue": true,
-            "description": "证书号（模糊）",
-            "in": "query",
-            "name": "certNo",
-            "type": "string"
-          },
-          {
-            "allowEmptyValue": true,
-            "description": "证书名称（模糊）",
-            "in": "query",
-            "name": "certName",
-            "type": "string"
-          },
-          {
-            "allowEmptyValue": true,
-            "description": "证书类型",
-            "in": "query",
-            "name": "certType",
-            "type": "string"
-          },
-          {
-            "allowEmptyValue": true,
-            "description": "0=待发 1=已发 2=已撤销",
-            "in": "query",
-            "name": "status",
-            "type": "string"
-          },
-          {
-            "allowEmptyValue": true,
-            "description": "1=班次结业 2=外部导入",
-            "in": "query",
-            "name": "source",
-            "type": "string"
-          },
-          {
-            "allowEmptyValue": true,
-            "description": "来源班次",
-            "in": "query",
-            "name": "sessionUuid",
-            "type": "string"
-          }
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "properties": {
-                "current": {
-                  "type": "integer"
-                },
-                "records": {
-                  "items": {
-                    "properties": {
-                      "certName": {
-                        "type": "string"
-                      },
-                      "certNo": {
-                        "description": "证书号 前缀-年-流水（如 JN-2026-000001）",
-                        "type": "string"
-                      },
-                      "certType": {
-                        "type": "string"
-                      },
-                      "createTime": {
-                        "type": "string"
-                      },
-                      "fileName": {
-                        "description": "扫描件文件名",
-                        "type": "string"
-                      },
-                      "hasFile": {
-                        "type": "boolean"
-                      },
-                      "issueTime": {
-                        "description": "发证时间",
-                        "type": "string"
-                      },
-                      "nickName": {
-                        "description": "学员姓名",
-                        "type": "string"
-                      },
-                      "sessionName": {
-                        "description": "来源班次名称（展示快照）",
-                        "type": "string"
-                      },
-                      "sessionUuid": {
-                        "description": "来源班次 uuid",
-                        "type": "string"
-                      },
-                      "source": {
-                        "description": "1=班次结业 2=外部导入",
-                        "type": "string"
-                      },
-                      "status": {
-                        "description": "0=待发 1=已发 2=已撤销",
-                        "type": "string"
-                      },
-                      "templateName": {
-                        "description": "模板名称（展示快照）",
-                        "type": "string"
-                      },
-                      "templateUuid": {
-                        "description": "证书模板 uuid（HRM-30 回填）",
-                        "type": "string"
-                      },
-                      "updateTime": {
-                        "type": "string"
-                      },
-                      "userUuid": {
-                        "description": "学员（manage_user.uuid）",
-                        "type": "string"
-                      },
-                      "username": {
-                        "description": "学员账号",
-                        "type": "string"
-                      },
-                      "uuid": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "uuid",
-                      "certNo",
-                      "certName",
-                      "certType",
-                      "templateUuid",
-                      "templateName",
-                      "source",
-                      "sessionUuid",
-                      "sessionName",
-                      "userUuid",
-                      "username",
-                      "nickName",
-                      "issueTime",
-                      "status",
-                      "fileName",
-                      "hasFile",
-                      "createTime",
-                      "updateTime"
-                    ],
-                    "type": "object"
-                  },
-                  "type": "array"
-                },
-                "size": {
-                  "type": "integer"
-                },
-                "total": {
-                  "type": "integer"
-                }
-              },
-              "type": "object"
-            }
-          }
-        },
-        "schemes": [
-          "https"
-        ],
-        "security": [
-          {
-            "apiKey": []
-          }
-        ],
-        "summary": "List",
-        "tags": [
-          "v1/hrm/certificate"
+          "v1/hrm/candidate"
         ]
       }
     },
@@ -6733,6 +6888,381 @@
         ]
       }
     },
+    "/api/v1/hrm/getRequirementList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:requirement:list",
+        "operationId": "v1/Hrm/RequirementList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据编号（模糊）",
+            "in": "query",
+            "name": "billNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据状态",
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "岗位名称（模糊）",
+            "in": "query",
+            "name": "postName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "岗位类别",
+            "in": "query",
+            "name": "postCategory",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "紧急度",
+            "in": "query",
+            "name": "urgency",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "所属部门（组织 uuid）",
+            "in": "query",
+            "name": "orgUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "1=强制只看我的单据（默认行为即我的单据，管理员可传 0 看全部由后端角色判定兜底）",
+            "in": "query",
+            "name": "mine",
+            "type": "integer"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "billNo": {
+                        "description": "单据编号 HR207-...",
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "creatorName": {
+                        "description": "申请人姓名",
+                        "type": "string"
+                      },
+                      "creatorUuid": {
+                        "description": "申请人 uuid",
+                        "type": "string"
+                      },
+                      "expectDate": {
+                        "description": "期望到岗日期 YYYY-MM-DD",
+                        "type": "string"
+                      },
+                      "headcount": {
+                        "description": "需求人数",
+                        "type": "integer"
+                      },
+                      "orgName": {
+                        "description": "所属部门名称（快照）",
+                        "type": "string"
+                      },
+                      "orgUuid": {
+                        "description": "所属部门（组织 uuid）",
+                        "type": "string"
+                      },
+                      "postCategory": {
+                        "description": "岗位类别 tech/product/design/operation/market/function/other",
+                        "type": "string"
+                      },
+                      "postName": {
+                        "description": "岗位名称",
+                        "type": "string"
+                      },
+                      "requirementDesc": {
+                        "description": "需求说明/任职要求",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "单据状态 unsubmitted/approving/approved/rejected/revoked",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "urgency": {
+                        "description": "紧急度 normal=普通 urgent=紧急",
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "billNo",
+                      "status",
+                      "postName",
+                      "postCategory",
+                      "headcount",
+                      "urgency",
+                      "expectDate",
+                      "orgUuid",
+                      "orgName",
+                      "requirementDesc",
+                      "creatorUuid",
+                      "creatorName",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/requirement"
+        ]
+      }
+    },
+    "/api/v1/hrm/getRewardList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:reward:list",
+        "operationId": "v1/Hrm/RewardList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据编号（模糊）",
+            "in": "query",
+            "name": "billNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据状态",
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "奖惩类型 reward/punishment",
+            "in": "query",
+            "name": "rewardType",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "员工工号（模糊）",
+            "in": "query",
+            "name": "employeeNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "1=强制只看我的单据（默认行为即我的单据，管理员可传 0 看全部由后端角色判定兜底）",
+            "in": "query",
+            "name": "mine",
+            "type": "integer"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "amount": {
+                        "description": "金额（奖励为发放金额，处分/扣款为正数金额，0=不涉及）",
+                        "type": "number"
+                      },
+                      "billNo": {
+                        "description": "单据编号 HR215-...",
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "creatorName": {
+                        "description": "申请人姓名",
+                        "type": "string"
+                      },
+                      "creatorUuid": {
+                        "description": "申请人 uuid",
+                        "type": "string"
+                      },
+                      "docNo": {
+                        "description": "文号",
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "description": "员工姓名",
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "description": "员工工号",
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "description": "员工档案 uuid",
+                        "type": "string"
+                      },
+                      "occurDate": {
+                        "description": "发生日期 YYYY-MM-DD",
+                        "type": "string"
+                      },
+                      "reason": {
+                        "description": "奖惩原因/事由",
+                        "type": "string"
+                      },
+                      "rewardLevel": {
+                        "description": "奖惩级别 company=公司级 dept=部门级 notice=通报 other=其他",
+                        "type": "string"
+                      },
+                      "rewardType": {
+                        "description": "奖惩类型 reward=奖励 punishment=处分",
+                        "type": "string"
+                      },
+                      "salaryMonth": {
+                        "description": "入账薪资年月 YYYY-MM",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "单据状态 unsubmitted/approving/approved/rejected/revoked",
+                        "type": "string"
+                      },
+                      "synced": {
+                        "description": "薪资数据源同步标记 1=已同步",
+                        "type": "integer"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "billNo",
+                      "status",
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "rewardType",
+                      "rewardLevel",
+                      "docNo",
+                      "occurDate",
+                      "amount",
+                      "reason",
+                      "salaryMonth",
+                      "synced",
+                      "creatorUuid",
+                      "creatorName",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/reward"
+        ]
+      }
+    },
     "/api/v1/hrm/getSessionParticipantList": {
       "get": {
         "description": "接口权限编码:v1:hrm:training_session:getSessionParticipantList",
@@ -7455,6 +7985,65 @@
         ]
       }
     },
+    "/api/v1/hrm/importCandidate": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:candidate:import",
+        "operationId": "v1/Hrm/CandidateImport",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fileName",
+                "content"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "successCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Import",
+        "tags": [
+          "v1/hrm/candidate"
+        ]
+      }
+    },
     "/api/v1/hrm/importEmployee": {
       "post": {
         "consumes": [
@@ -7514,78 +8103,6 @@
         ]
       }
     },
-    "/api/v1/hrm/importExternalCertificate": {
-      "post": {
-        "consumes": [
-          "application/json"
-        ],
-        "description": "接口权限编码:v1:hrm:certificate:importExternal",
-        "operationId": "v1/Hrm/CertificateImportExternal",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "properties": {
-                "certName": {
-                  "type": "string"
-                },
-                "certNo": {
-                  "description": "外部证书号（手动录入，唯一）",
-                  "type": "string"
-                },
-                "certType": {
-                  "type": "string"
-                },
-                "fileContent": {
-                  "description": "扫描件内容 base64",
-                  "type": "string"
-                },
-                "fileName": {
-                  "description": "扫描件文件名",
-                  "type": "string"
-                },
-                "userUuid": {
-                  "description": "学员",
-                  "type": "string"
-                }
-              },
-              "required": [
-                "userUuid",
-                "certName",
-                "certType",
-                "certNo"
-              ],
-              "type": "object"
-            }
-          }
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "type": "object"
-            }
-          }
-        },
-        "schemes": [
-          "https"
-        ],
-        "security": [
-          {
-            "apiKey": []
-          }
-        ],
-        "summary": "ImportExternal",
-        "tags": [
-          "v1/hrm/certificate"
-        ]
-      }
-    },
     "/api/v1/hrm/importOrg": {
       "post": {
         "consumes": [
@@ -7642,59 +8159,6 @@
         "summary": "Import",
         "tags": [
           "v1/hrm/org"
-        ]
-      }
-    },
-    "/api/v1/hrm/issueCertificates": {
-      "post": {
-        "consumes": [
-          "application/json"
-        ],
-        "description": "接口权限编码:v1:hrm:certificate:issue",
-        "operationId": "v1/Hrm/CertificateIssue",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "properties": {
-                "uuids": {
-                  "items": {
-                    "type": "string"
-                  },
-                  "type": "array"
-                }
-              },
-              "required": [
-                "uuids"
-              ],
-              "type": "object"
-            }
-          }
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "type": "object"
-            }
-          }
-        },
-        "schemes": [
-          "https"
-        ],
-        "security": [
-          {
-            "apiKey": []
-          }
-        ],
-        "summary": "Issue",
-        "tags": [
-          "v1/hrm/certificate"
         ]
       }
     },
@@ -7815,59 +8279,6 @@
         "summary": "Revoke",
         "tags": [
           "v1/hrm/bill"
-        ]
-      }
-    },
-    "/api/v1/hrm/revokeCertificates": {
-      "post": {
-        "consumes": [
-          "application/json"
-        ],
-        "description": "接口权限编码:v1:hrm:certificate:revoke",
-        "operationId": "v1/Hrm/CertificateRevoke",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "properties": {
-                "uuids": {
-                  "items": {
-                    "type": "string"
-                  },
-                  "type": "array"
-                }
-              },
-              "required": [
-                "uuids"
-              ],
-              "type": "object"
-            }
-          }
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "type": "object"
-            }
-          }
-        },
-        "schemes": [
-          "https"
-        ],
-        "security": [
-          {
-            "apiKey": []
-          }
-        ],
-        "summary": "Revoke",
-        "tags": [
-          "v1/hrm/certificate"
         ]
       }
     },
@@ -8108,13 +8519,13 @@
         ]
       }
     },
-    "/api/v1/hrm/toggleCertTemplateStatus": {
+    "/api/v1/hrm/updateCandidateStatus": {
       "post": {
         "consumes": [
           "application/json"
         ],
-        "description": "接口权限编码:v1:hrm:cert_template:toggleStatus",
-        "operationId": "v1/Hrm/CertTemplateToggleStatus",
+        "description": "接口权限编码:v1:hrm:candidate:updateStatus",
+        "operationId": "v1/Hrm/CandidateUpdateStatus",
         "parameters": [
           {
             "in": "body",
@@ -8123,7 +8534,6 @@
             "schema": {
               "properties": {
                 "status": {
-                  "description": "1=启用 2=停用",
                   "type": "string"
                 },
                 "uuid": {
@@ -8157,68 +8567,9 @@
             "apiKey": []
           }
         ],
-        "summary": "ToggleStatus",
+        "summary": "UpdateStatus",
         "tags": [
-          "v1/hrm/cert_template"
-        ]
-      }
-    },
-    "/api/v1/hrm/uploadCertificateFile": {
-      "post": {
-        "consumes": [
-          "application/json"
-        ],
-        "description": "接口权限编码:v1:hrm:certificate:uploadFile",
-        "operationId": "v1/Hrm/CertificateUploadFile",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "properties": {
-                "fileContent": {
-                  "description": "base64",
-                  "type": "string"
-                },
-                "fileName": {
-                  "type": "string"
-                },
-                "uuid": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "uuid",
-                "fileName",
-                "fileContent"
-              ],
-              "type": "object"
-            }
-          }
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "type": "object"
-            }
-          }
-        },
-        "schemes": [
-          "https"
-        ],
-        "security": [
-          {
-            "apiKey": []
-          }
-        ],
-        "summary": "UploadFile",
-        "tags": [
-          "v1/hrm/certificate"
+          "v1/hrm/candidate"
         ]
       }
     },

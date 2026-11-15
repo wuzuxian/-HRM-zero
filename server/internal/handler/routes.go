@@ -12,14 +12,15 @@ import (
 	v1hrmattendanceconfig "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/attendanceconfig"
 	v1hrmattendancegroup "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/attendancegroup"
 	v1hrmbill "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/bill"
-	v1hrmcert_template "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/cert_template"
-	v1hrmcertificate "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/certificate"
+	v1hrmcandidate "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/candidate"
 	v1hrmemployee "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/employee"
 	v1hrmleavetype "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/leavetype"
 	v1hrmorg "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/org"
 	v1hrmperf_indicator "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_indicator"
 	v1hrmperf_scheme "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_scheme"
 	v1hrmperf_template "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_template"
+	v1hrmrequirement "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/requirement"
+	v1hrmreward "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/reward"
 	v1hrmshift "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/shift"
 	v1hrmtraining "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/training"
 	v1hrmtraining_plan "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/training_plan"
@@ -219,74 +220,33 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				[]rest.Route{
 					{
 						Method:  http.MethodPost,
-						Path:    "/hrm/addCertTemplate",
-						Handler: v1hrmcert_template.Add(serverCtx),
+						Path:    "/hrm/addCandidate",
+						Handler: v1hrmcandidate.Add(serverCtx),
 					},
 					{
 						Method:  http.MethodPost,
-						Path:    "/hrm/deleteCertTemplate",
-						Handler: v1hrmcert_template.Delete(serverCtx),
+						Path:    "/hrm/deleteCandidate",
+						Handler: v1hrmcandidate.Delete(serverCtx),
 					},
 					{
 						Method:  http.MethodPost,
-						Path:    "/hrm/editCertTemplate",
-						Handler: v1hrmcert_template.Edit(serverCtx),
+						Path:    "/hrm/editCandidate",
+						Handler: v1hrmcandidate.Edit(serverCtx),
 					},
 					{
 						Method:  http.MethodGet,
-						Path:    "/hrm/getCertTemplateList",
-						Handler: v1hrmcert_template.List(serverCtx),
+						Path:    "/hrm/getCandidateList",
+						Handler: v1hrmcandidate.List(serverCtx),
 					},
 					{
 						Method:  http.MethodPost,
-						Path:    "/hrm/toggleCertTemplateStatus",
-						Handler: v1hrmcert_template.ToggleStatus(serverCtx),
-					},
-				}...,
-			),
-			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
-			rest.WithPrefix("/api/v1"),
-		)
-	}
-	{
-		server.AddRoutes(
-			rest.WithMiddlewares(
-				[]rest.Middleware{serverCtx.Authx},
-				[]rest.Route{
-					{
-						Method:  http.MethodPost,
-						Path:    "/hrm/batchIssueCertificates",
-						Handler: v1hrmcertificate.BatchIssue(serverCtx),
-					},
-					{
-						Method:  http.MethodGet,
-						Path:    "/hrm/downloadCertificateFile",
-						Handler: v1hrmcertificate.DownloadFile(serverCtx),
-					},
-					{
-						Method:  http.MethodGet,
-						Path:    "/hrm/getCertificateList",
-						Handler: v1hrmcertificate.List(serverCtx),
+						Path:    "/hrm/importCandidate",
+						Handler: v1hrmcandidate.Import(serverCtx),
 					},
 					{
 						Method:  http.MethodPost,
-						Path:    "/hrm/importExternalCertificate",
-						Handler: v1hrmcertificate.ImportExternal(serverCtx),
-					},
-					{
-						Method:  http.MethodPost,
-						Path:    "/hrm/issueCertificates",
-						Handler: v1hrmcertificate.Issue(serverCtx),
-					},
-					{
-						Method:  http.MethodPost,
-						Path:    "/hrm/revokeCertificates",
-						Handler: v1hrmcertificate.Revoke(serverCtx),
-					},
-					{
-						Method:  http.MethodPost,
-						Path:    "/hrm/uploadCertificateFile",
-						Handler: v1hrmcertificate.UploadFile(serverCtx),
+						Path:    "/hrm/updateCandidateStatus",
+						Handler: v1hrmcandidate.UpdateStatus(serverCtx),
 					},
 				}...,
 			),
@@ -518,6 +478,68 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodGet,
 						Path:    "/hrm/getPerfTemplateList",
 						Handler: v1hrmperf_template.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addRequirement",
+						Handler: v1hrmrequirement.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteRequirement",
+						Handler: v1hrmrequirement.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editRequirement",
+						Handler: v1hrmrequirement.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getRequirementList",
+						Handler: v1hrmrequirement.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addReward",
+						Handler: v1hrmreward.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteReward",
+						Handler: v1hrmreward.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editReward",
+						Handler: v1hrmreward.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getRewardList",
+						Handler: v1hrmreward.List(serverCtx),
 					},
 				}...,
 			),

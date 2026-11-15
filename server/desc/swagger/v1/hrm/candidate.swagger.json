@@ -1,0 +1,496 @@
+{
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/hrm/addCandidate": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:candidate:add",
+        "operationId": "v1/Hrm/CandidateAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "currentCompany": {
+                  "type": "string"
+                },
+                "currentPosition": {
+                  "type": "string"
+                },
+                "education": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "expectSalary": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "sourceChannel": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/candidate"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteCandidate": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:candidate:delete",
+        "operationId": "v1/Hrm/CandidateDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/candidate"
+        ]
+      }
+    },
+    "/api/v1/hrm/editCandidate": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:candidate:edit",
+        "operationId": "v1/Hrm/CandidateEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "currentCompany": {
+                  "type": "string"
+                },
+                "currentPosition": {
+                  "type": "string"
+                },
+                "education": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "expectSalary": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "sourceChannel": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "name"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/candidate"
+        ]
+      }
+    },
+    "/api/v1/hrm/getCandidateList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:candidate:list",
+        "operationId": "v1/Hrm/CandidateList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "姓名（模糊）",
+            "in": "query",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "手机号（模糊）",
+            "in": "query",
+            "name": "phone",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "来源渠道",
+            "in": "query",
+            "name": "sourceChannel",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "候选人状态",
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "currentCompany": {
+                        "description": "当前公司",
+                        "type": "string"
+                      },
+                      "currentPosition": {
+                        "description": "当前岗位",
+                        "type": "string"
+                      },
+                      "education": {
+                        "description": "最高学历 doctor/master/bachelor/associate/senior/other",
+                        "type": "string"
+                      },
+                      "email": {
+                        "description": "邮箱",
+                        "type": "string"
+                      },
+                      "expectSalary": {
+                        "description": "期望薪资（自由文本，如 20k-30k）",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "姓名",
+                        "type": "string"
+                      },
+                      "phone": {
+                        "description": "手机号",
+                        "type": "string"
+                      },
+                      "sourceChannel": {
+                        "description": "来源渠道 recommend/website/campus/headhunter/other",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "候选人状态 new/delivered/interviewing/offer/hired/rejected",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "name",
+                      "phone",
+                      "email",
+                      "sourceChannel",
+                      "education",
+                      "currentCompany",
+                      "currentPosition",
+                      "expectSalary",
+                      "status",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/candidate"
+        ]
+      }
+    },
+    "/api/v1/hrm/importCandidate": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:candidate:import",
+        "operationId": "v1/Hrm/CandidateImport",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fileName",
+                "content"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "successCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Import",
+        "tags": [
+          "v1/hrm/candidate"
+        ]
+      }
+    },
+    "/api/v1/hrm/updateCandidateStatus": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:candidate:updateStatus",
+        "operationId": "v1/Hrm/CandidateUpdateStatus",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "UpdateStatus",
+        "tags": [
+          "v1/hrm/candidate"
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKey": {
+      "description": "Enter Authorization",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0"
+}

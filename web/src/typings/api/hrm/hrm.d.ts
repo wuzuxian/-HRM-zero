@@ -1159,5 +1159,295 @@ declare namespace Api {
       fileName: string;
       content: string;
     };
+
+    type RewardType = 'reward' | 'punishment';
+
+    /**
+     * reward level (奖惩级别, demo-inventory §7)
+     *
+     * - "company": 公司级
+     * - "dept": 部门级
+     * - "notice": 通报
+     * - "other": 其他
+     */
+
+    type RewardLevel = 'company' | 'dept' | 'notice' | 'other';
+
+    /** hrm reward bill (奖惩单 HR215) */
+
+    type HrmReward = {
+      /** record uuid */
+      uuid: string;
+      /** 单据编号 HR215-... */
+      billNo: string;
+      /** 单据状态 */
+      status: BillStatus | null;
+      /** 员工档案 uuid */
+      employeeUuid: string;
+      /** 员工工号 */
+      employeeNo: string;
+      /** 员工姓名 */
+      employeeName: string;
+      /** 奖惩类型 */
+      rewardType: RewardType | null;
+      /** 奖惩级别 */
+      rewardLevel: RewardLevel | null;
+      /** 文号 */
+      docNo: string;
+      /** 发生日期 YYYY-MM-DD */
+      occurDate: string;
+      /** 金额（奖励为发放金额，处分/扣款为正数金额，0=不涉及） */
+      amount: number;
+      /** 奖惩原因/事由 */
+      reason: string;
+      /** 入账薪资年月 YYYY-MM（薪资数据源契约） */
+      salaryMonth: string;
+      /** 薪资数据源同步标记 1=已同步 */
+      synced: number;
+      /** 申请人 uuid */
+      creatorUuid: string;
+      /** 申请人姓名 */
+      creatorName: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** reward search params */
+
+    type RewardSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.HrmReward, 'billNo' | 'status' | 'rewardType' | 'employeeNo'> & Common.CommonSearchParams
+    >;
+
+    /** reward paginated list */
+
+    type RewardList = Common.PaginatingQueryRecord<HrmReward>;
+
+    /** add reward request */
+
+    type AddRewardRequest = {
+      employeeUuid: string;
+      employeeNo: string;
+      employeeName: string;
+      rewardType: RewardType | null;
+      rewardLevel: RewardLevel | null;
+      docNo: string;
+      occurDate: string;
+      amount: number;
+      reason: string;
+      /** YYYY-MM，空=发生日期所在月 */
+      salaryMonth: string;
+    };
+
+    /** edit reward request */
+
+    type EditRewardRequest = AddRewardRequest & {
+      uuid: string;
+    };
+
+    /**
+     * requirement post category (岗位类别, demo-inventory §5)
+     *
+     * - "tech": 技术类
+     * - "product": 产品类
+     * - "design": 设计类
+     * - "operation": 运营类
+     * - "market": 市场类
+     * - "function": 职能类
+     * - "other": 其他
+     */
+
+    type RequirementPostCategory = 'tech' | 'product' | 'design' | 'operation' | 'market' | 'function' | 'other';
+
+    /**
+     * requirement urgency (紧急度, demo-inventory §5)
+     *
+     * - "normal": 普通
+     * - "urgent": 紧急
+     */
+
+    type RequirementUrgency = 'normal' | 'urgent';
+
+    /** recruitment requirement bill (招聘需求单 HR207) */
+
+    type HrmRequirement = {
+      /** record uuid */
+      uuid: string;
+      /** 单据编号 HR207-... */
+      billNo: string;
+      /** 单据状态 */
+      status: BillStatus | null;
+      /** 岗位名称 */
+      postName: string;
+      /** 岗位类别 */
+      postCategory: RequirementPostCategory | null;
+      /** 需求人数 */
+      headcount: number;
+      /** 紧急度 */
+      urgency: RequirementUrgency | null;
+      /** 期望到岗日期 YYYY-MM-DD */
+      expectDate: string;
+      /** 所属部门（组织 uuid） */
+      orgUuid: string;
+      /** 所属部门名称（快照） */
+      orgName: string;
+      /** 需求说明/任职要求 */
+      requirementDesc: string;
+      /** 申请人 uuid */
+      creatorUuid: string;
+      /** 申请人姓名 */
+      creatorName: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** requirement search params */
+
+    type RequirementSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.HrmRequirement, 'billNo' | 'status' | 'postName' | 'postCategory' | 'urgency' | 'orgUuid'> &
+        Common.CommonSearchParams
+    >;
+
+    /** requirement paginated list */
+
+    type RequirementList = Common.PaginatingQueryRecord<HrmRequirement>;
+
+    /** add requirement request */
+
+    type AddRequirementRequest = {
+      postName: string;
+      postCategory: RequirementPostCategory | null;
+      headcount: number;
+      urgency: RequirementUrgency | null;
+      expectDate: string;
+      orgUuid: string;
+      orgName: string;
+      requirementDesc: string;
+    };
+
+    /** edit requirement request */
+
+    type EditRequirementRequest = AddRequirementRequest & {
+      uuid: string;
+    };
+
+    /**
+     * candidate source channel (来源渠道, demo-inventory §5)
+     *
+     * - "recommend": 内部推荐
+     * - "website": 招聘网站
+     * - "campus": 校园招聘
+     * - "headhunter": 猎头
+     * - "other": 其他
+     */
+
+    type CandidateSourceChannel = 'recommend' | 'website' | 'campus' | 'headhunter' | 'other';
+
+    /**
+     * candidate education (最高学历, demo-inventory §5)
+     *
+     * - "doctor": 博士
+     * - "master": 硕士
+     * - "bachelor": 本科
+     * - "associate": 大专
+     * - "senior": 高中
+     * - "other": 其他
+     */
+
+    type CandidateEducation = 'doctor' | 'master' | 'bachelor' | 'associate' | 'senior' | 'other';
+
+    /**
+     * candidate status (候选人状态, demo-inventory §5)
+     *
+     * - "new": 新线索
+     * - "delivered": 已投递
+     * - "interviewing": 面试中
+     * - "offer": 已发Offer
+     * - "hired": 录用通过
+     * - "rejected": 不通过
+     */
+
+    type CandidateStatus = 'new' | 'delivered' | 'interviewing' | 'offer' | 'hired' | 'rejected';
+
+    /** recruitment candidate (候选人, HRM-26 候选人中心; 普通实体, 非单据底座) */
+
+    type HrmCandidate = {
+      /** record uuid */
+      uuid: string;
+      /** 姓名 */
+      name: string;
+      /** 手机号 */
+      phone: string;
+      /** 邮箱 */
+      email: string;
+      /** 来源渠道 */
+      sourceChannel: CandidateSourceChannel | null;
+      /** 最高学历 */
+      education: CandidateEducation | null;
+      /** 当前公司 */
+      currentCompany: string;
+      /** 当前岗位 */
+      currentPosition: string;
+      /** 期望薪资（自由文本，如 20k-30k） */
+      expectSalary: string;
+      /** 候选人状态 */
+      status: CandidateStatus | null;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** candidate search params (demo-inventory §5: 筛选姓名/手机号/来源渠道) */
+
+    type CandidateSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.HrmCandidate, 'name' | 'phone' | 'sourceChannel' | 'status'> & Common.CommonSearchParams
+    >;
+
+    /** candidate paginated list */
+
+    type CandidateList = Common.PaginatingQueryRecord<HrmCandidate>;
+
+    /** add candidate request (初始状态 新线索) */
+
+    type AddCandidateRequest = {
+      name: string;
+      phone: string;
+      email: string;
+      sourceChannel: CandidateSourceChannel | null;
+      education: CandidateEducation | null;
+      currentCompany: string;
+      currentPosition: string;
+      expectSalary: string;
+      remark: string;
+    };
+
+    /** edit candidate request (状态不在此接口修改) */
+
+    type EditCandidateRequest = AddCandidateRequest & {
+      uuid: string;
+    };
+
+    /** candidate status transition request (不可跳级/不可回退) */
+
+    type UpdateCandidateStatusRequest = {
+      uuid: string;
+      status: CandidateStatus;
+    };
+
+    /** import candidates request (base64 xlsx, mirrors employee import) */
+
+    type ImportCandidateRequest = {
+      fileName: string;
+      content: string;
+    };
+
+    type ImportCandidateResponse = {
+      successCount: number;
+    };
+  }
   }
 }

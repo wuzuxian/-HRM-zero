@@ -1,0 +1,421 @@
+{
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/hrm/addRequirement": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:requirement:add",
+        "operationId": "v1/Hrm/RequirementAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "expectDate": {
+                  "type": "string"
+                },
+                "headcount": {
+                  "type": "integer"
+                },
+                "orgName": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "postCategory": {
+                  "type": "string"
+                },
+                "postName": {
+                  "type": "string"
+                },
+                "requirementDesc": {
+                  "type": "string"
+                },
+                "urgency": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "postName",
+                "postCategory",
+                "headcount",
+                "urgency",
+                "expectDate"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/requirement"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteRequirement": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:requirement:delete",
+        "operationId": "v1/Hrm/RequirementDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/requirement"
+        ]
+      }
+    },
+    "/api/v1/hrm/editRequirement": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:requirement:edit",
+        "operationId": "v1/Hrm/RequirementEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "expectDate": {
+                  "type": "string"
+                },
+                "headcount": {
+                  "type": "integer"
+                },
+                "orgName": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "postCategory": {
+                  "type": "string"
+                },
+                "postName": {
+                  "type": "string"
+                },
+                "requirementDesc": {
+                  "type": "string"
+                },
+                "urgency": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "postName",
+                "postCategory",
+                "headcount",
+                "urgency",
+                "expectDate"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/requirement"
+        ]
+      }
+    },
+    "/api/v1/hrm/getRequirementList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:requirement:list",
+        "operationId": "v1/Hrm/RequirementList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据编号（模糊）",
+            "in": "query",
+            "name": "billNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据状态",
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "岗位名称（模糊）",
+            "in": "query",
+            "name": "postName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "岗位类别",
+            "in": "query",
+            "name": "postCategory",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "紧急度",
+            "in": "query",
+            "name": "urgency",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "所属部门（组织 uuid）",
+            "in": "query",
+            "name": "orgUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "1=强制只看我的单据（默认行为即我的单据，管理员可传 0 看全部由后端角色判定兜底）",
+            "in": "query",
+            "name": "mine",
+            "type": "integer"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "billNo": {
+                        "description": "单据编号 HR207-...",
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "creatorName": {
+                        "description": "申请人姓名",
+                        "type": "string"
+                      },
+                      "creatorUuid": {
+                        "description": "申请人 uuid",
+                        "type": "string"
+                      },
+                      "expectDate": {
+                        "description": "期望到岗日期 YYYY-MM-DD",
+                        "type": "string"
+                      },
+                      "headcount": {
+                        "description": "需求人数",
+                        "type": "integer"
+                      },
+                      "orgName": {
+                        "description": "所属部门名称（快照）",
+                        "type": "string"
+                      },
+                      "orgUuid": {
+                        "description": "所属部门（组织 uuid）",
+                        "type": "string"
+                      },
+                      "postCategory": {
+                        "description": "岗位类别 tech/product/design/operation/market/function/other",
+                        "type": "string"
+                      },
+                      "postName": {
+                        "description": "岗位名称",
+                        "type": "string"
+                      },
+                      "requirementDesc": {
+                        "description": "需求说明/任职要求",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "单据状态 unsubmitted/approving/approved/rejected/revoked",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "urgency": {
+                        "description": "紧急度 normal=普通 urgent=紧急",
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "billNo",
+                      "status",
+                      "postName",
+                      "postCategory",
+                      "headcount",
+                      "urgency",
+                      "expectDate",
+                      "orgUuid",
+                      "orgName",
+                      "requirementDesc",
+                      "creatorUuid",
+                      "creatorName",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/requirement"
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKey": {
+      "description": "Enter Authorization",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0"
+}

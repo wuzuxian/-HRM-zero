@@ -192,6 +192,11 @@ const local: App.I18n.Schema = {
     hrm_performance_scheme: 'Scheme',
     hrm_training: 'Training',
     hrm_training_my: 'My Training',
+    hrm_reward: 'Reward & Discipline',
+    hrm_reward_bill: 'Reward Bill',
+    hrm_recruitment: 'Recruitment',
+    'hrm_recruitment_requirement-list': 'Requirement',
+    'hrm_recruitment_candidate-list': 'Candidates',
     hrm_training_plan: 'Training Plan',
     hrm_training_session: 'Training Session',
     'hrm_training_cert-template': 'Certificate Template',
@@ -259,6 +264,23 @@ const local: App.I18n.Schema = {
         add: 'Add Transfer',
         edit: 'Edit Transfer',
         delete: 'Delete Transfer'
+      },
+      reward: {
+        add: 'Add Reward Bill',
+        edit: 'Edit Reward Bill',
+        delete: 'Delete Reward Bill'
+      },
+      requirement: {
+        add: 'Add Requirement',
+        edit: 'Edit Requirement',
+        delete: 'Delete Requirement'
+      },
+      candidate: {
+        add: 'Add Candidate',
+        edit: 'Edit Candidate',
+        delete: 'Delete Candidate',
+        import: 'Import Candidates',
+        updatestatus: 'Candidate Status Transition'
       },
       bill: {
         submit: 'Submit Bill',
@@ -529,6 +551,173 @@ const local: App.I18n.Schema = {
       }
     },
     hrm: {
+      reward: {
+        title: 'Reward Bill',
+        billNo: 'Bill No.',
+        billStatus: {
+          title: 'Bill Status'
+        },
+        employeeNo: 'Employee No.',
+        employeeName: 'Employee Name',
+        rewardType: {
+          title: 'Type',
+          reward: 'Reward',
+          punishment: 'Discipline'
+        },
+        rewardLevel: {
+          title: 'Level',
+          company: 'Company Level',
+          dept: 'Department Level',
+          notice: 'Notice',
+          other: 'Other'
+        },
+        docNo: 'Document No.',
+        occurDate: 'Occur Date',
+        amount: 'Amount',
+        reason: 'Reason',
+        salaryMonth: 'Salary Month',
+        synced: 'Salary Synced',
+        creatorName: 'Applicant',
+        createTime: 'Created At',
+        yes: 'Yes',
+        no: 'No',
+        submit: 'Submit',
+        approve: 'Approve',
+        reject: 'Reject',
+        revoke: 'Revoke',
+        records: 'Records',
+        noRecords: 'No approval records',
+        confirmSubmit: 'Submit this reward bill for approval?',
+        confirmApprove: 'Approve this bill? Once approved it becomes the 奖惩奖励/奖惩扣款 salary-item data source.',
+        confirmReject: 'Reject this reward bill?',
+        confirmRevoke: 'Revoke this reward bill?',
+        addReward: 'Add Reward Bill',
+        editReward: 'Edit Reward Bill',
+        sectionEmployee: 'Employee Info',
+        sectionReward: 'Reward Info',
+        form: {
+          billNo: 'Please enter bill no.',
+          status: 'Please select bill status',
+          rewardType: 'Please select reward type',
+          rewardLevel: 'Please select reward level',
+          employeeNo: 'Please enter employee no.',
+          employeeName: 'Please enter employee name',
+          docNo: 'Please enter document no.',
+          salaryMonth: 'Salary month YYYY-MM, defaults to the occur-date month',
+          reason: 'Please enter reason'
+        }
+      },
+      requirement: {
+        title: 'Recruitment Requirement',
+        billNo: 'Requirement No.',
+        billStatus: {
+          title: 'Bill Status'
+        },
+        postName: 'Post Name',
+        postCategory: {
+          title: 'Post Category',
+          tech: 'Tech',
+          product: 'Product',
+          design: 'Design',
+          operation: 'Operation',
+          market: 'Marketing',
+          function: 'Function',
+          other: 'Other'
+        },
+        headcount: 'Headcount',
+        urgency: {
+          title: 'Urgency',
+          normal: 'Normal',
+          urgent: 'Urgent'
+        },
+        expectDate: 'Expected Onboard Date',
+        orgName: 'Department',
+        requirementDesc: 'Requirement Description',
+        creatorName: 'Applicant',
+        createTime: 'Create Time',
+        submit: 'Submit',
+        approve: 'Approve',
+        reject: 'Reject',
+        revoke: 'Revoke',
+        records: 'Approval Records',
+        noRecords: 'No approval records',
+        confirmSubmit: 'Submit this requirement bill for approval?',
+        confirmApprove: 'Approve this bill? Once approved it can be referenced by recruitment positions.',
+        confirmReject: 'Reject this requirement bill?',
+        confirmRevoke: 'Revoke this requirement bill?',
+        addRequirement: 'Add Requirement',
+        editRequirement: 'Edit Requirement',
+        sectionPost: 'Post Info',
+        form: {
+          billNo: 'Please enter requirement no.',
+          status: 'Please select bill status',
+          postName: 'Please enter post name',
+          postCategory: 'Please select post category',
+          urgency: 'Please select urgency',
+          org: 'Please select department',
+          requirementDesc: 'Please enter requirement description'
+        }
+      },
+      candidate: {
+        title: 'Candidate Center',
+        name: 'Name',
+        phone: 'Phone',
+        email: 'Email',
+        sourceChannel: {
+          title: 'Source Channel',
+          recommend: 'Referral',
+          website: 'Job Site',
+          campus: 'Campus',
+          headhunter: 'Headhunter',
+          other: 'Other'
+        },
+        education: {
+          title: 'Highest Education',
+          doctor: 'Doctor',
+          master: 'Master',
+          bachelor: 'Bachelor',
+          associate: 'Associate',
+          senior: 'Senior High',
+          other: 'Other'
+        },
+        currentCompany: 'Current Company',
+        currentPosition: 'Current Position',
+        expectSalary: 'Expected Salary',
+        remark: 'Remark',
+        status: {
+          title: 'Status',
+          new: 'New Lead',
+          delivered: 'Delivered',
+          interviewing: 'Interviewing',
+          offer: 'Offer Sent',
+          hired: 'Hired',
+          rejected: 'Rejected'
+        },
+        createTime: 'Create Time',
+        advanceTo: 'Advance to {status}',
+        confirmAdvance: "Advance this candidate's status to {status}?",
+        confirmReject: 'Mark this candidate as rejected?',
+        reject: 'Reject',
+        import: 'Excel Import',
+        importModalTitle: 'Import Candidates',
+        importSuccess: 'Import succeeded',
+        importTemplateTip:
+          'Template columns: Name, Phone, Email, Source Channel (Referral/Job Site/Campus/Headhunter/Other), Highest Education (Doctor/Master/Bachelor/Associate/Senior High/Other), Current Company, Current Position, Expected Salary',
+        chooseFileTip: 'Please choose an xlsx file',
+        addCandidate: 'Add Candidate',
+        editCandidate: 'Edit Candidate',
+        form: {
+          name: 'Please enter name',
+          phone: 'Please enter phone',
+          email: 'Please enter email',
+          sourceChannel: 'Please select source channel',
+          education: 'Please select highest education',
+          currentCompany: 'Please enter current company',
+          currentPosition: 'Please enter current position',
+          expectSalary: 'Please enter expected salary (e.g. 20k-30k)',
+          remark: 'Please enter remark'
+        }
+      },
       performance: {
         common: {
           status: {
