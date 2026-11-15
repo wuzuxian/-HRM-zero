@@ -128,5 +128,154 @@ declare namespace Api {
       fileName: string;
       content: string;
     };
+    /**
+     * shift/leave-type status (假勤设置)
+     *
+     * - "1": 启用
+     * - "0": 停用
+     */
+    type AttendanceStatus = '0' | '1';
+
+    /** hrm shift (班次), 上下班时间支持跨天 */
+    type Shift = {
+      /** record uuid */
+      uuid: string;
+      /** record creator */
+      createBy: string;
+      /** record updater */
+      updateBy: string;
+      /** shift name */
+      shiftName: string;
+      /** start time HH:mm */
+      startTime: string;
+      /** end time HH:mm, earlier than startTime means cross-day (22:00-次日06:00) */
+      endTime: string;
+      /** whether the shift crosses midnight: 1 yes 0 no */
+      crossDay: number;
+      /** rest period start HH:mm, empty when no rest */
+      restStart: string;
+      /** rest period end HH:mm */
+      restEnd: string;
+      /** standard working hours = span minus rest, in hours */
+      standardHours: number;
+      /** flexible minutes, 0 = not flexible */
+      flexibleMinutes: number;
+      /** status: enabled/disabled */
+      status: AttendanceStatus | null;
+      /** remark */
+      remark: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** shift search params */
+    type ShiftSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.Shift, 'shiftName' | 'status'> & Common.CommonSearchParams
+    >;
+
+    /** shift paginated list */
+    type ShiftList = Common.PaginatingQueryRecord<Shift>;
+
+    /** add shift request */
+    type AddShiftRequest = {
+      /** shift name */
+      shiftName: string;
+      /** start time HH:mm */
+      startTime: string;
+      /** end time HH:mm */
+      endTime: string;
+      /** rest period start HH:mm */
+      restStart: string;
+      /** rest period end HH:mm */
+      restEnd: string;
+      /** flexible minutes */
+      flexibleMinutes: number;
+      /** status */
+      status: AttendanceStatus | null;
+      /** remark */
+      remark: string;
+    };
+
+    /** edit shift request */
+    type EditShiftRequest = {
+      uuid: string;
+      shiftName: string;
+      startTime: string;
+      endTime: string;
+      restStart: string;
+      restEnd: string;
+      flexibleMinutes: number;
+      status: AttendanceStatus | null;
+      remark: string;
+    };
+
+    /** hrm leave type (假期类型) */
+    type LeaveType = {
+      /** record uuid */
+      uuid: string;
+      /** record creator */
+      createBy: string;
+      /** record updater */
+      updateBy: string;
+      /** type code: annual_leave/comp_leave/sick_leave/other_leave… */
+      typeCode: string;
+      /** type name */
+      typeName: string;
+      /** numeric type value referenced by leave bills */
+      typeValue: number;
+      /** whether balance management is enabled: 1 yes 0 no */
+      balanceEnabled: number;
+      /** whether attachment is required: 1 yes 0 no */
+      attachmentRequired: number;
+      /** default days */
+      defaultDays: number;
+      /** display order */
+      orderNum: number;
+      /** status: enabled/disabled */
+      status: AttendanceStatus | null;
+      /** remark */
+      remark: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** leave type search params */
+    type LeaveTypeSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.LeaveType, 'typeName' | 'status'> & Common.CommonSearchParams
+    >;
+
+    /** leave type paginated list */
+    type LeaveTypeList = Common.PaginatingQueryRecord<LeaveType>;
+
+    /** add leave type request */
+    type AddLeaveTypeRequest = {
+      typeCode: string;
+      typeName: string;
+      typeValue: number;
+      balanceEnabled: number;
+      attachmentRequired: number;
+      defaultDays: number;
+      orderNum: number;
+      status: AttendanceStatus | null;
+      remark: string;
+    };
+
+    /** edit leave type request */
+    type EditLeaveTypeRequest = {
+      uuid: string;
+      typeCode: string;
+      typeName: string;
+      typeValue: number;
+      balanceEnabled: number;
+      attachmentRequired: number;
+      defaultDays: number;
+      orderNum: number;
+      status: AttendanceStatus | null;
+      remark: string;
+    };
   }
 }

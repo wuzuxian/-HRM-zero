@@ -35,6 +35,10 @@ declare module "@elegant-router/types" {
     "about": "/about";
     "home": "/home";
     "hrm": "/hrm";
+    "hrm_attendance": "/hrm/attendance";
+    "hrm_attendance_setting": "/hrm/attendance/setting";
+    "hrm_attendance_setting_leave-type": "/hrm/attendance/setting/leave-type";
+    "hrm_attendance_setting_shift": "/hrm/attendance/setting/shift";
     "hrm_org": "/hrm/org";
     "hrm_org_orginfo": "/hrm/org/orginfo";
     "iframe-page": "/iframe-page/:url";
@@ -123,6 +127,8 @@ declare module "@elegant-router/types" {
     | "login"
     | "about"
     | "home"
+    | "hrm_attendance_setting_leave-type"
+    | "hrm_attendance_setting_shift"
     | "hrm_org_orginfo"
     | "manage_menu"
     | "manage_role"

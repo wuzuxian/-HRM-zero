@@ -63,3 +63,79 @@ export function ExportOrg() {
     method: 'get'
   });
 }
+
+/** get hrm shift (班次) paginated list */
+export function GetShiftList(params?: Api.Hrm.ShiftSearchParams) {
+  return request<Api.Hrm.ShiftList>({
+    url: '/api/v1/hrm/getShiftList',
+    method: 'get',
+    params
+  });
+}
+
+/** add hrm shift */
+export function AddShift(req: Api.Hrm.AddShiftRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addShift',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit hrm shift */
+export function EditShift(req: Api.Hrm.EditShiftRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editShift',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete hrm shifts */
+export function DeleteShift(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteShift',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** get hrm leave type (假期类型) paginated list */
+export function GetLeaveTypeList(params?: Api.Hrm.LeaveTypeSearchParams) {
+  return request<Api.Hrm.LeaveTypeList>({
+    url: '/api/v1/hrm/getLeaveTypeList',
+    method: 'get',
+    params
+  });
+}
+
+/** add hrm leave type */
+export function AddLeaveType(req: Api.Hrm.AddLeaveTypeRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addLeaveType',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit hrm leave type */
+export function EditLeaveType(req: Api.Hrm.EditLeaveTypeRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editLeaveType',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete hrm leave types */
+export function DeleteLeaveType(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteLeaveType',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}

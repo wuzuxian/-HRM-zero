@@ -175,6 +175,10 @@ const local: App.I18n.Schema = {
     hrm: 'HRM',
     hrm_org: 'Organization',
     hrm_org_orginfo: 'Org Management',
+    hrm_attendance: 'Attendance',
+    hrm_attendance_setting: 'Attendance Settings',
+    hrm_attendance_setting_shift: 'Shifts',
+    'hrm_attendance_setting_leave-type': 'Leave Types',
     exception: 'Exception',
     exception_403: '403',
     exception_404: '404',
@@ -209,6 +213,16 @@ const local: App.I18n.Schema = {
         delete: 'Delete Org',
         import: 'Import Orgs',
         export: 'Export Orgs'
+      },
+      shift: {
+        add: 'Add Shift',
+        edit: 'Edit Shift',
+        delete: 'Delete Shift'
+      },
+      leavetype: {
+        add: 'Add Leave Type',
+        edit: 'Edit Leave Type',
+        delete: 'Delete Leave Type'
       }
     }
   },
@@ -458,6 +472,61 @@ const local: App.I18n.Schema = {
         importSuccess: 'Import succeeded',
         chooseFileTip: 'Please select an xlsx file',
         importModalTitle: 'Import Orgs'
+      },
+      attendance: {
+        yes: 'Yes',
+        no: 'No',
+        status: {
+          enabled: 'Enabled',
+          disabled: 'Disabled'
+        },
+        shift: {
+          title: 'Shifts',
+          shiftName: 'Shift Name',
+          workTime: 'Work Time',
+          crossDay: 'Cross-day',
+          nextDay: 'Next day',
+          restTime: 'Rest Period',
+          noRest: 'No rest',
+          standardHours: 'Standard Hours',
+          flexibleMinutes: 'Flexible',
+          notFlexible: 'Not flexible',
+          flexibleMinutesValue: '{n} min flexible',
+          status: 'Status',
+          remark: 'Remark',
+          addShift: 'Add Shift',
+          editShift: 'Edit Shift',
+          form: {
+            shiftName: 'Please enter shift name',
+            startTime: 'Please select start time',
+            endTime: 'Please select end time',
+            rest: 'Rest period (optional)',
+            flexibleMinutes: 'Please enter flexible minutes',
+            status: 'Please select status',
+            remark: 'Please enter remark'
+          }
+        },
+        leaveType: {
+          title: 'Leave Types',
+          typeName: 'Type Name',
+          typeCode: 'Type Code',
+          typeValue: 'Type Value',
+          balanceEnabled: 'Balance Management',
+          attachmentRequired: 'Attachment Required',
+          defaultDays: 'Default Days',
+          orderNum: 'Order',
+          status: 'Status',
+          remark: 'Remark',
+          addLeaveType: 'Add Leave Type',
+          editLeaveType: 'Edit Leave Type',
+          form: {
+            typeName: 'Please enter type name',
+            typeCode: 'Please enter type code (e.g. annual_leave)',
+            typeValue: 'Please enter type value',
+            status: 'Please select status',
+            remark: 'Please enter remark'
+          }
+        }
       }
     }
   },
