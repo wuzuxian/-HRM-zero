@@ -24,6 +24,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_template_item"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_recruitment_candidate"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_recruitment_requirement"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_regularization_bill"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_reward_bill"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_item"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_subject"
@@ -60,6 +61,7 @@ type Model struct {
 	HrmPerfTemplateItem           hrm_perf_template_item.HrmPerfTemplateItemModel
 	HrmRecruitmentCandidate       hrm_recruitment_candidate.HrmRecruitmentCandidateModel
 	HrmRecruitmentRequirement     hrm_recruitment_requirement.HrmRecruitmentRequirementModel
+	HrmRegularizationBill         hrm_regularization_bill.HrmRegularizationBillModel
 	HrmRewardBill                 hrm_reward_bill.HrmRewardBillModel
 	HrmSalaryItem                 hrm_salary_item.HrmSalaryItemModel
 	HrmSalarySubject              hrm_salary_subject.HrmSalarySubjectModel
@@ -97,6 +99,7 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmPerfTemplateItem:           hrm_perf_template_item.NewHrmPerfTemplateItemModel(conn, op...),
 		HrmRecruitmentCandidate:       hrm_recruitment_candidate.NewHrmRecruitmentCandidateModel(conn, op...),
 		HrmRecruitmentRequirement:     hrm_recruitment_requirement.NewHrmRecruitmentRequirementModel(conn, op...),
+		HrmRegularizationBill:         hrm_regularization_bill.NewHrmRegularizationBillModel(conn, op...),
 		HrmRewardBill:                 hrm_reward_bill.NewHrmRewardBillModel(conn, op...),
 		HrmSalaryItem:                 hrm_salary_item.NewHrmSalaryItemModel(conn, op...),
 		HrmSalarySubject:              hrm_salary_subject.NewHrmSalarySubjectModel(conn, op...),
