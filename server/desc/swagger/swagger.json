@@ -1282,6 +1282,89 @@
         ]
       }
     },
+    "/api/v1/hrm/addReward": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:reward:add",
+        "operationId": "v1/Hrm/RewardAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "amount": {
+                  "type": "number"
+                },
+                "docNo": {
+                  "type": "string"
+                },
+                "employeeName": {
+                  "type": "string"
+                },
+                "employeeNo": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "occurDate": {
+                  "description": "YYYY-MM-DD",
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "rewardLevel": {
+                  "type": "string"
+                },
+                "rewardType": {
+                  "type": "string"
+                },
+                "salaryMonth": {
+                  "description": "YYYY-MM，空=发生日期所在月",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "employeeNo",
+                "employeeName",
+                "rewardType",
+                "rewardLevel",
+                "occurDate"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/reward"
+        ]
+      }
+    },
     "/api/v1/hrm/addShift": {
       "post": {
         "consumes": [
@@ -1938,6 +2021,59 @@
         "summary": "Delete",
         "tags": [
           "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteReward": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:reward:delete",
+        "operationId": "v1/Hrm/RewardDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/reward"
         ]
       }
     },
@@ -2830,6 +2966,91 @@
         "summary": "Edit",
         "tags": [
           "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/editReward": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:reward:edit",
+        "operationId": "v1/Hrm/RewardEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "amount": {
+                  "type": "number"
+                },
+                "docNo": {
+                  "type": "string"
+                },
+                "employeeName": {
+                  "type": "string"
+                },
+                "employeeNo": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "occurDate": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "rewardLevel": {
+                  "type": "string"
+                },
+                "rewardType": {
+                  "type": "string"
+                },
+                "salaryMonth": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "employeeNo",
+                "employeeName",
+                "rewardType",
+                "rewardLevel",
+                "occurDate"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/reward"
         ]
       }
     },
@@ -5650,6 +5871,194 @@
         "summary": "List",
         "tags": [
           "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/getRewardList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:reward:list",
+        "operationId": "v1/Hrm/RewardList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据编号（模糊）",
+            "in": "query",
+            "name": "billNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据状态",
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "奖惩类型 reward/punishment",
+            "in": "query",
+            "name": "rewardType",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "员工工号（模糊）",
+            "in": "query",
+            "name": "employeeNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "1=强制只看我的单据（默认行为即我的单据，管理员可传 0 看全部由后端角色判定兜底）",
+            "in": "query",
+            "name": "mine",
+            "type": "integer"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "amount": {
+                        "description": "金额（奖励为发放金额，处分/扣款为正数金额，0=不涉及）",
+                        "type": "number"
+                      },
+                      "billNo": {
+                        "description": "单据编号 HR215-...",
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "creatorName": {
+                        "description": "申请人姓名",
+                        "type": "string"
+                      },
+                      "creatorUuid": {
+                        "description": "申请人 uuid",
+                        "type": "string"
+                      },
+                      "docNo": {
+                        "description": "文号",
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "description": "员工姓名",
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "description": "员工工号",
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "description": "员工档案 uuid",
+                        "type": "string"
+                      },
+                      "occurDate": {
+                        "description": "发生日期 YYYY-MM-DD",
+                        "type": "string"
+                      },
+                      "reason": {
+                        "description": "奖惩原因/事由",
+                        "type": "string"
+                      },
+                      "rewardLevel": {
+                        "description": "奖惩级别 company=公司级 dept=部门级 notice=通报 other=其他",
+                        "type": "string"
+                      },
+                      "rewardType": {
+                        "description": "奖惩类型 reward=奖励 punishment=处分",
+                        "type": "string"
+                      },
+                      "salaryMonth": {
+                        "description": "入账薪资年月 YYYY-MM",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "单据状态 unsubmitted/approving/approved/rejected/revoked",
+                        "type": "string"
+                      },
+                      "synced": {
+                        "description": "薪资数据源同步标记 1=已同步",
+                        "type": "integer"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "billNo",
+                      "status",
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "rewardType",
+                      "rewardLevel",
+                      "docNo",
+                      "occurDate",
+                      "amount",
+                      "reason",
+                      "salaryMonth",
+                      "synced",
+                      "creatorUuid",
+                      "creatorName",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/reward"
         ]
       }
     },
