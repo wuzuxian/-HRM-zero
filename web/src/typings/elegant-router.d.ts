@@ -40,9 +40,9 @@ declare module "@elegant-router/types" {
     "hrm_attendance_setting_leave-type": "/hrm/attendance/setting/leave-type";
     "hrm_attendance_setting_shift": "/hrm/attendance/setting/shift";
     "hrm_employee": "/hrm/employee";
+    "hrm_employee_employee-archive-list": "/hrm/employee/employee-archive-list";
     "hrm_employee-relation": "/hrm/employee-relation";
     "hrm_employee-relation_transfer-list": "/hrm/employee-relation/transfer-list";
-    "hrm_employee_employee-archive-list": "/hrm/employee/employee-archive-list";
     "hrm_org": "/hrm/org";
     "hrm_org_org-chart": "/hrm/org/org-chart";
     "hrm_org_orginfo": "/hrm/org/orginfo";
@@ -53,6 +53,8 @@ declare module "@elegant-router/types" {
     "hrm_performance_setting_template": "/hrm/performance/setting/template";
     "hrm_training": "/hrm/training";
     "hrm_training_my": "/hrm/training/my";
+    "hrm_training_plan": "/hrm/training/plan";
+    "hrm_training_session": "/hrm/training/session";
     "iframe-page": "/iframe-page/:url";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
     "manage": "/manage";
@@ -141,14 +143,16 @@ declare module "@elegant-router/types" {
     | "home"
     | "hrm_attendance_setting_leave-type"
     | "hrm_attendance_setting_shift"
-    | "hrm_employee_employee-archive-list"
     | "hrm_employee-relation_transfer-list"
+    | "hrm_employee_employee-archive-list"
     | "hrm_org_org-chart"
     | "hrm_org_orginfo"
     | "hrm_performance_scheme"
     | "hrm_performance_setting_indicator"
     | "hrm_performance_setting_template"
     | "hrm_training_my"
+    | "hrm_training_plan"
+    | "hrm_training_session"
     | "manage_menu"
     | "manage_role"
     | "manage_user-detail"

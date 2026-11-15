@@ -237,6 +237,24 @@ export const generatedRoutes: GeneratedRoute[] = [
               title: 'hrm_training_my',
               i18nKey: 'route.hrm_training_my'
             }
+          },
+          {
+            name: 'hrm_training_plan',
+            path: '/hrm/training/plan',
+            component: 'view.hrm_training_plan',
+            meta: {
+              title: 'hrm_training_plan',
+              i18nKey: 'route.hrm_training_plan'
+            }
+          },
+          {
+            name: 'hrm_training_session',
+            path: '/hrm/training/session',
+            component: 'view.hrm_training_session',
+            meta: {
+              title: 'hrm_training_session',
+              i18nKey: 'route.hrm_training_session'
+            }
           }
         ]
       }

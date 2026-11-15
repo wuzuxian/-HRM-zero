@@ -543,6 +543,161 @@ declare namespace Api {
       content: string;
     };
 
+    // ---- HRM 培训计划单 (HRM-28, HR216) ----
+
+    /**
+     * training plan type (培训计划 计划类型)
+     *
+     * - "special": 专项
+     * - "new_hire": 新员工培养
+     * - "safety": 安全培训
+     * - "skill": 技能提升
+     */
+    type TrainingPlanType = 'special' | 'new_hire' | 'safety' | 'skill';
+
+    /** hrm training plan (培训计划单 HR216, 单据审批底座 + 发布状态) */
+    type TrainingPlan = {
+      /** record uuid */
+      uuid: string;
+      /** record creator */
+      createBy: string;
+      /** record updater */
+      updateBy: string;
+      /** 单据编号 HR216-... */
+      billNo: string;
+      /** 单据状态 */
+      status: BillStatus | null;
+      /** 计划名称 */
+      planName: string;
+      /** 主题 */
+      theme: string;
+      /** 年度 */
+      planYear: string;
+      /** 计划类型 */
+      planType: TrainingPlanType | null;
+      /** 开始日期 YYYY-MM-DD */
+      startDate: string;
+      /** 结束日期 YYYY-MM-DD */
+      endDate: string;
+      /** 发布状态 0=草稿 1=已发布（审批通过即发布） */
+      published: number;
+      /** 申请人 uuid */
+      creatorUuid: string;
+      /** 申请人姓名 */
+      creatorName: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** training plan search params (published 过滤为 '0'/'1' 字符串) */
+    type TrainingPlanSearchParams = CommonType.RecordNullable<
+      Pick<TrainingPlan, 'planName' | 'planType' | 'status'> & Common.CommonSearchParams
+    > & {
+      /** 发布状态 '0'=草稿 '1'=已发布 */
+      published?: string | null;
+    };
+
+    /** training plan paginated list */
+    type TrainingPlanList = Common.PaginatingQueryRecord<TrainingPlan>;
+
+    /** add training plan request */
+    type AddTrainingPlanRequest = {
+      planName: string;
+      theme: string;
+      planYear: string;
+      planType: TrainingPlanType | null;
+      startDate: string;
+      endDate: string;
+    };
+
+    /** edit training plan request */
+    type EditTrainingPlanRequest = AddTrainingPlanRequest & {
+      uuid: string;
+    };
+
+    // ---- HRM 培训班次 (HRM-28, 管理端 CRUD) ----
+
+    /** hrm training session (培训班次, admin view of hrm_training_session) */
+    type TrainingSession = {
+      /** record uuid */
+      uuid: string;
+      /** record creator */
+      createBy: string;
+      /** record updater */
+      updateBy: string;
+      /** 班次编号 PX-年-流水（自动生成） */
+      sessionNo: string;
+      /** 班次名称 */
+      sessionName: string;
+      /** 关联培训计划 uuid */
+      planUuid: string;
+      /** 关联培训计划名称（展示快照） */
+      planName: string;
+      /** 讲师 */
+      lecturer: string;
+      /** 地点 */
+      location: string;
+      /** 学时 */
+      hours: number;
+      /** 开始时间 */
+      startTime: string;
+      /** 结束时间 */
+      endTime: string;
+      /** 状态 */
+      status: TrainingSessionStatus | null;
+      remark: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** training session search params */
+    type TrainingSessionSearchParams = CommonType.RecordNullable<
+      Pick<TrainingSession, 'sessionName' | 'planUuid' | 'status'> & Common.CommonSearchParams
+    >;
+
+    /** training session paginated list */
+    type TrainingSessionList = Common.PaginatingQueryRecord<TrainingSession>;
+
+    /** add training session request (PX 编号后端自动生成) */
+    type AddTrainingSessionRequest = {
+      sessionName: string;
+      planUuid: string;
+      lecturer: string;
+      location: string;
+      hours: number;
+      startTime: string;
+      endTime: string;
+      remark: string;
+    };
+
+    /** edit training session request */
+    type EditTrainingSessionRequest = AddTrainingSessionRequest & {
+      uuid: string;
+    };
+
+    /** session participant row (班次学员) */
+    type SessionParticipant = {
+      /** participant row uuid */
+      uuid: string;
+      /** 学员（manage_user.uuid） */
+      userUuid: string;
+      /** 学员账号 */
+      username: string;
+      /** 学员姓名 */
+      nickName: string;
+    };
+
+    /** session participant list response */
+    type SessionParticipantList = {
+      records: SessionParticipant[];
+    };
+
+    /** set session participants request (选人, 全量覆盖) */
+    type SetSessionParticipantsRequest = {
+      sessionUuid: string;
+      userUuids: string[];
+    };
+
     // ---- HRM 员工档案 (HRM-03) ----
 
     /** 性别 1=男 2=女 */

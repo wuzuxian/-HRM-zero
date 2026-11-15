@@ -452,6 +452,17 @@ declare namespace App {
           };
           training: {
             downloadCert: string;
+            plan: {
+              add: string;
+              edit: string;
+              delete: string;
+            };
+            session: {
+              add: string;
+              edit: string;
+              delete: string;
+              participants: string;
+            };
           };
           employee: {
             add: string;
@@ -994,6 +1005,71 @@ declare namespace App {
             scanFile: string;
             preview: string;
             noFile: string;
+            planType: {
+              special: string;
+              newHire: string;
+              safety: string;
+              skill: string;
+            };
+            published: {
+              draft: string;
+              published: string;
+            };
+            plan: {
+              title: string;
+              billNo: string;
+              billStatusLabel: string;
+              planName: string;
+              theme: string;
+              planYear: string;
+              planType: string;
+              startDate: string;
+              endDate: string;
+              published: string;
+              creatorName: string;
+              addPlan: string;
+              editPlan: string;
+              submit: string;
+              approve: string;
+              reject: string;
+              revoke: string;
+              records: string;
+              confirmSubmit: string;
+              confirmApprove: string;
+              confirmReject: string;
+              confirmRevoke: string;
+              form: {
+                planName: string;
+                theme: string;
+                planYear: string;
+                planType: string;
+                status: string;
+                published: string;
+                endDateBeforeStart: string;
+              };
+            };
+            session: {
+              title: string;
+              sessionName: string;
+              planName: string;
+              lecturer: string;
+              remark: string;
+              addSession: string;
+              editSession: string;
+              participants: string;
+              finish: string;
+              confirmFinish: string;
+              participantsTip: string;
+              form: {
+                sessionName: string;
+                planUuid: string;
+                lecturer: string;
+                location: string;
+                status: string;
+                participantsPlaceholder: string;
+                endTimeBeforeStart: string;
+              };
+            };
           };
           employee: {
             title: string;

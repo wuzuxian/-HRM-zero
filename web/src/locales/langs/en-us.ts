@@ -190,6 +190,8 @@ const local: App.I18n.Schema = {
     hrm_performance_scheme: 'Scheme',
     hrm_training: 'Training',
     hrm_training_my: 'My Training',
+    hrm_training_plan: 'Training Plan',
+    hrm_training_session: 'Training Session',
     hrm_employee: 'HR Archive',
     'hrm_employee_employee-archive-list': 'Employee Archive',
     exception: 'Exception',
@@ -249,7 +251,18 @@ const local: App.I18n.Schema = {
         revoke: 'Revoke'
       },
       training: {
-        downloadCert: 'Download/Preview Cert Scan'
+        downloadCert: 'Download/Preview Cert Scan',
+        plan: {
+          add: 'Add Plan',
+          edit: 'Edit Plan',
+          delete: 'Delete Plan'
+        },
+        session: {
+          add: 'Add Session',
+          edit: 'Edit Session',
+          delete: 'Delete Session',
+          participants: 'Participants'
+        }
       },
       employee: {
         add: 'Add Employee',
@@ -903,7 +916,72 @@ const local: App.I18n.Schema = {
         },
         scanFile: 'Scan File',
         preview: 'Preview',
-        noFile: 'No scan file'
+        noFile: 'No scan file',
+        planType: {
+          special: 'Special',
+          newHire: 'New Hire',
+          safety: 'Safety',
+          skill: 'Skill'
+        },
+        published: {
+          draft: 'Draft',
+          published: 'Published'
+        },
+        plan: {
+          title: 'Training Plan',
+          billNo: 'Bill No.',
+          billStatusLabel: 'Bill Status',
+          planName: 'Plan Name',
+          theme: 'Theme',
+          planYear: 'Year',
+          planType: 'Plan Type',
+          startDate: 'Start Date',
+          endDate: 'End Date',
+          published: 'Publish Status',
+          creatorName: 'Applicant',
+          addPlan: 'Add Plan',
+          editPlan: 'Edit Plan',
+          submit: 'Submit',
+          approve: 'Approve',
+          reject: 'Reject',
+          revoke: 'Revoke',
+          records: 'Records',
+          confirmSubmit: 'Submit this training plan for approval?',
+          confirmApprove: 'Approve this plan? It will be published (draft → published) on approval.',
+          confirmReject: 'Reject this bill?',
+          confirmRevoke: 'Revoke this bill?',
+          form: {
+            planName: 'Please enter plan name',
+            theme: 'Please enter theme',
+            planYear: 'Please enter year (e.g. 2026)',
+            planType: 'Please select plan type',
+            status: 'Please select bill status',
+            published: 'Please select publish status',
+            endDateBeforeStart: 'End date cannot be earlier than start date'
+          }
+        },
+        session: {
+          title: 'Training Session',
+          sessionName: 'Session Name',
+          planName: 'Training Plan',
+          lecturer: 'Lecturer',
+          remark: 'Remark',
+          addSession: 'Add Session',
+          editSession: 'Edit Session',
+          participants: 'Participants',
+          finish: 'Finish',
+          confirmFinish: 'Finish this session? This cannot be undone.',
+          participantsTip: 'Saving replaces the full participant list (selection is the final roster).',
+          form: {
+            sessionName: 'Please enter session name',
+            planUuid: 'Please select a published training plan',
+            lecturer: 'Please enter lecturer',
+            location: 'Please enter location',
+            status: 'Please select status',
+            participantsPlaceholder: 'Search and select users (account/name)',
+            endTimeBeforeStart: 'End time must be later than start time'
+          }
+        }
       }
     }
   },

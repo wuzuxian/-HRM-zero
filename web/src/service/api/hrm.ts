@@ -321,3 +321,110 @@ export function ExportEmployee() {
     method: 'get'
   });
 }
+
+// ---- HRM 培训计划单 (HRM-28, HR216) ----
+
+/** get 培训计划单 paginated list */
+export function GetTrainingPlanList(params?: Api.Hrm.TrainingPlanSearchParams) {
+  return request<Api.Hrm.TrainingPlanList>({
+    url: '/api/v1/hrm/getTrainingPlanList',
+    method: 'get',
+    params
+  });
+}
+
+/** add 培训计划单 (单据编号 HR216-... 后端自动生成, 初始 未提交/草稿) */
+export function AddTrainingPlan(req: Api.Hrm.AddTrainingPlanRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addTrainingPlan',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 培训计划单 (仅未发布且单据状态可编辑时) */
+export function EditTrainingPlan(req: Api.Hrm.EditTrainingPlanRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editTrainingPlan',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 培训计划单 */
+export function DeleteTrainingPlan(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteTrainingPlan',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+// ---- HRM 培训班次 (HRM-28, 管理端 CRUD) ----
+
+/** get 培训班次 paginated list */
+export function GetTrainingSessionList(params?: Api.Hrm.TrainingSessionSearchParams) {
+  return request<Api.Hrm.TrainingSessionList>({
+    url: '/api/v1/hrm/getTrainingSessionList',
+    method: 'get',
+    params
+  });
+}
+
+/** add 培训班次 (班次编号 PX-年-流水 后端自动生成; 关联计划须已发布) */
+export function AddTrainingSession(req: Api.Hrm.AddTrainingSessionRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addTrainingSession',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 培训班次 */
+export function EditTrainingSession(req: Api.Hrm.EditTrainingSessionRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editTrainingSession',
+    method: 'post',
+    data: req
+  });
+}
+
+/** finish 培训班次 (行操作: 状态置已结束) */
+export function FinishTrainingSession(uuid: string) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/finishTrainingSession',
+    method: 'post',
+    data: { uuid }
+  });
+}
+
+/** delete/batch delete 培训班次 (级联清理学员绑定) */
+export function DeleteTrainingSession(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteTrainingSession',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** get 班次学员 list (选人弹窗回显) */
+export function GetSessionParticipantList(sessionUuid: string) {
+  return request<Api.Hrm.SessionParticipantList>({
+    url: '/api/v1/hrm/getSessionParticipantList',
+    method: 'get',
+    params: { sessionUuid }
+  });
+}
+
+/** set 班次学员 (选人, 全量覆盖) */
+export function SetSessionParticipants(req: Api.Hrm.SetSessionParticipantsRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/setSessionParticipants',
+    method: 'post',
+    data: req
+  });
+}

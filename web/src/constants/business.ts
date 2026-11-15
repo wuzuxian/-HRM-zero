@@ -88,6 +88,24 @@ export const hrmTrainingCertificateStatusRecord: Record<Api.Hrm.TrainingCertific
 
 export const hrmTrainingCertificateStatusOptions = transformRecordToOption(hrmTrainingCertificateStatusRecord);
 
+/** 培训计划 计划类型 (HRM-28 HR216) */
+export const hrmTrainingPlanTypeRecord: Record<Api.Hrm.TrainingPlanType, App.I18n.I18nKey> = {
+  special: 'page.hrm.training.planType.special',
+  new_hire: 'page.hrm.training.planType.newHire',
+  safety: 'page.hrm.training.planType.safety',
+  skill: 'page.hrm.training.planType.skill'
+};
+
+export const hrmTrainingPlanTypeOptions = transformRecordToOption(hrmTrainingPlanTypeRecord);
+
+/** 培训计划 发布状态 (0=草稿 1=已发布, 审批通过即发布) */
+export const hrmTrainingPlanPublishedRecord: Record<'0' | '1', App.I18n.I18nKey> = {
+  '0': 'page.hrm.training.published.draft',
+  '1': 'page.hrm.training.published.published'
+};
+
+export const hrmTrainingPlanPublishedOptions = transformRecordToOption(hrmTrainingPlanPublishedRecord);
+
 // ---- HRM 员工档案 (HRM-03) ----
 
 /** 性别 1=男 2=女 */
