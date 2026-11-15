@@ -196,31 +196,51 @@ watch(visible, () => {
             :label="$t('page.hrm.employeeRelation.regularization.orgUuid')"
             path="orgUuid"
           >
-            <NInput v-model:value="model.orgUuid" disabled :placeholder="$t('page.hrm.employeeRelation.regularization.form.none')" />
+            <NInput
+              v-model:value="model.orgUuid"
+              disabled
+              :placeholder="$t('page.hrm.employeeRelation.regularization.form.none')"
+            />
           </NFormItemGi>
           <NFormItemGi
             span="24 s:12 m:8"
             :label="$t('page.hrm.employeeRelation.regularization.companyUuid')"
             path="companyUuid"
           >
-            <NInput v-model:value="model.companyUuid" disabled :placeholder="$t('page.hrm.employeeRelation.regularization.form.none')" />
+            <NInput
+              v-model:value="model.companyUuid"
+              disabled
+              :placeholder="$t('page.hrm.employeeRelation.regularization.form.none')"
+            />
           </NFormItemGi>
           <NFormItemGi
             span="24 s:12 m:8"
             :label="$t('page.hrm.employeeRelation.regularization.position')"
             path="position"
           >
-            <NInput v-model:value="model.position" disabled :placeholder="$t('page.hrm.employeeRelation.regularization.form.none')" />
+            <NInput
+              v-model:value="model.position"
+              disabled
+              :placeholder="$t('page.hrm.employeeRelation.regularization.form.none')"
+            />
           </NFormItemGi>
           <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.employeeRelation.regularization.post')" path="post">
-            <NInput v-model:value="model.post" disabled :placeholder="$t('page.hrm.employeeRelation.regularization.form.none')" />
+            <NInput
+              v-model:value="model.post"
+              disabled
+              :placeholder="$t('page.hrm.employeeRelation.regularization.form.none')"
+            />
           </NFormItemGi>
           <NFormItemGi
             span="24 s:12 m:8"
             :label="$t('page.hrm.employeeRelation.regularization.hireDate')"
             path="hireDate"
           >
-            <NInput v-model:value="model.hireDate" disabled :placeholder="$t('page.hrm.employeeRelation.regularization.form.none')" />
+            <NInput
+              v-model:value="model.hireDate"
+              disabled
+              :placeholder="$t('page.hrm.employeeRelation.regularization.form.none')"
+            />
           </NFormItemGi>
           <NFormItemGi
             span="24 s:12 m:8"

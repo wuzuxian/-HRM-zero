@@ -140,6 +140,15 @@ const (
 	// OvertimeRuleDayTypeInvalidCode 加班当天类型非法（须为 工作日/休息日/法定节假日）
 	OvertimeRuleDayTypeInvalidCode = 10464
 
+	// HRM 排班管理：排班周期（HRM-14）业务错误码。1048x 段（1047x 已被入职单占用）。
+	// ScheduleCycleNotFoundCode 排班周期不存在
+	ScheduleCycleNotFoundCode = 10480
+	// ScheduleCycleInvalidCode 排班周期参数非法（名称/班次序列/考勤组绑定/状态等）
+	ScheduleCycleInvalidCode = 10481
+	// ScheduleCycleShiftInvalidCode 班次序列非法（班次不存在或已停用）
+	ScheduleCycleShiftInvalidCode = 10482
+	// ScheduleCycleGroupInvalidCode 适用考勤组不存在
+	ScheduleCycleGroupInvalidCode = 10483
 	// HRM 员工转正单（HRM-08，HR202）业务错误码。10465+ 段
 	// （10462-10464 加班规则，10450-10458 证书模板/发放，10460-10461 员工账号同步）。
 	// RegularizationNotFoundCode 转正单不存在
@@ -163,6 +172,16 @@ const (
 	EmployeeCertificateNotFoundCode = 10483
 	// EmployeeCertificateInvalidCode 员工证照参数非法（员工档案/证书类型/证号必填等）
 	EmployeeCertificateInvalidCode = 10484
+	// HRM 员工离职单（HRM-10，HR204）业务错误码。1049x 段
+	// （1048x 排班周期，1047x 入职单，10465-10468 转正单）。
+	// ResignationNotFoundCode 离职单不存在
+	ResignationNotFoundCode = 10490
+	// ResignationInvalidCode 离职单参数非法（离职类型/离职日期格式等）
+	ResignationInvalidCode = 10491
+	// ResignationEmployeeRequiredCode 未指定员工（工号与姓名为必填快照）
+	ResignationEmployeeRequiredCode = 10492
+	// ResignationNotEditableCode 单据当前状态不允许修改/删除（仅 未提交/审批不通过/已撤销 可改）
+	ResignationNotEditableCode = 10493
 )
 
 func init() {
@@ -234,6 +253,10 @@ func init() {
 	status.Register(OvertimeRuleInvalidCode)
 	status.Register(OvertimeRuleDayTypeInvalidCode)
 
+	status.Register(ScheduleCycleNotFoundCode)
+	status.Register(ScheduleCycleInvalidCode)
+	status.Register(ScheduleCycleShiftInvalidCode)
+	status.Register(ScheduleCycleGroupInvalidCode)
 	status.Register(RegularizationNotFoundCode)
 	status.Register(RegularizationInvalidCode)
 	status.Register(RegularizationEmployeeRequiredCode)
@@ -244,4 +267,9 @@ func init() {
 	status.Register(ContractNotRenewableCode)
 	status.Register(EmployeeCertificateNotFoundCode)
 	status.Register(EmployeeCertificateInvalidCode)
+
+	status.Register(ResignationNotFoundCode)
+	status.Register(ResignationInvalidCode)
+	status.Register(ResignationEmployeeRequiredCode)
+	status.Register(ResignationNotEditableCode)
 }

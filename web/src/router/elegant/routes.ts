@@ -79,6 +79,25 @@ export const generatedRoutes: GeneratedRoute[] = [
         },
         children: [
           {
+            name: 'hrm_attendance_scheduling',
+            path: '/hrm/attendance/scheduling',
+            meta: {
+              title: 'hrm_attendance_scheduling',
+              i18nKey: 'route.hrm_attendance_scheduling'
+            },
+            children: [
+              {
+                name: 'hrm_attendance_scheduling_schedule-cycle',
+                path: '/hrm/attendance/scheduling/schedule-cycle',
+                component: 'view.hrm_attendance_scheduling_schedule-cycle',
+                meta: {
+                  title: 'hrm_attendance_scheduling_schedule-cycle',
+                  i18nKey: 'route.hrm_attendance_scheduling_schedule-cycle'
+                }
+              }
+            ]
+          },
+          {
             name: 'hrm_attendance_setting',
             path: '/hrm/attendance/setting',
             meta: {
@@ -205,6 +224,15 @@ export const generatedRoutes: GeneratedRoute[] = [
             meta: {
               title: 'hrm_employee-relation_regular-list',
               i18nKey: 'route.hrm_employee-relation_regular-list'
+            }
+          },
+          {
+            name: 'hrm_employee-relation_resignation-list',
+            path: '/hrm/employee-relation/resignation-list',
+            component: 'view.hrm_employee-relation_resignation-list',
+            meta: {
+              title: 'hrm_employee-relation_resignation-list',
+              i18nKey: 'route.hrm_employee-relation_resignation-list'
             }
           },
           {

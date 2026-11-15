@@ -184,9 +184,12 @@ const local: App.I18n.Schema = {
     hrm_attendance_setting_shift: '班次管理',
     'hrm_attendance_setting_leave-type': '假期类型',
     'hrm_attendance_setting_overtime-rule': '加班规则',
+    hrm_attendance_scheduling: '排班管理',
+    'hrm_attendance_scheduling_schedule-cycle': '排班周期',
     'hrm_employee-relation': '人事管理',
     'hrm_employee-relation_transfer-list': '人事调动',
     'hrm_employee-relation_regular-list': '员工转正',
+    'hrm_employee-relation_resignation-list': '员工离职',
     'hrm_employee-relation_entry-list': '员工入职',
     hrm_performance: '绩效管理',
     hrm_performance_setting: '绩效设置',
@@ -276,6 +279,12 @@ const local: App.I18n.Schema = {
         delete: '删除加班规则',
         togglestatus: '加班规则启停'
       },
+      schedulecycle: {
+        add: '新增排班周期',
+        edit: '编辑排班周期',
+        delete: '删除排班周期',
+        togglestatus: '排班周期启停'
+      },
       transfer: {
         add: '新增调动',
         edit: '编辑调动',
@@ -285,6 +294,11 @@ const local: App.I18n.Schema = {
         add: '新增转正单',
         edit: '编辑转正单',
         delete: '删除转正单'
+      },
+      resignation: {
+        add: '新增离职单',
+        edit: '编辑离职单',
+        delete: '删除离职单'
       },
       entry: {
         add: '新增入职单',
@@ -1283,6 +1297,30 @@ const local: App.I18n.Schema = {
             status: '请选择状态',
             remark: '请输入备注'
           }
+        },
+        scheduleCycle: {
+          title: '排班周期',
+          cycleName: '周期名称',
+          shiftSequence: '班次序列',
+          cycleDays: '周期天数',
+          cycleDaysTip: '由班次序列长度派生',
+          sequenceSummary: '{n} 个班次',
+          usedGroups: '适用考勤组',
+          boundGroupCount: '{n} 个考勤组',
+          noBoundGroup: '未绑定',
+          addCycle: '新增排班周期',
+          editCycle: '编辑排班周期',
+          enable: '启用',
+          disable: '停用',
+          status: '状态',
+          remark: '备注',
+          form: {
+            cycleName: '请输入周期名称',
+            shiftSequence: '请选择班次序列（按顺序）',
+            usedGroups: '请选择适用考勤组',
+            status: '请选择状态',
+            remark: '请输入备注'
+          }
         }
       },
       employeeRelation: {
@@ -1390,6 +1428,57 @@ const local: App.I18n.Schema = {
             selectEmployee: '请选择员工',
             remark: '请输入备注',
             none: '选择员工后自动带出'
+          }
+        },
+        resignation: {
+          title: '员工离职',
+          billNo: '单据编号',
+          employeeNo: '员工工号',
+          employeeName: '员工姓名',
+          selectEmployee: '选择员工',
+          orgUuid: '员工所属部门',
+          companyUuid: '员工所属公司',
+          position: '职位',
+          post: '职务',
+          resignType: {
+            title: '离职类型',
+            voluntary: '自愿离职',
+            involuntary: '被动离职',
+            contract_end: '合同到期',
+            retirement: '退休'
+          },
+          resignReason: '离职原因',
+          applyDate: '申请日期',
+          resignDate: '离职日期',
+          lastWorkDate: '最后工作日期',
+          handoverPerson: '交接人',
+          salarySettleDate: '薪资结算日期',
+          creatorName: '申请人',
+          createTime: '创建时间',
+          submit: '提交',
+          approve: '通过',
+          reject: '驳回',
+          revoke: '撤销',
+          records: '审批记录',
+          noRecords: '暂无审批记录',
+          confirmSubmit: '确认提交该离职单进入审批？',
+          confirmApprove: '确认审批通过？通过后仅记录单据，定时任务将在离职日当天统一将员工置为离职。',
+          confirmReject: '确认驳回该离职单？',
+          confirmRevoke: '确认撤销该离职单？',
+          addResignation: '新增离职单',
+          editResignation: '编辑离职单',
+          sectionEmployee: '员工信息',
+          sectionSnapshot: '档案快照（自动带出）',
+          sectionResign: '离职信息',
+          form: {
+            billNo: '请输入单据编号',
+            status: '请选择单据状态',
+            employeeNo: '请输入员工工号',
+            selectEmployee: '请选择员工',
+            remark: '请输入备注',
+            none: '选择员工后自动带出',
+            resignType: '请选择离职类型',
+            handoverPerson: '请输入交接人'
           }
         },
         entry: {
