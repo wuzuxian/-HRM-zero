@@ -79,15 +79,16 @@ const (
 	// AttendanceRuleNotFoundCode 未找到生效规则（员工不在考勤组且组织链上无默认规则）
 	AttendanceRuleNotFoundCode = 10384
 
-	// HRM 奖惩单（HRM-07，HR215）业务错误码。1041x 段（1039x 为绩效重编号预留，1040x 跳过以防并行工单撞车）。
+	// HRM 奖惩单（HRM-07，HR215）业务错误码。1042x 段（1039x 为绩效重编号预留；
+	// 1040x/1041x 已被 HRM-28 培训计划/班次占用，见 hrm_training.go）。
 	// RewardNotFoundCode 奖惩单不存在
-	RewardNotFoundCode = 10410
+	RewardNotFoundCode = 10420
 	// RewardInvalidCode 奖惩单参数非法（奖惩类型/级别/发生日期/入账年月等）
-	RewardInvalidCode = 10411
+	RewardInvalidCode = 10421
 	// RewardEmployeeRequiredCode 未指定员工（工号与姓名为必填快照）
-	RewardEmployeeRequiredCode = 10412
+	RewardEmployeeRequiredCode = 10422
 	// RewardNotEditableCode 单据当前状态不允许修改/删除（仅 未提交/审批不通过/已撤销 可改）
-	RewardNotEditableCode = 10413
+	RewardNotEditableCode = 10423
 )
 
 func init() {
