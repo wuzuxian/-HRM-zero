@@ -1627,6 +1627,17 @@ export function PublishScheduleMonth(req: Api.Hrm.SchedulePublishRequest) {
   });
 }
 
+// ===== HRM-20 补卡单 (HR206, 假勤管理域 假勤申请) =====
+
+/** get hrm card replacement bills (补卡单 HR206) paginated list — defaults to 「我的单据」 server-side */
+export function GetCardReplacementList(params?: Api.Hrm.CardReplacementSearchParams) {
+  return request<Api.Hrm.CardReplacementList>({
+    url: '/api/v1/hrm/getCardReplacementList',
+    method: 'get',
+    params
+  });
+}
+
 /** get recruitment position (招聘职位 HRM-25) paginated list — 筛选 岗位名称/来源需求单/岗位类别/状态 */
 export function GetPositionList(params?: Api.Hrm.PositionSearchParams) {
   return request<Api.Hrm.PositionList>({
@@ -1636,10 +1647,28 @@ export function GetPositionList(params?: Api.Hrm.PositionSearchParams) {
   });
 }
 
+/** add hrm card replacement bill (原上班/下班打卡由后端按提交时打卡行快照) */
+export function AddCardReplacement(req: Api.Hrm.AddCardReplacementRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addCardReplacement',
+    method: 'post',
+    data: req
+  });
+}
+
 /** add recruitment position (requirementUuid 仅可引用 status=approved 需求单) */
 export function AddPosition(req: Api.Hrm.AddPositionRequest) {
   return request<Api.Common.Empty>({
     url: '/api/v1/hrm/addPosition',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit hrm card replacement bill (only in editable 单据状态; 日期变更时后端重取快照) */
+export function EditCardReplacement(req: Api.Hrm.EditCardReplacementRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editCardReplacement',
     method: 'post',
     data: req
   });
@@ -1654,6 +1683,17 @@ export function EditPosition(req: Api.Hrm.EditPositionRequest) {
   });
 }
 
+/** delete/batch delete hrm card replacement bills (only in editable 单据状态) */
+export function DeleteCardReplacement(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteCardReplacement',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
 /** delete/batch delete recruitment positions (不限状态) */
 export function DeletePosition(req: string[]) {
   return request<Api.Common.Empty>({
@@ -1664,6 +1704,7 @@ export function DeletePosition(req: string[]) {
     }
   });
 }
+
 
 /** update recruitment position status (open→full/closed；closed 终态；已满由 IncreaseHiredCount 联动) */
 export function UpdatePositionStatus(req: Api.Hrm.UpdatePositionStatusRequest) {

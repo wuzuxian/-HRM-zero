@@ -87,6 +87,15 @@ export const generatedRoutes: GeneratedRoute[] = [
             },
             children: [
               {
+                name: 'hrm_attendance_apply_card-replacement-list',
+                path: '/hrm/attendance/apply/card-replacement-list',
+                component: 'view.hrm_attendance_apply_card-replacement-list',
+                meta: {
+                  title: 'hrm_attendance_apply_card-replacement-list',
+                  i18nKey: 'route.hrm_attendance_apply_card-replacement-list'
+                }
+              },
+              {
                 name: 'hrm_attendance_apply_leave-cancel-list',
                 path: '/hrm/attendance/apply/leave-cancel-list',
                 component: 'view.hrm_attendance_apply_leave-cancel-list',

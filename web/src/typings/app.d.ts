@@ -456,6 +456,11 @@ declare namespace App {
             confirm: string;
             submit: string;
           };
+          cardreplacement: {
+            add: string;
+            edit: string;
+            delete: string;
+          };
           attendancegroup: {
             add: string;
             edit: string;
@@ -1294,6 +1299,48 @@ declare namespace App {
                 timeRangeRequired: string;
                 confirmHoursRequired: string;
                 confirmHoursExceeded: string;
+                reason: string;
+              };
+            };
+            cardReplacement: {
+              title: string;
+              billNo: string;
+              employeeNo: string;
+              employeeName: string;
+              orgName: string;
+              punchDate: string;
+              cardType: string;
+              clockIn: string;
+              clockOut: string;
+              punchTime: string;
+              origClockInTime: string;
+              origClockOutTime: string;
+              reason: string;
+              creatorName: string;
+              createTime: string;
+              selectEmployee: string;
+              addTitle: string;
+              editTitle: string;
+              submit: string;
+              approve: string;
+              reject: string;
+              revoke: string;
+              records: string;
+              noRecords: string;
+              confirmSubmit: string;
+              confirmApprove: string;
+              confirmReject: string;
+              confirmRevoke: string;
+              form: {
+                billNo: string;
+                status: string;
+                employeeNo: string;
+                cardType: string;
+                selectEmployee: string;
+                punchDate: string;
+                punchDateRequired: string;
+                punchTime: string;
+                punchTimeRequired: string;
                 reason: string;
               };
             };

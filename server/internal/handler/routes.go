@@ -13,6 +13,7 @@ import (
 	v1hrmattendancegroup "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/attendancegroup"
 	v1hrmbill "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/bill"
 	v1hrmcandidate "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/candidate"
+	v1hrmcardreplacement "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/cardreplacement"
 	v1hrmcert_template "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/cert_template"
 	v1hrmcertificate "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/certificate"
 	v1hrmcontract "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/contract"
@@ -267,6 +268,37 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodPost,
 						Path:    "/hrm/updateCandidateStatus",
 						Handler: v1hrmcandidate.UpdateStatus(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addCardReplacement",
+						Handler: v1hrmcardreplacement.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteCardReplacement",
+						Handler: v1hrmcardreplacement.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editCardReplacement",
+						Handler: v1hrmcardreplacement.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getCardReplacementList",
+						Handler: v1hrmcardreplacement.List(serverCtx),
 					},
 				}...,
 			),

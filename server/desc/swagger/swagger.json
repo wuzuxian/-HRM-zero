@@ -653,6 +653,87 @@
         ]
       }
     },
+    "/api/v1/hrm/addCardReplacement": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:cardreplacement:add",
+        "operationId": "v1/Hrm/CardreplacementAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "cardType": {
+                  "description": "clockIn/clockOut",
+                  "type": "string"
+                },
+                "employeeName": {
+                  "type": "string"
+                },
+                "employeeNo": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "orgName": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "punchDate": {
+                  "description": "yyyy-MM-dd",
+                  "type": "string"
+                },
+                "punchTime": {
+                  "description": "YYYY-MM-DD HH:MM:SS",
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "employeeNo",
+                "employeeName",
+                "punchDate",
+                "cardType",
+                "punchTime"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/cardreplacement"
+        ]
+      }
+    },
     "/api/v1/hrm/addCertTemplate": {
       "post": {
         "consumes": [
@@ -3884,6 +3965,59 @@
         ]
       }
     },
+    "/api/v1/hrm/deleteCardReplacement": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:cardreplacement:delete",
+        "operationId": "v1/Hrm/CardreplacementDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/cardreplacement"
+        ]
+      }
+    },
     "/api/v1/hrm/deleteCertTemplate": {
       "post": {
         "consumes": [
@@ -5693,6 +5827,88 @@
         "summary": "Edit",
         "tags": [
           "v1/hrm/candidate"
+        ]
+      }
+    },
+    "/api/v1/hrm/editCardReplacement": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:cardreplacement:edit",
+        "operationId": "v1/Hrm/CardreplacementEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "cardType": {
+                  "type": "string"
+                },
+                "employeeName": {
+                  "type": "string"
+                },
+                "employeeNo": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "orgName": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "punchDate": {
+                  "type": "string"
+                },
+                "punchTime": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "employeeNo",
+                "employeeName",
+                "punchDate",
+                "cardType",
+                "punchTime"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/cardreplacement"
         ]
       }
     },
@@ -9621,6 +9837,194 @@
         "summary": "List",
         "tags": [
           "v1/hrm/candidate"
+        ]
+      }
+    },
+    "/api/v1/hrm/getCardReplacementList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:cardreplacement:list",
+        "operationId": "v1/Hrm/CardreplacementList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据编号（模糊）",
+            "in": "query",
+            "name": "billNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据状态",
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "员工工号",
+            "in": "query",
+            "name": "employeeNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "补卡类型 clockIn/clockOut",
+            "in": "query",
+            "name": "cardType",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "1=强制只看我的单据",
+            "in": "query",
+            "name": "mine",
+            "type": "integer"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "billNo": {
+                        "description": "单据编号 HR206-...",
+                        "type": "string"
+                      },
+                      "cardType": {
+                        "description": "补卡类型 clockIn 上班卡 / clockOut 下班卡",
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "creatorName": {
+                        "description": "申请人姓名",
+                        "type": "string"
+                      },
+                      "creatorUuid": {
+                        "description": "申请人 uuid",
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "description": "员工姓名（快照）",
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "description": "员工工号（快照）",
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "description": "员工档案 uuid",
+                        "type": "string"
+                      },
+                      "orgName": {
+                        "description": "部门名称（快照）",
+                        "type": "string"
+                      },
+                      "orgUuid": {
+                        "description": "员工所属部门（组织 uuid，快照）",
+                        "type": "string"
+                      },
+                      "origClockInTime": {
+                        "description": "原上班打卡（快照，空=缺卡）",
+                        "type": "string"
+                      },
+                      "origClockOutTime": {
+                        "description": "原下班打卡（快照，空=缺卡）",
+                        "type": "string"
+                      },
+                      "punchDate": {
+                        "description": "补卡日期 yyyy-MM-dd",
+                        "type": "string"
+                      },
+                      "punchTime": {
+                        "description": "补卡时间 YYYY-MM-DD HH:MM:SS",
+                        "type": "string"
+                      },
+                      "reason": {
+                        "description": "补卡原因",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "单据状态 unsubmitted/approving/approved/rejected/revoked",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "billNo",
+                      "status",
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "orgUuid",
+                      "orgName",
+                      "punchDate",
+                      "cardType",
+                      "punchTime",
+                      "reason",
+                      "origClockInTime",
+                      "origClockOutTime",
+                      "creatorUuid",
+                      "creatorName",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/cardreplacement"
         ]
       }
     },

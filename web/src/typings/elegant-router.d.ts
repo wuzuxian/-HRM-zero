@@ -37,6 +37,7 @@ declare module "@elegant-router/types" {
     "hrm": "/hrm";
     "hrm_attendance": "/hrm/attendance";
     "hrm_attendance_apply": "/hrm/attendance/apply";
+    "hrm_attendance_apply_card-replacement-list": "/hrm/attendance/apply/card-replacement-list";
     "hrm_attendance_apply_leave-cancel-list": "/hrm/attendance/apply/leave-cancel-list";
     "hrm_attendance_apply_overtime-bill-list": "/hrm/attendance/apply/overtime-bill-list";
     "hrm_attendance_data": "/hrm/attendance/data";
@@ -177,6 +178,7 @@ declare module "@elegant-router/types" {
     | "login"
     | "about"
     | "home"
+    | "hrm_attendance_apply_card-replacement-list"
     | "hrm_attendance_apply_leave-cancel-list"
     | "hrm_attendance_apply_overtime-bill-list"
     | "hrm_attendance_data_leave-balance"
