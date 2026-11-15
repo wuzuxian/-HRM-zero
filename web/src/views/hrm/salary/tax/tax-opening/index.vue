@@ -251,22 +251,12 @@ async function handleExport() {
           @delete="handleBatchDelete"
           @refresh="getData"
         >
-          <NButton
-            v-auth="'hrm:tax_opening:import'"
-            size="small"
-            class="ml-8px"
-            @click="importVisible = true"
-          >
-            <icon-mdi-file-upload-outline class="text-icon mr-4px" />
+          <NButton v-auth="'hrm:tax_opening:import'" size="small" class="ml-8px" @click="importVisible = true">
+            <icon-mdi-file-upload-outline class="mr-4px text-icon" />
             {{ $t('page.hrm.salary.tax.opening.import') }}
           </NButton>
-          <NButton
-            v-auth="'hrm:tax_opening:export'"
-            size="small"
-            class="ml-8px"
-            @click="handleExport"
-          >
-            <icon-mdi-file-export-outline class="text-icon mr-4px" />
+          <NButton v-auth="'hrm:tax_opening:export'" size="small" class="ml-8px" @click="handleExport">
+            <icon-mdi-file-export-outline class="mr-4px text-icon" />
             {{ $t('button.hrm.tax_opening.export') }}
           </NButton>
         </TableHeaderOperation>

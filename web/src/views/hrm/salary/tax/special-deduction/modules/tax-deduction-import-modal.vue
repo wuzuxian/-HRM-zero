@@ -54,9 +54,7 @@ async function handleSubmit() {
     const content = await readFileAsBase64(file);
     const { error, data } = await ImportTaxSpecialDeduction({ fileName: file.name, content });
     if (!error) {
-      window.$message?.success(
-        `${$t('page.hrm.salary.tax.deduction.importSuccess')}: ${data?.successCount ?? 0}`
-      );
+      window.$message?.success(`${$t('page.hrm.salary.tax.deduction.importSuccess')}: ${data?.successCount ?? 0}`);
       visible.value = false;
       emit('submitted');
     }

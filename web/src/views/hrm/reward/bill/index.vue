@@ -379,12 +379,7 @@ function recordActionLabel(action: string) {
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <RewardSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getDataByPage" />
-    <NCard
-      :title="$t('page.hrm.reward.title')"
-      :bordered="false"
-      size="small"
-      class="sm:flex-1-hidden card-wrapper"
-    >
+    <NCard :title="$t('page.hrm.reward.title')" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
       <template #header-extra>
         <TableHeaderOperation
           v-model:columns="columnChecks"

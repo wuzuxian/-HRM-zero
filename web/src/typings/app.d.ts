@@ -461,6 +461,16 @@ declare namespace App {
             save: string;
             delete: string;
           };
+          punch: {
+            punch: string;
+            myList: string;
+            add: string;
+            edit: string;
+            delete: string;
+            export: string;
+            import: string;
+            settle: string;
+          };
           overtimerule: {
             add: string;
             edit: string;
@@ -1208,6 +1218,65 @@ declare namespace App {
                 actualEnd: string;
                 actualRangeRequired: string;
                 reason: string;
+              };
+            };
+            attendancePunch: {
+              title: string;
+              listTitle: string;
+              clockIn: string;
+              clockOut: string;
+              clockInSuccess: string;
+              clockOutSuccess: string;
+            };
+            punchRecord: {
+              title: string;
+              dateRange: string;
+              name: string;
+              employeeName: string;
+              username: string;
+              punchDate: string;
+              weekday: string;
+              clockInTime: string;
+              clockInStatus: string;
+              clockInLocation: string;
+              clockOutTime: string;
+              clockOutStatus: string;
+              clockOutLocation: string;
+              overtime: string;
+              overtimeYes: string;
+              overtimeNo: string;
+              employeeUuid: string;
+              statusNormal: string;
+              statusField: string;
+              statusMissing: string;
+              settleStatus: string;
+              settleNormal: string;
+              settleLate: string;
+              settleEarly: string;
+              settleMissing: string;
+              settleRest: string;
+              settleNoRule: string;
+              lateMinutes: string;
+              earlyMinutes: string;
+              workHours: string;
+              addTitle: string;
+              editTitle: string;
+              exportTitle: string;
+              importTitle: string;
+              importHint: string;
+              importFileRequired: string;
+              importSuccess: string;
+              settleTitle: string;
+              settleScope: string;
+              settleScopeHint: string;
+              settleRangeRequired: string;
+              settleSuccess: string;
+              form: {
+                name: string;
+                clockInStatus: string;
+                location: string;
+                employeeUuid: string;
+                punchDate: string;
               };
             };
             overtimeRule: {

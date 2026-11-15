@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { $t } from '@/locales';
 import { useNaiveForm } from '@/hooks/common/form';
-import {
-  hrmCertTemplateSourceOptions,
-  hrmCertTemplateStatusOptions
-} from '@/constants/business';
+import { hrmCertTemplateSourceOptions, hrmCertTemplateStatusOptions } from '@/constants/business';
 import { translateOptions } from '@/utils/common';
 
 defineOptions({

@@ -290,7 +290,8 @@ watch(visible, () => {
             />
           </NFormItemGi>
           <NFormItemGi span="24" :label="$t('page.hrm.employeeRelation.transfer.transferReason')" path="transferReason">
-            <NTextarea
+            <NInput
+  type="textarea"
               v-model:value="model.transferReason"
               :rows="2"
               :placeholder="$t('page.hrm.employeeRelation.transfer.form.transferReason')"

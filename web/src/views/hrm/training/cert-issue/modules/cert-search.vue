@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { $t } from '@/locales';
 import { useNaiveForm } from '@/hooks/common/form';
-import {
-  hrmCertificateSourceOptions,
-  hrmTrainingCertificateStatusOptions
-} from '@/constants/business';
+import { hrmCertificateSourceOptions, hrmTrainingCertificateStatusOptions } from '@/constants/business';
 import { translateOptions } from '@/utils/common';
 
 defineOptions({
@@ -39,24 +36,11 @@ async function search() {
       <NCollapseItem :title="$t('common.search')" name="cert-search">
         <NForm ref="formRef" :model="model" label-placement="left" :label-width="80">
           <NGrid responsive="screen" item-responsive>
-            <NFormItemGi
-              span="24 s:12 m:6"
-              :label="$t('page.hrm.training.certNo')"
-              path="certNo"
-              class="pr-24px"
-            >
+            <NFormItemGi span="24 s:12 m:6" :label="$t('page.hrm.training.certNo')" path="certNo" class="pr-24px">
               <NInput v-model:value="model.certNo" :placeholder="$t('page.hrm.training.certificate.form.certNo')" />
             </NFormItemGi>
-            <NFormItemGi
-              span="24 s:12 m:6"
-              :label="$t('page.hrm.training.certName')"
-              path="certName"
-              class="pr-24px"
-            >
-              <NInput
-                v-model:value="model.certName"
-                :placeholder="$t('page.hrm.training.certificate.form.certName')"
-              />
+            <NFormItemGi span="24 s:12 m:6" :label="$t('page.hrm.training.certName')" path="certName" class="pr-24px">
+              <NInput v-model:value="model.certName" :placeholder="$t('page.hrm.training.certificate.form.certName')" />
             </NFormItemGi>
             <NFormItemGi
               span="24 s:12 m:6"

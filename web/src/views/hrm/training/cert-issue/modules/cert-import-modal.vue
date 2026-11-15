@@ -3,7 +3,7 @@ import { reactive, ref, watch } from 'vue';
 import type { UploadFileInfo } from 'naive-ui';
 import { useLoading } from '@sa/hooks';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
-import { ImportExternalCertificate, GetUserList } from '@/service/api';
+import { GetUserList, ImportExternalCertificate } from '@/service/api';
 import { $t } from '@/locales';
 
 defineOptions({

@@ -102,7 +102,11 @@ watch(visible, () => {
 <template>
   <NModal v-model:show="visible" :title="title" preset="card" class="w-560px">
     <NForm ref="formRef" :model="model" label-placement="left" :label-width="140">
-      <NFormItem :label="$t('page.hrm.salary.tax.deduction.employeeName')" path="employeeUuid" :rule="defaultRequiredRule">
+      <NFormItem
+        :label="$t('page.hrm.salary.tax.deduction.employeeName')"
+        path="employeeUuid"
+        :rule="defaultRequiredRule"
+      >
         <NSelect
           v-model:value="model.employeeUuid"
           :options="employeeOptions"
@@ -125,7 +129,7 @@ watch(visible, () => {
         />
       </NFormItem>
       <NFormItem :label="$t('page.hrm.salary.tax.deduction.amount')" path="amount" :rule="defaultRequiredRule">
-        <NInputNumber v-model:value="model.amount" :min="0" class="w-full" :placeholder="'0.00'" />
+        <NInputNumber v-model:value="model.amount" :min="0" class="w-full" placeholder="0.00" />
       </NFormItem>
       <NFormItem :label="$t('page.hrm.salary.tax.deduction.form.months')" path="months">
         <NSelect

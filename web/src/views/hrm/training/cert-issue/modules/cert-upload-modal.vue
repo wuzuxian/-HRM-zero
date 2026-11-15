@@ -80,12 +80,7 @@ watch(visible, () => {
 </script>
 
 <template>
-  <NModal
-    v-model:show="visible"
-    :title="$t('page.hrm.training.certificate.upload')"
-    preset="card"
-    class="w-480px"
-  >
+  <NModal v-model:show="visible" :title="$t('page.hrm.training.certificate.upload')" preset="card" class="w-480px">
     <NUpload v-model:file-list="fileList" :max="1" :default-upload="false" accept=".pdf,.png,.jpg,.jpeg">
       <NButton>{{ $t('page.hrm.training.certificate.chooseFile') }}</NButton>
     </NUpload>

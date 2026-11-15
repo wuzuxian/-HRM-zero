@@ -88,9 +88,7 @@ async function handleSubmit() {
   confirmStartLoading();
 
   const request =
-    props.operateType === 'add'
-      ? AddReward({ ...model })
-      : EditReward({ ...model, uuid: props.rowData?.uuid ?? '' });
+    props.operateType === 'add' ? AddReward({ ...model }) : EditReward({ ...model, uuid: props.rowData?.uuid ?? '' });
 
   const { error } = await request;
   if (!error) {
@@ -115,46 +113,24 @@ watch(visible, () => {
       <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" :label-width="100">
         <NDivider :title="$t('page.hrm.reward.sectionEmployee')" title-placement="left" />
         <NGrid responsive="screen" item-responsive>
-          <NFormItemGi
-            span="24 s:12 m:8"
-            :label="$t('page.hrm.reward.employeeNo')"
-            path="employeeNo"
-          >
-            <NInput
-              v-model:value="model.employeeNo"
-              :placeholder="$t('page.hrm.reward.form.employeeNo')"
-            />
+          <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.reward.employeeNo')" path="employeeNo">
+            <NInput v-model:value="model.employeeNo" :placeholder="$t('page.hrm.reward.form.employeeNo')" />
           </NFormItemGi>
-          <NFormItemGi
-            span="24 s:12 m:8"
-            :label="$t('page.hrm.reward.employeeName')"
-            path="employeeName"
-          >
-            <NInput
-              v-model:value="model.employeeName"
-              :placeholder="$t('page.hrm.reward.form.employeeName')"
-            />
+          <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.reward.employeeName')" path="employeeName">
+            <NInput v-model:value="model.employeeName" :placeholder="$t('page.hrm.reward.form.employeeName')" />
           </NFormItemGi>
         </NGrid>
 
         <NDivider :title="$t('page.hrm.reward.sectionReward')" title-placement="left" />
         <NGrid responsive="screen" item-responsive>
-          <NFormItemGi
-            span="24 s:12 m:8"
-            :label="$t('page.hrm.reward.rewardType.title')"
-            path="rewardType"
-          >
+          <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.reward.rewardType.title')" path="rewardType">
             <NSelect
               v-model:value="model.rewardType"
               :options="translateOptions(hrmRewardTypeOptions)"
               :placeholder="$t('page.hrm.reward.form.rewardType')"
             />
           </NFormItemGi>
-          <NFormItemGi
-            span="24 s:12 m:8"
-            :label="$t('page.hrm.reward.rewardLevel.title')"
-            path="rewardLevel"
-          >
+          <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.reward.rewardLevel.title')" path="rewardLevel">
             <NSelect
               v-model:value="model.rewardLevel"
               :options="translateOptions(hrmRewardLevelOptions)"
@@ -162,10 +138,7 @@ watch(visible, () => {
             />
           </NFormItemGi>
           <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.reward.docNo')" path="docNo">
-            <NInput
-              v-model:value="model.docNo"
-              :placeholder="$t('page.hrm.reward.form.docNo')"
-            />
+            <NInput v-model:value="model.docNo" :placeholder="$t('page.hrm.reward.form.docNo')" />
           </NFormItemGi>
           <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.reward.occurDate')" path="occurDate">
             <NDatePicker
@@ -178,22 +151,12 @@ watch(visible, () => {
           <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.reward.amount')" path="amount">
             <NInputNumber v-model:value="model.amount" :min="0" :precision="2" class="w-full" />
           </NFormItemGi>
-          <NFormItemGi
-            span="24 s:12 m:8"
-            :label="$t('page.hrm.reward.salaryMonth')"
-            path="salaryMonth"
-          >
-            <NInput
-              v-model:value="model.salaryMonth"
-              :placeholder="$t('page.hrm.reward.form.salaryMonth')"
-            />
+          <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.reward.salaryMonth')" path="salaryMonth">
+            <NInput v-model:value="model.salaryMonth" :placeholder="$t('page.hrm.reward.form.salaryMonth')" />
           </NFormItemGi>
           <NFormItemGi span="24" :label="$t('page.hrm.reward.reason')" path="reason">
-            <NTextarea
-              v-model:value="model.reason"
-              :rows="2"
-              :placeholder="$t('page.hrm.reward.form.reason')"
-            />
+            <NInput
+  type="textarea" v-model:value="model.reason" :rows="2" :placeholder="$t('page.hrm.reward.form.reason')" />
           </NFormItemGi>
         </NGrid>
       </NForm>

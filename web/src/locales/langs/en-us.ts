@@ -185,9 +185,12 @@ const local: App.I18n.Schema = {
     'hrm_attendance_setting_leave-type': 'Leave Types',
     'hrm_attendance_setting_overtime-rule': 'Overtime Rules',
     hrm_attendance_data: 'Leave Data',
+    hrm_attendance_my: 'My Attendance',
     'hrm_attendance_data_leave-balance': 'Leave Balances',
     hrm_attendance_apply: 'Leave Applications',
     'hrm_attendance_apply_leave-cancel-list': 'Leave & Cancellation',
+    'hrm_attendance_my_attendance-punch': 'Attendance Punch',
+    'hrm_attendance_data_punch-record': 'Punch Records',
     hrm_attendance_scheduling: 'Scheduling',
     'hrm_attendance_scheduling_schedule-cycle': 'Schedule Cycles',
     'hrm_employee-relation': 'HR Management',
@@ -290,6 +293,16 @@ const local: App.I18n.Schema = {
       attendanceconfig: {
         save: 'Save Org Rule',
         delete: 'Delete Org Rule'
+      },
+      punch: {
+        punch: 'Clock In/Out',
+        myList: 'Refresh My Punches',
+        add: 'Add Punch Record',
+        edit: 'Edit Punch Record',
+        delete: 'Delete Punch Records',
+        export: 'Export Punch Records',
+        import: 'Import External Punch Data',
+        settle: 'Manual Day Settle'
       },
       overtimerule: {
         add: 'Add Overtime Rule',
@@ -1162,7 +1175,7 @@ const local: App.I18n.Schema = {
           form: {
             selectEmployee: 'Please select employee',
             certType: 'Please enter certificate type',
-            certNo: "Please enter certificate no. (keep masked value on edit = unchanged)"
+            certNo: 'Please enter certificate no. (keep masked value on edit = unchanged)'
           }
         }
       },
@@ -1401,6 +1414,67 @@ const local: App.I18n.Schema = {
             actualEnd: 'Actual end',
             actualRangeRequired: 'Please select the actual range',
             reason: 'Please enter reason (optional)'
+          }
+        },
+        attendancePunch: {
+          title: 'Attendance Punch',
+          listTitle: 'My Punch Records',
+          clockIn: 'Clock In',
+          clockOut: 'Clock Out',
+          clockInSuccess: 'Clocked in',
+          clockOutSuccess: 'Clocked out'
+        },
+        punchRecord: {
+          title: 'Punch Records',
+          dateRange: 'Punch Date Range',
+          name: 'Name',
+          employeeName: 'Name',
+          username: 'Account',
+          punchDate: 'Punch Date',
+          weekday: 'Weekday',
+          clockInTime: 'Clock In',
+          clockInStatus: 'In Status',
+          clockInLocation: 'In Location',
+          clockOutTime: 'Clock Out',
+          clockOutStatus: 'Out Status',
+          clockOutLocation: 'Out Location',
+          overtime: 'Overtime',
+          overtimeYes: 'Yes',
+          overtimeNo: 'No',
+          employeeUuid: 'Employee',
+          statusNormal: 'Normal',
+          statusField: 'Field',
+          statusMissing: 'Missing',
+          settleStatus: 'Settle Status',
+          settleNormal: 'Normal',
+          settleLate: 'Late',
+          settleEarly: 'Early Leave',
+          settleMissing: 'Missing',
+          settleRest: 'Rest Day',
+          settleNoRule: 'No Rule',
+          lateMinutes: 'Late (min)',
+          earlyMinutes: 'Early (min)',
+          workHours: 'Work Hours',
+          addTitle: 'Add Punch Record',
+          editTitle: 'Edit Punch Record',
+          exportTitle: 'Export',
+          importTitle: 'Import External Punch Data',
+          importHint:
+            'CSV columns: date,employee_no,clock_in_time,clock_in_status,clock_in_location,clock_out_time,clock_out_status,clock_out_location,overtime',
+          importFileRequired: 'Please select a CSV file',
+          importSuccess: 'Imported',
+          settleTitle: 'Manual Day Settle',
+          settleScope: 'Settle Scope',
+          settleScopeHint:
+            'Settle all employees day by day in the range; workdays without punches are recorded as missing',
+          settleRangeRequired: 'Please select the settle date range',
+          settleSuccess: 'Settle completed',
+          form: {
+            name: 'Please enter name',
+            clockInStatus: 'Please select clock-in status',
+            location: 'Please enter location (GPS address for field punch)',
+            employeeUuid: 'Please enter employee UUID',
+            punchDate: 'Please select punch date'
           }
         },
         overtimeRule: {
@@ -1870,7 +1944,8 @@ const local: App.I18n.Schema = {
             import: 'Import',
             importSuccess: 'Import succeeded',
             importModalTitle: 'Import Tax Openings',
-            chooseFileTip: 'Choose an xlsx file (columns: name / ID card / subject / year / until month / totals / remark)',
+            chooseFileTip:
+              'Choose an xlsx file (columns: name / ID card / subject / year / until month / totals / remark)',
             form: {
               employeeName: 'Please select employee',
               subjectName: 'Please select salary subject (empty = any subject)',

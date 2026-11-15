@@ -130,20 +130,10 @@ watch(visible, () => {
           />
         </NFormItemGi>
         <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.training.plan.startDate')" path="startDate">
-          <NDatePicker
-            v-model:formatted-value="model.startDate"
-            type="date"
-            value-format="yyyy-MM-dd"
-            class="w-full"
-          />
+          <NDatePicker v-model:formatted-value="model.startDate" type="date" value-format="yyyy-MM-dd" class="w-full" />
         </NFormItemGi>
         <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.training.plan.endDate')" path="endDate">
-          <NDatePicker
-            v-model:formatted-value="model.endDate"
-            type="date"
-            value-format="yyyy-MM-dd"
-            class="w-full"
-          />
+          <NDatePicker v-model:formatted-value="model.endDate" type="date" value-format="yyyy-MM-dd" class="w-full" />
         </NFormItemGi>
       </NGrid>
     </NForm>

@@ -1,11 +1,7 @@
 <script setup lang="tsx">
 import { computed, reactive, ref } from 'vue';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import {
-  DeleteTrainingSession,
-  FinishTrainingSession,
-  GetTrainingSessionList
-} from '@/service/api';
+import { DeleteTrainingSession, FinishTrainingSession, GetTrainingSessionList } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { hrmTrainingSessionStatusRecord } from '@/constants/business';

@@ -174,11 +174,7 @@ watch(visible, () => {
               :placeholder="$t('page.hrm.employee.contractExpiring.form.contractNo')"
             />
           </NFormItemGi>
-          <NFormItemGi
-            span="24 s:12 m:12"
-            :label="$t('page.hrm.employee.contractExpiring.startDate')"
-            path="startDate"
-          >
+          <NFormItemGi span="24 s:12 m:12" :label="$t('page.hrm.employee.contractExpiring.startDate')" path="startDate">
             <NDatePicker
               v-model:formatted-value="model.startDate"
               type="date"
@@ -186,23 +182,15 @@ watch(visible, () => {
               class="w-full"
             />
           </NFormItemGi>
-          <NFormItemGi
-            span="24 s:12 m:12"
-            :label="$t('page.hrm.employee.contractExpiring.endDate')"
-            path="endDate"
-          >
-            <NDatePicker
-              v-model:formatted-value="model.endDate"
-              type="date"
-              value-format="yyyy-MM-dd"
-              class="w-full"
-            />
+          <NFormItemGi span="24 s:12 m:12" :label="$t('page.hrm.employee.contractExpiring.endDate')" path="endDate">
+            <NDatePicker v-model:formatted-value="model.endDate" type="date" value-format="yyyy-MM-dd" class="w-full" />
           </NFormItemGi>
           <NFormItemGi span="24 s:12 m:12" :label="$t('page.hrm.employee.contractExpiring.status')" path="status">
             <NSelect v-model:value="model.status" :options="statusOptions" />
           </NFormItemGi>
           <NFormItemGi span="24" :label="$t('page.hrm.employee.contractExpiring.remark')" path="remark">
-            <NTextarea
+            <NInput
+  type="textarea"
               v-model:value="model.remark"
               :rows="2"
               :placeholder="$t('page.hrm.employee.contractExpiring.form.remark')"

@@ -347,8 +347,9 @@ watch(visible, () => {
                 />
               </NFormItemGi>
               <NFormItemGi span="24" :label="$t('page.hrm.employeeRelation.entry.remark')" path="remark">
-                <NTextarea
+                <NInput
                   v-model:value="model.remark"
+                  type="textarea"
                   :rows="2"
                   :placeholder="$t('page.hrm.employeeRelation.entry.form.remark')"
                 />
@@ -588,8 +589,9 @@ watch(visible, () => {
         <NTabPane name="attachments" :tab="$t('page.hrm.employeeRelation.entry.tabAttachments')">
           <NForm label-placement="left" :label-width="110">
             <NFormItem :label="$t('page.hrm.employeeRelation.entry.attachmentDesc')" path="attachmentDesc">
-              <NTextarea
+              <NInput
                 v-model:value="model.attachmentDesc"
+                type="textarea"
                 :rows="4"
                 :placeholder="$t('page.hrm.employeeRelation.entry.form.attachmentDesc')"
               />

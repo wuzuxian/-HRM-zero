@@ -28,7 +28,6 @@ async function search() {
   await validate();
   emit('search');
 }
-
 </script>
 
 <template>

@@ -12,11 +12,7 @@ import {
 } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
-import {
-  hrmBillStatusRecord,
-  hrmTrainingPlanPublishedRecord,
-  hrmTrainingPlanTypeRecord
-} from '@/constants/business';
+import { hrmBillStatusRecord, hrmTrainingPlanPublishedRecord, hrmTrainingPlanTypeRecord } from '@/constants/business';
 import { useTable } from '@/hooks/common/table';
 import PlanOperateModal from './modules/plan-operate-modal.vue';
 import PlanSearch from './modules/plan-search.vue';
@@ -33,11 +29,7 @@ const EDITABLE_STATUSES: Api.Hrm.BillStatus[] = ['unsubmitted', 'rejected', 'rev
 const HR216 = '216';
 
 function isEditable(row: Api.Hrm.TrainingPlan) {
-  return (
-    row.status !== null &&
-    EDITABLE_STATUSES.includes(row.status) &&
-    row.published === 0
-  );
+  return row.status !== null && EDITABLE_STATUSES.includes(row.status) && row.published === 0;
 }
 
 function statusTag(row: Api.Hrm.TrainingPlan) {

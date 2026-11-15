@@ -1,11 +1,7 @@
 <script setup lang="tsx">
 import { computed, reactive, ref } from 'vue';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import {
-  DeleteTaxSpecialDeduction,
-  ExportTaxSpecialDeduction,
-  GetTaxSpecialDeductionList
-} from '@/service/api';
+import { DeleteTaxSpecialDeduction, ExportTaxSpecialDeduction, GetTaxSpecialDeductionList } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { hrmTaxDeductTypeRecord, hrmTaxDeductionSourceRecord } from '@/constants/business';
@@ -96,7 +92,9 @@ const {
       title: $t('page.hrm.salary.tax.deduction.sourceTitle'),
       align: 'center',
       width: 100,
-      render: row => <NTag type={row.source === 'import' ? 'info' : 'default'}>{$t(hrmTaxDeductionSourceRecord[row.source])}</NTag>
+      render: row => (
+        <NTag type={row.source === 'import' ? 'info' : 'default'}>{$t(hrmTaxDeductionSourceRecord[row.source])}</NTag>
+      )
     },
     {
       key: 'operate',
@@ -226,7 +224,7 @@ async function handleExport() {
             class="ml-8px"
             @click="maintainYearVisible = true"
           >
-            <icon-mdi-calendar-edit class="text-icon mr-4px" />
+            <icon-mdi-calendar-edit class="mr-4px text-icon" />
             {{ $t('page.hrm.salary.tax.deduction.maintainYear') }}
           </NButton>
           <NButton
@@ -235,16 +233,11 @@ async function handleExport() {
             class="ml-8px"
             @click="importVisible = true"
           >
-            <icon-mdi-file-upload-outline class="text-icon mr-4px" />
+            <icon-mdi-file-upload-outline class="mr-4px text-icon" />
             {{ $t('page.hrm.salary.tax.deduction.import') }}
           </NButton>
-          <NButton
-            v-auth="'hrm:tax_special_deduction:export'"
-            size="small"
-            class="ml-8px"
-            @click="handleExport"
-          >
-            <icon-mdi-file-export-outline class="text-icon mr-4px" />
+          <NButton v-auth="'hrm:tax_special_deduction:export'" size="small" class="ml-8px" @click="handleExport">
+            <icon-mdi-file-export-outline class="mr-4px text-icon" />
             {{ $t('button.hrm.tax_special_deduction.export') }}
           </NButton>
         </TableHeaderOperation>

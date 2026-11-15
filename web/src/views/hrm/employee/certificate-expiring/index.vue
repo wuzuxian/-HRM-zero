@@ -1,6 +1,7 @@
 <script setup lang="tsx">
 import { computed, reactive, ref, watch } from 'vue';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
+import { useLoading } from '@sa/hooks';
 import {
   AddEmployeeCertificate,
   DeleteEmployeeCertificate,
@@ -12,7 +13,6 @@ import {
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useTable } from '@/hooks/common/table';
-import { useLoading } from '@sa/hooks';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { certExpiryStateOptions } from '@/constants/business';
 import { translateOptions } from '@/utils/common';
@@ -432,10 +432,16 @@ watch(operateVisible, () => {
               />
             </NFormItemGi>
             <NFormItemGi span="24 s:12 m:12" :label="$t('page.hrm.employee.certExpiring.certType')" path="certType">
-              <NInput v-model:value="certModel.certType" :placeholder="$t('page.hrm.employee.certExpiring.form.certType')" />
+              <NInput
+                v-model:value="certModel.certType"
+                :placeholder="$t('page.hrm.employee.certExpiring.form.certType')"
+              />
             </NFormItemGi>
             <NFormItemGi span="24 s:12 m:12" :label="$t('page.hrm.employee.certExpiring.certNo')" path="certNo">
-              <NInput v-model:value="certModel.certNo" :placeholder="$t('page.hrm.employee.certExpiring.form.certNo')" />
+              <NInput
+                v-model:value="certModel.certNo"
+                :placeholder="$t('page.hrm.employee.certExpiring.form.certNo')"
+              />
             </NFormItemGi>
             <NFormItemGi span="24 s:12 m:12" :label="$t('page.hrm.employee.certExpiring.issueDate')" path="issueDate">
               <NDatePicker
@@ -456,7 +462,8 @@ watch(operateVisible, () => {
               />
             </NFormItemGi>
             <NFormItemGi span="24" :label="$t('page.hrm.employee.certExpiring.remark')" path="remark">
-              <NTextarea v-model:value="certModel.remark" :rows="2" />
+              <NInput
+  type="textarea" v-model:value="certModel.remark" :rows="2" />
             </NFormItemGi>
           </NGrid>
         </NForm>

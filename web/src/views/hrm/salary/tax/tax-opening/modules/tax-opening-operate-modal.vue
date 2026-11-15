@@ -195,25 +195,25 @@ watch(visible, () => {
           />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.salary.tax.opening.incomeTotal')" path="incomeTotal">
-          <NInputNumber v-model:value="model.incomeTotal" :min="0" class="w-full" :placeholder="'0.00'" />
+          <NInputNumber v-model:value="model.incomeTotal" :min="0" class="w-full" placeholder="0.00" />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.salary.tax.opening.specialDeductionTotal')" path="specialDeductionTotal">
-          <NInputNumber v-model:value="model.specialDeductionTotal" :min="0" class="w-full" :placeholder="'0.00'" />
+          <NInputNumber v-model:value="model.specialDeductionTotal" :min="0" class="w-full" placeholder="0.00" />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.salary.tax.opening.specialExtraTotal')" path="specialExtraTotal">
-          <NInputNumber v-model:value="model.specialExtraTotal" :min="0" class="w-full" :placeholder="'0.00'" />
+          <NInputNumber v-model:value="model.specialExtraTotal" :min="0" class="w-full" placeholder="0.00" />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.salary.tax.opening.exemptTotal')" path="exemptTotal">
-          <NInputNumber v-model:value="model.exemptTotal" :min="0" class="w-full" :placeholder="'0.00'" />
+          <NInputNumber v-model:value="model.exemptTotal" :min="0" class="w-full" placeholder="0.00" />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.salary.tax.opening.otherDeductionTotal')" path="otherDeductionTotal">
-          <NInputNumber v-model:value="model.otherDeductionTotal" :min="0" class="w-full" :placeholder="'0.00'" />
+          <NInputNumber v-model:value="model.otherDeductionTotal" :min="0" class="w-full" placeholder="0.00" />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.salary.tax.opening.taxableIncomeTotal')" path="taxableIncomeTotal">
-          <NInputNumber v-model:value="model.taxableIncomeTotal" class="w-full" :placeholder="'0.00'" />
+          <NInputNumber v-model:value="model.taxableIncomeTotal" class="w-full" placeholder="0.00" />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.salary.tax.opening.taxPaidTotal')" path="taxPaidTotal">
-          <NInputNumber v-model:value="model.taxPaidTotal" :min="0" class="w-full" :placeholder="'0.00'" />
+          <NInputNumber v-model:value="model.taxPaidTotal" :min="0" class="w-full" placeholder="0.00" />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.salary.tax.opening.remark')" path="remark">
           <NInput

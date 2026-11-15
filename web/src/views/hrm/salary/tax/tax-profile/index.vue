@@ -220,13 +220,8 @@ async function handleExport() {
           @delete="handleBatchDelete"
           @refresh="getData"
         >
-          <NButton
-            v-auth="'hrm:tax_profile:export'"
-            size="small"
-            class="ml-8px"
-            @click="handleExport"
-          >
-            <icon-mdi-file-export-outline class="text-icon mr-4px" />
+          <NButton v-auth="'hrm:tax_profile:export'" size="small" class="ml-8px" @click="handleExport">
+            <icon-mdi-file-export-outline class="mr-4px text-icon" />
             {{ $t('button.hrm.tax_profile.export') }}
           </NButton>
         </TableHeaderOperation>

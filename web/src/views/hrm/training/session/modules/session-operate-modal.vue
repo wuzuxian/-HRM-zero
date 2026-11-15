@@ -144,10 +144,7 @@ watch(visible, () => {
     <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" :label-width="100">
       <NGrid responsive="screen" item-responsive>
         <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.training.session.sessionName')" path="sessionName">
-          <NInput
-            v-model:value="model.sessionName"
-            :placeholder="$t('page.hrm.training.session.form.sessionName')"
-          />
+          <NInput v-model:value="model.sessionName" :placeholder="$t('page.hrm.training.session.form.sessionName')" />
         </NFormItemGi>
         <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.training.session.planName')" path="planUuid">
           <NSelect

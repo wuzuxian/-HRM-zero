@@ -155,7 +155,8 @@ watch(visible, () => {
             />
           </NFormItemGi>
           <NFormItemGi span="24" :label="$t('page.hrm.candidate.remark')" path="remark">
-            <NTextarea v-model:value="model.remark" :rows="2" :placeholder="$t('page.hrm.candidate.form.remark')" />
+            <NInput
+  type="textarea" v-model:value="model.remark" :rows="2" :placeholder="$t('page.hrm.candidate.form.remark')" />
           </NFormItemGi>
         </NGrid>
       </NForm>

@@ -67,9 +67,7 @@ type Grid = Record<number, Partial<Record<Api.Hrm.TaxDeductionType, number>>>;
 
 const grid = ref<Grid>({});
 
-const monthLabels = computed(() =>
-  Array.from({ length: 12 }, (_, i) => `${i + 1}`)
-);
+const monthLabels = computed(() => Array.from({ length: 12 }, (_, i) => `${i + 1}`));
 
 function cellAmount(month: number, deductType: Api.Hrm.TaxDeductionType): number | undefined {
   return grid.value[month]?.[deductType];
@@ -135,9 +133,7 @@ async function handleSubmit() {
   });
   confirmEndLoading();
   if (error) return;
-  window.$message?.success(
-    `${$t('page.hrm.salary.tax.deduction.saved')}: ${resp?.saved ?? rows.length}`
-  );
+  window.$message?.success(`${$t('page.hrm.salary.tax.deduction.saved')}: ${resp?.saved ?? rows.length}`);
   closeModel();
   emit('submitted');
 }
@@ -169,7 +165,11 @@ export default { deductTypes };
 <template>
   <NModal v-model:show="visible" :title="title" preset="card" class="w-880px">
     <NForm ref="formRef" :model="model" label-placement="left" :label-width="100">
-      <NFormItem :label="$t('page.hrm.salary.tax.deduction.employeeName')" path="employeeUuid" :rule="defaultRequiredRule">
+      <NFormItem
+        :label="$t('page.hrm.salary.tax.deduction.employeeName')"
+        path="employeeUuid"
+        :rule="defaultRequiredRule"
+      >
         <NSelect
           v-model:value="model.employeeUuid"
           :options="employeeOptions"
@@ -195,14 +195,14 @@ export default { deductTypes };
             <th class="border border-gray-200 bg-gray-50 px-8px py-6px text-left">
               {{ $t('page.hrm.salary.tax.deduction.deductType') }}
             </th>
-            <th v-for="m in monthLabels" :key="m" class="border border-gray-200 bg-gray-50 px-4px py-6px w-56px">
+            <th v-for="m in monthLabels" :key="m" class="w-56px border border-gray-200 bg-gray-50 px-4px py-6px">
               {{ m }}
             </th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="dt in deductTypes" :key="dt">
-            <td class="border border-gray-200 px-8px py-4px text-left whitespace-nowrap">
+            <td class="whitespace-nowrap border border-gray-200 px-8px py-4px text-left">
               {{ $t(`page.hrm.salary.tax.deduction.deductType.${dt}`) }}
             </td>
             <td v-for="(m, idx) in monthLabels" :key="`${dt}-${idx}`" class="border border-gray-200 px-2px py-2px">
@@ -212,7 +212,7 @@ export default { deductTypes };
                 :min="0"
                 :show-button="false"
                 class="w-full"
-                :placeholder="'0'"
+                placeholder="0"
                 @update:value="(v: number | null) => setCellAmount(idx + 1, dt, v)"
               />
             </td>

@@ -113,6 +113,34 @@ export const generatedRoutes: GeneratedRoute[] = [
                   title: 'hrm_attendance_data_leave-balance',
                   i18nKey: 'route.hrm_attendance_data_leave-balance'
                 }
+              },
+              {
+                name: 'hrm_attendance_data_punch-record',
+                path: '/hrm/attendance/data/punch-record',
+                component: 'view.hrm_attendance_data_punch-record',
+                meta: {
+                  title: 'hrm_attendance_data_punch-record',
+                  i18nKey: 'route.hrm_attendance_data_punch-record'
+                }
+              }
+            ]
+          },
+          {
+            name: 'hrm_attendance_my',
+            path: '/hrm/attendance/my',
+            meta: {
+              title: 'hrm_attendance_my',
+              i18nKey: 'route.hrm_attendance_my'
+            },
+            children: [
+              {
+                name: 'hrm_attendance_my_attendance-punch',
+                path: '/hrm/attendance/my/attendance-punch',
+                component: 'view.hrm_attendance_my_attendance-punch',
+                meta: {
+                  title: 'hrm_attendance_my_attendance-punch',
+                  i18nKey: 'route.hrm_attendance_my_attendance-punch'
+                }
               }
             ]
           },

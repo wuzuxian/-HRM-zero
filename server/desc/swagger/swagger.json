@@ -2006,6 +2006,81 @@
         ]
       }
     },
+    "/api/v1/hrm/addPunchRecord": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:punch:add",
+        "operationId": "v1/Hrm/PunchAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "clockInLocation": {
+                  "type": "string"
+                },
+                "clockInStatus": {
+                  "type": "string"
+                },
+                "clockInTime": {
+                  "type": "string"
+                },
+                "clockOutLocation": {
+                  "type": "string"
+                },
+                "clockOutStatus": {
+                  "type": "string"
+                },
+                "clockOutTime": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "overtime": {
+                  "type": "string"
+                },
+                "punchDate": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "employeeUuid",
+                "punchDate"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/punch"
+        ]
+      }
+    },
     "/api/v1/hrm/addRegularization": {
       "post": {
         "consumes": [
@@ -4079,6 +4154,59 @@
         "summary": "Delete",
         "tags": [
           "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/deletePunchRecord": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:punch:delete",
+        "operationId": "v1/Hrm/PunchDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/punch"
         ]
       }
     },
@@ -6385,6 +6513,77 @@
         ]
       }
     },
+    "/api/v1/hrm/editPunchRecord": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:punch:edit",
+        "operationId": "v1/Hrm/PunchEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "clockInLocation": {
+                  "type": "string"
+                },
+                "clockInStatus": {
+                  "type": "string"
+                },
+                "clockInTime": {
+                  "type": "string"
+                },
+                "clockOutLocation": {
+                  "type": "string"
+                },
+                "clockOutStatus": {
+                  "type": "string"
+                },
+                "clockOutTime": {
+                  "type": "string"
+                },
+                "overtime": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/punch"
+        ]
+      }
+    },
     "/api/v1/hrm/editRegularization": {
       "post": {
         "consumes": [
@@ -7526,6 +7725,70 @@
         "summary": "Export",
         "tags": [
           "v1/hrm/org"
+        ]
+      }
+    },
+    "/api/v1/hrm/exportPunchRecord": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:punch:export",
+        "operationId": "v1/Hrm/PunchExport",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "clockInStatus": {
+                  "type": "string"
+                },
+                "endDate": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "startDate": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Export",
+        "tags": [
+          "v1/hrm/punch"
         ]
       }
     },
@@ -11246,6 +11509,190 @@
         ]
       }
     },
+    "/api/v1/hrm/getMyPunchList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:punch:myList",
+        "operationId": "v1/Hrm/PunchMyList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "startDate",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "endDate",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "clockStatus",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "clockInLocation": {
+                        "type": "string"
+                      },
+                      "clockInStatus": {
+                        "type": "string"
+                      },
+                      "clockInTime": {
+                        "type": "string"
+                      },
+                      "clockOutLocation": {
+                        "type": "string"
+                      },
+                      "clockOutStatus": {
+                        "type": "string"
+                      },
+                      "clockOutTime": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "overtime": {
+                        "type": "string"
+                      },
+                      "punchDate": {
+                        "type": "string"
+                      },
+                      "ruleSource": {
+                        "type": "string"
+                      },
+                      "settleEarlyMinutes": {
+                        "type": "integer"
+                      },
+                      "settleLateMinutes": {
+                        "type": "integer"
+                      },
+                      "settleStatus": {
+                        "type": "string"
+                      },
+                      "settleTime": {
+                        "type": "string"
+                      },
+                      "settleWorkHours": {
+                        "type": "number"
+                      },
+                      "source": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "userUuid": {
+                        "type": "string"
+                      },
+                      "username": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "weekday": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "punchDate",
+                      "employeeUuid",
+                      "userUuid",
+                      "username",
+                      "employeeNo",
+                      "employeeName",
+                      "orgName",
+                      "weekday",
+                      "clockInTime",
+                      "clockInStatus",
+                      "clockInLocation",
+                      "clockOutTime",
+                      "clockOutStatus",
+                      "clockOutLocation",
+                      "overtime",
+                      "source",
+                      "ruleSource",
+                      "settleStatus",
+                      "settleLateMinutes",
+                      "settleEarlyMinutes",
+                      "settleWorkHours",
+                      "settleTime",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "MyList",
+        "tags": [
+          "v1/hrm/punch"
+        ]
+      }
+    },
     "/api/v1/hrm/getMyTrainingCertificateList": {
       "get": {
         "description": "接口权限编码:v1:hrm:training:getMyCertificateList",
@@ -12490,6 +12937,196 @@
         "summary": "List",
         "tags": [
           "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/getPunchList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:punch:list",
+        "operationId": "v1/Hrm/PunchList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "startDate",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "endDate",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "clockInStatus",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "clockInLocation": {
+                        "type": "string"
+                      },
+                      "clockInStatus": {
+                        "type": "string"
+                      },
+                      "clockInTime": {
+                        "type": "string"
+                      },
+                      "clockOutLocation": {
+                        "type": "string"
+                      },
+                      "clockOutStatus": {
+                        "type": "string"
+                      },
+                      "clockOutTime": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "overtime": {
+                        "type": "string"
+                      },
+                      "punchDate": {
+                        "type": "string"
+                      },
+                      "ruleSource": {
+                        "type": "string"
+                      },
+                      "settleEarlyMinutes": {
+                        "type": "integer"
+                      },
+                      "settleLateMinutes": {
+                        "type": "integer"
+                      },
+                      "settleStatus": {
+                        "type": "string"
+                      },
+                      "settleTime": {
+                        "type": "string"
+                      },
+                      "settleWorkHours": {
+                        "type": "number"
+                      },
+                      "source": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "userUuid": {
+                        "type": "string"
+                      },
+                      "username": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "weekday": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "punchDate",
+                      "employeeUuid",
+                      "userUuid",
+                      "username",
+                      "employeeNo",
+                      "employeeName",
+                      "orgName",
+                      "weekday",
+                      "clockInTime",
+                      "clockInStatus",
+                      "clockInLocation",
+                      "clockOutTime",
+                      "clockOutStatus",
+                      "clockOutLocation",
+                      "overtime",
+                      "source",
+                      "ruleSource",
+                      "settleStatus",
+                      "settleLateMinutes",
+                      "settleEarlyMinutes",
+                      "settleWorkHours",
+                      "settleTime",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/punch"
         ]
       }
     },
@@ -15027,6 +15664,65 @@
         ]
       }
     },
+    "/api/v1/hrm/importPunchRecord": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:punch:import",
+        "operationId": "v1/Hrm/PunchImport",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "fileContent": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fileName",
+                "fileContent"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "successCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Import",
+        "tags": [
+          "v1/hrm/punch"
+        ]
+      }
+    },
     "/api/v1/hrm/importTaxOpening": {
       "post": {
         "consumes": [
@@ -15505,6 +16201,76 @@
         ]
       }
     },
+    "/api/v1/hrm/punch": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:punch:punch",
+        "operationId": "v1/Hrm/PunchPunch",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "location": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "clockInTime": {
+                  "type": "string"
+                },
+                "clockOutTime": {
+                  "type": "string"
+                },
+                "punchDate": {
+                  "type": "string"
+                },
+                "settleStatus": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Punch",
+        "tags": [
+          "v1/hrm/punch"
+        ]
+      }
+    },
     "/api/v1/hrm/rejectBill": {
       "post": {
         "consumes": [
@@ -15937,6 +16703,105 @@
         "summary": "SetSessionParticipants",
         "tags": [
           "v1/hrm/training_session"
+        ]
+      }
+    },
+    "/api/v1/hrm/settlePunchDay": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:punch:settle",
+        "operationId": "v1/Hrm/PunchSettle",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "employeeUuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "endDate": {
+                  "type": "string"
+                },
+                "startDate": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "startDate"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "earlyMinutes": {
+                        "type": "integer"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "lateMinutes": {
+                        "type": "integer"
+                      },
+                      "punchDate": {
+                        "type": "string"
+                      },
+                      "settleStatus": {
+                        "type": "string"
+                      },
+                      "workHours": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "employeeUuid",
+                      "employeeName",
+                      "punchDate",
+                      "settleStatus",
+                      "lateMinutes",
+                      "earlyMinutes",
+                      "workHours"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Settle",
+        "tags": [
+          "v1/hrm/punch"
         ]
       }
     },
