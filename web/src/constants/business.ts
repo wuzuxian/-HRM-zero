@@ -307,3 +307,32 @@ export const certExpiryStateRecord: Record<Api.Hrm.CertExpiryState, App.I18n.I18
 };
 
 export const certExpiryStateOptions = transformRecordToOption(certExpiryStateRecord);
+
+/** HRM-36 居民类型: resident=居民个人 non_resident=非居民个人 */
+export const hrmTaxResidentTypeRecord: Record<Api.Hrm.TaxResidentType, App.I18n.I18nKey> = {
+  resident: 'page.hrm.salary.tax.profile.residentTypeEnum.resident',
+  non_resident: 'page.hrm.salary.tax.profile.residentTypeEnum.non_resident'
+};
+
+export const hrmTaxResidentTypeOptions = transformRecordToOption(hrmTaxResidentTypeRecord);
+
+/** HRM-36 专项附加扣除项 7 类 (demo-inventory 8.3) */
+export const hrmTaxDeductTypeRecord: Record<Api.Hrm.TaxDeductionType, App.I18n.I18nKey> = {
+  CHILDREN_EDU: 'page.hrm.salary.tax.deduction.deductType.CHILDREN_EDU',
+  CONTINUING_EDU: 'page.hrm.salary.tax.deduction.deductType.CONTINUING_EDU',
+  CRITICAL_ILLNESS: 'page.hrm.salary.tax.deduction.deductType.CRITICAL_ILLNESS',
+  HOUSE_LOAN: 'page.hrm.salary.tax.deduction.deductType.HOUSE_LOAN',
+  HOUSE_RENT: 'page.hrm.salary.tax.deduction.deductType.HOUSE_RENT',
+  SUPPORT_ELDERLY: 'page.hrm.salary.tax.deduction.deductType.SUPPORT_ELDERLY',
+  INFANT_CARE: 'page.hrm.salary.tax.deduction.deductType.INFANT_CARE'
+};
+
+export const hrmTaxDeductTypeOptions = transformRecordToOption(hrmTaxDeductTypeRecord);
+
+/** HRM-36 扣除来源: manual=手工维护 import=导入 */
+export const hrmTaxDeductionSourceRecord: Record<Api.Hrm.TaxDeductionSource, App.I18n.I18nKey> = {
+  manual: 'page.hrm.salary.tax.deduction.source.manual',
+  import: 'page.hrm.salary.tax.deduction.source.import'
+};
+
+export const hrmTaxDeductionSourceOptions = transformRecordToOption(hrmTaxDeductionSourceRecord);

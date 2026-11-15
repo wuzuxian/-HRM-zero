@@ -3617,5 +3617,191 @@ declare namespace Api {
       uuid: string;
       status: AttendanceStatus;
     };
+
+    // ===== HRM-36 个税管理三件套 =====
+
+    /** 居民类型: resident=居民个人 non_resident=非居民个人 */
+    type TaxResidentType = 'resident' | 'non_resident';
+
+    /** 专项附加扣除项 7 类 (demo-inventory 8.3) */
+    type TaxDeductionType =
+      | 'CHILDREN_EDU'
+      | 'CONTINUING_EDU'
+      | 'CRITICAL_ILLNESS'
+      | 'HOUSE_LOAN'
+      | 'HOUSE_RENT'
+      | 'SUPPORT_ELDERLY'
+      | 'INFANT_CARE';
+
+    /** 扣除来源: manual=手工维护 import=导入 */
+    type TaxDeductionSource = 'manual' | 'import';
+
+    /** hrm tax profile (员工个税档案, 员工唯一) */
+    type TaxProfile = {
+      uuid: string;
+      employeeUuid: string;
+      employeeName: string;
+      idCard: string;
+      residentType: TaxResidentType;
+      taxCity: string;
+      defaultSpecialExtra: string;
+      status: SalarySubjectStatus | null;
+      remark: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    type TaxProfileSearchParams = CommonType.RecordNullable<
+      Pick<TaxProfile, 'employeeName' | 'residentType' | 'status'> & Common.CommonSearchParams
+    >;
+
+    type TaxProfileList = Common.PaginatingQueryRecord<TaxProfile>;
+
+    type AddTaxProfileRequest = {
+      employeeUuid: string;
+      residentType: TaxResidentType;
+      taxCity: string;
+      defaultSpecialExtra: string;
+      status?: SalarySubjectStatus | null;
+      remark?: string;
+    };
+
+    type EditTaxProfileRequest = {
+      uuid: string;
+      employeeUuid: string;
+      residentType: TaxResidentType;
+      taxCity: string;
+      defaultSpecialExtra: string;
+      status: SalarySubjectStatus | null;
+      remark?: string;
+    };
+
+    type ExportTaxProfileResponse = {
+      fileName: string;
+      content: string;
+    };
+
+    /** hrm tax special deduction row (员工+年度+月份+扣除项 唯一) */
+    type TaxSpecialDeductionRow = {
+      uuid: string;
+      employeeUuid: string;
+      employeeName: string;
+      idCard: string;
+      deductYear: string;
+      deductMonth: number;
+      deductType: TaxDeductionType;
+      amount: number;
+      source: TaxDeductionSource;
+      remark: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    type TaxSpecialDeductionSearchParams = CommonType.RecordNullable<
+      Pick<TaxSpecialDeductionRow, 'employeeName' | 'deductYear' | 'deductType' | 'source'> &
+        Common.CommonSearchParams
+    >;
+
+    type TaxSpecialDeductionList = Common.PaginatingQueryRecord<TaxSpecialDeductionRow>;
+
+    /** 维护弹窗单格: (月份, 扣除项, 金额) */
+    type TaxSpecialDeductionMaintainRow = {
+      deductMonth: number;
+      deductType: TaxDeductionType;
+      amount: number;
+    };
+
+    type MaintainTaxSpecialDeductionRequest = {
+      employeeUuid: string;
+      deductYear: string;
+      rows: TaxSpecialDeductionMaintainRow[];
+    };
+
+    type MaintainTaxSpecialDeductionResponse = {
+      saved: number;
+    };
+
+    type MaintainTaxSpecialDeductionYearRequest = {
+      employeeUuid: string;
+      deductYear: string;
+      deductType: TaxDeductionType;
+      amount: number;
+      months?: number[];
+    };
+
+    type TaxSpecialDeductionImportRequest = {
+      fileName: string;
+      content: string;
+    };
+
+    type TaxSpecialDeductionImportResponse = {
+      successCount: number;
+    };
+
+    type ExportTaxSpecialDeductionResponse = {
+      fileName: string;
+      content: string;
+    };
+
+    /** hrm tax opening (个税累计期初, 员工+主体+年度 唯一; 累计预扣法期初数) */
+    type TaxOpening = {
+      uuid: string;
+      employeeUuid: string;
+      employeeName: string;
+      idCard: string;
+      subjectUuid: string;
+      subjectName: string;
+      taxYear: string;
+      untilMonth: number;
+      incomeTotal: number;
+      specialDeductionTotal: number;
+      specialExtraTotal: number;
+      exemptTotal: number;
+      otherDeductionTotal: number;
+      taxableIncomeTotal: number;
+      taxPaidTotal: number;
+      remark: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    type TaxOpeningSearchParams = CommonType.RecordNullable<
+      Pick<TaxOpening, 'employeeName' | 'subjectUuid' | 'taxYear'> & Common.CommonSearchParams
+    >;
+
+    type TaxOpeningList = Common.PaginatingQueryRecord<TaxOpening>;
+
+    type AddTaxOpeningRequest = {
+      employeeUuid: string;
+      subjectUuid?: string;
+      taxYear: string;
+      untilMonth: number;
+      incomeTotal?: number;
+      specialDeductionTotal?: number;
+      specialExtraTotal?: number;
+      exemptTotal?: number;
+      otherDeductionTotal?: number;
+      taxableIncomeTotal?: number;
+      taxPaidTotal?: number;
+      remark?: string;
+    };
+
+    type EditTaxOpeningRequest = AddTaxOpeningRequest & {
+      uuid: string;
+    };
+
+    type TaxOpeningImportRequest = {
+      fileName: string;
+      content: string;
+    };
+
+    type TaxOpeningImportResponse = {
+      successCount: number;
+    };
+
+    type ExportTaxOpeningResponse = {
+      fileName: string;
+      content: string;
+    };
   }
 }

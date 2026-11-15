@@ -207,6 +207,10 @@ const local: App.I18n.Schema = {
     hrm_salary_setting: '薪酬设置',
     hrm_salary_setting_subject: '薪酬主体',
     hrm_salary_setting_item: '薪资项目',
+    hrm_salary_tax: '个税管理',
+    'hrm_salary_tax_tax-profile': '员工个税档案',
+    'hrm_salary_tax_special-deduction': '专项附加扣除',
+    'hrm_salary_tax_tax-opening': '个税累计期初',
     hrm_training_plan: '培训计划',
     hrm_training_session: '培训班次',
     'hrm_training_cert-template': '证书模板',
@@ -364,6 +368,26 @@ const local: App.I18n.Schema = {
         add: '新增薪资项目',
         edit: '编辑薪资项目',
         delete: '删除薪资项目'
+      },
+      tax_profile: {
+        add: '新增个税档案',
+        edit: '编辑个税档案',
+        delete: '删除个税档案',
+        export: '导出个税档案'
+      },
+      tax_special_deduction: {
+        maintain: '维护专项附加',
+        delete: '删除专项附加',
+        maintain_year: '年度维护专项附加',
+        import: '导入专项附加',
+        export: '导出专项附加'
+      },
+      tax_opening: {
+        add: '新增累计期初',
+        edit: '编辑累计期初',
+        delete: '删除累计期初',
+        import: '导入累计期初',
+        export: '导出累计期初'
       },
       employee: {
         add: '新增员工',
@@ -1640,6 +1664,99 @@ const local: App.I18n.Schema = {
             formula: '请输入公式表达式',
             status: '请选择状态',
             remark: '请输入备注'
+          }
+        },
+        tax: {
+          profile: {
+            title: '员工个税档案',
+            employeeName: '员工',
+            idCard: '身份证号',
+            residentType: '居民类型',
+            residentTypeEnum: {
+              resident: '居民个人',
+              non_resident: '非居民个人'
+            },
+            taxCity: '税城市',
+            defaultSpecialExtra: '默认专项附加',
+            status: '状态',
+            remark: '备注',
+            addProfile: '新增个税档案',
+            editProfile: '编辑个税档案',
+            form: {
+              employeeName: '请选择员工',
+              residentType: '请选择居民类型',
+              taxCity: '请输入税城市',
+              defaultSpecialExtra: '请勾选默认专项附加扣除项',
+              status: '请选择状态',
+              remark: '请输入备注'
+            }
+          },
+          deduction: {
+            title: '专项附加扣除',
+            employeeName: '姓名',
+            idCard: '身份证号',
+            deductYear: '扣除年度',
+            deductMonth: '月份',
+            deductTypeTitle: '扣除项',
+            amount: '扣除金额',
+            sourceTitle: '来源',
+            remark: '备注',
+            maintain: '维护',
+            maintainYear: '年度维护',
+            import: '导入',
+            importSuccess: '导入成功',
+            importModalTitle: '导入专项附加扣除',
+            chooseFileTip: '请选择 xlsx 文件（模板列：姓名/身份证号/扣除年度/月份/扣除项/扣除金额/备注）',
+            maintainModalTitle: '维护专项附加扣除（逐月）',
+            maintainYearTitle: '年度维护专项附加扣除',
+            saved: '已保存',
+            form: {
+              employeeName: '请选择员工',
+              deductYear: '请选择扣除年度',
+              amount: '请输入扣除金额（元/月）',
+              months: '套用月份（留空=全年 12 个月）'
+            },
+            deductType: {
+              CHILDREN_EDU: '子女教育',
+              CONTINUING_EDU: '继续教育',
+              CRITICAL_ILLNESS: '大病医疗',
+              HOUSE_LOAN: '住房贷款利息',
+              HOUSE_RENT: '住房租金',
+              SUPPORT_ELDERLY: '赡养老人',
+              INFANT_CARE: '3岁以下婴幼儿照护'
+            },
+            source: {
+              manual: '手工维护',
+              import: '导入'
+            }
+          },
+          opening: {
+            title: '个税累计期初',
+            employeeName: '员工',
+            idCard: '身份证号',
+            subjectName: '主体',
+            taxYear: '年度',
+            untilMonth: '截至月',
+            incomeTotal: '累计收入',
+            specialDeductionTotal: '累计专项扣除',
+            specialExtraTotal: '累计专项附加',
+            exemptTotal: '累计免税',
+            otherDeductionTotal: '累计其他扣除',
+            taxableIncomeTotal: '累计应纳税所得额',
+            taxPaidTotal: '累计已缴税额',
+            remark: '备注',
+            addOpening: '新增累计期初',
+            editOpening: '编辑累计期初',
+            import: '导入',
+            importSuccess: '导入成功',
+            importModalTitle: '导入个税累计期初',
+            chooseFileTip: '请选择 xlsx 文件（模板列：姓名/身份证号/薪酬主体/年度/截至月/各累计数/备注）',
+            form: {
+              employeeName: '请选择员工',
+              subjectName: '请选择薪酬主体（可空=不限主体）',
+              taxYear: '请选择年度',
+              untilMonth: '请选择截至月（1-12）'
+            }
           }
         }
       },
