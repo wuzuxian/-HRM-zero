@@ -185,6 +185,7 @@ const local: App.I18n.Schema = {
     hrm_performance_setting: '绩效设置',
     hrm_performance_setting_indicator: '指标库',
     hrm_performance_setting_template: '模板管理',
+    hrm_performance_scheme: '绩效方案',
     hrm_training: '培训管理',
     hrm_training_my: '我的培训',
     hrm_employee: '人事档案',
@@ -255,6 +256,11 @@ const local: App.I18n.Schema = {
           add: '新增模板',
           edit: '编辑模板',
           delete: '删除模板'
+        },
+        scheme: {
+          add: '新增方案',
+          edit: '编辑方案',
+          delete: '删除方案'
         }
       }
     }
@@ -487,6 +493,25 @@ const local: App.I18n.Schema = {
           system: '系统取数',
           manual: '手工填报'
         },
+        schemePeriodType: {
+          month: '月度',
+          quarter: '季度',
+          half_year: '半年',
+          year: '年度'
+        },
+        schemeAssessmentMode: {
+          kpi: 'KPI',
+          kpi_behavior: 'KPI+行为混合'
+        },
+        schemeScoreMode: {
+          percent: '百分制',
+          grade: '等级制',
+          amount: '金额制'
+        },
+        schemePayLinkMode: {
+          coefficient: '系数制',
+          amount: '金额制'
+        },
         indicator: {
           title: '指标库',
           code: '指标编码',
@@ -530,6 +555,29 @@ const local: App.I18n.Schema = {
           itemIncomplete: '请为每条指标配置选择指标并填写大于 0 的权重',
           addTemplate: '新增模板',
           editTemplate: '编辑模板'
+        },
+        scheme: {
+          title: '绩效方案',
+          name: '方案名称',
+          templateName: '关联模板',
+          periodType: '周期类型',
+          assessmentMode: '评估模式',
+          scoreMode: '评分模式',
+          payLinkMode: '联薪方式',
+          status: '状态',
+          remark: '备注',
+          form: {
+            name: '请输入方案名称',
+            templateUuid: '请选择关联模板',
+            periodType: '请选择周期类型',
+            assessmentMode: '请选择评估模式',
+            scoreMode: '请选择评分模式',
+            payLinkMode: '请选择联薪方式',
+            status: '请选择状态',
+            remark: '请输入备注'
+          },
+          addScheme: '新增方案',
+          editScheme: '编辑方案'
         }
       },
       org: {

@@ -45,6 +45,7 @@ declare module "@elegant-router/types" {
     "hrm_org_org-chart": "/hrm/org/org-chart";
     "hrm_org_orginfo": "/hrm/org/orginfo";
     "hrm_performance": "/hrm/performance";
+    "hrm_performance_scheme": "/hrm/performance/scheme";
     "hrm_performance_setting": "/hrm/performance/setting";
     "hrm_performance_setting_indicator": "/hrm/performance/setting/indicator";
     "hrm_performance_setting_template": "/hrm/performance/setting/template";
@@ -141,6 +142,7 @@ declare module "@elegant-router/types" {
     | "hrm_employee_employee-archive-list"
     | "hrm_org_org-chart"
     | "hrm_org_orginfo"
+    | "hrm_performance_scheme"
     | "hrm_performance_setting_indicator"
     | "hrm_performance_setting_template"
     | "hrm_training_my"

@@ -1,0 +1,104 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/perf_scheme"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 绩效方案（HRM-41，演示站 9.1 绩效方案）：定义考核方式的配置——关联模板、
+// 周期类型、评估模式、评分模式、联薪方式与启停状态。
+// 模板引用 hrm_perf_template（HRM-40），不存在的模板拒绝保存。
+type HrmPerfScheme {
+	Uuid string `json:"uuid"`
+	// 方案名称
+	Name string `json:"name"`
+	// 关联考核模板 uuid
+	TemplateUuid string `json:"templateUuid"`
+	// 关联考核模板名称（展示快照）
+	TemplateName string `json:"templateName"`
+	// 周期类型：month=月度 quarter=季度 half_year=半年 year=年度
+	PeriodType string `json:"periodType"`
+	// 评估模式：kpi=KPI kpi_behavior=KPI+行为混合
+	AssessmentMode string `json:"assessmentMode"`
+	// 评分模式：percent=百分制 grade=等级制 amount=金额制
+	ScoreMode string `json:"scoreMode"`
+	// 联薪方式：coefficient=系数制 amount=金额制
+	PayLinkMode string `json:"payLinkMode"`
+	// 状态：1=启用 2=停用
+	Status     string `json:"status"`
+	Remark     string `json:"remark"`
+	CreateTime string `json:"createTime"`
+	UpdateTime string `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	Name   string `form:"name,optional"`
+	Status string `form:"status,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmPerfScheme `json:"records"`
+}
+
+type AddRequest {
+	Name string `json:"name"`
+	// 关联考核模板 uuid（须为已存在的 hrm_perf_template）
+	TemplateUuid   string `json:"templateUuid"`
+	PeriodType     string `json:"periodType"`
+	AssessmentMode string `json:"assessmentMode"`
+	ScoreMode      string `json:"scoreMode"`
+	PayLinkMode    string `json:"payLinkMode"`
+	Status         string `json:"status,default=1"`
+	Remark         string `json:"remark,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid string `json:"uuid"`
+	Name string `json:"name"`
+	// 关联考核模板 uuid（须为已存在的 hrm_perf_template）
+	TemplateUuid   string `json:"templateUuid"`
+	PeriodType     string `json:"periodType"`
+	AssessmentMode string `json:"assessmentMode"`
+	ScoreMode      string `json:"scoreMode"`
+	PayLinkMode    string `json:"payLinkMode"`
+	Status         string `json:"status"`
+	Remark         string `json:"remark,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/perf_scheme
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getPerfSchemeList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addPerfScheme (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editPerfScheme (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deletePerfScheme (DeleteRequest) returns (DeleteResponse)
+}
+

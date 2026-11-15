@@ -185,6 +185,7 @@ const local: App.I18n.Schema = {
     hrm_performance_setting: 'Settings',
     hrm_performance_setting_indicator: 'Indicator Library',
     hrm_performance_setting_template: 'Template Management',
+    hrm_performance_scheme: 'Scheme',
     hrm_training: 'Training',
     hrm_training_my: 'My Training',
     hrm_employee: 'HR Archive',
@@ -255,6 +256,11 @@ const local: App.I18n.Schema = {
           add: 'Add Template',
           edit: 'Edit Template',
           delete: 'Delete Template'
+        },
+        scheme: {
+          add: 'Add Scheme',
+          edit: 'Edit Scheme',
+          delete: 'Delete Scheme'
         }
       }
     }
@@ -487,6 +493,25 @@ const local: App.I18n.Schema = {
           system: 'System Data',
           manual: 'Manual Input'
         },
+        schemePeriodType: {
+          month: 'Monthly',
+          quarter: 'Quarterly',
+          half_year: 'Semi-annual',
+          year: 'Annual'
+        },
+        schemeAssessmentMode: {
+          kpi: 'KPI',
+          kpi_behavior: 'KPI + Behavior'
+        },
+        schemeScoreMode: {
+          percent: 'Percentage',
+          grade: 'Grade',
+          amount: 'Amount'
+        },
+        schemePayLinkMode: {
+          coefficient: 'Coefficient',
+          amount: 'Amount'
+        },
         indicator: {
           title: 'Indicator Library',
           code: 'Indicator Code',
@@ -530,6 +555,29 @@ const local: App.I18n.Schema = {
           itemIncomplete: 'Please select an indicator and enter a weight greater than 0 for each row',
           addTemplate: 'Add Template',
           editTemplate: 'Edit Template'
+        },
+        scheme: {
+          title: 'Performance Scheme',
+          name: 'Scheme Name',
+          templateName: 'Linked Template',
+          periodType: 'Period Type',
+          assessmentMode: 'Assessment Mode',
+          scoreMode: 'Score Mode',
+          payLinkMode: 'Pay Link Mode',
+          status: 'Status',
+          remark: 'Remark',
+          form: {
+            name: 'Please enter scheme name',
+            templateUuid: 'Please select a template',
+            periodType: 'Please select period type',
+            assessmentMode: 'Please select assessment mode',
+            scoreMode: 'Please select score mode',
+            payLinkMode: 'Please select pay link mode',
+            status: 'Please select status',
+            remark: 'Please enter remark'
+          },
+          addScheme: 'Add Scheme',
+          editScheme: 'Edit Scheme'
         }
       },
       org: {

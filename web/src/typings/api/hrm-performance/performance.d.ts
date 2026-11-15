@@ -159,6 +159,89 @@ declare namespace Api {
       type EditTemplateResponse = {};
       // eslint-disable-next-line @typescript-eslint/no-empty-object-type
       type DeleteTemplateResponse = {};
+
+      /**
+       * 周期类型（HRM-41 绩效方案）
+       *
+       * - "month": 月度
+       * - "quarter": 季度
+       * - "half_year": 半年
+       * - "year": 年度
+       */
+      type SchemePeriodType = 'month' | 'quarter' | 'half_year' | 'year';
+
+      /**
+       * 评估模式
+       *
+       * - "kpi": KPI
+       * - "kpi_behavior": KPI+行为混合
+       */
+      type SchemeAssessmentMode = 'kpi' | 'kpi_behavior';
+
+      /**
+       * 评分模式
+       *
+       * - "percent": 百分制
+       * - "grade": 等级制
+       * - "amount": 金额制
+       */
+      type SchemeScoreMode = 'percent' | 'grade' | 'amount';
+
+      /**
+       * 联薪方式（HRM-49 绩效联薪契约字段，取值勿改动）
+       *
+       * - "coefficient": 系数制
+       * - "amount": 金额制
+       */
+      type SchemePayLinkMode = 'coefficient' | 'amount';
+
+      /** 绩效方案 */
+      type Scheme = Common.CommonRecord<{
+        /** 方案名称 */
+        name: string;
+        /** 关联考核模板 uuid */
+        templateUuid: string;
+        /** 关联考核模板名称（展示快照） */
+        templateName: string;
+        /** 周期类型 */
+        periodType: SchemePeriodType;
+        /** 评估模式 */
+        assessmentMode: SchemeAssessmentMode;
+        /** 评分模式 */
+        scoreMode: SchemeScoreMode;
+        /** 联薪方式 */
+        payLinkMode: SchemePayLinkMode;
+        /** 备注 */
+        remark: string;
+      }>;
+
+      /** 绩效方案 search params */
+      type SchemeSearchParams = CommonType.RecordNullable<Pick<Scheme, 'name' | 'status'> & Common.CommonSearchParams>;
+
+      /** 绩效方案 list */
+      type SchemeList = Common.PaginatingQueryRecord<Scheme>;
+
+      type AddSchemeRequest = {
+        name: string;
+        templateUuid: string;
+        periodType: SchemePeriodType;
+        assessmentMode: SchemeAssessmentMode;
+        scoreMode: SchemeScoreMode;
+        payLinkMode: SchemePayLinkMode;
+        status: CommonStatus;
+        remark: string;
+      };
+
+      type EditSchemeRequest = AddSchemeRequest & {
+        uuid: string | undefined;
+      };
+
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      type AddSchemeResponse = {};
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      type EditSchemeResponse = {};
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      type DeleteSchemeResponse = {};
     }
   }
 }
