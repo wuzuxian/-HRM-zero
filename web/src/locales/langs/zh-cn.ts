@@ -184,6 +184,8 @@ const local: App.I18n.Schema = {
     hrm_attendance_setting_shift: '班次管理',
     'hrm_attendance_setting_leave-type': '假期类型',
     'hrm_attendance_setting_overtime-rule': '加班规则',
+    hrm_attendance_data: '假期数据',
+    'hrm_attendance_data_leave-balance': '假期余额',
     hrm_attendance_scheduling: '排班管理',
     'hrm_attendance_scheduling_schedule-cycle': '排班周期',
     'hrm_employee-relation': '人事管理',
@@ -264,6 +266,10 @@ const local: App.I18n.Schema = {
         add: '新增假期类型',
         edit: '编辑假期类型',
         delete: '删除假期类型'
+      },
+      leavebalance: {
+        init: '初始化本年度额度',
+        adjust: '调整余额'
       },
       attendancegroup: {
         add: '新增考勤组',
@@ -1283,6 +1289,52 @@ const local: App.I18n.Schema = {
             typeValue: '请输入类型值',
             status: '请选择状态',
             remark: '请输入备注'
+          }
+        },
+        leaveBalance: {
+          title: '假期余额',
+          year: '年度',
+          name: '姓名',
+          orgName: '部门',
+          orgUuid: '部门（含下级）',
+          leaveTypeCode: '假期类型',
+          employeeNo: '工号',
+          employeeName: '姓名',
+          hireDate: '入职日期',
+          leaveTypeName: '假期类型',
+          granted: '应发',
+          used: '已用',
+          frozen: '冻结',
+          available: '可用',
+          initTitle: '初始化本年度额度',
+          initScope: '初始化范围',
+          initScopeHint: '未指定员工时对全体在册员工按假期类型默认天数初始化；已有余额的行自动跳过',
+          initSuccess: '初始化完成',
+          defaultDays: '默认天数',
+          skipped: '已初始化',
+          skippedYes: '跳过',
+          skippedNo: '将创建',
+          adjustTitle: '调整余额',
+          adjustDays: '调整天数',
+          adjustDaysPlaceholder: '正数增加、负数扣减（步进 0.5）',
+          adjustDaysRequired: '调整天数不能为空或 0',
+          adjustSuccess: '调整成功',
+          reason: '调整原因',
+          logTitle: '余额流水',
+          logDays: '变更数量',
+          logTime: '操作时间',
+          changeType: '变更类型',
+          changeTypeInit: '初始化',
+          changeTypeAdjust: '调整',
+          changeTypeConsume: '请假扣减',
+          changeTypeAccrue: '调休入账',
+          operatorName: '操作人',
+          billUuid: '关联单据',
+          form: {
+            year: '请选择年度',
+            name: '请输入姓名',
+            leaveTypeCode: '请选择假期类型',
+            reason: '请输入调整原因（选填）'
           }
         },
         overtimeRule: {

@@ -1,0 +1,22 @@
+CREATE TABLE `hrm_leave_balance_log` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(36) NOT NULL UNIQUE,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `balance_uuid` varchar(36) NOT NULL COMMENT '余额行 uuid (hrm_leave_balance.uuid)',
+  `year` bigint NOT NULL,
+  `employee_uuid` varchar(36) NOT NULL,
+  `leave_type_code` varchar(50) NOT NULL,
+  `change_type` varchar(20) NOT NULL COMMENT '变更类型 init=初始化 adjust=调整 consume=请假扣减 accrue=调休入账',
+  `days` decimal(6,1) NOT NULL COMMENT '变更数量（正=增，负=减）',
+  `granted_after` decimal(6,1) NOT NULL DEFAULT 0 COMMENT '变更后应发',
+  `used_after` decimal(6,1) NOT NULL DEFAULT 0 COMMENT '变更后已用',
+  `frozen_after` decimal(6,1) NOT NULL DEFAULT 0 COMMENT '变更后冻结',
+  `reason` varchar(500) NOT NULL DEFAULT '' COMMENT '调整原因/说明',
+  `bill_uuid` varchar(36) NOT NULL DEFAULT '' COMMENT '关联单据 uuid（请假单/加班单，无关联为空）',
+  `operator_uuid` varchar(36) NOT NULL DEFAULT '' COMMENT '操作人用户 uuid（系统动作为空）',
+  `operator_name` varchar(100) NOT NULL DEFAULT '' COMMENT '操作人姓名（快照）',
+  PRIMARY KEY (`id`),
+  KEY `idx_hrm_leave_balance_log_balance` (`balance_uuid`),
+  KEY `idx_hrm_leave_balance_log_employee` (`employee_uuid`, `year`, `leave_type_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

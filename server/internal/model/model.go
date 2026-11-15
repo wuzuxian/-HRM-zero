@@ -21,6 +21,8 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_entry_bill_education"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_entry_bill_family"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_entry_bill_work"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_leave_balance"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_leave_balance_log"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_leave_type"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_org"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_overtime_rule"
@@ -69,6 +71,8 @@ type Model struct {
 	HrmEntryBillEducation         hrm_entry_bill_education.HrmEntryBillEducationModel
 	HrmEntryBillFamily            hrm_entry_bill_family.HrmEntryBillFamilyModel
 	HrmEntryBillWork              hrm_entry_bill_work.HrmEntryBillWorkModel
+	HrmLeaveBalance               hrm_leave_balance.HrmLeaveBalanceModel
+	HrmLeaveBalanceLog            hrm_leave_balance_log.HrmLeaveBalanceLogModel
 	HrmLeaveType                  hrm_leave_type.HrmLeaveTypeModel
 	HrmOrg                        hrm_org.HrmOrgModel
 	HrmOvertimeRule               hrm_overtime_rule.HrmOvertimeRuleModel
@@ -118,6 +122,8 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmEntryBillEducation:         hrm_entry_bill_education.NewHrmEntryBillEducationModel(conn, op...),
 		HrmEntryBillFamily:            hrm_entry_bill_family.NewHrmEntryBillFamilyModel(conn, op...),
 		HrmEntryBillWork:              hrm_entry_bill_work.NewHrmEntryBillWorkModel(conn, op...),
+		HrmLeaveBalance:               hrm_leave_balance.NewHrmLeaveBalanceModel(conn, op...),
+		HrmLeaveBalanceLog:            hrm_leave_balance_log.NewHrmLeaveBalanceLogModel(conn, op...),
 		HrmLeaveType:                  hrm_leave_type.NewHrmLeaveTypeModel(conn, op...),
 		HrmOrg:                        hrm_org.NewHrmOrgModel(conn, op...),
 		HrmOvertimeRule:               hrm_overtime_rule.NewHrmOvertimeRuleModel(conn, op...),

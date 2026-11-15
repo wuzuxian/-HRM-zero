@@ -79,6 +79,25 @@ export const generatedRoutes: GeneratedRoute[] = [
         },
         children: [
           {
+            name: 'hrm_attendance_data',
+            path: '/hrm/attendance/data',
+            meta: {
+              title: 'hrm_attendance_data',
+              i18nKey: 'route.hrm_attendance_data'
+            },
+            children: [
+              {
+                name: 'hrm_attendance_data_leave-balance',
+                path: '/hrm/attendance/data/leave-balance',
+                component: 'view.hrm_attendance_data_leave-balance',
+                meta: {
+                  title: 'hrm_attendance_data_leave-balance',
+                  i18nKey: 'route.hrm_attendance_data_leave-balance'
+                }
+              }
+            ]
+          },
+          {
             name: 'hrm_attendance_scheduling',
             path: '/hrm/attendance/scheduling',
             meta: {

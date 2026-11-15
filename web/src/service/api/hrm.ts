@@ -1162,6 +1162,51 @@ export function DeleteResignation(req: string[]) {
   });
 }
 
+/** get hrm leave balance (假期余额) paginated list — 部门含下级由后端展开 */
+export function GetLeaveBalanceList(params?: Api.Hrm.LeaveBalanceSearchParams) {
+  return request<Api.Hrm.LeaveBalanceList>({
+    url: '/api/v1/hrm/getLeaveBalanceList',
+    method: 'get',
+    params
+  });
+}
+
+/** get hrm leave balance log (余额流水) paginated list */
+export function GetLeaveBalanceLogList(params?: Api.Hrm.LeaveBalanceLogSearchParams) {
+  return request<Api.Hrm.LeaveBalanceLogList>({
+    url: '/api/v1/hrm/getLeaveBalanceLogList',
+    method: 'get',
+    params
+  });
+}
+
+/** preview hrm leave balance init (初始化预览：按默认天数 × 员工 × 启用余额管理的类型) */
+export function PreviewLeaveBalanceInit(req: Api.Hrm.LeaveBalanceInitPreviewRequest) {
+  return request<{ records: Api.Hrm.LeaveBalanceInitPreviewItem[] }>({
+    url: '/api/v1/hrm/previewLeaveBalanceInit',
+    method: 'post',
+    data: req
+  });
+}
+
+/** init hrm leave balance for a year (初始化本年度额度，重复初始化的行自动跳过) */
+export function InitLeaveBalance(req: Api.Hrm.LeaveBalanceInitRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/initLeaveBalance',
+    method: 'post',
+    data: req
+  });
+}
+
+/** adjust hrm leave balance (手工增减应发，记原因；可用不得为负) */
+export function AdjustLeaveBalance(req: Api.Hrm.LeaveBalanceAdjustRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/adjustLeaveBalance',
+    method: 'post',
+    data: req
+  });
+}
+
 // ===== HRM-36 个税管理三件套 (薪酬管理域 个税管理) =====
 
 /** get 员工个税档案 paginated list (员工唯一) */
