@@ -4824,5 +4824,112 @@ declare namespace Api {
     type EditCardReplacementRequest = AddCardReplacementRequest & {
       uuid: string;
     };
+
+     // ===== HRM-35 员工薪资档案 =====
+
+    /** hrm salary archive (员工薪资档案, demo-inventory 8.2) */
+    type SalaryArchive = {
+      /** record uuid */
+      uuid: string;
+      /** employee uuid (hrm_employee) */
+      employeeUuid: string;
+      /** employee no snapshot (选员工带出) */
+      employeeNo: string;
+      /** employee name snapshot */
+      employeeName: string;
+      /** company uuid snapshot (选员工带出) */
+      companyUuid: string;
+      /** company name snapshot */
+      companyName: string;
+      /** dept org uuid snapshot (选员工带出) */
+      orgUuid: string;
+      /** dept org name snapshot */
+      orgName: string;
+      /** salary subject uuid */
+      subjectUuid: string;
+      /** subject name snapshot */
+      subjectName: string;
+      /** salary scheme uuid (''=未绑定方案) */
+      schemeUuid: string;
+      /** scheme name snapshot */
+      schemeName: string;
+      /** 固定薪资 */
+      fixedSalary: number;
+      /** 固定补贴 */
+      fixedAllowance: number;
+      /** status: enabled/disabled */
+      status: SalarySubjectStatus | null;
+      /** 生效日期 YYYY-MM-DD */
+      effectiveDate: string;
+      /** 失效日期 YYYY-MM-DD (''=长期有效) */
+      expireDate: string;
+      /** remark */
+      remark: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** salary archive search params */
+    type SalaryArchiveSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.SalaryArchive, 'employeeName' | 'employeeNo' | 'subjectUuid' | 'schemeUuid' | 'status'> & Common.CommonSearchParams
+    >;
+
+    /** salary archive paginated list */
+    type SalaryArchiveList = Common.PaginatingQueryRecord<SalaryArchive>;
+
+    /** add salary archive request */
+    type AddSalaryArchiveRequest = {
+      employeeUuid: string;
+      subjectUuid: string;
+      schemeUuid?: string;
+      fixedSalary?: number;
+      fixedAllowance?: number;
+      status?: SalarySubjectStatus | null;
+      /** YYYY-MM-DD */
+      effectiveDate: string;
+      /** YYYY-MM-DD, ''=长期有效; 必须大于生效日期 */
+      expireDate?: string;
+      remark?: string;
+    };
+
+    /** edit salary archive request */
+    type EditSalaryArchiveRequest = AddSalaryArchiveRequest & {
+      uuid: string;
+      status: SalarySubjectStatus | null;
+    };
+
+    /** HRM-37 试算消费: 生效档案对应方案摘要 */
+    type SalaryArchiveEffectiveScheme = {
+      uuid: string;
+      schemeName: string;
+      subjectUuid: string;
+      subjectName: string;
+      settleCycle: string;
+      payDay: number;
+      currency: string;
+    };
+
+    /** HRM-37 试算消费: 项目行 = 方案项目配置 + 项目实时快照 (calc_order 升序) */
+    type SalaryArchiveEffectiveItem = {
+      itemUuid: string;
+      itemCode: string;
+      itemName: string;
+      itemType: SalaryItemType;
+      itemClass: SalaryItemClass;
+      valueMode: SalaryItemValueMode;
+      calcOrder: number;
+      status: SalarySubjectStatus | null;
+      overrideAmount: number;
+      overrideFormula: string;
+    };
+
+    /** HRM-37 试算消费: 按试算月份取员工当时有效档案 (生效≤月末 AND (失效空 OR 失效≥月初)) */
+    type SalaryArchiveEffective = {
+      archive: SalaryArchive;
+      scheme: SalaryArchiveEffectiveScheme;
+      items: SalaryArchiveEffectiveItem[];
+    };
   }
 }

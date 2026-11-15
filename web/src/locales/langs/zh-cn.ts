@@ -219,6 +219,7 @@ const local: App.I18n.Schema = {
     hrm_salary_setting_subject: '薪酬主体',
     hrm_salary_setting_item: '薪资项目',
     hrm_salary_setting_scheme: '薪酬方案',
+    'hrm_salary_archive-list': '员工薪资档案',
     hrm_salary_tax: '个税管理',
     'hrm_salary_tax_tax-profile': '员工个税档案',
     'hrm_salary_tax_special-deduction': '专项附加扣除',
@@ -432,6 +433,11 @@ const local: App.I18n.Schema = {
         add: '新增薪酬方案',
         edit: '编辑薪酬方案',
         delete: '删除薪酬方案'
+      },
+      salary_archive: {
+        add: '新增薪资档案',
+        edit: '编辑薪资档案',
+        delete: '删除薪资档案'
       },
       tax_profile: {
         add: '新增个税档案',
@@ -2110,6 +2116,34 @@ const local: App.I18n.Schema = {
             personStatus: '请选择适用人员状态',
             personStatusRequired: '适用人员状态不能为空',
             payDayInvalid: '发薪日须为 1-31 号',
+            status: '请选择状态',
+            remark: '请输入备注'
+          }
+        },
+        archive: {
+          title: '员工薪资档案',
+          employee: '员工',
+          employeeName: '员工姓名',
+          employeeNo: '员工ID',
+          companyName: '所属公司',
+          orgName: '所属部门',
+          subject: '薪酬主体',
+          scheme: '薪酬方案',
+          status: '状态',
+          fixedSalary: '固定薪资',
+          fixedAllowance: '固定补贴',
+          effectiveDate: '生效日期',
+          expireDate: '失效日期',
+          longTerm: '长期',
+          remark: '备注',
+          addArchive: '新增薪资档案',
+          editArchive: '编辑薪资档案',
+          employeeInfoTip: '选择员工后自动带出所属公司与部门',
+          form: {
+            employee: '请选择员工',
+            subject: '请选择薪酬主体',
+            scheme: '请选择薪酬方案（可留空）',
+            effectiveDateRequired: '生效日期不能为空',
             status: '请选择状态',
             remark: '请输入备注'
           }

@@ -479,6 +479,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         },
         children: [
           {
+            name: 'hrm_salary_archive-list',
+            path: '/hrm/salary/archive-list',
+            component: 'view.hrm_salary_archive-list',
+            meta: {
+              title: 'hrm_salary_archive-list',
+              i18nKey: 'route.hrm_salary_archive-list'
+            }
+          },
+          {
             name: 'hrm_salary_setting',
             path: '/hrm/salary/setting',
             meta: {

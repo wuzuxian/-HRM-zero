@@ -595,6 +595,11 @@ declare namespace App {
             edit: string;
             delete: string;
           };
+          salary_archive: {
+            add: string;
+            edit: string;
+            delete: string;
+          };
           tax_profile: {
             add: string;
             edit: string;
@@ -2073,6 +2078,34 @@ declare namespace App {
                 personStatus: string;
                 personStatusRequired: string;
                 payDayInvalid: string;
+                status: string;
+                remark: string;
+              };
+            };
+            archive: {
+              title: string;
+              employee: string;
+              employeeName: string;
+              employeeNo: string;
+              companyName: string;
+              orgName: string;
+              subject: string;
+              scheme: string;
+              status: string;
+              fixedSalary: string;
+              fixedAllowance: string;
+              effectiveDate: string;
+              expireDate: string;
+              longTerm: string;
+              remark: string;
+              addArchive: string;
+              editArchive: string;
+              employeeInfoTip: string;
+              form: {
+                employee: string;
+                subject: string;
+                scheme: string;
+                effectiveDateRequired: string;
                 status: string;
                 remark: string;
               };

@@ -1780,3 +1780,52 @@ export function UpdatePositionStatus(req: Api.Hrm.UpdatePositionStatusRequest) {
     data: req
   });
 }
+
+// ===== HRM-35 员工薪资档案 (薪酬管理域) =====
+
+/** get 员工薪资档案 paginated list (筛选 员工姓名/员工ID/主体/方案/状态) */
+export function GetSalaryArchiveList(params?: Api.Hrm.SalaryArchiveSearchParams) {
+  return request<Api.Hrm.SalaryArchiveList>({
+    url: '/api/v1/hrm/getSalaryArchiveList',
+    method: 'get',
+    params
+  });
+}
+
+/** get 员工生效薪资档案 (HRM-37 试算消费: 按试算月份取当时有效档案+方案+项目清单) */
+export function GetEffectiveSalaryArchive(employeeUuid: string, yearMonth: string) {
+  return request<Api.Hrm.SalaryArchiveEffective>({
+    url: '/api/v1/hrm/getEffectiveSalaryArchive',
+    method: 'get',
+    params: { employeeUuid, yearMonth }
+  });
+}
+
+/** add 员工薪资档案 (选员工带出 公司/部门 快照; 同员工同主体区间重叠拒绝) */
+export function AddSalaryArchive(req: Api.Hrm.AddSalaryArchiveRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addSalaryArchive',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 员工薪资档案 (区间变更时重新做重叠检查) */
+export function EditSalaryArchive(req: Api.Hrm.EditSalaryArchiveRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editSalaryArchive',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 员工薪资档案 */
+export function DeleteSalaryArchive(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteSalaryArchive',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
