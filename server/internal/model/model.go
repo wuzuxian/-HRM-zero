@@ -9,6 +9,10 @@ import (
 
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_approval_record"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_bill_sequence"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_education"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_family"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_work"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_leave_type"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_org"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_indicator"
@@ -29,6 +33,10 @@ import (
 type Model struct {
 	HrmApprovalRecord             hrm_approval_record.HrmApprovalRecordModel
 	HrmBillSequence               hrm_bill_sequence.HrmBillSequenceModel
+	HrmEmployee                   hrm_employee.HrmEmployeeModel
+	HrmEmployeeEducation          hrm_employee_education.HrmEmployeeEducationModel
+	HrmEmployeeFamily             hrm_employee_family.HrmEmployeeFamilyModel
+	HrmEmployeeWork               hrm_employee_work.HrmEmployeeWorkModel
 	HrmLeaveType                  hrm_leave_type.HrmLeaveTypeModel
 	HrmOrg                        hrm_org.HrmOrgModel
 	HrmPerfIndicator              hrm_perf_indicator.HrmPerfIndicatorModel
@@ -50,6 +58,10 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 	return Model{
 		HrmApprovalRecord:             hrm_approval_record.NewHrmApprovalRecordModel(conn, op...),
 		HrmBillSequence:               hrm_bill_sequence.NewHrmBillSequenceModel(conn, op...),
+		HrmEmployee:                   hrm_employee.NewHrmEmployeeModel(conn, op...),
+		HrmEmployeeEducation:          hrm_employee_education.NewHrmEmployeeEducationModel(conn, op...),
+		HrmEmployeeFamily:             hrm_employee_family.NewHrmEmployeeFamilyModel(conn, op...),
+		HrmEmployeeWork:               hrm_employee_work.NewHrmEmployeeWorkModel(conn, op...),
 		HrmLeaveType:                  hrm_leave_type.NewHrmLeaveTypeModel(conn, op...),
 		HrmOrg:                        hrm_org.NewHrmOrgModel(conn, op...),
 		HrmPerfIndicator:              hrm_perf_indicator.NewHrmPerfIndicatorModel(conn, op...),

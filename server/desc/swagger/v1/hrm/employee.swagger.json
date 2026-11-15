@@ -1,0 +1,1251 @@
+{
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/hrm/addEmployee": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:employee:add",
+        "operationId": "v1/Hrm/EmployeeAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "address": {
+                  "type": "string"
+                },
+                "avatar": {
+                  "type": "string"
+                },
+                "bankAccount": {
+                  "type": "string"
+                },
+                "bankName": {
+                  "type": "string"
+                },
+                "birthday": {
+                  "type": "string"
+                },
+                "bloodType": {
+                  "type": "string"
+                },
+                "companyUuid": {
+                  "type": "string"
+                },
+                "educations": {
+                  "items": {
+                    "properties": {
+                      "education": {
+                        "type": "string"
+                      },
+                      "endDate": {
+                        "type": "string"
+                      },
+                      "major": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "school": {
+                        "type": "string"
+                      },
+                      "startDate": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "school",
+                      "major",
+                      "education",
+                      "startDate",
+                      "endDate"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "emergencyContact": {
+                  "type": "string"
+                },
+                "emergencyPhone": {
+                  "type": "string"
+                },
+                "employeeNo": {
+                  "type": "string"
+                },
+                "families": {
+                  "items": {
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "phone": {
+                        "type": "string"
+                      },
+                      "relation": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "workUnit": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "relation",
+                      "phone",
+                      "workUnit"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "formalDate": {
+                  "type": "string"
+                },
+                "gender": {
+                  "type": "string"
+                },
+                "height": {
+                  "type": "string"
+                },
+                "hireDate": {
+                  "type": "string"
+                },
+                "householdAddress": {
+                  "type": "string"
+                },
+                "idCard": {
+                  "type": "string"
+                },
+                "maritalStatus": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "nation": {
+                  "type": "string"
+                },
+                "nativePlace": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "personStatus": {
+                  "default": "1",
+                  "example": "1",
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "politicalStatus": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string"
+                },
+                "post": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "weight": {
+                  "type": "string"
+                },
+                "works": {
+                  "items": {
+                    "properties": {
+                      "company": {
+                        "type": "string"
+                      },
+                      "endDate": {
+                        "type": "string"
+                      },
+                      "position": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "startDate": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "company",
+                      "position",
+                      "startDate",
+                      "endDate"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "name",
+                "personStatus"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/employee"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteEmployee": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:employee:delete",
+        "operationId": "v1/Hrm/EmployeeDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/employee"
+        ]
+      }
+    },
+    "/api/v1/hrm/editEmployee": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:employee:edit",
+        "operationId": "v1/Hrm/EmployeeEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "address": {
+                  "type": "string"
+                },
+                "avatar": {
+                  "type": "string"
+                },
+                "bankAccount": {
+                  "type": "string"
+                },
+                "bankName": {
+                  "type": "string"
+                },
+                "birthday": {
+                  "type": "string"
+                },
+                "bloodType": {
+                  "type": "string"
+                },
+                "companyUuid": {
+                  "type": "string"
+                },
+                "educations": {
+                  "items": {
+                    "properties": {
+                      "education": {
+                        "type": "string"
+                      },
+                      "endDate": {
+                        "type": "string"
+                      },
+                      "major": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "school": {
+                        "type": "string"
+                      },
+                      "startDate": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "school",
+                      "major",
+                      "education",
+                      "startDate",
+                      "endDate"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "emergencyContact": {
+                  "type": "string"
+                },
+                "emergencyPhone": {
+                  "type": "string"
+                },
+                "employeeNo": {
+                  "type": "string"
+                },
+                "families": {
+                  "items": {
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "phone": {
+                        "type": "string"
+                      },
+                      "relation": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "workUnit": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "relation",
+                      "phone",
+                      "workUnit"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "formalDate": {
+                  "type": "string"
+                },
+                "gender": {
+                  "type": "string"
+                },
+                "height": {
+                  "type": "string"
+                },
+                "hireDate": {
+                  "type": "string"
+                },
+                "householdAddress": {
+                  "type": "string"
+                },
+                "idCard": {
+                  "type": "string"
+                },
+                "maritalStatus": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "nation": {
+                  "type": "string"
+                },
+                "nativePlace": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "personStatus": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "politicalStatus": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string"
+                },
+                "post": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                },
+                "weight": {
+                  "type": "string"
+                },
+                "works": {
+                  "items": {
+                    "properties": {
+                      "company": {
+                        "type": "string"
+                      },
+                      "endDate": {
+                        "type": "string"
+                      },
+                      "position": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "startDate": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "company",
+                      "position",
+                      "startDate",
+                      "endDate"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuid",
+                "name"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/employee"
+        ]
+      }
+    },
+    "/api/v1/hrm/exportEmployee": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:employee:export",
+        "operationId": "v1/Hrm/EmployeeExport",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Export",
+        "tags": [
+          "v1/hrm/employee"
+        ]
+      }
+    },
+    "/api/v1/hrm/getEmployeeDetail": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:employee:detail",
+        "operationId": "v1/Hrm/EmployeeDetail",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "uuid",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "employee": {
+                  "properties": {
+                    "address": {
+                      "type": "string"
+                    },
+                    "avatar": {
+                      "type": "string"
+                    },
+                    "bankAccount": {
+                      "type": "string"
+                    },
+                    "bankName": {
+                      "type": "string"
+                    },
+                    "birthday": {
+                      "type": "string"
+                    },
+                    "bloodType": {
+                      "type": "string"
+                    },
+                    "companyUuid": {
+                      "type": "string"
+                    },
+                    "createTime": {
+                      "type": "string"
+                    },
+                    "educations": {
+                      "items": {
+                        "properties": {
+                          "education": {
+                            "type": "string"
+                          },
+                          "endDate": {
+                            "type": "string"
+                          },
+                          "major": {
+                            "type": "string"
+                          },
+                          "remark": {
+                            "type": "string"
+                          },
+                          "school": {
+                            "type": "string"
+                          },
+                          "startDate": {
+                            "type": "string"
+                          },
+                          "uuid": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "school",
+                          "major",
+                          "education",
+                          "startDate",
+                          "endDate"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "emergencyContact": {
+                      "type": "string"
+                    },
+                    "emergencyPhone": {
+                      "type": "string"
+                    },
+                    "employeeNo": {
+                      "type": "string"
+                    },
+                    "families": {
+                      "items": {
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "phone": {
+                            "type": "string"
+                          },
+                          "relation": {
+                            "type": "string"
+                          },
+                          "remark": {
+                            "type": "string"
+                          },
+                          "uuid": {
+                            "type": "string"
+                          },
+                          "workUnit": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "relation",
+                          "phone",
+                          "workUnit"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "formalDate": {
+                      "type": "string"
+                    },
+                    "gender": {
+                      "type": "string"
+                    },
+                    "height": {
+                      "type": "string"
+                    },
+                    "hireDate": {
+                      "type": "string"
+                    },
+                    "householdAddress": {
+                      "type": "string"
+                    },
+                    "idCard": {
+                      "type": "string"
+                    },
+                    "maritalStatus": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "nation": {
+                      "type": "string"
+                    },
+                    "nativePlace": {
+                      "type": "string"
+                    },
+                    "orgUuid": {
+                      "type": "string"
+                    },
+                    "personStatus": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "politicalStatus": {
+                      "type": "string"
+                    },
+                    "position": {
+                      "type": "string"
+                    },
+                    "post": {
+                      "type": "string"
+                    },
+                    "remark": {
+                      "type": "string"
+                    },
+                    "updateTime": {
+                      "type": "string"
+                    },
+                    "userStatus": {
+                      "type": "string"
+                    },
+                    "uuid": {
+                      "type": "string"
+                    },
+                    "weight": {
+                      "type": "string"
+                    },
+                    "works": {
+                      "items": {
+                        "properties": {
+                          "company": {
+                            "type": "string"
+                          },
+                          "endDate": {
+                            "type": "string"
+                          },
+                          "position": {
+                            "type": "string"
+                          },
+                          "remark": {
+                            "type": "string"
+                          },
+                          "startDate": {
+                            "type": "string"
+                          },
+                          "uuid": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "company",
+                          "position",
+                          "startDate",
+                          "endDate"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "uuid",
+                    "employeeNo",
+                    "name",
+                    "gender",
+                    "birthday",
+                    "nation",
+                    "politicalStatus",
+                    "maritalStatus",
+                    "nativePlace",
+                    "bloodType",
+                    "idCard",
+                    "height",
+                    "weight",
+                    "householdAddress",
+                    "address",
+                    "emergencyContact",
+                    "emergencyPhone",
+                    "phone",
+                    "email",
+                    "avatar",
+                    "bankName",
+                    "bankAccount",
+                    "companyUuid",
+                    "orgUuid",
+                    "position",
+                    "post",
+                    "personStatus",
+                    "hireDate",
+                    "formalDate",
+                    "userStatus",
+                    "remark",
+                    "createTime",
+                    "updateTime"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Detail",
+        "tags": [
+          "v1/hrm/employee"
+        ]
+      }
+    },
+    "/api/v1/hrm/getEmployeeList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:employee:list",
+        "operationId": "v1/Hrm/EmployeeList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "orgUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "personStatus",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "address": {
+                        "type": "string"
+                      },
+                      "avatar": {
+                        "type": "string"
+                      },
+                      "bankAccount": {
+                        "type": "string"
+                      },
+                      "bankName": {
+                        "type": "string"
+                      },
+                      "birthday": {
+                        "type": "string"
+                      },
+                      "bloodType": {
+                        "type": "string"
+                      },
+                      "companyUuid": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "educations": {
+                        "items": {
+                          "properties": {
+                            "education": {
+                              "type": "string"
+                            },
+                            "endDate": {
+                              "type": "string"
+                            },
+                            "major": {
+                              "type": "string"
+                            },
+                            "remark": {
+                              "type": "string"
+                            },
+                            "school": {
+                              "type": "string"
+                            },
+                            "startDate": {
+                              "type": "string"
+                            },
+                            "uuid": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "school",
+                            "major",
+                            "education",
+                            "startDate",
+                            "endDate"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "emergencyContact": {
+                        "type": "string"
+                      },
+                      "emergencyPhone": {
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "type": "string"
+                      },
+                      "families": {
+                        "items": {
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "phone": {
+                              "type": "string"
+                            },
+                            "relation": {
+                              "type": "string"
+                            },
+                            "remark": {
+                              "type": "string"
+                            },
+                            "uuid": {
+                              "type": "string"
+                            },
+                            "workUnit": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "name",
+                            "relation",
+                            "phone",
+                            "workUnit"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "formalDate": {
+                        "type": "string"
+                      },
+                      "gender": {
+                        "type": "string"
+                      },
+                      "height": {
+                        "type": "string"
+                      },
+                      "hireDate": {
+                        "type": "string"
+                      },
+                      "householdAddress": {
+                        "type": "string"
+                      },
+                      "idCard": {
+                        "type": "string"
+                      },
+                      "maritalStatus": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "nation": {
+                        "type": "string"
+                      },
+                      "nativePlace": {
+                        "type": "string"
+                      },
+                      "orgUuid": {
+                        "type": "string"
+                      },
+                      "personStatus": {
+                        "type": "string"
+                      },
+                      "phone": {
+                        "type": "string"
+                      },
+                      "politicalStatus": {
+                        "type": "string"
+                      },
+                      "position": {
+                        "type": "string"
+                      },
+                      "post": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "userStatus": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "weight": {
+                        "type": "string"
+                      },
+                      "works": {
+                        "items": {
+                          "properties": {
+                            "company": {
+                              "type": "string"
+                            },
+                            "endDate": {
+                              "type": "string"
+                            },
+                            "position": {
+                              "type": "string"
+                            },
+                            "remark": {
+                              "type": "string"
+                            },
+                            "startDate": {
+                              "type": "string"
+                            },
+                            "uuid": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "company",
+                            "position",
+                            "startDate",
+                            "endDate"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "employeeNo",
+                      "name",
+                      "gender",
+                      "birthday",
+                      "nation",
+                      "politicalStatus",
+                      "maritalStatus",
+                      "nativePlace",
+                      "bloodType",
+                      "idCard",
+                      "height",
+                      "weight",
+                      "householdAddress",
+                      "address",
+                      "emergencyContact",
+                      "emergencyPhone",
+                      "phone",
+                      "email",
+                      "avatar",
+                      "bankName",
+                      "bankAccount",
+                      "companyUuid",
+                      "orgUuid",
+                      "position",
+                      "post",
+                      "personStatus",
+                      "hireDate",
+                      "formalDate",
+                      "userStatus",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/employee"
+        ]
+      }
+    },
+    "/api/v1/hrm/importEmployee": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:employee:import",
+        "operationId": "v1/Hrm/EmployeeImport",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fileName",
+                "content"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "successCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Import",
+        "tags": [
+          "v1/hrm/employee"
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKey": {
+      "description": "Enter Authorization",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0"
+}

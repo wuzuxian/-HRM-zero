@@ -1,0 +1,310 @@
+package employee
+
+import (
+	"context"
+
+	"github.com/google/uuid"
+	"github.com/jzero-io/jzero/core/stores/condition"
+	"github.com/jzero-io/jzero/core/status"
+	"github.com/pkg/errors"
+	"github.com/zeromicro/go-zero/core/stores/sqlx"
+
+	"github.com/jzero-io/jzero-admin/server/internal/errcodes"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_education"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_family"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_work"
+	"github.com/jzero-io/jzero-admin/server/internal/svc"
+	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/employee"
+)
+
+func uuidNew() string {
+	return uuid.New().String()
+}
+
+// HRM 员工档案 enums (GLOSSARY「人员状态」/ demo-inventory 2.1):
+// 性别 1=男 2=女; 婚姻状况 1=未婚 2=已婚 3=离异 4=丧偶;
+// 人员状态 1=正式 2=试用期 3=实习生 4=临时工 5=离职 6=退休。
+// 在册口径 = person_status NOT IN (离职, 退休) — 组织架构图 (HRM-02) 汇总人数使用。
+// 用户状态由 user_uuid 派生: '1'=已生成系统账号, '0'=未生成 (#6 同步 seam)。
+const (
+	genderMale    = "1"
+	genderFemale  = "2"
+
+	maritalUnmarried = "1"
+	maritalMarried   = "2"
+	maritalDivorced  = "3"
+	maritalWidowed   = "4"
+
+	personStatusRegular     = "1"
+	personStatusProbation   = "2"
+	personStatusIntern      = "3"
+	personStatusTemp        = "4"
+	personStatusResigned    = "5"
+	personStatusRetired     = "6"
+
+	userStatusCreated = "1"
+	userStatusNone    = "0"
+)
+
+func validGender(v string) bool {
+	return v == genderMale || v == genderFemale
+}
+
+func validMaritalStatus(v string) bool {
+	return v == maritalUnmarried || v == maritalMarried || v == maritalDivorced || v == maritalWidowed
+}
+
+func validPersonStatus(v string) bool {
+	return v == personStatusRegular || v == personStatusProbation || v == personStatusIntern ||
+		v == personStatusTemp || v == personStatusResigned || v == personStatusRetired
+}
+
+// employeeToType converts a model row into the API record (UserStatus 由
+// user_uuid 派生: 是否已生成系统账号).
+func employeeToType(row *hrm_employee.HrmEmployee) types.HrmEmployee {
+	out := types.HrmEmployee{
+		Uuid:             row.Uuid,
+		EmployeeNo:       row.EmployeeNo,
+		Name:             row.Name,
+		Gender:           row.Gender,
+		Birthday:         row.Birthday,
+		Nation:           row.Nation,
+		PoliticalStatus:  row.PoliticalStatus,
+		MaritalStatus:    row.MaritalStatus,
+		NativePlace:      row.NativePlace,
+		BloodType:        row.BloodType,
+		IdCard:           row.IdCard,
+		Height:           row.Height,
+		Weight:           row.Weight,
+		HouseholdAddress: row.HouseholdAddress,
+		Address:          row.Address,
+		EmergencyContact: row.EmergencyContact,
+		EmergencyPhone:   row.EmergencyPhone,
+		Phone:            row.Phone,
+		Email:            row.Email,
+		Avatar:           row.Avatar,
+		BankName:         row.BankName,
+		BankAccount:      row.BankAccount,
+		CompanyUuid:      row.CompanyUuid,
+		OrgUuid:          row.OrgUuid,
+		Position:         row.Position,
+		Post:             row.Post,
+		PersonStatus:     row.PersonStatus,
+		HireDate:         row.HireDate,
+		FormalDate:       row.FormalDate,
+		UserStatus:       userStatusNone,
+		Remark:           row.Remark,
+		CreateTime:       row.CreateTime.Format("2006-01-02 15:04:05"),
+		UpdateTime:       row.UpdateTime.Format("2006-01-02 15:04:05"),
+	}
+	if row.UserUuid != "" {
+		out.UserStatus = userStatusCreated
+	}
+	return out
+}
+
+// generateEmployeeNo resolves the 工号 for a new employee inside a transaction:
+// provided employee_no is duplicate-checked; blank employee_no is generated as
+// 最大工号+1 (8 位补零). Concurrent adds are serialized by the transaction; the
+// hrm_employee.employee_no UNIQUE index is the last line of defense.
+func generateEmployeeNo(ctx context.Context, session sqlx.Session, svcCtx *svc.ServiceContext, employeeNo string) (string, error) {
+	if employeeNo != "" {
+		_, err := svcCtx.Model.HrmEmployee.FindOneByCondition(ctx, session,
+			condition.NewChain().Equal(hrm_employee.EmployeeNo, employeeNo).Build()...)
+		if err == nil {
+			return "", status.ErrorMessage(errcodes.EmployeeNoDuplicateCode, "工号已存在: "+employeeNo)
+		}
+		if err != sqlx.ErrNotFound {
+			return "", err
+		}
+		return employeeNo, nil
+	}
+
+	rows, err := svcCtx.Model.HrmEmployee.FindByCondition(ctx, session)
+	if err != nil {
+		return "", err
+	}
+	nos := make([]string, 0, len(rows))
+	for _, row := range rows {
+		nos = append(nos, row.EmployeeNo)
+	}
+	next, err := NextEmployeeNo(maxNumericEmployeeNo(nos))
+	if err != nil {
+		if errors.Is(err, ErrEmployeeNoExhausted) {
+			return "", status.ErrorMessage(errcodes.EmployeeNoExhaustedCode, err.Error())
+		}
+		return "", status.ErrorMessage(errcodes.EmployeeNoDuplicateCode, err.Error())
+	}
+	return next, nil
+}
+
+// saveChildren 全删全插 the three sub-tables (教育经历/工作经历/家属) for an
+// employee inside the caller's transaction, mirroring spec user story 9.
+func saveChildren(ctx context.Context, session sqlx.Session, svcCtx *svc.ServiceContext, employeeUuid string,
+	educations []types.HrmEmployeeEducation, works []types.HrmEmployeeWork, families []types.HrmEmployeeFamily) error {
+	chain := condition.NewChain().Equal(hrm_employee_education.EmployeeUuid, employeeUuid)
+	if err := svcCtx.Model.HrmEmployeeEducation.DeleteByCondition(ctx, session, chain.Build()...); err != nil {
+		return err
+	}
+	workChain := condition.NewChain().Equal(hrm_employee_work.EmployeeUuid, employeeUuid)
+	if err := svcCtx.Model.HrmEmployeeWork.DeleteByCondition(ctx, session, workChain.Build()...); err != nil {
+		return err
+	}
+	familyChain := condition.NewChain().Equal(hrm_employee_family.EmployeeUuid, employeeUuid)
+	if err := svcCtx.Model.HrmEmployeeFamily.DeleteByCondition(ctx, session, familyChain.Build()...); err != nil {
+		return err
+	}
+
+	if len(educations) > 0 {
+		rows := make([]*hrm_employee_education.HrmEmployeeEducation, 0, len(educations))
+		for _, item := range educations {
+			rows = append(rows, &hrm_employee_education.HrmEmployeeEducation{
+				Uuid:         uuidNew(),
+				EmployeeUuid: employeeUuid,
+				School:       item.School,
+				Major:        item.Major,
+				Education:    item.Education,
+				StartDate:    item.StartDate,
+				EndDate:      item.EndDate,
+				Remark:       item.Remark,
+			})
+		}
+		if err := svcCtx.Model.HrmEmployeeEducation.BulkInsert(ctx, session, rows); err != nil {
+			return err
+		}
+	}
+
+	if len(works) > 0 {
+		rows := make([]*hrm_employee_work.HrmEmployeeWork, 0, len(works))
+		for _, item := range works {
+			rows = append(rows, &hrm_employee_work.HrmEmployeeWork{
+				Uuid:         uuidNew(),
+				EmployeeUuid: employeeUuid,
+				Company:      item.Company,
+				Position:     item.Position,
+				StartDate:    item.StartDate,
+				EndDate:      item.EndDate,
+				Remark:       item.Remark,
+			})
+		}
+		if err := svcCtx.Model.HrmEmployeeWork.BulkInsert(ctx, session, rows); err != nil {
+			return err
+		}
+	}
+
+	if len(families) > 0 {
+		rows := make([]*hrm_employee_family.HrmEmployeeFamily, 0, len(families))
+		for _, item := range families {
+			rows = append(rows, &hrm_employee_family.HrmEmployeeFamily{
+				Uuid:         uuidNew(),
+				EmployeeUuid: employeeUuid,
+				Name:         item.Name,
+				Relation:     item.Relation,
+				Phone:        item.Phone,
+				WorkUnit:     item.WorkUnit,
+				Remark:       item.Remark,
+			})
+		}
+		if err := svcCtx.Model.HrmEmployeeFamily.BulkInsert(ctx, session, rows); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// insertEmployee writes the master row (+ any provided sub-table rows) inside
+// the caller's transaction. Shared by Add and Import.
+func insertEmployee(ctx context.Context, session sqlx.Session, svcCtx *svc.ServiceContext, req *types.AddRequest) error {
+	row := &hrm_employee.HrmEmployee{
+		Uuid:             uuidNew(),
+		EmployeeNo:       req.EmployeeNo,
+		Name:             req.Name,
+		Gender:           req.Gender,
+		Birthday:         req.Birthday,
+		Nation:           req.Nation,
+		PoliticalStatus:  req.PoliticalStatus,
+		MaritalStatus:    req.MaritalStatus,
+		NativePlace:      req.NativePlace,
+		BloodType:        req.BloodType,
+		IdCard:           req.IdCard,
+		Height:           req.Height,
+		Weight:           req.Weight,
+		HouseholdAddress: req.HouseholdAddress,
+		Address:          req.Address,
+		EmergencyContact: req.EmergencyContact,
+		EmergencyPhone:   req.EmergencyPhone,
+		Phone:            req.Phone,
+		Email:            req.Email,
+		Avatar:           req.Avatar,
+		BankName:         req.BankName,
+		BankAccount:      req.BankAccount,
+		CompanyUuid:      req.CompanyUuid,
+		OrgUuid:          req.OrgUuid,
+		Position:         req.Position,
+		Post:             req.Post,
+		PersonStatus:     req.PersonStatus,
+		HireDate:         req.HireDate,
+		FormalDate:       req.FormalDate,
+		Remark:           req.Remark,
+	}
+	if err := svcCtx.Model.HrmEmployee.InsertV2(ctx, session, row); err != nil {
+		return err
+	}
+	return saveChildren(ctx, session, svcCtx, row.Uuid, req.Educations, req.Works, req.Families)
+}
+
+// findChildren loads the three sub-tables for a detail record.
+func findChildren(ctx context.Context, svcCtx *svc.ServiceContext, employeeUuid string) ([]types.HrmEmployeeEducation, []types.HrmEmployeeWork, []types.HrmEmployeeFamily, error) {
+	educations, err := svcCtx.Model.HrmEmployeeEducation.FindByCondition(ctx, nil,
+		condition.NewChain().Equal(hrm_employee_education.EmployeeUuid, employeeUuid).OrderByAsc(hrm_employee_education.Id).Build()...)
+	if err != nil {
+		return nil, nil, nil, err
+	}
+	works, err := svcCtx.Model.HrmEmployeeWork.FindByCondition(ctx, nil,
+		condition.NewChain().Equal(hrm_employee_work.EmployeeUuid, employeeUuid).OrderByAsc(hrm_employee_work.Id).Build()...)
+	if err != nil {
+		return nil, nil, nil, err
+	}
+	families, err := svcCtx.Model.HrmEmployeeFamily.FindByCondition(ctx, nil,
+		condition.NewChain().Equal(hrm_employee_family.EmployeeUuid, employeeUuid).OrderByAsc(hrm_employee_family.Id).Build()...)
+	if err != nil {
+		return nil, nil, nil, err
+	}
+
+	eduTypes := make([]types.HrmEmployeeEducation, 0, len(educations))
+	for _, row := range educations {
+		eduTypes = append(eduTypes, types.HrmEmployeeEducation{
+			Uuid:      row.Uuid,
+			School:    row.School,
+			Major:     row.Major,
+			Education: row.Education,
+			StartDate: row.StartDate,
+			EndDate:   row.EndDate,
+			Remark:    row.Remark,
+		})
+	}
+	workTypes := make([]types.HrmEmployeeWork, 0, len(works))
+	for _, row := range works {
+		workTypes = append(workTypes, types.HrmEmployeeWork{
+			Uuid:      row.Uuid,
+			Company:   row.Company,
+			Position:  row.Position,
+			StartDate: row.StartDate,
+			EndDate:   row.EndDate,
+			Remark:    row.Remark,
+		})
+	}
+	familyTypes := make([]types.HrmEmployeeFamily, 0, len(families))
+	for _, row := range families {
+		familyTypes = append(familyTypes, types.HrmEmployeeFamily{
+			Uuid:     row.Uuid,
+			Name:     row.Name,
+			Relation: row.Relation,
+			Phone:    row.Phone,
+			WorkUnit: row.WorkUnit,
+			Remark:   row.Remark,
+		})
+	}
+	return eduTypes, workTypes, familyTypes, nil
+}

@@ -1,0 +1,230 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/employee"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// HrmEmployeeEducation 教育经历从表行
+type HrmEmployeeEducation {
+	Uuid      string `json:"uuid,optional"`
+	School    string `json:"school"`
+	Major     string `json:"major"`
+	Education string `json:"education"`
+	StartDate string `json:"startDate"`
+	EndDate   string `json:"endDate"`
+	Remark    string `json:"remark,optional"`
+}
+
+// HrmEmployeeWork 工作经历从表行
+type HrmEmployeeWork {
+	Uuid      string `json:"uuid,optional"`
+	Company   string `json:"company"`
+	Position  string `json:"position"`
+	StartDate string `json:"startDate"`
+	EndDate   string `json:"endDate"`
+	Remark    string `json:"remark,optional"`
+}
+
+// HrmEmployeeFamily 家属从表行
+type HrmEmployeeFamily {
+	Uuid     string `json:"uuid,optional"`
+	Name     string `json:"name"`
+	Relation string `json:"relation"`
+	Phone    string `json:"phone"`
+	WorkUnit string `json:"workUnit"`
+	Remark   string `json:"remark,optional"`
+}
+
+// HrmEmployee 员工档案主表行 (列表不带从表, 详情带)
+type HrmEmployee {
+	Uuid             string `json:"uuid"`
+	EmployeeNo       string `json:"employeeNo"`
+	Name             string `json:"name"`
+	Gender           string `json:"gender"`
+	Birthday         string `json:"birthday"`
+	Nation           string `json:"nation"`
+	PoliticalStatus  string `json:"politicalStatus"`
+	MaritalStatus    string `json:"maritalStatus"`
+	NativePlace      string `json:"nativePlace"`
+	BloodType        string `json:"bloodType"`
+	IdCard           string `json:"idCard"`
+	Height           string `json:"height"`
+	Weight           string `json:"weight"`
+	HouseholdAddress string `json:"householdAddress"`
+	Address          string `json:"address"`
+	EmergencyContact string `json:"emergencyContact"`
+	EmergencyPhone   string `json:"emergencyPhone"`
+	Phone            string `json:"phone"`
+	Email            string `json:"email"`
+	Avatar           string `json:"avatar"`
+	BankName         string `json:"bankName"`
+	BankAccount      string `json:"bankAccount"`
+	CompanyUuid      string `json:"companyUuid"`
+	OrgUuid          string `json:"orgUuid"`
+	Position         string `json:"position"`
+	Post             string `json:"post"`
+	PersonStatus     string `json:"personStatus"`
+	HireDate         string `json:"hireDate"`
+	FormalDate       string `json:"formalDate"`
+	// UserStatus 用户状态: 是否已生成系统账号 (1=已生成 0=未生成, 由 user_uuid 派生)
+	UserStatus string                 `json:"userStatus"`
+	Remark     string                 `json:"remark"`
+	CreateTime string                 `json:"createTime"`
+	UpdateTime string                 `json:"updateTime"`
+	Educations []HrmEmployeeEducation `json:"educations,optional"`
+	Works      []HrmEmployeeWork      `json:"works,optional"`
+	Families   []HrmEmployeeFamily    `json:"families,optional"`
+}
+
+type ListRequest {
+	PageRequest
+	EmployeeNo   string `form:"employeeNo,optional"`
+	Name         string `form:"name,optional"`
+	OrgUuid      string `form:"orgUuid,optional"`
+	PersonStatus string `form:"personStatus,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmEmployee `json:"records"`
+}
+
+type DetailRequest {
+	Uuid string `form:"uuid"`
+}
+
+type DetailResponse {
+	Employee HrmEmployee `json:"employee"`
+}
+
+// AddRequest 新增员工; EmployeeNo 为空时按 最大工号+1 (8位补零) 自动生成
+type AddRequest {
+	EmployeeNo       string                 `json:"employeeNo,optional"`
+	Name             string                 `json:"name"`
+	Gender           string                 `json:"gender,optional"`
+	Birthday         string                 `json:"birthday,optional"`
+	Nation           string                 `json:"nation,optional"`
+	PoliticalStatus  string                 `json:"politicalStatus,optional"`
+	MaritalStatus    string                 `json:"maritalStatus,optional"`
+	NativePlace      string                 `json:"nativePlace,optional"`
+	BloodType        string                 `json:"bloodType,optional"`
+	IdCard           string                 `json:"idCard,optional"`
+	Height           string                 `json:"height,optional"`
+	Weight           string                 `json:"weight,optional"`
+	HouseholdAddress string                 `json:"householdAddress,optional"`
+	Address          string                 `json:"address,optional"`
+	EmergencyContact string                 `json:"emergencyContact,optional"`
+	EmergencyPhone   string                 `json:"emergencyPhone,optional"`
+	Phone            string                 `json:"phone,optional"`
+	Email            string                 `json:"email,optional"`
+	Avatar           string                 `json:"avatar,optional"`
+	BankName         string                 `json:"bankName,optional"`
+	BankAccount      string                 `json:"bankAccount,optional"`
+	CompanyUuid      string                 `json:"companyUuid,optional"`
+	OrgUuid          string                 `json:"orgUuid,optional"`
+	Position         string                 `json:"position,optional"`
+	Post             string                 `json:"post,optional"`
+	PersonStatus     string                 `json:"personStatus,default=1"`
+	HireDate         string                 `json:"hireDate,optional"`
+	FormalDate       string                 `json:"formalDate,optional"`
+	Remark           string                 `json:"remark,optional"`
+	Educations       []HrmEmployeeEducation `json:"educations,optional"`
+	Works            []HrmEmployeeWork      `json:"works,optional"`
+	Families         []HrmEmployeeFamily    `json:"families,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid             string                 `json:"uuid"`
+	EmployeeNo       string                 `json:"employeeNo,optional"`
+	Name             string                 `json:"name"`
+	Gender           string                 `json:"gender,optional"`
+	Birthday         string                 `json:"birthday,optional"`
+	Nation           string                 `json:"nation,optional"`
+	PoliticalStatus  string                 `json:"politicalStatus,optional"`
+	MaritalStatus    string                 `json:"maritalStatus,optional"`
+	NativePlace      string                 `json:"nativePlace,optional"`
+	BloodType        string                 `json:"bloodType,optional"`
+	IdCard           string                 `json:"idCard,optional"`
+	Height           string                 `json:"height,optional"`
+	Weight           string                 `json:"weight,optional"`
+	HouseholdAddress string                 `json:"householdAddress,optional"`
+	Address          string                 `json:"address,optional"`
+	EmergencyContact string                 `json:"emergencyContact,optional"`
+	EmergencyPhone   string                 `json:"emergencyPhone,optional"`
+	Phone            string                 `json:"phone,optional"`
+	Email            string                 `json:"email,optional"`
+	Avatar           string                 `json:"avatar,optional"`
+	BankName         string                 `json:"bankName,optional"`
+	BankAccount      string                 `json:"bankAccount,optional"`
+	CompanyUuid      string                 `json:"companyUuid,optional"`
+	OrgUuid          string                 `json:"orgUuid,optional"`
+	Position         string                 `json:"position,optional"`
+	Post             string                 `json:"post,optional"`
+	PersonStatus     string                 `json:"personStatus,optional"`
+	HireDate         string                 `json:"hireDate,optional"`
+	FormalDate       string                 `json:"formalDate,optional"`
+	Remark           string                 `json:"remark,optional"`
+	Educations       []HrmEmployeeEducation `json:"educations,optional"`
+	Works            []HrmEmployeeWork      `json:"works,optional"`
+	Families         []HrmEmployeeFamily    `json:"families,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+type ImportRequest {
+	FileName string `json:"fileName"`
+	Content  string `json:"content"`
+}
+
+type ImportResponse {
+	SuccessCount int64 `json:"successCount"`
+}
+
+type ExportResponse {
+	FileName string `json:"fileName"`
+	Content  string `json:"content"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/employee
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getEmployeeList (ListRequest) returns (ListResponse)
+
+	@handler Detail
+	get /hrm/getEmployeeDetail (DetailRequest) returns (DetailResponse)
+
+	@handler Add
+	post /hrm/addEmployee (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editEmployee (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deleteEmployee (DeleteRequest) returns (DeleteResponse)
+
+	@handler Import
+	post /hrm/importEmployee (ImportRequest) returns (ImportResponse)
+
+	@handler Export
+	get /hrm/exportEmployee returns (ExportResponse)
+}
+

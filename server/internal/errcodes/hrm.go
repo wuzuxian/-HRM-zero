@@ -44,6 +44,18 @@ const (
 	TrainingCertificateNotFoundCode = 10360
 	// TrainingCertificateFileNotFoundCode 证书扫描件不存在（未上传或已清除）
 	TrainingCertificateFileNotFoundCode = 10361
+
+	// HRM 人事档案：员工档案（HRM-03）业务错误码。
+	// EmployeeNotFoundCode 员工不存在
+	EmployeeNotFoundCode = 10350
+	// EmployeeNoExhaustedCode 工号流水已超出 8 位上限
+	EmployeeNoExhaustedCode = 10351
+	// EmployeeNoDuplicateCode 工号已存在
+	EmployeeNoDuplicateCode = 10352
+	// EmployeeInvalidCode 员工档案参数非法（姓名/性别/婚姻状况/人员状态等）
+	EmployeeInvalidCode = 10353
+	// EmployeeImportInvalidCode 导入员工文件非法
+	EmployeeImportInvalidCode = 10354
 )
 
 func init() {
@@ -69,4 +81,10 @@ func init() {
 
 	status.Register(TrainingCertificateNotFoundCode)
 	status.Register(TrainingCertificateFileNotFoundCode)
+
+	status.Register(EmployeeNotFoundCode)
+	status.Register(EmployeeNoExhaustedCode)
+	status.Register(EmployeeNoDuplicateCode)
+	status.Register(EmployeeInvalidCode)
+	status.Register(EmployeeImportInvalidCode)
 }
