@@ -114,6 +114,15 @@ export const generatedRoutes: GeneratedRoute[] = [
                 }
               },
               {
+                name: 'hrm_attendance_setting_overtime-rule',
+                path: '/hrm/attendance/setting/overtime-rule',
+                component: 'view.hrm_attendance_setting_overtime-rule',
+                meta: {
+                  title: 'hrm_attendance_setting_overtime-rule',
+                  i18nKey: 'route.hrm_attendance_setting_overtime-rule'
+                }
+              },
+              {
                 name: 'hrm_attendance_setting_shift',
                 path: '/hrm/attendance/setting/shift',
                 component: 'view.hrm_attendance_setting_shift',

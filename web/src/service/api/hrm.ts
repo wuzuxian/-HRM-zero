@@ -856,3 +856,50 @@ export function DeleteSalaryItem(req: string[]) {
     }
   });
 }
+
+/** get hrm overtime rule (加班规则) paginated list */
+export function GetOvertimeRuleList(params?: Api.Hrm.OvertimeRuleSearchParams) {
+  return request<Api.Hrm.OvertimeRuleList>({
+    url: '/api/v1/hrm/getOvertimeRuleList',
+    method: 'get',
+    params
+  });
+}
+
+/** add hrm overtime rule */
+export function AddOvertimeRule(req: Api.Hrm.AddOvertimeRuleRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addOvertimeRule',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit hrm overtime rule */
+export function EditOvertimeRule(req: Api.Hrm.EditOvertimeRuleRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editOvertimeRule',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete hrm overtime rules */
+export function DeleteOvertimeRule(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteOvertimeRule',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** toggle hrm overtime rule status (启用/停用) */
+export function ToggleOvertimeRuleStatus(req: { uuid: string; status: Api.Hrm.AttendanceStatus }) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/toggleOvertimeRuleStatus',
+    method: 'post',
+    data: req
+  });
+}

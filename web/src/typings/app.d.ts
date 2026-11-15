@@ -451,6 +451,12 @@ declare namespace App {
             save: string;
             delete: string;
           };
+          overtimerule: {
+            add: string;
+            edit: string;
+            delete: string;
+            togglestatus: string;
+          };
           transfer: {
             add: string;
             edit: string;
@@ -1035,6 +1041,43 @@ declare namespace App {
                 typeName: string;
                 typeCode: string;
                 typeValue: string;
+                status: string;
+                remark: string;
+              };
+            };
+            overtimeRule: {
+              title: string;
+              ruleName: string;
+              workday: string;
+              restday: string;
+              holiday: string;
+              dayPolicy: string;
+              approvalRequired: string;
+              punchRequired: string;
+              compMultiplier: string;
+              multiplierTip: string;
+              multiplierValue: string;
+              needApproval: string;
+              noApproval: string;
+              needPunch: string;
+              noPunch: string;
+              minUnitMinutes: string;
+              minUnitHalfHour: string;
+              minUnitHour: string;
+              monthlyLimitHours: string;
+              monthlyLimitTip: string;
+              noLimit: string;
+              usedGroups: string;
+              boundGroupCount: string;
+              globalFallback: string;
+              addRule: string;
+              editRule: string;
+              enable: string;
+              disable: string;
+              status: string;
+              remark: string;
+              form: {
+                ruleName: string;
                 status: string;
                 remark: string;
               };

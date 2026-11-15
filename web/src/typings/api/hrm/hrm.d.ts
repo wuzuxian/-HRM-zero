@@ -1594,5 +1594,84 @@ declare namespace Api {
       status: SalarySubjectStatus | null;
       remark: string;
     };
+
+    /**
+     * overtime day type (当天类型)
+     *
+     * - "1": 工作日
+     * - "2": 休息日
+     * - "3": 法定节假日
+     */
+    type OvertimeDayType = '1' | '2' | '3';
+
+    /** overtime policy of one day type (当天策略: 审批/打卡/调休倍数) */
+    type DayOvertimePolicy = {
+      /** 需审批 1=需审批 0=免审批 */
+      approvalRequired: number;
+      /** 需打卡 1=需打卡 0=免打卡 */
+      punchRequired: number;
+      /** 调休倍数 (1=1:1) */
+      compMultiplier: number;
+    };
+
+    /** hrm overtime rule (加班规则, HRM-13) */
+    type OvertimeRule = {
+      /** record uuid */
+      uuid: string;
+      /** record creator */
+      createBy: string;
+      /** record updater */
+      updateBy: string;
+      /** 规则名称 */
+      ruleName: string;
+      /** 工作日策略 */
+      workday: DayOvertimePolicy;
+      /** 休息日策略 */
+      restday: DayOvertimePolicy;
+      /** 法定节假日策略 */
+      holiday: DayOvertimePolicy;
+      /** 最小计算单位（分钟, 默认30） */
+      minUnitMinutes: number;
+      /** 月上限（小时, 0=不限制） */
+      monthlyLimitHours: number;
+      /** 使用的考勤组 uuid 集合 (空=全局兜底规则) */
+      groupUuids: string[];
+      /** 组织默认规则所属组织 uuid (空=全局) */
+      orgUuid: string;
+      /** status: enabled/disabled */
+      status: AttendanceStatus | null;
+      /** remark */
+      remark: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** overtime rule search params */
+    type OvertimeRuleSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.OvertimeRule, 'ruleName' | 'status'> & Common.CommonSearchParams
+    >;
+
+    /** overtime rule paginated list */
+    type OvertimeRuleList = Common.PaginatingQueryRecord<OvertimeRule>;
+
+    /** add overtime rule request */
+    type AddOvertimeRuleRequest = {
+      ruleName: string;
+      workday: DayOvertimePolicy;
+      restday: DayOvertimePolicy;
+      holiday: DayOvertimePolicy;
+      minUnitMinutes?: number;
+      monthlyLimitHours?: number;
+      groupUuids?: string[];
+      orgUuid?: string;
+      status?: AttendanceStatus;
+      remark?: string;
+    };
+
+    /** edit overtime rule request */
+    type EditOvertimeRuleRequest = AddOvertimeRuleRequest & {
+      uuid: string;
+      status: AttendanceStatus;
+    };
   }
 }

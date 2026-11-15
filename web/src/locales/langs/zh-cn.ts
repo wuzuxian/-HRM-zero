@@ -183,6 +183,7 @@ const local: App.I18n.Schema = {
     'hrm_attendance_setting_attendance-config': '组织默认规则',
     hrm_attendance_setting_shift: '班次管理',
     'hrm_attendance_setting_leave-type': '假期类型',
+    'hrm_attendance_setting_overtime-rule': '加班规则',
     'hrm_employee-relation': '人事管理',
     'hrm_employee-relation_transfer-list': '人事调动',
     hrm_performance: '绩效管理',
@@ -263,6 +264,12 @@ const local: App.I18n.Schema = {
       attendanceconfig: {
         save: '保存组织规则',
         delete: '删除组织规则'
+      },
+      overtimerule: {
+        add: '新增加班规则',
+        edit: '编辑加班规则',
+        delete: '删除加班规则',
+        togglestatus: '加班规则启停'
       },
       transfer: {
         add: '新增调动',
@@ -1131,6 +1138,43 @@ const local: App.I18n.Schema = {
             typeName: '请输入类型名称',
             typeCode: '请输入类型编码（如 annual_leave）',
             typeValue: '请输入类型值',
+            status: '请选择状态',
+            remark: '请输入备注'
+          }
+        },
+        overtimeRule: {
+          title: '加班规则',
+          ruleName: '规则名称',
+          workday: '工作日',
+          restday: '休息日',
+          holiday: '法定节假日',
+          dayPolicy: '当天策略',
+          approvalRequired: '审批方式',
+          punchRequired: '打卡要求',
+          compMultiplier: '调休倍数',
+          multiplierTip: '调休×N = 加班 1 小时折算 N 小时调休',
+          multiplierValue: '调休×{n}',
+          needApproval: '需审批',
+          noApproval: '免审批',
+          needPunch: '需打卡',
+          noPunch: '免打卡',
+          minUnitMinutes: '最小单位',
+          minUnitHalfHour: '30分钟',
+          minUnitHour: '1小时',
+          monthlyLimitHours: '月上限',
+          monthlyLimitTip: '0 表示不限制',
+          noLimit: '不限制',
+          usedGroups: '使用的考勤组',
+          boundGroupCount: '{n} 个考勤组',
+          globalFallback: '全部考勤组',
+          addRule: '新增加班规则',
+          editRule: '编辑加班规则',
+          enable: '启用',
+          disable: '停用',
+          status: '状态',
+          remark: '备注',
+          form: {
+            ruleName: '请输入规则名称',
             status: '请选择状态',
             remark: '请输入备注'
           }

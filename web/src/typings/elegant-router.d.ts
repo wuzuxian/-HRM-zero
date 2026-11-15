@@ -40,6 +40,7 @@ declare module "@elegant-router/types" {
     "hrm_attendance_setting_attendance-config": "/hrm/attendance/setting/attendance-config";
     "hrm_attendance_setting_group": "/hrm/attendance/setting/group";
     "hrm_attendance_setting_leave-type": "/hrm/attendance/setting/leave-type";
+    "hrm_attendance_setting_overtime-rule": "/hrm/attendance/setting/overtime-rule";
     "hrm_attendance_setting_shift": "/hrm/attendance/setting/shift";
     "hrm_employee": "/hrm/employee";
     "hrm_employee_employee-archive-list": "/hrm/employee/employee-archive-list";
@@ -157,6 +158,7 @@ declare module "@elegant-router/types" {
     | "hrm_attendance_setting_attendance-config"
     | "hrm_attendance_setting_group"
     | "hrm_attendance_setting_leave-type"
+    | "hrm_attendance_setting_overtime-rule"
     | "hrm_attendance_setting_shift"
     | "hrm_employee-relation_transfer-list"
     | "hrm_employee_employee-archive-list"

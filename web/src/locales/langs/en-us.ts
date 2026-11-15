@@ -183,6 +183,7 @@ const local: App.I18n.Schema = {
     'hrm_attendance_setting_attendance-config': 'Org Default Rules',
     hrm_attendance_setting_shift: 'Shifts',
     'hrm_attendance_setting_leave-type': 'Leave Types',
+    'hrm_attendance_setting_overtime-rule': 'Overtime Rules',
     'hrm_employee-relation': 'HR Management',
     'hrm_employee-relation_transfer-list': 'Transfer',
     hrm_performance: 'Performance',
@@ -263,6 +264,12 @@ const local: App.I18n.Schema = {
       attendanceconfig: {
         save: 'Save Org Rule',
         delete: 'Delete Org Rule'
+      },
+      overtimerule: {
+        add: 'Add Overtime Rule',
+        edit: 'Edit Overtime Rule',
+        delete: 'Delete Overtime Rule',
+        togglestatus: 'Toggle Overtime Rule'
       },
       transfer: {
         add: 'Add Transfer',
@@ -1131,6 +1138,43 @@ const local: App.I18n.Schema = {
             typeName: 'Please enter type name',
             typeCode: 'Please enter type code (e.g. annual_leave)',
             typeValue: 'Please enter type value',
+            status: 'Please select status',
+            remark: 'Please enter remark'
+          }
+        },
+        overtimeRule: {
+          title: 'Overtime Rules',
+          ruleName: 'Rule Name',
+          workday: 'Workday',
+          restday: 'Rest Day',
+          holiday: 'Statutory Holiday',
+          dayPolicy: 'Day Policy',
+          approvalRequired: 'Approval',
+          punchRequired: 'Punch Requirement',
+          compMultiplier: 'Comp Multiplier',
+          multiplierTip: 'Multiplier N means 1 hour overtime converts to N hours time-off',
+          multiplierValue: 'Comp x{n}',
+          needApproval: 'Approval Required',
+          noApproval: 'No Approval',
+          needPunch: 'Punch Required',
+          noPunch: 'No Punch',
+          minUnitMinutes: 'Min Unit',
+          minUnitHalfHour: '30 min',
+          minUnitHour: '1 hour',
+          monthlyLimitHours: 'Monthly Limit',
+          monthlyLimitTip: '0 means unlimited',
+          noLimit: 'Unlimited',
+          usedGroups: 'Used Groups',
+          boundGroupCount: '{n} group(s)',
+          globalFallback: 'All Groups',
+          addRule: 'Add Overtime Rule',
+          editRule: 'Edit Overtime Rule',
+          enable: 'Enable',
+          disable: 'Disable',
+          status: 'Status',
+          remark: 'Remark',
+          form: {
+            ruleName: 'Please enter rule name',
             status: 'Please select status',
             remark: 'Please enter remark'
           }
