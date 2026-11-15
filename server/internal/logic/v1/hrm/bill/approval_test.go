@@ -18,10 +18,10 @@ import (
 // and a stub document type (see stub_test.go).
 
 var (
-	testCtx   = context.Background()
-	stubOp    = Operator{UserUuid: "user-uuid-1", Name: "张三"}
-	stubDay   = time.Date(2026, 11, 12, 15, 4, 5, 0, time.Local)
-	stubYM    = "20261112"
+	testCtx    = context.Background()
+	stubOp     = Operator{UserUuid: "user-uuid-1", Name: "张三"}
+	stubDay    = time.Date(2026, 11, 12, 15, 4, 5, 0, time.Local)
+	stubYM     = "20261112"
 	stubBillNo = "HR901-2026111200001"
 )
 

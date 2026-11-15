@@ -4,10 +4,12 @@
 // after approval stays in each document's own logic (see Handler.OnApproved).
 //
 // Button-code convention (casbin API codes / bare frontend codes):
+//
 //	v1:hrm:bill:submit   hrm:bill:submit
 //	v1:hrm:bill:approve  hrm:bill:approve
 //	v1:hrm:bill:reject   hrm:bill:reject
 //	v1:hrm:bill:revoke   hrm:bill:revoke
+//
 // Document page menus must list these API codes in their permissions JSON.
 package bill
 
