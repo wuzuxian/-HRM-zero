@@ -38,6 +38,16 @@ const (
 	LeaveTypeNotFoundCode = 10345
 	// LeaveTypeInvalidCode 类型编码非法（须为小写字母+下划线）或状态非法
 	LeaveTypeInvalidCode = 10346
+
+	// HRM 人事调动单（HRM-09，HR203）业务错误码。
+	// TransferNotFoundCode 调动单不存在
+	TransferNotFoundCode = 10360
+	// TransferInvalidCode 调动单参数非法（异动类型/生效设置等）
+	TransferInvalidCode = 10361
+	// TransferEmployeeRequiredCode 未指定员工（工号与姓名为必填快照）
+	TransferEmployeeRequiredCode = 10362
+	// TransferNotEditableCode 单据当前状态不允许修改/删除（仅 未提交/审批不通过/已撤销 可改）
+	TransferNotEditableCode = 10363
 )
 
 func init() {
@@ -60,4 +70,9 @@ func init() {
 	status.Register(LeaveTypeCodeDuplicateCode)
 	status.Register(LeaveTypeNotFoundCode)
 	status.Register(LeaveTypeInvalidCode)
+
+	status.Register(TransferNotFoundCode)
+	status.Register(TransferInvalidCode)
+	status.Register(TransferEmployeeRequiredCode)
+	status.Register(TransferNotEditableCode)
 }

@@ -15,6 +15,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_template"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_template_item"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_shift"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_transfer_bill"
 	"github.com/jzero-io/jzero-admin/server/internal/model/manage_email"
 	"github.com/jzero-io/jzero-admin/server/internal/model/manage_menu"
 	"github.com/jzero-io/jzero-admin/server/internal/model/manage_role"
@@ -32,6 +33,7 @@ type Model struct {
 	HrmPerfTemplate     hrm_perf_template.HrmPerfTemplateModel
 	HrmPerfTemplateItem hrm_perf_template_item.HrmPerfTemplateItemModel
 	HrmShift            hrm_shift.HrmShiftModel
+	HrmTransferBill     hrm_transfer_bill.HrmTransferBillModel
 	ManageEmail         manage_email.ManageEmailModel
 	ManageMenu          manage_menu.ManageMenuModel
 	ManageRole          manage_role.ManageRoleModel
@@ -50,6 +52,7 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmPerfTemplate:     hrm_perf_template.NewHrmPerfTemplateModel(conn, op...),
 		HrmPerfTemplateItem: hrm_perf_template_item.NewHrmPerfTemplateItemModel(conn, op...),
 		HrmShift:            hrm_shift.NewHrmShiftModel(conn, op...),
+		HrmTransferBill:     hrm_transfer_bill.NewHrmTransferBillModel(conn, op...),
 		ManageEmail:         manage_email.NewManageEmailModel(conn, op...),
 		ManageMenu:          manage_menu.NewManageMenuModel(conn, op...),
 		ManageRole:          manage_role.NewManageRoleModel(conn, op...),
