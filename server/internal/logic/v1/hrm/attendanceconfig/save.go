@@ -1,9 +1,9 @@
 package attendanceconfig
 
 import (
-	"strings"
 	"context"
 	"net/http"
+	"strings"
 
 	"github.com/google/uuid"
 	"github.com/jzero-io/jzero/core/status"
