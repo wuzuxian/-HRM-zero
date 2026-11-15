@@ -71,3 +71,19 @@ export const hrmTransferChangeTypeRecord: Record<Api.Hrm.TransferChangeType, App
 };
 
 export const hrmTransferChangeTypeOptions = transformRecordToOption(hrmTransferChangeTypeRecord);
+
+export const hrmTrainingSessionStatusRecord: Record<Api.Hrm.TrainingSessionStatus, App.I18n.I18nKey> = {
+  '1': 'page.hrm.training.sessionStatus.notStarted',
+  '2': 'page.hrm.training.sessionStatus.ongoing',
+  '3': 'page.hrm.training.sessionStatus.finished'
+};
+
+export const hrmTrainingSessionStatusOptions = transformRecordToOption(hrmTrainingSessionStatusRecord);
+
+export const hrmTrainingCertificateStatusRecord: Record<Api.Hrm.TrainingCertificateStatus, App.I18n.I18nKey> = {
+  '0': 'page.hrm.training.certStatus.pending',
+  '1': 'page.hrm.training.certStatus.issued',
+  '2': 'page.hrm.training.certStatus.revoked'
+};
+
+export const hrmTrainingCertificateStatusOptions = transformRecordToOption(hrmTrainingCertificateStatusRecord);

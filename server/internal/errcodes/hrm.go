@@ -39,15 +39,21 @@ const (
 	// LeaveTypeInvalidCode 类型编码非法（须为小写字母+下划线）或状态非法
 	LeaveTypeInvalidCode = 10346
 
+	// HRM 培训管理：我的培训（HRM-31）业务错误码。
+	// TrainingCertificateNotFoundCode 证书不存在或无权访问（我的培训仅限证书本人）
+	TrainingCertificateNotFoundCode = 10360
+	// TrainingCertificateFileNotFoundCode 证书扫描件不存在（未上传或已清除）
+	TrainingCertificateFileNotFoundCode = 10361
+
 	// HRM 人事调动单（HRM-09，HR203）业务错误码。
 	// TransferNotFoundCode 调动单不存在
-	TransferNotFoundCode = 10360
+	TransferNotFoundCode = 10370
 	// TransferInvalidCode 调动单参数非法（异动类型/生效设置等）
-	TransferInvalidCode = 10361
+	TransferInvalidCode = 10371
 	// TransferEmployeeRequiredCode 未指定员工（工号与姓名为必填快照）
-	TransferEmployeeRequiredCode = 10362
+	TransferEmployeeRequiredCode = 10372
 	// TransferNotEditableCode 单据当前状态不允许修改/删除（仅 未提交/审批不通过/已撤销 可改）
-	TransferNotEditableCode = 10363
+	TransferNotEditableCode = 10373
 )
 
 func init() {
@@ -70,6 +76,9 @@ func init() {
 	status.Register(LeaveTypeCodeDuplicateCode)
 	status.Register(LeaveTypeNotFoundCode)
 	status.Register(LeaveTypeInvalidCode)
+
+	status.Register(TrainingCertificateNotFoundCode)
+	status.Register(TrainingCertificateFileNotFoundCode)
 
 	status.Register(TransferNotFoundCode)
 	status.Register(TransferInvalidCode)

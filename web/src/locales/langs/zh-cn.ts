@@ -22,6 +22,7 @@ const local: App.I18n.Schema = {
     delete: '删除',
     deleteSuccess: '删除成功',
     confirmDelete: '确认删除吗？',
+    download: '下载',
     edit: '编辑',
     editSuccess: '编辑成功',
     editHomeSuccess: '编辑角色首页成功',
@@ -186,6 +187,8 @@ const local: App.I18n.Schema = {
     hrm_performance_setting: '绩效设置',
     hrm_performance_setting_indicator: '指标库',
     hrm_performance_setting_template: '模板管理',
+    hrm_training: '培训管理',
+    hrm_training_my: '我的培训',
     exception: '异常页',
     exception_403: '403',
     exception_404: '404',
@@ -241,6 +244,9 @@ const local: App.I18n.Schema = {
         approve: '审批通过',
         reject: '审批驳回',
         revoke: '撤销单据'
+      },
+      training: {
+        downloadCert: '下载/预览证书扫描件'
       },
       performance: {
         indicator: {
@@ -700,6 +706,35 @@ const local: App.I18n.Schema = {
             effectiveDateRequired: '非立即生效时必须选择生效日期'
           }
         }
+      },
+      training: {
+        mySessionTitle: '我的班次',
+        myCertTitle: '我的培训证书',
+        sessionNo: '班次编号',
+        sessionName: '班次',
+        location: '地点',
+        lecturer: '讲师',
+        hours: '学时',
+        startTime: '开始时间',
+        endTime: '结束时间',
+        sessionStatusLabel: '状态',
+        sessionStatus: {
+          notStarted: '未开始',
+          ongoing: '进行中',
+          finished: '已结束'
+        },
+        certName: '证书名称',
+        certNo: '证书号',
+        issueTime: '发证时间',
+        certStatusLabel: '状态',
+        certStatus: {
+          pending: '待发',
+          issued: '已发',
+          revoked: '已撤销'
+        },
+        scanFile: '扫描件',
+        preview: '预览',
+        noFile: '无扫描件'
       }
     }
   },

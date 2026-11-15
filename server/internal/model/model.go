@@ -15,6 +15,9 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_template"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_template_item"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_shift"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_certificate"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_session"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_session_participant"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_transfer_bill"
 	"github.com/jzero-io/jzero-admin/server/internal/model/manage_email"
 	"github.com/jzero-io/jzero-admin/server/internal/model/manage_menu"
@@ -25,39 +28,45 @@ import (
 )
 
 type Model struct {
-	HrmApprovalRecord   hrm_approval_record.HrmApprovalRecordModel
-	HrmBillSequence     hrm_bill_sequence.HrmBillSequenceModel
-	HrmLeaveType        hrm_leave_type.HrmLeaveTypeModel
-	HrmOrg              hrm_org.HrmOrgModel
-	HrmPerfIndicator    hrm_perf_indicator.HrmPerfIndicatorModel
-	HrmPerfTemplate     hrm_perf_template.HrmPerfTemplateModel
-	HrmPerfTemplateItem hrm_perf_template_item.HrmPerfTemplateItemModel
-	HrmShift            hrm_shift.HrmShiftModel
-	HrmTransferBill     hrm_transfer_bill.HrmTransferBillModel
-	ManageEmail         manage_email.ManageEmailModel
-	ManageMenu          manage_menu.ManageMenuModel
-	ManageRole          manage_role.ManageRoleModel
-	ManageRoleMenu      manage_role_menu.ManageRoleMenuModel
-	ManageUser          manage_user.ManageUserModel
-	ManageUserRole      manage_user_role.ManageUserRoleModel
+	HrmApprovalRecord             hrm_approval_record.HrmApprovalRecordModel
+	HrmBillSequence               hrm_bill_sequence.HrmBillSequenceModel
+	HrmLeaveType                  hrm_leave_type.HrmLeaveTypeModel
+	HrmOrg                        hrm_org.HrmOrgModel
+	HrmPerfIndicator              hrm_perf_indicator.HrmPerfIndicatorModel
+	HrmPerfTemplate               hrm_perf_template.HrmPerfTemplateModel
+	HrmPerfTemplateItem           hrm_perf_template_item.HrmPerfTemplateItemModel
+	HrmShift                      hrm_shift.HrmShiftModel
+	HrmTrainingCertificate        hrm_training_certificate.HrmTrainingCertificateModel
+	HrmTrainingSession            hrm_training_session.HrmTrainingSessionModel
+	HrmTrainingSessionParticipant hrm_training_session_participant.HrmTrainingSessionParticipantModel
+	HrmTransferBill               hrm_transfer_bill.HrmTransferBillModel
+	ManageEmail                   manage_email.ManageEmailModel
+	ManageMenu                    manage_menu.ManageMenuModel
+	ManageRole                    manage_role.ManageRoleModel
+	ManageRoleMenu                manage_role_menu.ManageRoleMenuModel
+	ManageUser                    manage_user.ManageUserModel
+	ManageUserRole                manage_user_role.ManageUserRoleModel
 }
 
 func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 	return Model{
-		HrmApprovalRecord:   hrm_approval_record.NewHrmApprovalRecordModel(conn, op...),
-		HrmBillSequence:     hrm_bill_sequence.NewHrmBillSequenceModel(conn, op...),
-		HrmLeaveType:        hrm_leave_type.NewHrmLeaveTypeModel(conn, op...),
-		HrmOrg:              hrm_org.NewHrmOrgModel(conn, op...),
-		HrmPerfIndicator:    hrm_perf_indicator.NewHrmPerfIndicatorModel(conn, op...),
-		HrmPerfTemplate:     hrm_perf_template.NewHrmPerfTemplateModel(conn, op...),
-		HrmPerfTemplateItem: hrm_perf_template_item.NewHrmPerfTemplateItemModel(conn, op...),
-		HrmShift:            hrm_shift.NewHrmShiftModel(conn, op...),
-		HrmTransferBill:     hrm_transfer_bill.NewHrmTransferBillModel(conn, op...),
-		ManageEmail:         manage_email.NewManageEmailModel(conn, op...),
-		ManageMenu:          manage_menu.NewManageMenuModel(conn, op...),
-		ManageRole:          manage_role.NewManageRoleModel(conn, op...),
-		ManageRoleMenu:      manage_role_menu.NewManageRoleMenuModel(conn, op...),
-		ManageUser:          manage_user.NewManageUserModel(conn, op...),
-		ManageUserRole:      manage_user_role.NewManageUserRoleModel(conn, op...),
+		HrmApprovalRecord:             hrm_approval_record.NewHrmApprovalRecordModel(conn, op...),
+		HrmBillSequence:               hrm_bill_sequence.NewHrmBillSequenceModel(conn, op...),
+		HrmLeaveType:                  hrm_leave_type.NewHrmLeaveTypeModel(conn, op...),
+		HrmOrg:                        hrm_org.NewHrmOrgModel(conn, op...),
+		HrmPerfIndicator:              hrm_perf_indicator.NewHrmPerfIndicatorModel(conn, op...),
+		HrmPerfTemplate:               hrm_perf_template.NewHrmPerfTemplateModel(conn, op...),
+		HrmPerfTemplateItem:           hrm_perf_template_item.NewHrmPerfTemplateItemModel(conn, op...),
+		HrmShift:                      hrm_shift.NewHrmShiftModel(conn, op...),
+		HrmTrainingCertificate:        hrm_training_certificate.NewHrmTrainingCertificateModel(conn, op...),
+		HrmTrainingSession:            hrm_training_session.NewHrmTrainingSessionModel(conn, op...),
+		HrmTrainingSessionParticipant: hrm_training_session_participant.NewHrmTrainingSessionParticipantModel(conn, op...),
+		HrmTransferBill:               hrm_transfer_bill.NewHrmTransferBillModel(conn, op...),
+		ManageEmail:                   manage_email.NewManageEmailModel(conn, op...),
+		ManageMenu:                    manage_menu.NewManageMenuModel(conn, op...),
+		ManageRole:                    manage_role.NewManageRoleModel(conn, op...),
+		ManageRoleMenu:                manage_role_menu.NewManageRoleMenuModel(conn, op...),
+		ManageUser:                    manage_user.NewManageUserModel(conn, op...),
+		ManageUserRole:                manage_user_role.NewManageUserRoleModel(conn, op...),
 	}
 }

@@ -192,6 +192,25 @@ export const generatedRoutes: GeneratedRoute[] = [
             ]
           }
         ]
+      },
+      {
+        name: 'hrm_training',
+        path: '/hrm/training',
+        meta: {
+          title: 'hrm_training',
+          i18nKey: 'route.hrm_training'
+        },
+        children: [
+          {
+            name: 'hrm_training_my',
+            path: '/hrm/training/my',
+            component: 'view.hrm_training_my',
+            meta: {
+              title: 'hrm_training_my',
+              i18nKey: 'route.hrm_training_my'
+            }
+          }
+        ]
       }
     ]
   },
