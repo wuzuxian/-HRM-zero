@@ -12,7 +12,6 @@ const appStore = useAppStore();
 const authStore = useAuthStore();
 
 const gap = computed(() => (appStore.isMobile ? 0 : 16));
-
 </script>
 
 <template>
@@ -21,7 +20,7 @@ const gap = computed(() => (appStore.isMobile ? 0 : 16));
       <NGi span="24 s:24 m:18">
         <div class="flex-y-center">
           <div class="w-72px shrink-0 overflow-hidden rd-1/2">
-            <img src="@/assets/imgs/jzero.svg" class="w-full h-auto" />
+            <img src="@/assets/imgs/jzero.svg" class="h-auto w-full" />
           </div>
           <div class="pl-12px">
             <h3 class="text-18px font-semibold">

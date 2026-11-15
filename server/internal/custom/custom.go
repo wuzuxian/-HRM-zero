@@ -8,11 +8,19 @@ import (
 	"github.com/casbin/casbin/v2"
 
 	"github.com/jzero-io/jzero-admin/server/internal/global"
+	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/transfer"
 	"github.com/jzero-io/jzero-admin/server/internal/model"
+	"github.com/jzero-io/jzero-admin/server/internal/scheduler"
 	menutypes "github.com/jzero-io/jzero-admin/server/internal/types/v1/manage/menu"
 )
 
-type Custom struct{}
+// Custom is the service-group hook for server-lifecycle logic that is not a
+// REST route. It owns the in-process scheduler (服务内嵌定时调度骨架): domain
+// packages expose NewXxxJob constructors and Start registers them; later
+// tickets (HRM-10 离职生效、假勤日结/月报锁定) append their jobs here.
+type Custom struct {
+	scheduler *scheduler.Scheduler
+}
 
 func New() *Custom {
 	return &Custom{}
@@ -31,11 +39,21 @@ func (c *Custom) Init() error {
 	return nil
 }
 
-// Start Please add custom logic here.
-func (c *Custom) Start() {}
+// Start launches the in-process scheduler. Called by service.ServiceGroup in
+// its own goroutine; Stop is invoked on server shutdown.
+func (c *Custom) Start() {
+	s := scheduler.New()
+	s.Register(transfer.NewEffectiveScanJob(global.ServiceContext.SqlxConn, time.Now))
+	c.scheduler = s
+	s.Start()
+}
 
-// Stop Please add shut down logic here.
-func (c *Custom) Stop() {}
+// Stop shuts the scheduler down (cancels job contexts, waits for in-flight runs).
+func (c *Custom) Stop() {
+	if c.scheduler != nil {
+		c.scheduler.Stop()
+	}
+}
 
 func InitCasbinRule(ctx context.Context, model model.Model, enforcer *casbin.Enforcer) error {
 	// get all role

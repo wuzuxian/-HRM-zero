@@ -1,0 +1,492 @@
+{
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/hrm/addTransfer": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:transfer:add",
+        "operationId": "v1/Hrm/TransferAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "changeType": {
+                  "type": "string"
+                },
+                "effectiveDate": {
+                  "description": "YYYY-MM-DD，非立即生效时必填",
+                  "type": "string"
+                },
+                "effectiveImmediately": {
+                  "type": "integer"
+                },
+                "employeeName": {
+                  "type": "string"
+                },
+                "employeeNo": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "newCompany": {
+                  "type": "string"
+                },
+                "newOrg": {
+                  "type": "string"
+                },
+                "newPosition": {
+                  "type": "string"
+                },
+                "newPost": {
+                  "type": "string"
+                },
+                "newSalary": {
+                  "type": "number"
+                },
+                "originalCompany": {
+                  "type": "string"
+                },
+                "originalOrg": {
+                  "type": "string"
+                },
+                "originalPosition": {
+                  "type": "string"
+                },
+                "originalPost": {
+                  "type": "string"
+                },
+                "transferReason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "employeeNo",
+                "employeeName",
+                "changeType",
+                "effectiveImmediately"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/transfer"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteTransfer": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:transfer:delete",
+        "operationId": "v1/Hrm/TransferDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/transfer"
+        ]
+      }
+    },
+    "/api/v1/hrm/editTransfer": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:transfer:edit",
+        "operationId": "v1/Hrm/TransferEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "changeType": {
+                  "type": "string"
+                },
+                "effectiveDate": {
+                  "type": "string"
+                },
+                "effectiveImmediately": {
+                  "type": "integer"
+                },
+                "employeeName": {
+                  "type": "string"
+                },
+                "employeeNo": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "newCompany": {
+                  "type": "string"
+                },
+                "newOrg": {
+                  "type": "string"
+                },
+                "newPosition": {
+                  "type": "string"
+                },
+                "newPost": {
+                  "type": "string"
+                },
+                "newSalary": {
+                  "type": "number"
+                },
+                "originalCompany": {
+                  "type": "string"
+                },
+                "originalOrg": {
+                  "type": "string"
+                },
+                "originalPosition": {
+                  "type": "string"
+                },
+                "originalPost": {
+                  "type": "string"
+                },
+                "transferReason": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "employeeNo",
+                "employeeName",
+                "changeType",
+                "effectiveImmediately"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/transfer"
+        ]
+      }
+    },
+    "/api/v1/hrm/getTransferList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:transfer:list",
+        "operationId": "v1/Hrm/TransferList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据编号（模糊）",
+            "in": "query",
+            "name": "billNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据状态",
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "员工工号（模糊）",
+            "in": "query",
+            "name": "employeeNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "1=强制只看我的单据（默认行为即我的单据，管理员可传 0 看全部由后端角色判定兜底）",
+            "in": "query",
+            "name": "mine",
+            "type": "integer"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "applied": {
+                        "description": "生效回写是否已完成 1=是 0=否",
+                        "type": "integer"
+                      },
+                      "billNo": {
+                        "description": "单据编号 HR203-...",
+                        "type": "string"
+                      },
+                      "changeType": {
+                        "description": "异动类型 post/org/salary/company/other",
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "creatorName": {
+                        "description": "申请人姓名",
+                        "type": "string"
+                      },
+                      "creatorUuid": {
+                        "description": "申请人 uuid",
+                        "type": "string"
+                      },
+                      "effectiveDate": {
+                        "description": "生效日期 YYYY-MM-DD",
+                        "type": "string"
+                      },
+                      "effectiveImmediately": {
+                        "description": "是否立即生效 1=是 0=否",
+                        "type": "integer"
+                      },
+                      "employeeName": {
+                        "description": "员工姓名",
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "description": "员工工号",
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "description": "员工档案 uuid",
+                        "type": "string"
+                      },
+                      "newCompany": {
+                        "description": "新公司（组织 uuid）",
+                        "type": "string"
+                      },
+                      "newOrg": {
+                        "description": "新部门（组织 uuid）",
+                        "type": "string"
+                      },
+                      "newPosition": {
+                        "description": "新职位",
+                        "type": "string"
+                      },
+                      "newPost": {
+                        "description": "新岗位",
+                        "type": "string"
+                      },
+                      "newSalary": {
+                        "description": "调整后薪资（调薪时填写）",
+                        "type": "number"
+                      },
+                      "originalCompany": {
+                        "description": "原公司（组织 uuid）",
+                        "type": "string"
+                      },
+                      "originalOrg": {
+                        "description": "原部门（组织 uuid）",
+                        "type": "string"
+                      },
+                      "originalPosition": {
+                        "description": "原职位",
+                        "type": "string"
+                      },
+                      "originalPost": {
+                        "description": "原岗位",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "单据状态 unsubmitted/approving/approved/rejected/revoked",
+                        "type": "string"
+                      },
+                      "transferReason": {
+                        "description": "调动原因",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "billNo",
+                      "status",
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "changeType",
+                      "originalCompany",
+                      "originalOrg",
+                      "originalPosition",
+                      "originalPost",
+                      "newCompany",
+                      "newOrg",
+                      "newPosition",
+                      "newPost",
+                      "newSalary",
+                      "transferReason",
+                      "effectiveImmediately",
+                      "effectiveDate",
+                      "applied",
+                      "creatorUuid",
+                      "creatorName",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/transfer"
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKey": {
+      "description": "Enter Authorization",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0"
+}

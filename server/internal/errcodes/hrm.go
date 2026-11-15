@@ -56,6 +56,16 @@ const (
 	EmployeeInvalidCode = 10353
 	// EmployeeImportInvalidCode 导入员工文件非法
 	EmployeeImportInvalidCode = 10354
+
+	// HRM 人事调动单（HRM-09，HR203）业务错误码。
+	// TransferNotFoundCode 调动单不存在
+	TransferNotFoundCode = 10370
+	// TransferInvalidCode 调动单参数非法（异动类型/生效设置等）
+	TransferInvalidCode = 10371
+	// TransferEmployeeRequiredCode 未指定员工（工号与姓名为必填快照）
+	TransferEmployeeRequiredCode = 10372
+	// TransferNotEditableCode 单据当前状态不允许修改/删除（仅 未提交/审批不通过/已撤销 可改）
+	TransferNotEditableCode = 10373
 )
 
 func init() {
@@ -87,4 +97,9 @@ func init() {
 	status.Register(EmployeeNoDuplicateCode)
 	status.Register(EmployeeInvalidCode)
 	status.Register(EmployeeImportInvalidCode)
+
+	status.Register(TransferNotFoundCode)
+	status.Register(TransferInvalidCode)
+	status.Register(TransferEmployeeRequiredCode)
+	status.Register(TransferNotEditableCode)
 }

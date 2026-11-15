@@ -439,6 +439,17 @@ declare namespace App {
             edit: string;
             delete: string;
           };
+          transfer: {
+            add: string;
+            edit: string;
+            delete: string;
+          };
+          bill: {
+            submit: string;
+            approve: string;
+            reject: string;
+            revoke: string;
+          };
           training: {
             downloadCert: string;
           };
@@ -838,6 +849,73 @@ declare namespace App {
                 typeValue: string;
                 status: string;
                 remark: string;
+              };
+            };
+          };
+          employeeRelation: {
+            billStatus: {
+              title: string;
+              unsubmitted: string;
+              approving: string;
+              approved: string;
+              rejected: string;
+              revoked: string;
+            };
+            transfer: {
+              title: string;
+              billNo: string;
+              employeeNo: string;
+              employeeName: string;
+              changeType: {
+                title: string;
+                post: string;
+                org: string;
+                salary: string;
+                company: string;
+                other: string;
+              };
+              originalCompany: string;
+              originalOrg: string;
+              originalPosition: string;
+              originalPost: string;
+              newCompany: string;
+              newOrg: string;
+              newPosition: string;
+              newPost: string;
+              newSalary: string;
+              transferReason: string;
+              effectiveImmediately: string;
+              effectiveDate: string;
+              applied: string;
+              creatorName: string;
+              createTime: string;
+              yes: string;
+              no: string;
+              submit: string;
+              approve: string;
+              reject: string;
+              revoke: string;
+              records: string;
+              noRecords: string;
+              confirmSubmit: string;
+              confirmApprove: string;
+              confirmReject: string;
+              confirmRevoke: string;
+              addTransfer: string;
+              editTransfer: string;
+              sectionEmployee: string;
+              sectionOriginal: string;
+              sectionNew: string;
+              sectionEffect: string;
+              form: {
+                billNo: string;
+                status: string;
+                employeeNo: string;
+                employeeName: string;
+                changeType: string;
+                org: string;
+                transferReason: string;
+                effectiveDateRequired: string;
               };
             };
           };

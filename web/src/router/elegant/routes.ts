@@ -109,20 +109,20 @@ export const generatedRoutes: GeneratedRoute[] = [
         ]
       },
       {
-        name: 'hrm_employee',
-        path: '/hrm/employee',
+        name: 'hrm_employee-relation',
+        path: '/hrm/employee-relation',
         meta: {
-          title: 'hrm_employee',
-          i18nKey: 'route.hrm_employee'
+          title: 'hrm_employee-relation',
+          i18nKey: 'route.hrm_employee-relation'
         },
         children: [
           {
-            name: 'hrm_employee_employee-archive-list',
-            path: '/hrm/employee/employee-archive-list',
-            component: 'view.hrm_employee_employee-archive-list',
+            name: 'hrm_employee-relation_transfer-list',
+            path: '/hrm/employee-relation/transfer-list',
+            component: 'view.hrm_employee-relation_transfer-list',
             meta: {
-              title: 'hrm_employee_employee-archive-list',
-              i18nKey: 'route.hrm_employee_employee-archive-list'
+              title: 'hrm_employee-relation_transfer-list',
+              i18nKey: 'route.hrm_employee-relation_transfer-list'
             }
           }
         ]

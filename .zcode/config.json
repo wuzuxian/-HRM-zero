@@ -1,0 +1,21 @@
+{
+  "hooks": {
+    "enabled": true,
+    "events": {
+      "PreToolUse": [
+        {
+          "matcher": "Edit|Write",
+          "hooks": [
+            {
+              "type": "process",
+              "command": "python3",
+              "args": ["${ZCODE_PROJECT_DIR}/.zcode/hooks/no-edit-generated.py"],
+              "timeoutMs": 5000,
+              "statusMessage": "generated-file guard"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -6,7 +6,7 @@ defineOptions({
 
 <template>
   <div class="w-72px shrink-0 overflow-hidden rd-1/2">
-    <img src="@/assets/imgs/jzero.svg" class="w-full h-auto" />
+    <img src="@/assets/imgs/jzero.svg" class="h-auto w-full" />
   </div>
 </template>
 
