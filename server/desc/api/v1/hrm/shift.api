@@ -5,6 +5,7 @@ info (
 )
 
 import (
+	"../../common/request.api"
 	"../../common/response.api"
 )
 
@@ -25,11 +26,13 @@ type HrmShift {
 }
 
 type ListRequest {
+	PageRequest
 	ShiftName string `form:"shiftName,optional"`
 	Status    string `form:"status,optional"`
 }
 
 type ListResponse {
+	PageResponse
 	Records []HrmShift `json:"records"`
 }
 

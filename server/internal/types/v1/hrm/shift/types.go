@@ -62,12 +62,19 @@ type HrmShift struct {
 }
 
 type ListRequest struct {
+	PageRequest
 	ShiftName string `form:"shiftName,optional"`
 	Status    string `form:"status,optional"`
 }
 
 type ListResponse struct {
+	PageResponse
 	Records []HrmShift `json:"records"`
+}
+
+type PageRequest struct {
+	Current int `form:"current,default=1,optional"`
+	Size    int `form:"size,default=10,optional"`
 }
 
 type PageResponse struct {

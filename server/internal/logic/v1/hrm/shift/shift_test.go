@@ -17,6 +17,8 @@ func newCtx(t *testing.T) *svc.ServiceContext {
 
 func mustList(t *testing.T, svcCtx *svc.ServiceContext, req types.ListRequest) []types.HrmShift {
 	t.Helper()
+	req.Current = 1
+	req.Size = 100
 	resp, err := NewList(context.Background(), svcCtx, nil).List(&req)
 	if err != nil {
 		t.Fatalf("list shifts: %v", err)

@@ -5,6 +5,7 @@ info (
 )
 
 import (
+	"../../common/request.api"
 	"../../common/response.api"
 )
 
@@ -24,11 +25,13 @@ type HrmLeaveType {
 }
 
 type ListRequest {
+	PageRequest
 	TypeName string `form:"typeName,optional"`
 	Status   string `form:"status,optional"`
 }
 
 type ListResponse {
+	PageResponse
 	Records []HrmLeaveType `json:"records"`
 }
 

@@ -28,10 +28,11 @@ func NewList(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request) *
 	}
 }
 
-// List 班次列表，支持按班次名称/状态筛选.
+// List 班次分页列表，支持按班次名称/状态筛选.
 func (l *List) List(req *types.ListRequest) (resp *types.ListResponse, err error) {
-	rows, err := l.svcCtx.Model.HrmShift.FindByCondition(l.ctx, nil,
+	rows, total, err := l.svcCtx.Model.HrmShift.PageByCondition(l.ctx, nil,
 		condition.NewChain().
+			Page(req.Current, req.Size).
 			Like(hrm_shift.ShiftName, "%"+req.ShiftName+"%", condition.WithSkip(req.ShiftName == "")).
 			Equal(hrm_shift.Status, req.Status, condition.WithSkip(req.Status == "")).
 			OrderByDesc(hrm_shift.Id).
@@ -59,5 +60,9 @@ func (l *List) List(req *types.ListRequest) (resp *types.ListResponse, err error
 		})
 	}
 
-	return &types.ListResponse{Records: records}, nil
+	return &types.ListResponse{PageResponse: types.PageResponse{
+		Current: req.Current,
+		Size:    req.Size,
+		Total:   total,
+	}, Records: records}, nil
 }

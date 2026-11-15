@@ -63,12 +63,19 @@ type HrmLeaveType struct {
 }
 
 type ListRequest struct {
+	PageRequest
 	TypeName string `form:"typeName,optional"`
 	Status   string `form:"status,optional"`
 }
 
 type ListResponse struct {
+	PageResponse
 	Records []HrmLeaveType `json:"records"`
+}
+
+type PageRequest struct {
+	Current int `form:"current,default=1,optional"`
+	Size    int `form:"size,default=10,optional"`
 }
 
 type PageResponse struct {

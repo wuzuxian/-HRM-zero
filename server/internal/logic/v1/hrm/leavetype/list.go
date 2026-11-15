@@ -28,10 +28,11 @@ func NewList(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request) *
 	}
 }
 
-// List 假期类型列表，按排序号升序展示，支持按类型名称/状态筛选.
+// List 假期类型分页列表，按排序号升序展示，支持按类型名称/状态筛选.
 func (l *List) List(req *types.ListRequest) (resp *types.ListResponse, err error) {
-	rows, err := l.svcCtx.Model.HrmLeaveType.FindByCondition(l.ctx, nil,
+	rows, total, err := l.svcCtx.Model.HrmLeaveType.PageByCondition(l.ctx, nil,
 		condition.NewChain().
+			Page(req.Current, req.Size).
 			Like(hrm_leave_type.TypeName, "%"+req.TypeName+"%", condition.WithSkip(req.TypeName == "")).
 			Equal(hrm_leave_type.Status, req.Status, condition.WithSkip(req.Status == "")).
 			OrderByAsc(hrm_leave_type.OrderNum).
@@ -59,5 +60,9 @@ func (l *List) List(req *types.ListRequest) (resp *types.ListResponse, err error
 		})
 	}
 
-	return &types.ListResponse{Records: records}, nil
+	return &types.ListResponse{PageResponse: types.PageResponse{
+		Current: req.Current,
+		Size:    req.Size,
+		Total:   total,
+	}, Records: records}, nil
 }

@@ -225,6 +225,20 @@
         "parameters": [
           {
             "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
             "in": "query",
             "name": "typeName",
             "type": "string"
@@ -244,6 +258,9 @@
             "description": "",
             "schema": {
               "properties": {
+                "current": {
+                  "type": "integer"
+                },
                 "records": {
                   "items": {
                     "properties": {
@@ -301,6 +318,12 @@
                     "type": "object"
                   },
                   "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
                 }
               },
               "type": "object"
