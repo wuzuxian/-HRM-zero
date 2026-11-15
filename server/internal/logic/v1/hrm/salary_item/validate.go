@@ -2,10 +2,13 @@ package salary_item
 
 import (
 	"regexp"
+	"time"
 
 	"github.com/jzero-io/jzero/core/status"
 
 	"github.com/jzero-io/jzero-admin/server/internal/errcodes"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_item"
+	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/salary_item"
 )
 
 // 薪资项目（GLOSSARY「薪资项目」）枚举：
@@ -69,4 +72,24 @@ func normalizeFormula(itemType, formula string) string {
 		return ""
 	}
 	return formula
+}
+
+// itemRowToRecord 薪资项目行 → API record（list/get_all 共用映射）.
+func itemRowToRecord(row *hrm_salary_item.HrmSalaryItem) types.HrmSalaryItem {
+	return types.HrmSalaryItem{
+		Uuid:       row.Uuid,
+		ItemCode:   row.ItemCode,
+		ItemName:   row.ItemName,
+		ItemType:   row.ItemType,
+		ItemClass:  row.ItemClass,
+		ValueMode:  row.ValueMode,
+		CalcOrder:  row.CalcOrder,
+		OrderNum:   row.OrderNum,
+		Formula:    row.Formula,
+		IsPreset:   row.IsPreset,
+		Status:     row.Status,
+		Remark:     row.Remark,
+		CreateTime: row.CreateTime.Format(time.DateTime),
+		UpdateTime: row.UpdateTime.Format(time.DateTime),
+	}
 }

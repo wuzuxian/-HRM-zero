@@ -226,6 +226,7 @@ const routeMap: RouteMap = {
   "hrm_salary": "/hrm/salary",
   "hrm_salary_setting": "/hrm/salary/setting",
   "hrm_salary_setting_item": "/hrm/salary/setting/item",
+  "hrm_salary_setting_scheme": "/hrm/salary/setting/scheme",
   "hrm_salary_setting_subject": "/hrm/salary/setting/subject",
   "hrm_salary_tax": "/hrm/salary/tax",
   "hrm_salary_tax_special-deduction": "/hrm/salary/tax/special-deduction",

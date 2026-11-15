@@ -1910,6 +1910,131 @@ declare namespace Api {
       remark: string;
     };
 
+     // ===== HRM-34 薪酬方案 =====
+
+    /** hrm salary scheme (薪酬方案, GLOSSARY: 某薪酬主体下适用于某类人员状态的薪资计算配置) */
+    type SalaryScheme = {
+      /** record uuid */
+      uuid: string;
+      /** scheme name */
+      schemeName: string;
+      /** linked salary subject uuid */
+      subjectUuid: string;
+      /** linked subject name snapshot */
+      subjectName: string;
+      /** 适用人员状态, 逗号分隔 (1=正式 2=试用期 3=实习生 4=临时工 5=离职 6=退休) */
+      personStatus: string;
+      /** settle cycle: monthly=月度 */
+      settleCycle: string;
+      /** pay day (几号, 1-31) */
+      payDay: number;
+      /** currency (ISO 4217) */
+      currency: string;
+      /** status: enabled/disabled */
+      status: SalarySubjectStatus | null;
+      /** remark */
+      remark: string;
+      /** configured item count */
+      itemCount: number;
+      /** 配置完整度 6 项检查 (1=已配置 0=未配置/未接入) */
+      completeness: SalarySchemeCompleteness;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** 配置完整度 (项目✓ 计薪✓ 岗位✓ 社保✓ 个税✓ 考勤✓; 岗位/社保/考勤 未接入恒 0) */
+    type SalarySchemeCompleteness = {
+      schemeItems: number;
+      schemeCalc: number;
+      schemePosition: number;
+      schemeSi: number;
+      schemeTax: number;
+      schemeAttendance: number;
+    };
+
+    /** 方案项目配置行 (项目快照字段实时取自 hrm_salary_item, 不落库) */
+    type SalarySchemeItem = {
+      /** record uuid */
+      uuid: string;
+      /** scheme uuid */
+      schemeUuid: string;
+      /** salary item uuid */
+      itemUuid: string;
+      /** item code (snapshot) */
+      itemCode: string;
+      /** item name (snapshot) */
+      itemName: string;
+      /** item type (snapshot) */
+      itemType: SalaryItemType;
+      /** item class (snapshot) */
+      itemClass: SalaryItemClass;
+      /** value mode (snapshot) */
+      valueMode: SalaryItemValueMode;
+      /** calc order (snapshot) */
+      calcOrder: number;
+      /** item status (snapshot; 停用项目容忍展示) */
+      status: SalarySubjectStatus | null;
+      /** override amount (0=继承项目默认) */
+      overrideAmount: number;
+      /** override formula (''=继承项目默认) */
+      overrideFormula: string;
+    };
+
+    /** salary scheme search params */
+    type SalarySchemeSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.SalaryScheme, 'schemeName' | 'subjectUuid' | 'status'> & Common.CommonSearchParams
+    >;
+
+    /** salary scheme paginated list */
+    type SalarySchemeList = Common.PaginatingQueryRecord<SalaryScheme>;
+
+    /** 方案项目配置入参 */
+    type SalarySchemeItemPayload = {
+      itemUuid: string;
+      overrideAmount: number;
+      overrideFormula: string;
+    };
+
+    /** add salary scheme request */
+    type AddSalarySchemeRequest = {
+      schemeName: string;
+      subjectUuid: string;
+      personStatus: string[];
+      settleCycle: string;
+      payDay: number;
+      currency: string;
+      status: SalarySubjectStatus | null;
+      remark: string;
+      items: SalarySchemeItemPayload[];
+    };
+
+    /** edit salary scheme request */
+    type EditSalarySchemeRequest = {
+      uuid: string;
+      schemeName: string;
+      subjectUuid: string;
+      personStatus: string[];
+      settleCycle: string;
+      payDay: number;
+      currency: string;
+      status: SalarySubjectStatus | null;
+      remark: string;
+      items: SalarySchemeItemPayload[];
+    };
+
+    /** get salary scheme detail response (配置弹窗回显) */
+    type SalarySchemeDetail = {
+      scheme: SalaryScheme;
+      items: SalarySchemeItem[];
+    };
+
+    /** get scheme items response (HRM-37 试算消费) */
+    type SalarySchemeItemsResponse = {
+      items: SalarySchemeItem[];
+    };
+
     /**
      * overtime day type (当天类型)
      *

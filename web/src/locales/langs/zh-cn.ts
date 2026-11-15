@@ -217,6 +217,7 @@ const local: App.I18n.Schema = {
     hrm_salary_setting: '薪酬设置',
     hrm_salary_setting_subject: '薪酬主体',
     hrm_salary_setting_item: '薪资项目',
+    hrm_salary_setting_scheme: '薪酬方案',
     hrm_salary_tax: '个税管理',
     'hrm_salary_tax_tax-profile': '员工个税档案',
     'hrm_salary_tax_special-deduction': '专项附加扣除',
@@ -418,6 +419,11 @@ const local: App.I18n.Schema = {
         add: '新增薪资项目',
         edit: '编辑薪资项目',
         delete: '删除薪资项目'
+      },
+      salary_scheme: {
+        add: '新增薪酬方案',
+        edit: '编辑薪酬方案',
+        delete: '删除薪酬方案'
       },
       tax_profile: {
         add: '新增个税档案',
@@ -1994,6 +2000,51 @@ const local: App.I18n.Schema = {
             itemClass: '请选择项目分类',
             valueMode: '请选择取值方式',
             formula: '请输入公式表达式',
+            status: '请选择状态',
+            remark: '请输入备注'
+          }
+        },
+        scheme: {
+          title: '薪酬方案',
+          schemeName: '方案名称',
+          subject: '薪酬主体',
+          personStatus: '适用人员状态',
+          settleCycle: '结算周期',
+          payDay: '发薪日',
+          payDayUnit: '号',
+          currency: '币种',
+          itemCount: '项目数',
+          status: '状态',
+          remark: '备注',
+          config: '配置',
+          addScheme: '新增薪酬方案',
+          editScheme: '编辑薪酬方案',
+          configItems: '薪资项目构成（全量勾选）',
+          overrideTitle: '项目覆盖值 / 公式（留空继承项目默认）',
+          itemChecked: '勾选',
+          itemCountTip: '已勾选项目数',
+          overrideAmountPlaceholder: '覆盖金额（留空继承默认）',
+          overrideFormulaPlaceholder: '覆盖公式（留空继承默认）',
+          settleCycleEnum: {
+            monthly: '月度'
+          },
+          completeness: {
+            title: '配置完整度',
+            items: '项目',
+            calc: '计薪',
+            position: '岗位',
+            si: '社保',
+            tax: '个税',
+            attendance: '考勤',
+            notIntegrated: '未接入',
+            notIntegratedTip: '该检查项暂未接入自动校验'
+          },
+          form: {
+            schemeName: '请输入方案名称',
+            subject: '请选择薪酬主体',
+            personStatus: '请选择适用人员状态',
+            personStatusRequired: '适用人员状态不能为空',
+            payDayInvalid: '发薪日须为 1-31 号',
             status: '请选择状态',
             remark: '请输入备注'
           }

@@ -156,6 +156,7 @@ var RoutesCodesMap = map[string]string{
 	"POST:/api/v1/hrm/addSalaryItem":                    "v1:hrm:salary_item:add",
 	"POST:/api/v1/hrm/deleteSalaryItem":                 "v1:hrm:salary_item:delete",
 	"POST:/api/v1/hrm/editSalaryItem":                   "v1:hrm:salary_item:edit",
+	"GET:/api/v1/hrm/getAllSalaryItem":                  "v1:hrm:salary_item:getAll",
 	"GET:/api/v1/hrm/getSalaryItemList":                 "v1:hrm:salary_item:list",
 	"POST:/api/v1/hrm/addSalaryScheme":                  "v1:hrm:salary_scheme:add",
 	"POST:/api/v1/hrm/deleteSalaryScheme":               "v1:hrm:salary_scheme:delete",

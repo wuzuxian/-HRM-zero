@@ -583,6 +583,11 @@ declare namespace App {
             edit: string;
             delete: string;
           };
+          salary_scheme: {
+            add: string;
+            edit: string;
+            delete: string;
+          };
           tax_profile: {
             add: string;
             edit: string;
@@ -1961,6 +1966,51 @@ declare namespace App {
                 itemClass: string;
                 valueMode: string;
                 formula: string;
+                status: string;
+                remark: string;
+              };
+            };
+            scheme: {
+              title: string;
+              schemeName: string;
+              subject: string;
+              personStatus: string;
+              settleCycle: string;
+              payDay: string;
+              payDayUnit: string;
+              currency: string;
+              itemCount: string;
+              status: string;
+              remark: string;
+              config: string;
+              addScheme: string;
+              editScheme: string;
+              configItems: string;
+              overrideTitle: string;
+              itemChecked: string;
+              itemCountTip: string;
+              overrideAmountPlaceholder: string;
+              overrideFormulaPlaceholder: string;
+              settleCycleEnum: {
+                monthly: string;
+              };
+              completeness: {
+                title: string;
+                items: string;
+                calc: string;
+                position: string;
+                si: string;
+                tax: string;
+                attendance: string;
+                notIntegrated: string;
+                notIntegratedTip: string;
+              };
+              form: {
+                schemeName: string;
+                subject: string;
+                personStatus: string;
+                personStatusRequired: string;
+                payDayInvalid: string;
                 status: string;
                 remark: string;
               };

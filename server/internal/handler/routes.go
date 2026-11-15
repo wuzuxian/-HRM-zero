@@ -1078,6 +1078,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					},
 					{
 						Method:  http.MethodGet,
+						Path:    "/hrm/getAllSalaryItem",
+						Handler: v1hrmsalary_item.GetAll(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
 						Path:    "/hrm/getSalaryItemList",
 						Handler: v1hrmsalary_item.List(serverCtx),
 					},

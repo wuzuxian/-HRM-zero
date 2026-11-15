@@ -487,6 +487,15 @@ export const generatedRoutes: GeneratedRoute[] = [
                 }
               },
               {
+                name: 'hrm_salary_setting_scheme',
+                path: '/hrm/salary/setting/scheme',
+                component: 'view.hrm_salary_setting_scheme',
+                meta: {
+                  title: 'hrm_salary_setting_scheme',
+                  i18nKey: 'route.hrm_salary_setting_scheme'
+                }
+              },
+              {
                 name: 'hrm_salary_setting_subject',
                 path: '/hrm/salary/setting/subject',
                 component: 'view.hrm_salary_setting_subject',

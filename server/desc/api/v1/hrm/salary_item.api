@@ -42,6 +42,11 @@ type ListResponse {
 	Records []HrmSalaryItem `json:"records"`
 }
 
+// GetAllResponse 全量薪资项目（不分页, calc_order 升序 —— 方案配置弹窗全量勾选用）。
+type GetAllResponse {
+	Records []HrmSalaryItem `json:"records"`
+}
+
 type AddRequest {
 	ItemCode  string `json:"itemCode"`
 	ItemName  string `json:"itemName"`
@@ -89,6 +94,9 @@ type DeleteResponse {}
 service server {
 	@handler List
 	get /hrm/getSalaryItemList (ListRequest) returns (ListResponse)
+
+	@handler GetAll
+	get /hrm/getAllSalaryItem (GetAllResponse) returns (GetAllResponse)
 
 	@handler Add
 	post /hrm/addSalaryItem (AddRequest) returns (AddResponse)

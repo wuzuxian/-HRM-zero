@@ -85,7 +85,7 @@ VALUES
 -- 薪资项目 page
 INSERT INTO "manage_menu" (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
-    ('aaa10000-1111-4000-8000-000000001303','2026-11-15 00:00:00','2026-11-15 00:00:00','1','aaa10000-1111-4000-8000-000000001301','2','薪资项目',0,'',2,'hrm_salary_setting_item','/hrm/salary/setting/item','view.hrm_salary_setting_item','mdi:format-list-numbered','1','route.hrm_salary_setting_item',0,'',0,0,'[]','[{"code":"v1:hrm:salary_item:list","desc":"薪资项目列表"}]',0,'');
+    ('aaa10000-1111-4000-8000-000000001303','2026-11-15 00:00:00','2026-11-15 00:00:00','1','aaa10000-1111-4000-8000-000000001301','2','薪资项目',0,'',2,'hrm_salary_setting_item','/hrm/salary/setting/item','view.hrm_salary_setting_item','mdi:format-list-numbered','1','route.hrm_salary_setting_item',0,'',0,0,'[]','[{"code":"v1:hrm:salary_item:list","desc":"薪资项目列表"},{"code":"v1:hrm:salary_item:getAll","desc":"全量薪资项目"}]',0,'');
 
 -- 薪资项目 buttons
 INSERT INTO "manage_menu" (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
