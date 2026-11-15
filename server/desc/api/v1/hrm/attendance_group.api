@@ -1,0 +1,173 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/attendancegroup"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+type HrmAttendanceGroup {
+	Uuid                string   `json:"uuid"`
+	GroupName           string   `json:"groupName"`
+	GroupType           string   `json:"groupType"`
+	WorkDays            []int64  `json:"workDays"`
+	StartTime           string   `json:"startTime"`
+	EndTime             string   `json:"endTime"`
+	FlexibleMinutes     int64    `json:"flexibleMinutes"`
+	UnassignedShiftUuid string   `json:"unassignedShiftUuid"`
+	DefaultShiftUuids   []string `json:"defaultShiftUuids"`
+	OrgUuids            []string `json:"orgUuids"`
+	MemberUuids         []string `json:"memberUuids"`
+	Managers            []string `json:"managers"`
+	Status              string   `json:"status"`
+	Remark              string   `json:"remark"`
+	CreateTime          string   `json:"createTime"`
+	UpdateTime          string   `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	GroupName string `form:"groupName,optional"`
+	GroupType string `form:"groupType,optional"`
+	Status    string `form:"status,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmAttendanceGroup `json:"records"`
+}
+
+type AddRequest {
+	GroupName           string   `json:"groupName"`
+	GroupType           string   `json:"groupType"`
+	WorkDays            []int64  `json:"workDays,optional"`
+	StartTime           string   `json:"startTime,optional"`
+	EndTime             string   `json:"endTime,optional"`
+	FlexibleMinutes     int64    `json:"flexibleMinutes,optional"`
+	UnassignedShiftUuid string   `json:"unassignedShiftUuid,optional"`
+	DefaultShiftUuids   []string `json:"defaultShiftUuids,optional"`
+	OrgUuids            []string `json:"orgUuids,optional"`
+	MemberUuids         []string `json:"memberUuids,optional"`
+	Managers            []string `json:"managers,optional"`
+	Status              string   `json:"status,default=1"`
+	Remark              string   `json:"remark,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid                string   `json:"uuid"`
+	GroupName           string   `json:"groupName"`
+	GroupType           string   `json:"groupType"`
+	WorkDays            []int64  `json:"workDays,optional"`
+	StartTime           string   `json:"startTime,optional"`
+	EndTime             string   `json:"endTime,optional"`
+	FlexibleMinutes     int64    `json:"flexibleMinutes,optional"`
+	UnassignedShiftUuid string   `json:"unassignedShiftUuid,optional"`
+	DefaultShiftUuids   []string `json:"defaultShiftUuids,optional"`
+	OrgUuids            []string `json:"orgUuids,optional"`
+	MemberUuids         []string `json:"memberUuids,optional"`
+	Managers            []string `json:"managers,optional"`
+	Status              string   `json:"status"`
+	Remark              string   `json:"remark,optional"`
+}
+
+type EditResponse {}
+
+type ToggleStatusRequest {
+	Uuid   string `json:"uuid"`
+	Status string `json:"status"`
+}
+
+type ToggleStatusResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+type MemberRequest {
+	Uuid string `json:"uuid,optional"`
+}
+
+type MemberResponse {
+	Total   int64                  `json:"total"`
+	Members []EffectiveGroupMember `json:"members"`
+}
+
+type EffectiveGroupMember {
+	Uuid       string `json:"uuid"`
+	EmployeeNo string `json:"employeeNo"`
+	Name       string `json:"name"`
+	OrgName    string `json:"orgName"`
+}
+
+type GetEffectiveRuleRequest {
+	EmployeeUuid string `json:"employeeUuid,optional"`
+	EmployeeNo   string `json:"employeeNo,optional"`
+}
+
+type GetEffectiveRuleResponse {
+	Found           bool    `json:"found"`
+	Source          string  `json:"source"`
+	SourceUuid      string  `json:"sourceUuid"`
+	SourceName      string  `json:"sourceName"`
+	GroupType       string  `json:"groupType"`
+	StartTime       string  `json:"startTime"`
+	EndTime         string  `json:"endTime"`
+	WorkDays        []int64 `json:"workDays"`
+	FlexibleMinutes int64   `json:"flexibleMinutes"`
+}
+
+type ShiftUsageRequest {
+	ShiftUuid string `json:"shiftUuid,optional"`
+}
+
+type ShiftUsageResponse {
+	Count  int64             `json:"count"`
+	Groups []GroupUsageBrief `json:"groups"`
+}
+
+type GroupUsageBrief {
+	Uuid      string `json:"uuid"`
+	GroupName string `json:"groupName"`
+	Status    string `json:"status"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/attendancegroup
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getAttendanceGroupList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addAttendanceGroup (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editAttendanceGroup (EditRequest) returns (EditResponse)
+
+	@handler ToggleStatus
+	post /hrm/toggleAttendanceGroupStatus (ToggleStatusRequest) returns (ToggleStatusResponse)
+
+	@handler Delete
+	post /hrm/deleteAttendanceGroup (DeleteRequest) returns (DeleteResponse)
+
+	@handler Members
+	get /hrm/getAttendanceGroupMembers (MemberRequest) returns (MemberResponse)
+
+	@handler EffectiveRule
+	get /hrm/getEffectiveAttendanceRule (GetEffectiveRuleRequest) returns (GetEffectiveRuleResponse)
+
+	@handler ShiftUsage
+	get /hrm/getAttendanceGroupShiftUsage (ShiftUsageRequest) returns (ShiftUsageResponse)
+}
+

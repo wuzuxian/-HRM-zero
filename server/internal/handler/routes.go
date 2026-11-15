@@ -9,6 +9,8 @@ import (
 
 	swagger "github.com/jzero-io/jzero-admin/server/internal/handler/swagger"
 	v1auth "github.com/jzero-io/jzero-admin/server/internal/handler/v1/auth"
+	v1hrmattendanceconfig "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/attendanceconfig"
+	v1hrmattendancegroup "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/attendancegroup"
 	v1hrmbill "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/bill"
 	v1hrmemployee "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/employee"
 	v1hrmleavetype "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/leavetype"
@@ -88,6 +90,83 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Handler: v1auth.GetUserInfo(serverCtx),
 				},
 			},
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteAttendanceConfig",
+						Handler: v1hrmattendanceconfig.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getAttendanceConfigList",
+						Handler: v1hrmattendanceconfig.List(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/saveAttendanceConfig",
+						Handler: v1hrmattendanceconfig.Save(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addAttendanceGroup",
+						Handler: v1hrmattendancegroup.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteAttendanceGroup",
+						Handler: v1hrmattendancegroup.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editAttendanceGroup",
+						Handler: v1hrmattendancegroup.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getAttendanceGroupList",
+						Handler: v1hrmattendancegroup.List(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getAttendanceGroupMembers",
+						Handler: v1hrmattendancegroup.Members(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getAttendanceGroupShiftUsage",
+						Handler: v1hrmattendancegroup.ShiftUsage(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getEffectiveAttendanceRule",
+						Handler: v1hrmattendancegroup.EffectiveRule(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/toggleAttendanceGroupStatus",
+						Handler: v1hrmattendancegroup.ToggleStatus(serverCtx),
+					},
+				}...,
+			),
 			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
 			rest.WithPrefix("/api/v1"),
 		)
