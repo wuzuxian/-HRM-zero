@@ -79,6 +79,25 @@ export const generatedRoutes: GeneratedRoute[] = [
         },
         children: [
           {
+            name: 'hrm_attendance_scheduling',
+            path: '/hrm/attendance/scheduling',
+            meta: {
+              title: 'hrm_attendance_scheduling',
+              i18nKey: 'route.hrm_attendance_scheduling'
+            },
+            children: [
+              {
+                name: 'hrm_attendance_scheduling_schedule-cycle',
+                path: '/hrm/attendance/scheduling/schedule-cycle',
+                component: 'view.hrm_attendance_scheduling_schedule-cycle',
+                meta: {
+                  title: 'hrm_attendance_scheduling_schedule-cycle',
+                  i18nKey: 'route.hrm_attendance_scheduling_schedule-cycle'
+                }
+              }
+            ]
+          },
+          {
             name: 'hrm_attendance_setting',
             path: '/hrm/attendance/setting',
             meta: {

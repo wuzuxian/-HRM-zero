@@ -457,6 +457,12 @@ declare namespace App {
             delete: string;
             togglestatus: string;
           };
+          schedulecycle: {
+            add: string;
+            edit: string;
+            delete: string;
+            togglestatus: string;
+          };
           transfer: {
             add: string;
             edit: string;
@@ -1083,6 +1089,30 @@ declare namespace App {
               remark: string;
               form: {
                 ruleName: string;
+                status: string;
+                remark: string;
+              };
+            };
+            scheduleCycle: {
+              title: string;
+              cycleName: string;
+              shiftSequence: string;
+              cycleDays: string;
+              cycleDaysTip: string;
+              sequenceSummary: string;
+              usedGroups: string;
+              boundGroupCount: string;
+              noBoundGroup: string;
+              addCycle: string;
+              editCycle: string;
+              enable: string;
+              disable: string;
+              status: string;
+              remark: string;
+              form: {
+                cycleName: string;
+                shiftSequence: string;
+                usedGroups: string;
                 status: string;
                 remark: string;
               };

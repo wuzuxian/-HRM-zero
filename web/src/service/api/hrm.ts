@@ -949,3 +949,50 @@ export function ToggleOvertimeRuleStatus(req: { uuid: string; status: Api.Hrm.At
     data: req
   });
 }
+
+/** get hrm schedule cycle (排班周期) paginated list */
+export function GetScheduleCycleList(params?: Api.Hrm.ScheduleCycleSearchParams) {
+  return request<Api.Hrm.ScheduleCycleList>({
+    url: '/api/v1/hrm/getScheduleCycleList',
+    method: 'get',
+    params
+  });
+}
+
+/** add hrm schedule cycle */
+export function AddScheduleCycle(req: Api.Hrm.AddScheduleCycleRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addScheduleCycle',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit hrm schedule cycle */
+export function EditScheduleCycle(req: Api.Hrm.EditScheduleCycleRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editScheduleCycle',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete hrm schedule cycles */
+export function DeleteScheduleCycle(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteScheduleCycle',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** toggle hrm schedule cycle status (启用/停用) */
+export function ToggleScheduleCycleStatus(req: { uuid: string; status: Api.Hrm.AttendanceStatus }) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/toggleScheduleCycleStatus',
+    method: 'post',
+    data: req
+  });
+}

@@ -184,6 +184,8 @@ const local: App.I18n.Schema = {
     hrm_attendance_setting_shift: 'Shifts',
     'hrm_attendance_setting_leave-type': 'Leave Types',
     'hrm_attendance_setting_overtime-rule': 'Overtime Rules',
+    hrm_attendance_scheduling: 'Scheduling',
+    'hrm_attendance_scheduling_schedule-cycle': 'Schedule Cycles',
     'hrm_employee-relation': 'HR Management',
     'hrm_employee-relation_transfer-list': 'Transfer',
     'hrm_employee-relation_entry-list': 'Entry',
@@ -271,6 +273,12 @@ const local: App.I18n.Schema = {
         edit: 'Edit Overtime Rule',
         delete: 'Delete Overtime Rule',
         togglestatus: 'Toggle Overtime Rule'
+      },
+      schedulecycle: {
+        add: 'Add Schedule Cycle',
+        edit: 'Edit Schedule Cycle',
+        delete: 'Delete Schedule Cycle',
+        togglestatus: 'Toggle Schedule Cycle'
       },
       transfer: {
         add: 'Add Transfer',
@@ -1181,6 +1189,30 @@ const local: App.I18n.Schema = {
           remark: 'Remark',
           form: {
             ruleName: 'Please enter rule name',
+            status: 'Please select status',
+            remark: 'Please enter remark'
+          }
+        },
+        scheduleCycle: {
+          title: 'Schedule Cycles',
+          cycleName: 'Cycle Name',
+          shiftSequence: 'Shift Sequence',
+          cycleDays: 'Cycle Days',
+          cycleDaysTip: 'Derived from shift sequence length',
+          sequenceSummary: '{n} shifts',
+          usedGroups: 'Attendance Groups',
+          boundGroupCount: '{n} groups',
+          noBoundGroup: 'Not Bound',
+          addCycle: 'Add Schedule Cycle',
+          editCycle: 'Edit Schedule Cycle',
+          enable: 'Enable',
+          disable: 'Disable',
+          status: 'Status',
+          remark: 'Remark',
+          form: {
+            cycleName: 'Please enter cycle name',
+            shiftSequence: 'Please select shift sequence (in order)',
+            usedGroups: 'Please select attendance groups',
             status: 'Please select status',
             remark: 'Please enter remark'
           }

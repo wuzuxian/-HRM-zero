@@ -36,6 +36,8 @@ declare module "@elegant-router/types" {
     "home": "/home";
     "hrm": "/hrm";
     "hrm_attendance": "/hrm/attendance";
+    "hrm_attendance_scheduling": "/hrm/attendance/scheduling";
+    "hrm_attendance_scheduling_schedule-cycle": "/hrm/attendance/scheduling/schedule-cycle";
     "hrm_attendance_setting": "/hrm/attendance/setting";
     "hrm_attendance_setting_attendance-config": "/hrm/attendance/setting/attendance-config";
     "hrm_attendance_setting_group": "/hrm/attendance/setting/group";
@@ -156,6 +158,7 @@ declare module "@elegant-router/types" {
     | "login"
     | "about"
     | "home"
+    | "hrm_attendance_scheduling_schedule-cycle"
     | "hrm_attendance_setting_attendance-config"
     | "hrm_attendance_setting_group"
     | "hrm_attendance_setting_leave-type"

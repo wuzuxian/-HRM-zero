@@ -22,6 +22,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   login: () => import("@/views/_builtin/login/index.vue"),
   about: () => import("@/views/about/index.vue"),
   home: () => import("@/views/home/index.vue"),
+  "hrm_attendance_scheduling_schedule-cycle": () => import("@/views/hrm/attendance/scheduling/schedule-cycle/index.vue"),
   "hrm_attendance_setting_attendance-config": () => import("@/views/hrm/attendance/setting/attendance-config/index.vue"),
   hrm_attendance_setting_group: () => import("@/views/hrm/attendance/setting/group/index.vue"),
   "hrm_attendance_setting_leave-type": () => import("@/views/hrm/attendance/setting/leave-type/index.vue"),

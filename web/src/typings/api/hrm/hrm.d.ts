@@ -1837,5 +1837,50 @@ declare namespace Api {
       uuid: string;
       status: AttendanceStatus;
     };
+
+    /** hrm schedule cycle (排班周期, HRM-14): 循环使用的班次序列, 周期天数 = 序列长度（派生） */
+    type ScheduleCycle = {
+      /** record uuid */
+      uuid: string;
+      /** record creator */
+      createBy: string;
+      /** record updater */
+      updateBy: string;
+      /** 周期名称 */
+      cycleName: string;
+      /** 有序班次 uuid 序列（循环展开） */
+      shiftUuids: string[];
+      /** 适用考勤组 uuid 集合（空=未绑定） */
+      groupUuids: string[];
+      /** status: enabled/disabled */
+      status: AttendanceStatus | null;
+      /** remark */
+      remark: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** schedule cycle search params */
+    type ScheduleCycleSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.ScheduleCycle, 'cycleName' | 'status'> & Common.CommonSearchParams
+    >;
+
+    /** schedule cycle paginated list */
+    type ScheduleCycleList = Common.PaginatingQueryRecord<ScheduleCycle>;
+
+    /** add schedule cycle request */
+    type AddScheduleCycleRequest = {
+      cycleName: string;
+      shiftUuids: string[];
+      groupUuids?: string[];
+      status?: AttendanceStatus;
+      remark?: string;
+    };
+
+    /** edit schedule cycle request */
+    type EditScheduleCycleRequest = AddScheduleCycleRequest & {
+      uuid: string;
+      status: AttendanceStatus;
+    };
   }
 }

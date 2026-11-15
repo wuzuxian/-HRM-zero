@@ -184,6 +184,8 @@ const local: App.I18n.Schema = {
     hrm_attendance_setting_shift: '班次管理',
     'hrm_attendance_setting_leave-type': '假期类型',
     'hrm_attendance_setting_overtime-rule': '加班规则',
+    hrm_attendance_scheduling: '排班管理',
+    'hrm_attendance_scheduling_schedule-cycle': '排班周期',
     'hrm_employee-relation': '人事管理',
     'hrm_employee-relation_transfer-list': '人事调动',
     'hrm_employee-relation_entry-list': '员工入职',
@@ -271,6 +273,12 @@ const local: App.I18n.Schema = {
         edit: '编辑加班规则',
         delete: '删除加班规则',
         togglestatus: '加班规则启停'
+      },
+      schedulecycle: {
+        add: '新增排班周期',
+        edit: '编辑排班周期',
+        delete: '删除排班周期',
+        togglestatus: '排班周期启停'
       },
       transfer: {
         add: '新增调动',
@@ -1181,6 +1189,30 @@ const local: App.I18n.Schema = {
           remark: '备注',
           form: {
             ruleName: '请输入规则名称',
+            status: '请选择状态',
+            remark: '请输入备注'
+          }
+        },
+        scheduleCycle: {
+          title: '排班周期',
+          cycleName: '周期名称',
+          shiftSequence: '班次序列',
+          cycleDays: '周期天数',
+          cycleDaysTip: '由班次序列长度派生',
+          sequenceSummary: '{n} 个班次',
+          usedGroups: '适用考勤组',
+          boundGroupCount: '{n} 个考勤组',
+          noBoundGroup: '未绑定',
+          addCycle: '新增排班周期',
+          editCycle: '编辑排班周期',
+          enable: '启用',
+          disable: '停用',
+          status: '状态',
+          remark: '备注',
+          form: {
+            cycleName: '请输入周期名称',
+            shiftSequence: '请选择班次序列（按顺序）',
+            usedGroups: '请选择适用考勤组',
             status: '请选择状态',
             remark: '请输入备注'
           }
