@@ -3,6 +3,7 @@ package auth
 import (
 	"context"
 	"net/http"
+	"strings"
 
 	"github.com/jzero-io/jzero-admin/core-engine/helper/auth"
 	"github.com/jzero-io/jzero/core/stores/condition"
@@ -84,10 +85,7 @@ func (l *GetUserInfo) GetUserInfo(req *types.GetUserInfoRequest) (resp *types.Ge
 	if err != nil {
 		return nil, err
 	}
-	buttons := make([]string, 0)
-	for _, menu := range menus {
-		buttons = append(buttons, menu.ButtonCode)
-	}
+	buttons := buttonCodes(menus)
 
 	return &types.GetUserInfoResponse{
 		UserUuid: user.Uuid,
@@ -95,4 +93,20 @@ func (l *GetUserInfo) GetUserInfo(req *types.GetUserInfoRequest) (resp *types.Ge
 		Roles:    roleCodes,
 		Buttons:  buttons,
 	}, nil
+}
+
+// buttonCodeAPIVersionPrefix is the API version prefix ("v1") stored in the
+// seed data for button codes (e.g. "v1:manage:user:add"), mirroring the API
+// permission codes used by casbin. The frontend permission check compares bare
+// codes ("manage:user:add"), so the prefix is stripped at this boundary; codes
+// stored without it pass through unchanged.
+const buttonCodeAPIVersionPrefix = "v1:"
+
+// buttonCodes collects the UI button codes from button-type menus.
+func buttonCodes(menus []*manage_menu.ManageMenu) []string {
+	buttons := make([]string, 0, len(menus))
+	for _, menu := range menus {
+		buttons = append(buttons, strings.TrimPrefix(menu.ButtonCode, buttonCodeAPIVersionPrefix))
+	}
+	return buttons
 }
