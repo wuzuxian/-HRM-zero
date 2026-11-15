@@ -71,6 +71,25 @@ export const generatedRoutes: GeneratedRoute[] = [
     },
     children: [
       {
+        name: 'hrm_org',
+        path: '/hrm/org',
+        meta: {
+          title: 'hrm_org',
+          i18nKey: 'route.hrm_org'
+        },
+        children: [
+          {
+            name: 'hrm_org_orginfo',
+            path: '/hrm/org/orginfo',
+            component: 'view.hrm_org_orginfo',
+            meta: {
+              title: 'hrm_org_orginfo',
+              i18nKey: 'route.hrm_org_orginfo'
+            }
+          }
+        ]
+      },
+      {
         name: 'hrm_performance',
         path: '/hrm/performance',
         meta: {

@@ -474,6 +474,155 @@
         ]
       }
     },
+    "/api/v1/hrm/addOrg": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:org:add",
+        "operationId": "v1/Hrm/OrgAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "leader": {
+                  "type": "string"
+                },
+                "orderNum": {
+                  "type": "integer"
+                },
+                "orgName": {
+                  "type": "string"
+                },
+                "orgType": {
+                  "default": "2",
+                  "example": "2",
+                  "type": "string"
+                },
+                "parentUuid": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "status": {
+                  "default": "1",
+                  "example": "1",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "orgName",
+                "orgType",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/org"
+        ]
+      }
+    },
+    "/api/v1/hrm/addOrgChild": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:org:addChild",
+        "operationId": "v1/Hrm/OrgAddChild",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "leader": {
+                  "type": "string"
+                },
+                "orderNum": {
+                  "type": "integer"
+                },
+                "orgName": {
+                  "type": "string"
+                },
+                "orgType": {
+                  "default": "2",
+                  "example": "2",
+                  "type": "string"
+                },
+                "parentUuid": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "status": {
+                  "default": "1",
+                  "example": "1",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "parentUuid",
+                "orgName",
+                "orgType",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "AddChild",
+        "tags": [
+          "v1/hrm/org"
+        ]
+      }
+    },
     "/api/v1/hrm/addPerfIndicator": {
       "post": {
         "consumes": [
@@ -694,6 +843,59 @@
         ]
       }
     },
+    "/api/v1/hrm/deleteOrg": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:org:delete",
+        "operationId": "v1/Hrm/OrgDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/org"
+        ]
+      }
+    },
     "/api/v1/hrm/deletePerfIndicator": {
       "post": {
         "consumes": [
@@ -797,6 +999,77 @@
         "summary": "Delete",
         "tags": [
           "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/editOrg": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:org:edit",
+        "operationId": "v1/Hrm/OrgEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "leader": {
+                  "type": "string"
+                },
+                "orderNum": {
+                  "type": "integer"
+                },
+                "orgName": {
+                  "type": "string"
+                },
+                "orgType": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "orgName",
+                "orgType",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/org"
         ]
       }
     },
@@ -961,6 +1234,43 @@
         "summary": "Edit",
         "tags": [
           "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/exportOrg": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:org:export",
+        "operationId": "v1/Hrm/OrgExport",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Export",
+        "tags": [
+          "v1/hrm/org"
         ]
       }
     },
@@ -1236,6 +1546,163 @@
         "summary": "GetApprovalRecordList",
         "tags": [
           "v1/hrm/bill"
+        ]
+      }
+    },
+    "/api/v1/hrm/getOrgTree": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:org:list",
+        "operationId": "v1/Hrm/OrgList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "orgName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "orgType",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "children": {
+                        "items": {
+                          "properties": {
+                            "children": {
+                              "items": {
+                                "type": "object"
+                              },
+                              "type": "array"
+                            },
+                            "createTime": {
+                              "type": "string"
+                            },
+                            "leader": {
+                              "type": "string"
+                            },
+                            "orderNum": {
+                              "type": "integer"
+                            },
+                            "orgName": {
+                              "type": "string"
+                            },
+                            "orgType": {
+                              "type": "string"
+                            },
+                            "parentUuid": {
+                              "type": "string"
+                            },
+                            "remark": {
+                              "type": "string"
+                            },
+                            "status": {
+                              "type": "string"
+                            },
+                            "updateTime": {
+                              "type": "string"
+                            },
+                            "uuid": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "uuid",
+                            "parentUuid",
+                            "orgName",
+                            "orgType",
+                            "leader",
+                            "orderNum",
+                            "status",
+                            "remark",
+                            "createTime",
+                            "updateTime"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "leader": {
+                        "type": "string"
+                      },
+                      "orderNum": {
+                        "type": "integer"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "orgType": {
+                        "type": "string"
+                      },
+                      "parentUuid": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "parentUuid",
+                      "orgName",
+                      "orgType",
+                      "leader",
+                      "orderNum",
+                      "status",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/org"
         ]
       }
     },
@@ -1650,6 +2117,65 @@
         "summary": "List",
         "tags": [
           "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/importOrg": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:org:import",
+        "operationId": "v1/Hrm/OrgImport",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "fileName",
+                "content"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "successCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Import",
+        "tags": [
+          "v1/hrm/org"
         ]
       }
     },

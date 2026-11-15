@@ -22,6 +22,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   login: () => import("@/views/_builtin/login/index.vue"),
   about: () => import("@/views/about/index.vue"),
   home: () => import("@/views/home/index.vue"),
+  hrm_org_orginfo: () => import("@/views/hrm/org/orginfo/index.vue"),
   hrm_performance_setting_indicator: () => import("@/views/hrm/performance/setting/indicator/index.vue"),
   hrm_performance_setting_template: () => import("@/views/hrm/performance/setting/template/index.vue"),
   manage_menu: () => import("@/views/manage/menu/index.vue"),

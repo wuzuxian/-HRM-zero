@@ -173,6 +173,8 @@ const local: App.I18n.Schema = {
     manage_role: 'Role Manage',
     manage_menu: 'Menu Manage',
     hrm: 'HRM',
+    hrm_org: 'Organization',
+    hrm_org_orginfo: 'Org Management',
     hrm_performance: 'Performance',
     hrm_performance_setting: 'Settings',
     hrm_performance_setting_indicator: 'Indicator Library',
@@ -204,6 +206,14 @@ const local: App.I18n.Schema = {
       }
     },
     hrm: {
+      org: {
+        add: 'Add Org',
+        addchild: 'Add Child Org',
+        edit: 'Edit Org',
+        delete: 'Delete Org',
+        import: 'Import Orgs',
+        export: 'Export Orgs'
+      },
       performance: {
         indicator: {
           add: 'Add Indicator',
@@ -490,6 +500,44 @@ const local: App.I18n.Schema = {
           addTemplate: 'Add Template',
           editTemplate: 'Edit Template'
         }
+      },
+      org: {
+        title: 'Org Management',
+        orgName: 'Org Name',
+        orgTypeTitle: 'Org Type',
+        orgType: {
+          company: 'Company',
+          department: 'Department'
+        },
+        leader: 'Leader',
+        orderNum: 'Display Order',
+        orgStatus: 'Org Status',
+        status: {
+          open: 'Open',
+          closed: 'Closed'
+        },
+        remark: 'Remark',
+        createTime: 'Create Time',
+        parentOrg: 'Parent Org',
+        form: {
+          orgName: 'Please enter org name',
+          orgType: 'Please select org type',
+          leader: 'Please enter leader',
+          orderNum: 'Please enter display order',
+          orgStatus: 'Please select org status',
+          remark: 'Please enter remark',
+          parentOrg: 'Parent Org'
+        },
+        addOrg: 'Add Org',
+        addChildOrg: 'Add Child Org',
+        editOrg: 'Edit Org',
+        importOrg: 'Import',
+        exportOrg: 'Export',
+        collapse: 'Collapse',
+        expand: 'Expand',
+        importSuccess: 'Import succeeded',
+        chooseFileTip: 'Please select an xlsx file',
+        importModalTitle: 'Import Orgs'
       }
     }
   },

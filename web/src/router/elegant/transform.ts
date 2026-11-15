@@ -181,6 +181,8 @@ const routeMap: RouteMap = {
   "about": "/about",
   "home": "/home",
   "hrm": "/hrm",
+  "hrm_org": "/hrm/org",
+  "hrm_org_orginfo": "/hrm/org/orginfo",
   "hrm_performance": "/hrm/performance",
   "hrm_performance_setting": "/hrm/performance/setting",
   "hrm_performance_setting_indicator": "/hrm/performance/setting/indicator",

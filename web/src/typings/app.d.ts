@@ -420,6 +420,14 @@ declare namespace App {
           };
         };
         hrm: {
+          org: {
+            add: string;
+            addchild: string;
+            edit: string;
+            delete: string;
+            import: string;
+            export: string;
+          };
           performance: {
             indicator: {
               add: string;
@@ -705,6 +713,44 @@ declare namespace App {
               addTemplate: string;
               editTemplate: string;
             };
+          };
+          org: {
+            title: string;
+            orgName: string;
+            orgTypeTitle: string;
+            orgType: {
+              company: string;
+              department: string;
+            };
+            leader: string;
+            orderNum: string;
+            orgStatus: string;
+            status: {
+              open: string;
+              closed: string;
+            };
+            remark: string;
+            createTime: string;
+            parentOrg: string;
+            form: {
+              orgName: string;
+              orgType: string;
+              leader: string;
+              orderNum: string;
+              orgStatus: string;
+              remark: string;
+              parentOrg: string;
+            };
+            addOrg: string;
+            addChildOrg: string;
+            editOrg: string;
+            importOrg: string;
+            exportOrg: string;
+            collapse: string;
+            expand: string;
+            importSuccess: string;
+            chooseFileTip: string;
+            importModalTitle: string;
           };
         };
       };

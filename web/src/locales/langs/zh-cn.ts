@@ -172,7 +172,9 @@ const local: App.I18n.Schema = {
     'manage_user-detail': '用户详情',
     manage_role: '角色管理',
     manage_menu: '菜单管理',
-    hrm: '人力',
+    hrm: '人力资源',
+    hrm_org: '组织',
+    hrm_org_orginfo: '组织管理',
     hrm_performance: '绩效管理',
     hrm_performance_setting: '绩效设置',
     hrm_performance_setting_indicator: '指标库',
@@ -204,6 +206,14 @@ const local: App.I18n.Schema = {
       }
     },
     hrm: {
+      org: {
+        add: '新增组织',
+        addchild: '新增下级组织',
+        edit: '编辑组织',
+        delete: '删除组织',
+        import: '导入组织',
+        export: '导出组织'
+      },
       performance: {
         indicator: {
           add: '新增指标',
@@ -490,6 +500,44 @@ const local: App.I18n.Schema = {
           addTemplate: '新增模板',
           editTemplate: '编辑模板'
         }
+      },
+      org: {
+        title: '组织管理',
+        orgName: '组织名称',
+        orgTypeTitle: '组织类型',
+        orgType: {
+          company: '公司',
+          department: '部门'
+        },
+        leader: '负责人',
+        orderNum: '显示顺序',
+        orgStatus: '组织状态',
+        status: {
+          open: '开启',
+          closed: '关闭'
+        },
+        remark: '备注',
+        createTime: '创建时间',
+        parentOrg: '上级组织',
+        form: {
+          orgName: '请输入组织名称',
+          orgType: '请选择组织类型',
+          leader: '请输入负责人',
+          orderNum: '请输入显示顺序',
+          orgStatus: '请选择组织状态',
+          remark: '请输入备注',
+          parentOrg: '上级组织'
+        },
+        addOrg: '新增组织',
+        addChildOrg: '新增下级',
+        editOrg: '编辑组织',
+        importOrg: '导入',
+        exportOrg: '导出',
+        collapse: '收缩',
+        expand: '展开',
+        importSuccess: '导入成功',
+        chooseFileTip: '请选择 xlsx 文件',
+        importModalTitle: '导入组织'
       }
     }
   },

@@ -35,6 +35,8 @@ declare module "@elegant-router/types" {
     "about": "/about";
     "home": "/home";
     "hrm": "/hrm";
+    "hrm_org": "/hrm/org";
+    "hrm_org_orginfo": "/hrm/org/orginfo";
     "hrm_performance": "/hrm/performance";
     "hrm_performance_setting": "/hrm/performance/setting";
     "hrm_performance_setting_indicator": "/hrm/performance/setting/indicator";
@@ -125,6 +127,7 @@ declare module "@elegant-router/types" {
     | "login"
     | "about"
     | "home"
+    | "hrm_org_orginfo"
     | "hrm_performance_setting_indicator"
     | "hrm_performance_setting_template"
     | "manage_menu"

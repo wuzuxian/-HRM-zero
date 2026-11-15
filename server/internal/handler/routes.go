@@ -10,6 +10,7 @@ import (
 	swagger "github.com/jzero-io/jzero-admin/server/internal/handler/swagger"
 	v1auth "github.com/jzero-io/jzero-admin/server/internal/handler/v1/auth"
 	v1hrmbill "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/bill"
+	v1hrmorg "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/org"
 	v1hrmperf_indicator "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_indicator"
 	v1hrmperf_template "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_template"
 	v1managemenu "github.com/jzero-io/jzero-admin/server/internal/handler/v1/manage/menu"
@@ -115,6 +116,52 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodPost,
 						Path:    "/hrm/submitBill",
 						Handler: v1hrmbill.Submit(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addOrg",
+						Handler: v1hrmorg.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addOrgChild",
+						Handler: v1hrmorg.AddChild(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteOrg",
+						Handler: v1hrmorg.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editOrg",
+						Handler: v1hrmorg.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/exportOrg",
+						Handler: v1hrmorg.Export(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getOrgTree",
+						Handler: v1hrmorg.List(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/importOrg",
+						Handler: v1hrmorg.Import(serverCtx),
 					},
 				}...,
 			),
