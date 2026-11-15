@@ -529,6 +529,12 @@ declare namespace App {
             import: string;
             updatestatus: string;
           };
+          position: {
+            add: string;
+            edit: string;
+            delete: string;
+            updatestatus: string;
+          };
           bill: {
             submit: string;
             approve: string;
@@ -1749,6 +1755,45 @@ declare namespace App {
               urgency: string;
               org: string;
               requirementDesc: string;
+            };
+          };
+          position: {
+            title: string;
+            postName: string;
+            requirement: string;
+            requirementBillNo: string;
+            postCategory: {
+              title: string;
+              tech: string;
+              product: string;
+              design: string;
+              operation: string;
+              market: string;
+              function: string;
+              other: string;
+            };
+            ownerName: string;
+            status: {
+              title: string;
+              open: string;
+              full: string;
+              closed: string;
+            };
+            headcount: string;
+            hiredCount: string;
+            publishDate: string;
+            createTime: string;
+            close: string;
+            confirmClose: string;
+            addPosition: string;
+            editPosition: string;
+            form: {
+              postName: string;
+              requirement: string;
+              postCategory: string;
+              owner: string;
+              status: string;
+              remark: string;
             };
           };
           candidate: {

@@ -414,6 +414,15 @@ export const generatedRoutes: GeneratedRoute[] = [
             }
           },
           {
+            name: 'hrm_recruitment_position-list',
+            path: '/hrm/recruitment/position-list',
+            component: 'view.hrm_recruitment_position-list',
+            meta: {
+              title: 'hrm_recruitment_position-list',
+              i18nKey: 'route.hrm_recruitment_position-list'
+            }
+          },
+          {
             name: 'hrm_recruitment_requirement-list',
             path: '/hrm/recruitment/requirement-list',
             component: 'view.hrm_recruitment_requirement-list',

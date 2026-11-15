@@ -211,6 +211,7 @@ const local: App.I18n.Schema = {
     hrm_recruitment: 'Recruitment',
     'hrm_recruitment_requirement-list': 'Requirement',
     'hrm_recruitment_candidate-list': 'Candidates',
+    'hrm_recruitment_position-list': 'Positions',
     hrm_salary: 'Salary',
     hrm_salary_setting: 'Salary Settings',
     hrm_salary_setting_subject: 'Salary Subjects',
@@ -362,6 +363,12 @@ const local: App.I18n.Schema = {
         delete: 'Delete Candidate',
         import: 'Import Candidates',
         updatestatus: 'Candidate Status Transition'
+      },
+      position: {
+        add: 'Add Position',
+        edit: 'Edit Position',
+        delete: 'Delete Position',
+        updatestatus: 'Position Status Transition'
       },
       bill: {
         submit: 'Submit Bill',
@@ -778,6 +785,45 @@ const local: App.I18n.Schema = {
           urgency: 'Please select urgency',
           org: 'Please select department',
           requirementDesc: 'Please enter requirement description'
+        }
+      },
+      position: {
+        title: 'Positions',
+        postName: 'Post Name',
+        requirement: 'Source Requirement',
+        requirementBillNo: 'Requirement No.',
+        postCategory: {
+          title: 'Category',
+          tech: 'Tech',
+          product: 'Product',
+          design: 'Design',
+          operation: 'Operation',
+          market: 'Market',
+          function: 'Function',
+          other: 'Other'
+        },
+        ownerName: 'Owner',
+        status: {
+          title: 'Status',
+          open: 'Open',
+          full: 'Full',
+          closed: 'Closed'
+        },
+        headcount: 'Headcount',
+        hiredCount: 'Hired',
+        publishDate: 'Publish Date',
+        createTime: 'Created At',
+        close: 'Close Position',
+        confirmClose: 'Close this position? Closed positions cannot hire anymore.',
+        addPosition: 'Add Position',
+        editPosition: 'Edit Position',
+        form: {
+          postName: 'Please enter post name',
+          requirement: 'Please select an approved requirement',
+          postCategory: 'Please select category',
+          owner: 'Please enter owner name',
+          status: 'Please select status',
+          remark: 'Please enter remark'
         }
       },
       candidate: {

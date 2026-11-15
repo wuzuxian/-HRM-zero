@@ -218,6 +218,7 @@ const routeMap: RouteMap = {
   "hrm_performance_setting_template": "/hrm/performance/setting/template",
   "hrm_recruitment": "/hrm/recruitment",
   "hrm_recruitment_candidate-list": "/hrm/recruitment/candidate-list",
+  "hrm_recruitment_position-list": "/hrm/recruitment/position-list",
   "hrm_recruitment_requirement-list": "/hrm/recruitment/requirement-list",
   "hrm_reward": "/hrm/reward",
   "hrm_reward_bill": "/hrm/reward/bill",

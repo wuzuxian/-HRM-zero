@@ -1568,3 +1568,50 @@ export function PublishScheduleMonth(req: Api.Hrm.SchedulePublishRequest) {
     data: req
   });
 }
+
+/** get recruitment position (招聘职位 HRM-25) paginated list — 筛选 岗位名称/来源需求单/岗位类别/状态 */
+export function GetPositionList(params?: Api.Hrm.PositionSearchParams) {
+  return request<Api.Hrm.PositionList>({
+    url: '/api/v1/hrm/getPositionList',
+    method: 'get',
+    params
+  });
+}
+
+/** add recruitment position (requirementUuid 仅可引用 status=approved 需求单) */
+export function AddPosition(req: Api.Hrm.AddPositionRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addPosition',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit recruitment position (普通实体，任意状态可改；headcount 不得小于已录用人数) */
+export function EditPosition(req: Api.Hrm.EditPositionRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editPosition',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete recruitment positions (不限状态) */
+export function DeletePosition(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deletePosition',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** update recruitment position status (open→full/closed；closed 终态；已满由 IncreaseHiredCount 联动) */
+export function UpdatePositionStatus(req: Api.Hrm.UpdatePositionStatusRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/updatePositionStatus',
+    method: 'post',
+    data: req
+  });
+}

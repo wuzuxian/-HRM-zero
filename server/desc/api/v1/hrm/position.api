@@ -1,0 +1,113 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/position"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 招聘职位（HRM-25，demo-inventory §5）：岗位名称/来源需求单/岗位类别/招聘负责人/
+// 状态(招聘中)/招聘人数/已录用人数/发布日期。
+// 普通实体 CRUD（非单据底座）：无 bill_no/审批状态。
+// 来源需求单接缝（HRM-24 契约）：requirementUuid 仅可引用 status='approved' 的需求单，
+//   非 approved 拒绝（errcode 1058x）；前端选择器经 GET /hrm/getRequirementList?status=approved。
+// 已录用人数联动（HRM-27 录用审批契约）：录用审批通过后调 IncreaseHiredCount 事务化递增，
+//   达招聘人数自动置状态 已满(full)。本模块同时提供 updatePositionStatus 手工关闭职位。
+type HrmPosition {
+	Uuid              string `json:"uuid"`
+	PostName          string `json:"postName"` // 岗位名称
+	RequirementUuid   string `json:"requirementUuid"` // 来源需求单 uuid（approved）
+	RequirementBillNo string `json:"requirementBillNo"` // 来源需求单单据编号快照（列表展示）
+	PostCategory      string `json:"postCategory"` // 岗位类别 tech/product/design/operation/market/function/other
+	OwnerUuid         string `json:"ownerUuid"` // 招聘负责人 uuid
+	OwnerName         string `json:"ownerName"` // 招聘负责人姓名
+	Headcount         int64  `json:"headcount"` // 招聘人数
+	HiredCount        int64  `json:"hiredCount"` // 已录用人数
+	PublishDate       string `json:"publishDate"` // 发布日期 YYYY-MM-DD
+	Status            string `json:"status"` // 职位状态 open=招聘中 full=已满 closed=已关闭
+	Remark            string `json:"remark"` // 备注
+	CreateTime        string `json:"createTime"`
+	UpdateTime        string `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	PostName        string `form:"postName,optional"` // 岗位名称（模糊）
+	RequirementUuid string `form:"requirementUuid,optional"` // 来源需求单
+	PostCategory    string `form:"postCategory,optional"` // 岗位类别
+	Status          string `form:"status,optional"` // 职位状态
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmPosition `json:"records"`
+}
+
+type AddRequest {
+	PostName        string `json:"postName"`
+	RequirementUuid string `json:"requirementUuid"` // 必填，仅 approved 需求单可引用
+	PostCategory    string `json:"postCategory"`
+	OwnerUuid       string `json:"ownerUuid,optional"`
+	OwnerName       string `json:"ownerName,optional"`
+	Headcount       int64  `json:"headcount"`
+	PublishDate     string `json:"publishDate,optional"`
+	Remark          string `json:"remark,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid            string `json:"uuid"`
+	PostName        string `json:"postName"`
+	RequirementUuid string `json:"requirementUuid"`
+	PostCategory    string `json:"postCategory"`
+	OwnerUuid       string `json:"ownerUuid,optional"`
+	OwnerName       string `json:"ownerName,optional"`
+	Headcount       int64  `json:"headcount"`
+	PublishDate     string `json:"publishDate,optional"`
+	Remark          string `json:"remark,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+// UpdateStatusRequest 职位状态流转：open→full（联动自动）/closed（手工关闭）
+type UpdateStatusRequest {
+	Uuid   string `json:"uuid"`
+	Status string `json:"status"`
+}
+
+type UpdateStatusResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/position
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getPositionList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addPosition (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editPosition (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deletePosition (DeleteRequest) returns (DeleteResponse)
+
+	@handler UpdateStatus
+	post /hrm/updatePositionStatus (UpdateStatusRequest) returns (UpdateStatusResponse)
+}
+
