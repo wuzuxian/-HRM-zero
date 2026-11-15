@@ -2041,5 +2041,250 @@ declare namespace Api {
       uuid: string;
       status: AttendanceStatus;
     };
+
+    /** hrm leave balance (假期余额) — 可用 = 应发 granted − 已用 used − 冻结 frozen */
+    type LeaveBalance = {
+      /** record uuid */
+      uuid: string;
+      /** record creator */
+      createBy: string;
+      /** record updater */
+      updateBy: string;
+      /** year */
+      year: number;
+      /** employee uuid (hrm_employee.uuid) */
+      employeeUuid: string;
+      /** employee no */
+      employeeNo: string;
+      /** employee name */
+      employeeName: string;
+      /** org uuid */
+      orgUuid: string;
+      /** org name */
+      orgName: string;
+      /** hire date */
+      hireDate: string;
+      /** leave type code: annual_leave/comp_leave… */
+      leaveTypeCode: string;
+      /** leave type name */
+      leaveTypeName: string;
+      /** granted (应发 = 初始 + 调整) */
+      granted: number;
+      /** used (已扣减) */
+      used: number;
+      /** frozen (冻结) */
+      frozen: number;
+      /** available (可用 = granted − used − frozen) */
+      available: number;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** leave balance search params */
+    type LeaveBalanceSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.LeaveBalance, 'year' | 'employeeName' | 'orgUuid' | 'leaveTypeCode'> & Common.CommonSearchParams
+    > & { name?: string | null };
+
+    /** leave balance paginated list */
+    type LeaveBalanceList = Common.PaginatingQueryRecord<LeaveBalance>;
+
+    /** hrm leave balance log (余额流水) */
+    type LeaveBalanceLog = {
+      /** record uuid */
+      uuid: string;
+      /** balance row uuid */
+      balanceUuid: string;
+      /** year */
+      year: number;
+      /** employee uuid */
+      employeeUuid: string;
+      /** leave type code */
+      leaveTypeCode: string;
+      /** leave type name */
+      leaveTypeName: string;
+      /** change type: init/adjust/consume/accrue */
+      changeType: string;
+      /** change days (正=增 负=减) */
+      days: number;
+      /** granted after change */
+      grantedAfter: number;
+      /** used after change */
+      usedAfter: number;
+      /** frozen after change */
+      frozenAfter: number;
+      /** reason/remark */
+      reason: string;
+      /** related bill uuid */
+      billUuid: string;
+      /** operator user uuid */
+      operatorUuid: string;
+      /** operator name */
+      operatorName: string;
+      /** record create time */
+      createTime: string;
+    };
+
+    /** leave balance log search params */
+    type LeaveBalanceLogSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.LeaveBalanceLog, 'year' | 'employeeUuid' | 'leaveTypeCode' | 'balanceUuid'> &
+        Common.CommonSearchParams
+    >;
+
+    /** leave balance log paginated list */
+    type LeaveBalanceLogList = Common.PaginatingQueryRecord<LeaveBalanceLog>;
+
+    /** init leave balance request (员工 uuids 为空 = 全体在册员工) */
+    type LeaveBalanceInitRequest = {
+      year: number;
+      employeeUuids?: string[];
+    };
+
+    /** init leave balance preview request */
+    type LeaveBalanceInitPreviewRequest = {
+      year: number;
+      employeeUuids?: string[];
+    };
+
+    /** init preview item (skipped=1 表示已有余额行将被跳过) */
+    type LeaveBalanceInitPreviewItem = {
+      employeeUuid: string;
+      employeeNo: string;
+      employeeName: string;
+      leaveTypeCode: string;
+      leaveTypeName: string;
+      defaultDays: number;
+      skipped: number;
+    };
+
+    /** adjust leave balance request (days ≠ 0 增减应发；可用不得为负) */
+    type LeaveBalanceAdjustRequest = {
+      balanceUuid: string;
+      days: number;
+      reason?: string;
+    };
+    /** hrm leave balance (假期余额) — 可用 = 应发 granted − 已用 used − 冻结 frozen */
+    type LeaveBalance = {
+      /** record uuid */
+      uuid: string;
+      /** record creator */
+      createBy: string;
+      /** record updater */
+      updateBy: string;
+      /** year */
+      year: number;
+      /** employee uuid (hrm_employee.uuid) */
+      employeeUuid: string;
+      /** employee no */
+      employeeNo: string;
+      /** employee name */
+      employeeName: string;
+      /** org uuid */
+      orgUuid: string;
+      /** org name */
+      orgName: string;
+      /** hire date */
+      hireDate: string;
+      /** leave type code: annual_leave/comp_leave… */
+      leaveTypeCode: string;
+      /** leave type name */
+      leaveTypeName: string;
+      /** granted (应发 = 初始 + 调整) */
+      granted: number;
+      /** used (已扣减) */
+      used: number;
+      /** frozen (冻结) */
+      frozen: number;
+      /** available (可用 = granted − used − frozen) */
+      available: number;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** leave balance search params */
+    type LeaveBalanceSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.LeaveBalance, 'year' | 'employeeName' | 'orgUuid' | 'leaveTypeCode'> & Common.CommonSearchParams
+    > & { name?: string | null };
+
+    /** leave balance paginated list */
+    type LeaveBalanceList = Common.PaginatingQueryRecord<LeaveBalance>;
+
+    /** hrm leave balance log (余额流水) */
+    type LeaveBalanceLog = {
+      /** record uuid */
+      uuid: string;
+      /** balance row uuid */
+      balanceUuid: string;
+      /** year */
+      year: number;
+      /** employee uuid */
+      employeeUuid: string;
+      /** leave type code */
+      leaveTypeCode: string;
+      /** leave type name */
+      leaveTypeName: string;
+      /** change type: init/adjust/consume/accrue */
+      changeType: string;
+      /** change days (正=增 负=减) */
+      days: number;
+      /** granted after change */
+      grantedAfter: number;
+      /** used after change */
+      usedAfter: number;
+      /** frozen after change */
+      frozenAfter: number;
+      /** reason/remark */
+      reason: string;
+      /** related bill uuid */
+      billUuid: string;
+      /** operator user uuid */
+      operatorUuid: string;
+      /** operator name */
+      operatorName: string;
+      /** record create time */
+      createTime: string;
+    };
+
+    /** leave balance log search params */
+    type LeaveBalanceLogSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.LeaveBalanceLog, 'year' | 'employeeUuid' | 'leaveTypeCode' | 'balanceUuid'> &
+        Common.CommonSearchParams
+    >;
+
+    /** leave balance log paginated list */
+    type LeaveBalanceLogList = Common.PaginatingQueryRecord<LeaveBalanceLog>;
+
+    /** init leave balance request (员工 uuids 为空 = 全体在册员工) */
+    type LeaveBalanceInitRequest = {
+      year: number;
+      employeeUuids?: string[];
+    };
+
+    /** init leave balance preview request */
+    type LeaveBalanceInitPreviewRequest = {
+      year: number;
+      employeeUuids?: string[];
+    };
+
+    /** init preview item (skipped=1 表示已有余额行将被跳过) */
+    type LeaveBalanceInitPreviewItem = {
+      employeeUuid: string;
+      employeeNo: string;
+      employeeName: string;
+      leaveTypeCode: string;
+      leaveTypeName: string;
+      defaultDays: number;
+      skipped: number;
+    };
+
+    /** adjust leave balance request (days ≠ 0 增减应发；可用不得为负) */
+    type LeaveBalanceAdjustRequest = {
+      balanceUuid: string;
+      days: number;
+      reason?: string;
+    };
   }
 }

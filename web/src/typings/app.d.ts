@@ -439,6 +439,10 @@ declare namespace App {
             edit: string;
             delete: string;
           };
+          leavebalance: {
+            init: string;
+            adjust: string;
+          };
           attendancegroup: {
             add: string;
             edit: string;
@@ -1064,6 +1068,52 @@ declare namespace App {
                 typeValue: string;
                 status: string;
                 remark: string;
+              };
+            };
+            leaveBalance: {
+              title: string;
+              year: string;
+              name: string;
+              orgName: string;
+              orgUuid: string;
+              leaveTypeCode: string;
+              employeeNo: string;
+              employeeName: string;
+              hireDate: string;
+              leaveTypeName: string;
+              granted: string;
+              used: string;
+              frozen: string;
+              available: string;
+              initTitle: string;
+              initScope: string;
+              initScopeHint: string;
+              initSuccess: string;
+              defaultDays: string;
+              skipped: string;
+              skippedYes: string;
+              skippedNo: string;
+              adjustTitle: string;
+              adjustDays: string;
+              adjustDaysPlaceholder: string;
+              adjustDaysRequired: string;
+              adjustSuccess: string;
+              reason: string;
+              logTitle: string;
+              logDays: string;
+              logTime: string;
+              changeType: string;
+              changeTypeInit: string;
+              changeTypeAdjust: string;
+              changeTypeConsume: string;
+              changeTypeAccrue: string;
+              operatorName: string;
+              billUuid: string;
+              form: {
+                year: string;
+                name: string;
+                leaveTypeCode: string;
+                reason: string;
               };
             };
             overtimeRule: {

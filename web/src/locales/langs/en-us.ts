@@ -184,6 +184,8 @@ const local: App.I18n.Schema = {
     hrm_attendance_setting_shift: 'Shifts',
     'hrm_attendance_setting_leave-type': 'Leave Types',
     'hrm_attendance_setting_overtime-rule': 'Overtime Rules',
+    hrm_attendance_data: 'Leave Data',
+    'hrm_attendance_data_leave-balance': 'Leave Balances',
     hrm_attendance_scheduling: 'Scheduling',
     'hrm_attendance_scheduling_schedule-cycle': 'Schedule Cycles',
     'hrm_employee-relation': 'HR Management',
@@ -257,6 +259,10 @@ const local: App.I18n.Schema = {
         add: 'Add Leave Type',
         edit: 'Edit Leave Type',
         delete: 'Delete Leave Type'
+      },
+      leavebalance: {
+        init: 'Initialize This Year',
+        adjust: 'Adjust Balance'
       },
       attendancegroup: {
         add: 'Add Attendance Group',
@@ -1168,6 +1174,53 @@ const local: App.I18n.Schema = {
             remark: 'Please enter remark'
           }
         },
+        leaveBalance: {
+          title: 'Leave Balances',
+          year: 'Year',
+          name: 'Name',
+          orgName: 'Org',
+          orgUuid: 'Org (incl. sub-orgs)',
+          leaveTypeCode: 'Leave Type',
+          employeeNo: 'Employee No',
+          employeeName: 'Name',
+          hireDate: 'Hire Date',
+          leaveTypeName: 'Leave Type',
+          granted: 'Granted',
+          used: 'Used',
+          frozen: 'Frozen',
+          available: 'Available',
+          initTitle: 'Initialize This Year',
+          initScope: 'Scope',
+          initScopeHint:
+            'All active employees by leave-type default days when no employee selected; existing rows are skipped',
+          initSuccess: 'Initialization completed',
+          defaultDays: 'Default Days',
+          skipped: 'Initialized',
+          skippedYes: 'Skipped',
+          skippedNo: 'To create',
+          adjustTitle: 'Adjust Balance',
+          adjustDays: 'Adjust Days',
+          adjustDaysPlaceholder: 'Positive to add, negative to deduct (step 0.5)',
+          adjustDaysRequired: 'Adjust days must not be empty or 0',
+          adjustSuccess: 'Adjusted',
+          reason: 'Reason',
+          logTitle: 'Balance Logs',
+          logDays: 'Change',
+          logTime: 'Time',
+          changeType: 'Change Type',
+          changeTypeInit: 'Init',
+          changeTypeAdjust: 'Adjust',
+          changeTypeConsume: 'Leave Deduct',
+          changeTypeAccrue: 'Comp Accrue',
+          operatorName: 'Operator',
+          billUuid: 'Related Bill',
+          form: {
+            year: 'Please select year',
+            name: 'Please enter name',
+            leaveTypeCode: 'Please select leave type',
+            reason: 'Please enter reason (optional)'
+          }
+        },
         overtimeRule: {
           title: 'Overtime Rules',
           ruleName: 'Rule Name',
@@ -1369,7 +1422,8 @@ const local: App.I18n.Schema = {
           records: 'Records',
           noRecords: 'No approval records yet',
           confirmSubmit: 'Submit this resignation bill for approval?',
-          confirmApprove: 'Approve this bill? It is recorded only — the scheduled job will set the employee to resigned on the resign date.',
+          confirmApprove:
+            'Approve this bill? It is recorded only — the scheduled job will set the employee to resigned on the resign date.',
           confirmReject: 'Reject this resignation bill?',
           confirmRevoke: 'Revoke this resignation bill?',
           addResignation: 'Add Resignation Bill',
