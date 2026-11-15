@@ -1439,7 +1439,6 @@ declare namespace Api {
     };
 
     /** import candidates request (base64 xlsx, mirrors employee import) */
-
     type ImportCandidateRequest = {
       fileName: string;
       content: string;
@@ -1448,6 +1447,5 @@ declare namespace Api {
     type ImportCandidateResponse = {
       successCount: number;
     };
-  }
   }
 }
