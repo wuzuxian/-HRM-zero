@@ -474,6 +474,166 @@
         ]
       }
     },
+    "/api/v1/hrm/addPerfIndicator": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:perf_indicator:add",
+        "operationId": "v1/Hrm/PerfIndicatorAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "dataSource": {
+                  "type": "string"
+                },
+                "defaultWeight": {
+                  "type": "number"
+                },
+                "indicatorType": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "scoreRule": {
+                  "type": "string"
+                },
+                "status": {
+                  "default": "1",
+                  "example": "1",
+                  "type": "string"
+                },
+                "unit": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "name",
+                "indicatorType",
+                "scoreRule",
+                "dataSource",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/perf_indicator"
+        ]
+      }
+    },
+    "/api/v1/hrm/addPerfTemplate": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:perf_template:add",
+        "operationId": "v1/Hrm/PerfTemplateAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "items": {
+                  "items": {
+                    "properties": {
+                      "indicatorUuid": {
+                        "type": "string"
+                      },
+                      "weight": {
+                        "description": "权重（百分比）",
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "indicatorUuid",
+                      "weight"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "status": {
+                  "default": "1",
+                  "example": "1",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "status",
+                "items"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/perf_template"
+        ]
+      }
+    },
     "/api/v1/hrm/approveBill": {
       "post": {
         "consumes": [
@@ -531,6 +691,450 @@
         "summary": "Approve",
         "tags": [
           "v1/hrm/bill"
+        ]
+      }
+    },
+    "/api/v1/hrm/deletePerfIndicator": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:perf_indicator:delete",
+        "operationId": "v1/Hrm/PerfIndicatorDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/perf_indicator"
+        ]
+      }
+    },
+    "/api/v1/hrm/deletePerfTemplate": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:perf_template:delete",
+        "operationId": "v1/Hrm/PerfTemplateDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/editPerfIndicator": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:perf_indicator:edit",
+        "operationId": "v1/Hrm/PerfIndicatorEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "dataSource": {
+                  "type": "string"
+                },
+                "defaultWeight": {
+                  "type": "number"
+                },
+                "indicatorType": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "scoreRule": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "unit": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "code",
+                "name",
+                "indicatorType",
+                "scoreRule",
+                "dataSource",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/perf_indicator"
+        ]
+      }
+    },
+    "/api/v1/hrm/editPerfTemplate": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:perf_template:edit",
+        "operationId": "v1/Hrm/PerfTemplateEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "items": {
+                  "items": {
+                    "properties": {
+                      "indicatorUuid": {
+                        "type": "string"
+                      },
+                      "weight": {
+                        "description": "权重（百分比）",
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "indicatorUuid",
+                      "weight"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "name",
+                "status",
+                "items"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/getAllPerfIndicator": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:perf_indicator:getAll",
+        "operationId": "v1/Hrm/PerfIndicatorGetAll",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "code": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "dataSource": {
+                        "description": "数据来源：system=系统取数 manual=手工填报",
+                        "type": "string"
+                      },
+                      "defaultWeight": {
+                        "description": "默认权重（百分比）",
+                        "type": "number"
+                      },
+                      "indicatorType": {
+                        "description": "指标类型：kpi=结果指标(KPI) behavior=行为能力",
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "scoreRule": {
+                        "description": "评分规则：formula=公式评分 manual=手工评分",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "1=启用 0=停用",
+                        "type": "string"
+                      },
+                      "unit": {
+                        "description": "计量单位",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "code",
+                      "name",
+                      "indicatorType",
+                      "unit",
+                      "scoreRule",
+                      "dataSource",
+                      "defaultWeight",
+                      "status",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "records"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "code": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "dataSource": {
+                        "description": "数据来源：system=系统取数 manual=手工填报",
+                        "type": "string"
+                      },
+                      "defaultWeight": {
+                        "description": "默认权重（百分比）",
+                        "type": "number"
+                      },
+                      "indicatorType": {
+                        "description": "指标类型：kpi=结果指标(KPI) behavior=行为能力",
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "scoreRule": {
+                        "description": "评分规则：formula=公式评分 manual=手工评分",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "1=启用 0=停用",
+                        "type": "string"
+                      },
+                      "unit": {
+                        "description": "计量单位",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "code",
+                      "name",
+                      "indicatorType",
+                      "unit",
+                      "scoreRule",
+                      "dataSource",
+                      "defaultWeight",
+                      "status",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "GetAll",
+        "tags": [
+          "v1/hrm/perf_indicator"
         ]
       }
     },
@@ -632,6 +1236,420 @@
         "summary": "GetApprovalRecordList",
         "tags": [
           "v1/hrm/bill"
+        ]
+      }
+    },
+    "/api/v1/hrm/getPerfIndicatorList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:perf_indicator:list",
+        "operationId": "v1/Hrm/PerfIndicatorList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "code",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "indicatorType",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "scoreRule",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "dataSource",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "code": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "dataSource": {
+                        "description": "数据来源：system=系统取数 manual=手工填报",
+                        "type": "string"
+                      },
+                      "defaultWeight": {
+                        "description": "默认权重（百分比）",
+                        "type": "number"
+                      },
+                      "indicatorType": {
+                        "description": "指标类型：kpi=结果指标(KPI) behavior=行为能力",
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "scoreRule": {
+                        "description": "评分规则：formula=公式评分 manual=手工评分",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "1=启用 0=停用",
+                        "type": "string"
+                      },
+                      "unit": {
+                        "description": "计量单位",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "code",
+                      "name",
+                      "indicatorType",
+                      "unit",
+                      "scoreRule",
+                      "dataSource",
+                      "defaultWeight",
+                      "status",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/perf_indicator"
+        ]
+      }
+    },
+    "/api/v1/hrm/getPerfTemplateDetail": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:perf_template:getDetail",
+        "operationId": "v1/Hrm/PerfTemplateGetDetail",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "uuid",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "createTime": {
+                  "type": "string"
+                },
+                "items": {
+                  "items": {
+                    "properties": {
+                      "dataSource": {
+                        "type": "string"
+                      },
+                      "indicatorCode": {
+                        "description": "指标编码（快照自指标库）",
+                        "type": "string"
+                      },
+                      "indicatorName": {
+                        "type": "string"
+                      },
+                      "indicatorType": {
+                        "type": "string"
+                      },
+                      "indicatorUuid": {
+                        "type": "string"
+                      },
+                      "scoreRule": {
+                        "type": "string"
+                      },
+                      "unit": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "weight": {
+                        "description": "权重（百分比）",
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "indicatorUuid",
+                      "weight",
+                      "indicatorCode",
+                      "indicatorName",
+                      "indicatorType",
+                      "unit",
+                      "scoreRule",
+                      "dataSource"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "status": {
+                  "description": "1=启用 0=停用",
+                  "type": "string"
+                },
+                "updateTime": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "GetDetail",
+        "tags": [
+          "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/getPerfTemplateList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:perf_template:list",
+        "operationId": "v1/Hrm/PerfTemplateList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "items": {
+                        "items": {
+                          "properties": {
+                            "dataSource": {
+                              "type": "string"
+                            },
+                            "indicatorCode": {
+                              "description": "指标编码（快照自指标库）",
+                              "type": "string"
+                            },
+                            "indicatorName": {
+                              "type": "string"
+                            },
+                            "indicatorType": {
+                              "type": "string"
+                            },
+                            "indicatorUuid": {
+                              "type": "string"
+                            },
+                            "scoreRule": {
+                              "type": "string"
+                            },
+                            "unit": {
+                              "type": "string"
+                            },
+                            "uuid": {
+                              "type": "string"
+                            },
+                            "weight": {
+                              "description": "权重（百分比）",
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "uuid",
+                            "indicatorUuid",
+                            "weight",
+                            "indicatorCode",
+                            "indicatorName",
+                            "indicatorType",
+                            "unit",
+                            "scoreRule",
+                            "dataSource"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "1=启用 0=停用",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "name",
+                      "status",
+                      "remark",
+                      "items",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/perf_template"
         ]
       }
     },

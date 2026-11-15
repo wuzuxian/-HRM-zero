@@ -10,6 +10,8 @@ import (
 	swagger "github.com/jzero-io/jzero-admin/server/internal/handler/swagger"
 	v1auth "github.com/jzero-io/jzero-admin/server/internal/handler/v1/auth"
 	v1hrmbill "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/bill"
+	v1hrmperf_indicator "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_indicator"
+	v1hrmperf_template "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_template"
 	v1managemenu "github.com/jzero-io/jzero-admin/server/internal/handler/v1/manage/menu"
 	v1managerole "github.com/jzero-io/jzero-admin/server/internal/handler/v1/manage/role"
 	v1manageuser "github.com/jzero-io/jzero-admin/server/internal/handler/v1/manage/user"
@@ -113,6 +115,78 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodPost,
 						Path:    "/hrm/submitBill",
 						Handler: v1hrmbill.Submit(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addPerfIndicator",
+						Handler: v1hrmperf_indicator.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deletePerfIndicator",
+						Handler: v1hrmperf_indicator.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editPerfIndicator",
+						Handler: v1hrmperf_indicator.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getAllPerfIndicator",
+						Handler: v1hrmperf_indicator.GetAll(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getPerfIndicatorList",
+						Handler: v1hrmperf_indicator.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addPerfTemplate",
+						Handler: v1hrmperf_template.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deletePerfTemplate",
+						Handler: v1hrmperf_template.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editPerfTemplate",
+						Handler: v1hrmperf_template.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getPerfTemplateDetail",
+						Handler: v1hrmperf_template.GetDetail(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getPerfTemplateList",
+						Handler: v1hrmperf_template.List(serverCtx),
 					},
 				}...,
 			),
