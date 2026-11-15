@@ -42,10 +42,7 @@ async function search() {
               path="billNo"
               class="pr-24px"
             >
-              <NInput
-                v-model:value="model.billNo"
-                :placeholder="$t('page.hrm.employeeRelation.entry.form.billNo')"
-              />
+              <NInput v-model:value="model.billNo" :placeholder="$t('page.hrm.employeeRelation.entry.form.billNo')" />
             </NFormItemGi>
             <NFormItemGi
               span="24 s:12 m:6"
@@ -66,10 +63,7 @@ async function search() {
               path="name"
               class="pr-24px"
             >
-              <NInput
-                v-model:value="model.name"
-                :placeholder="$t('page.hrm.employeeRelation.entry.form.name')"
-              />
+              <NInput v-model:value="model.name" :placeholder="$t('page.hrm.employeeRelation.entry.form.name')" />
             </NFormItemGi>
             <NFormItemGi span="24 m:6" class="pr-24px">
               <NSpace class="w-full" justify="end">

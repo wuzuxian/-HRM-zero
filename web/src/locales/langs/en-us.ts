@@ -183,6 +183,7 @@ const local: App.I18n.Schema = {
     'hrm_attendance_setting_attendance-config': 'Org Default Rules',
     hrm_attendance_setting_shift: 'Shifts',
     'hrm_attendance_setting_leave-type': 'Leave Types',
+    'hrm_attendance_setting_overtime-rule': 'Overtime Rules',
     'hrm_employee-relation': 'HR Management',
     'hrm_employee-relation_transfer-list': 'Transfer',
     'hrm_employee-relation_entry-list': 'Entry',
@@ -198,6 +199,10 @@ const local: App.I18n.Schema = {
     hrm_recruitment: 'Recruitment',
     'hrm_recruitment_requirement-list': 'Requirement',
     'hrm_recruitment_candidate-list': 'Candidates',
+    hrm_salary: 'Salary',
+    hrm_salary_setting: 'Salary Settings',
+    hrm_salary_setting_subject: 'Salary Subjects',
+    hrm_salary_setting_item: 'Salary Items',
     hrm_training_plan: 'Training Plan',
     hrm_training_session: 'Training Session',
     'hrm_training_cert-template': 'Certificate Template',
@@ -261,6 +266,12 @@ const local: App.I18n.Schema = {
         save: 'Save Org Rule',
         delete: 'Delete Org Rule'
       },
+      overtimerule: {
+        add: 'Add Overtime Rule',
+        edit: 'Edit Overtime Rule',
+        delete: 'Delete Overtime Rule',
+        togglestatus: 'Toggle Overtime Rule'
+      },
       transfer: {
         add: 'Add Transfer',
         edit: 'Edit Transfer',
@@ -320,6 +331,16 @@ const local: App.I18n.Schema = {
           revoke: 'Revoke Certificate',
           uploadFile: 'Upload Scan File'
         }
+      },
+      salary_subject: {
+        add: 'Add Salary Subject',
+        edit: 'Edit Salary Subject',
+        delete: 'Delete Salary Subject'
+      },
+      salary_item: {
+        add: 'Add Salary Item',
+        edit: 'Edit Salary Item',
+        delete: 'Delete Salary Item'
       },
       employee: {
         add: 'Add Employee',
@@ -1126,6 +1147,43 @@ const local: App.I18n.Schema = {
             status: 'Please select status',
             remark: 'Please enter remark'
           }
+        },
+        overtimeRule: {
+          title: 'Overtime Rules',
+          ruleName: 'Rule Name',
+          workday: 'Workday',
+          restday: 'Rest Day',
+          holiday: 'Statutory Holiday',
+          dayPolicy: 'Day Policy',
+          approvalRequired: 'Approval',
+          punchRequired: 'Punch Requirement',
+          compMultiplier: 'Comp Multiplier',
+          multiplierTip: 'Multiplier N means 1 hour overtime converts to N hours time-off',
+          multiplierValue: 'Comp x{n}',
+          needApproval: 'Approval Required',
+          noApproval: 'No Approval',
+          needPunch: 'Punch Required',
+          noPunch: 'No Punch',
+          minUnitMinutes: 'Min Unit',
+          minUnitHalfHour: '30 min',
+          minUnitHour: '1 hour',
+          monthlyLimitHours: 'Monthly Limit',
+          monthlyLimitTip: '0 means unlimited',
+          noLimit: 'Unlimited',
+          usedGroups: 'Used Groups',
+          boundGroupCount: '{n} group(s)',
+          globalFallback: 'All Groups',
+          addRule: 'Add Overtime Rule',
+          editRule: 'Edit Overtime Rule',
+          enable: 'Enable',
+          disable: 'Disable',
+          status: 'Status',
+          remark: 'Remark',
+          form: {
+            ruleName: 'Please enter rule name',
+            status: 'Please select status',
+            remark: 'Please enter remark'
+          }
         }
       },
       employeeRelation: {
@@ -1238,7 +1296,8 @@ const local: App.I18n.Schema = {
           records: 'Records',
           noRecords: 'No approval records yet',
           confirmSubmit: 'Submit this entry bill for approval?',
-          confirmApprove: 'Approve this bill? An employee archive will be created automatically (employee no. generated).',
+          confirmApprove:
+            'Approve this bill? An employee archive will be created automatically (employee no. generated).',
           confirmReject: 'Reject this bill?',
           confirmRevoke: 'Revoke this bill?',
           addEntry: 'Add Entry Bill',
@@ -1289,6 +1348,70 @@ const local: App.I18n.Schema = {
             remark: 'Please enter remark',
             billNo: 'Please enter bill no.',
             status: 'Please select status'
+          }
+        }
+      },
+      salary: {
+        subject: {
+          title: 'Salary Subjects',
+          subjectName: 'Subject Name',
+          orgName: 'Linked Company',
+          payAccount: 'Pay Account',
+          payBank: 'Pay Bank',
+          status: 'Status',
+          remark: 'Remark',
+          addSubject: 'Add Salary Subject',
+          editSubject: 'Edit Salary Subject',
+          form: {
+            subjectName: 'Please enter subject name',
+            orgName: 'Please select linked company',
+            payAccount: 'Please enter pay account',
+            payBank: 'Please enter pay bank',
+            status: 'Please select status',
+            remark: 'Please enter remark'
+          }
+        },
+        item: {
+          title: 'Salary Items',
+          itemName: 'Item Name',
+          itemCode: 'Item Code',
+          itemType: {
+            title: 'Item Type',
+            fixed: 'Fixed',
+            data: 'Data-driven',
+            formula: 'Formula'
+          },
+          itemClass: {
+            title: 'Item Class',
+            earning: 'Earning',
+            deduction: 'Deduction',
+            cost: 'Cost'
+          },
+          valueMode: {
+            title: 'Value Mode',
+            manual: 'Manual',
+            system: 'System',
+            formula: 'Formula'
+          },
+          calcOrder: 'Calc Order',
+          orderNum: 'Display Order',
+          formula: 'Formula Expression',
+          isPreset: 'Preset',
+          presetYes: 'Preset',
+          presetNo: 'Custom',
+          status: 'Status',
+          remark: 'Remark',
+          addItem: 'Add Salary Item',
+          editItem: 'Edit Salary Item',
+          form: {
+            itemName: 'Please enter item name',
+            itemCode: 'Please enter item code (e.g. OTHER_BONUS)',
+            itemType: 'Please select item type',
+            itemClass: 'Please select item class',
+            valueMode: 'Please select value mode',
+            formula: 'Please enter formula expression',
+            status: 'Please select status',
+            remark: 'Please enter remark'
           }
         }
       },
@@ -1427,7 +1550,8 @@ const local: App.I18n.Schema = {
           batchIssue: 'Batch Issue',
           batchIssueDone: 'Issued',
           batchIssueSkipped: 'Skipped (already certified)',
-          batchIssueTip: 'Generates certificates for the finished-session participants (cert no = template prefix-year-seq); students already holding a valid certificate of the template are skipped (idempotent).',
+          batchIssueTip:
+            'Generates certificates for the finished-session participants (cert no = template prefix-year-seq); students already holding a valid certificate of the template are skipped (idempotent).',
           importExternal: 'Import External Certificate',
           issue: 'Issue',
           revoke: 'Revoke',

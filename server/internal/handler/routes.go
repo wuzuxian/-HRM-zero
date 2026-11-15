@@ -19,11 +19,14 @@ import (
 	v1hrmentry "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/entry"
 	v1hrmleavetype "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/leavetype"
 	v1hrmorg "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/org"
+	v1hrmovertimerule "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/overtimerule"
 	v1hrmperf_indicator "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_indicator"
 	v1hrmperf_scheme "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_scheme"
 	v1hrmperf_template "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_template"
 	v1hrmrequirement "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/requirement"
 	v1hrmreward "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/reward"
+	v1hrmsalary_item "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_item"
+	v1hrmsalary_subject "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_subject"
 	v1hrmshift "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/shift"
 	v1hrmtraining "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/training"
 	v1hrmtraining_plan "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/training_plan"
@@ -515,6 +518,47 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				[]rest.Route{
 					{
 						Method:  http.MethodPost,
+						Path:    "/hrm/addOvertimeRule",
+						Handler: v1hrmovertimerule.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteOvertimeRule",
+						Handler: v1hrmovertimerule.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editOvertimeRule",
+						Handler: v1hrmovertimerule.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getOvertimeRuleList",
+						Handler: v1hrmovertimerule.List(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/resolveOvertimeRule",
+						Handler: v1hrmovertimerule.Resolve(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/toggleOvertimeRuleStatus",
+						Handler: v1hrmovertimerule.ToggleStatus(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
 						Path:    "/hrm/addPerfIndicator",
 						Handler: v1hrmperf_indicator.Add(serverCtx),
 					},
@@ -666,6 +710,68 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodGet,
 						Path:    "/hrm/getRewardList",
 						Handler: v1hrmreward.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addSalaryItem",
+						Handler: v1hrmsalary_item.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteSalaryItem",
+						Handler: v1hrmsalary_item.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editSalaryItem",
+						Handler: v1hrmsalary_item.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getSalaryItemList",
+						Handler: v1hrmsalary_item.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addSalarySubject",
+						Handler: v1hrmsalary_subject.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteSalarySubject",
+						Handler: v1hrmsalary_subject.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editSalarySubject",
+						Handler: v1hrmsalary_subject.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getSalarySubjectList",
+						Handler: v1hrmsalary_subject.List(serverCtx),
 					},
 				}...,
 			),

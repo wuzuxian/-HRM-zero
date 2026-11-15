@@ -451,6 +451,12 @@ declare namespace App {
             save: string;
             delete: string;
           };
+          overtimerule: {
+            add: string;
+            edit: string;
+            delete: string;
+            togglestatus: string;
+          };
           transfer: {
             add: string;
             edit: string;
@@ -510,6 +516,16 @@ declare namespace App {
               revoke: string;
               uploadFile: string;
             };
+          };
+          salary_subject: {
+            add: string;
+            edit: string;
+            delete: string;
+          };
+          salary_item: {
+            add: string;
+            edit: string;
+            delete: string;
           };
           employee: {
             add: string;
@@ -1034,6 +1050,43 @@ declare namespace App {
                 remark: string;
               };
             };
+            overtimeRule: {
+              title: string;
+              ruleName: string;
+              workday: string;
+              restday: string;
+              holiday: string;
+              dayPolicy: string;
+              approvalRequired: string;
+              punchRequired: string;
+              compMultiplier: string;
+              multiplierTip: string;
+              multiplierValue: string;
+              needApproval: string;
+              noApproval: string;
+              needPunch: string;
+              noPunch: string;
+              minUnitMinutes: string;
+              minUnitHalfHour: string;
+              minUnitHour: string;
+              monthlyLimitHours: string;
+              monthlyLimitTip: string;
+              noLimit: string;
+              usedGroups: string;
+              boundGroupCount: string;
+              globalFallback: string;
+              addRule: string;
+              editRule: string;
+              enable: string;
+              disable: string;
+              status: string;
+              remark: string;
+              form: {
+                ruleName: string;
+                status: string;
+                remark: string;
+              };
+            };
           };
           employeeRelation: {
             billStatus: {
@@ -1363,6 +1416,70 @@ declare namespace App {
               currentPosition: string;
               expectSalary: string;
               remark: string;
+            };
+          };
+          salary: {
+            subject: {
+              title: string;
+              subjectName: string;
+              orgName: string;
+              payAccount: string;
+              payBank: string;
+              status: string;
+              remark: string;
+              addSubject: string;
+              editSubject: string;
+              form: {
+                subjectName: string;
+                orgName: string;
+                payAccount: string;
+                payBank: string;
+                status: string;
+                remark: string;
+              };
+            };
+            item: {
+              title: string;
+              itemName: string;
+              itemCode: string;
+              itemType: {
+                title: string;
+                fixed: string;
+                data: string;
+                formula: string;
+              };
+              itemClass: {
+                title: string;
+                earning: string;
+                deduction: string;
+                cost: string;
+              };
+              valueMode: {
+                title: string;
+                manual: string;
+                system: string;
+                formula: string;
+              };
+              calcOrder: string;
+              orderNum: string;
+              formula: string;
+              isPreset: string;
+              presetYes: string;
+              presetNo: string;
+              status: string;
+              remark: string;
+              addItem: string;
+              editItem: string;
+              form: {
+                itemName: string;
+                itemCode: string;
+                itemType: string;
+                itemClass: string;
+                valueMode: string;
+                formula: string;
+                status: string;
+                remark: string;
+              };
             };
           };
           training: {

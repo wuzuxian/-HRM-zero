@@ -111,6 +111,34 @@ const (
 	CandidateStatusTransitionInvalidCode = 10442
 	// CandidateImportInvalidCode 导入候选人文件非法
 	CandidateImportInvalidCode = 10443
+
+	// HRM 薪酬设置：薪酬主体与薪资项目（HRM-33）业务错误码。1044x 段
+	// （10440-10443 已被候选人占用，本段自 10444 起）。
+	// SalarySubjectNotFoundCode 薪酬主体不存在
+	SalarySubjectNotFoundCode = 10444
+	// SalarySubjectInvalidCode 薪酬主体参数非法（名称/关联公司/启停状态等）
+	SalarySubjectInvalidCode = 10445
+	// SalarySubjectOrgNotFoundCode 关联公司不存在（须为 hrm_org 中 org_type=1 的公司节点）
+	SalarySubjectOrgNotFoundCode = 10446
+	// SalarySubjectOrgInvalidCode 关联组织不是公司节点（org_type != 1）
+	SalarySubjectOrgInvalidCode = 10447
+	// SalaryItemNotFoundCode 薪资项目不存在
+	SalaryItemNotFoundCode = 10448
+	// SalaryItemCodeDuplicateCode 薪资项目编码已存在
+	SalaryItemCodeDuplicateCode = 10449
+	// SalaryItemInvalidCode 薪资项目参数非法（名称/编码/项目类型/项目分类/取值方式/状态等）
+	SalaryItemInvalidCode = 10450
+	// SalaryItemPresetGuardCode 预置薪资项目不可删除（可停用）
+	SalaryItemPresetGuardCode = 10451
+
+	// HRM 假勤设置：加班规则（HRM-13）业务错误码。10462-10464 段
+	// （1044x 已被候选人/薪酬占用，10450-10458 证书模板/发放，10460-10461 员工账号同步）。
+	// OvertimeRuleNotFoundCode 加班规则不存在
+	OvertimeRuleNotFoundCode = 10462
+	// OvertimeRuleInvalidCode 加班规则参数非法（名称/当天策略/调休倍数/最小单位/月上限/考勤组绑定/状态等）
+	OvertimeRuleInvalidCode = 10463
+	// OvertimeRuleDayTypeInvalidCode 加班当天类型非法（须为 工作日/休息日/法定节假日）
+	OvertimeRuleDayTypeInvalidCode = 10464
 )
 
 func init() {
@@ -168,4 +196,17 @@ func init() {
 	status.Register(CandidateInvalidCode)
 	status.Register(CandidateStatusTransitionInvalidCode)
 	status.Register(CandidateImportInvalidCode)
+
+	status.Register(SalarySubjectNotFoundCode)
+	status.Register(SalarySubjectInvalidCode)
+	status.Register(SalarySubjectOrgNotFoundCode)
+	status.Register(SalarySubjectOrgInvalidCode)
+	status.Register(SalaryItemNotFoundCode)
+	status.Register(SalaryItemCodeDuplicateCode)
+	status.Register(SalaryItemInvalidCode)
+	status.Register(SalaryItemPresetGuardCode)
+
+	status.Register(OvertimeRuleNotFoundCode)
+	status.Register(OvertimeRuleInvalidCode)
+	status.Register(OvertimeRuleDayTypeInvalidCode)
 }

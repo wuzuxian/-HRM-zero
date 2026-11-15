@@ -21,6 +21,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_entry_bill_work"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_leave_type"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_org"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_overtime_rule"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_indicator"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_scheme"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_template"
@@ -28,6 +29,8 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_recruitment_candidate"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_recruitment_requirement"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_reward_bill"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_item"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_subject"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_shift"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_cert_template"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_certificate"
@@ -58,6 +61,7 @@ type Model struct {
 	HrmEntryBillWork              hrm_entry_bill_work.HrmEntryBillWorkModel
 	HrmLeaveType                  hrm_leave_type.HrmLeaveTypeModel
 	HrmOrg                        hrm_org.HrmOrgModel
+	HrmOvertimeRule               hrm_overtime_rule.HrmOvertimeRuleModel
 	HrmPerfIndicator              hrm_perf_indicator.HrmPerfIndicatorModel
 	HrmPerfScheme                 hrm_perf_scheme.HrmPerfSchemeModel
 	HrmPerfTemplate               hrm_perf_template.HrmPerfTemplateModel
@@ -65,6 +69,8 @@ type Model struct {
 	HrmRecruitmentCandidate       hrm_recruitment_candidate.HrmRecruitmentCandidateModel
 	HrmRecruitmentRequirement     hrm_recruitment_requirement.HrmRecruitmentRequirementModel
 	HrmRewardBill                 hrm_reward_bill.HrmRewardBillModel
+	HrmSalaryItem                 hrm_salary_item.HrmSalaryItemModel
+	HrmSalarySubject              hrm_salary_subject.HrmSalarySubjectModel
 	HrmShift                      hrm_shift.HrmShiftModel
 	HrmTrainingCertTemplate       hrm_training_cert_template.HrmTrainingCertTemplateModel
 	HrmTrainingCertificate        hrm_training_certificate.HrmTrainingCertificateModel
@@ -96,6 +102,7 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmEntryBillWork:              hrm_entry_bill_work.NewHrmEntryBillWorkModel(conn, op...),
 		HrmLeaveType:                  hrm_leave_type.NewHrmLeaveTypeModel(conn, op...),
 		HrmOrg:                        hrm_org.NewHrmOrgModel(conn, op...),
+		HrmOvertimeRule:               hrm_overtime_rule.NewHrmOvertimeRuleModel(conn, op...),
 		HrmPerfIndicator:              hrm_perf_indicator.NewHrmPerfIndicatorModel(conn, op...),
 		HrmPerfScheme:                 hrm_perf_scheme.NewHrmPerfSchemeModel(conn, op...),
 		HrmPerfTemplate:               hrm_perf_template.NewHrmPerfTemplateModel(conn, op...),
@@ -103,6 +110,8 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmRecruitmentCandidate:       hrm_recruitment_candidate.NewHrmRecruitmentCandidateModel(conn, op...),
 		HrmRecruitmentRequirement:     hrm_recruitment_requirement.NewHrmRecruitmentRequirementModel(conn, op...),
 		HrmRewardBill:                 hrm_reward_bill.NewHrmRewardBillModel(conn, op...),
+		HrmSalaryItem:                 hrm_salary_item.NewHrmSalaryItemModel(conn, op...),
+		HrmSalarySubject:              hrm_salary_subject.NewHrmSalarySubjectModel(conn, op...),
 		HrmShift:                      hrm_shift.NewHrmShiftModel(conn, op...),
 		HrmTrainingCertTemplate:       hrm_training_cert_template.NewHrmTrainingCertTemplateModel(conn, op...),
 		HrmTrainingCertificate:        hrm_training_certificate.NewHrmTrainingCertificateModel(conn, op...),

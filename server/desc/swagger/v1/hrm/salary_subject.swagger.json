@@ -1,0 +1,338 @@
+{
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/hrm/addSalarySubject": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_subject:add",
+        "operationId": "v1/Hrm/SalarySubjectAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "orgUuid": {
+                  "type": "string"
+                },
+                "payAccount": {
+                  "type": "string"
+                },
+                "payBank": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "status": {
+                  "default": "1",
+                  "example": "1",
+                  "type": "string"
+                },
+                "subjectName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "subjectName",
+                "orgUuid",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/salary_subject"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteSalarySubject": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_subject:delete",
+        "operationId": "v1/Hrm/SalarySubjectDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/salary_subject"
+        ]
+      }
+    },
+    "/api/v1/hrm/editSalarySubject": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_subject:edit",
+        "operationId": "v1/Hrm/SalarySubjectEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "orgUuid": {
+                  "type": "string"
+                },
+                "payAccount": {
+                  "type": "string"
+                },
+                "payBank": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "subjectName": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "subjectName",
+                "orgUuid",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/salary_subject"
+        ]
+      }
+    },
+    "/api/v1/hrm/getSalarySubjectList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:salary_subject:list",
+        "operationId": "v1/Hrm/SalarySubjectList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "subjectName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "orgUuid": {
+                        "type": "string"
+                      },
+                      "payAccount": {
+                        "type": "string"
+                      },
+                      "payBank": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "subjectName": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "subjectName",
+                      "orgUuid",
+                      "orgName",
+                      "payAccount",
+                      "payBank",
+                      "status",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/salary_subject"
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKey": {
+      "description": "Enter Authorization",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0"
+}

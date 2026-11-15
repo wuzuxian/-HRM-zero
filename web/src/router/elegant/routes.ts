@@ -114,6 +114,15 @@ export const generatedRoutes: GeneratedRoute[] = [
                 }
               },
               {
+                name: 'hrm_attendance_setting_overtime-rule',
+                path: '/hrm/attendance/setting/overtime-rule',
+                component: 'view.hrm_attendance_setting_overtime-rule',
+                meta: {
+                  title: 'hrm_attendance_setting_overtime-rule',
+                  i18nKey: 'route.hrm_attendance_setting_overtime-rule'
+                }
+              },
+              {
                 name: 'hrm_attendance_setting_shift',
                 path: '/hrm/attendance/setting/shift',
                 component: 'view.hrm_attendance_setting_shift',
@@ -292,6 +301,44 @@ export const generatedRoutes: GeneratedRoute[] = [
               title: 'hrm_reward_bill',
               i18nKey: 'route.hrm_reward_bill'
             }
+          }
+        ]
+      },
+      {
+        name: 'hrm_salary',
+        path: '/hrm/salary',
+        meta: {
+          title: 'hrm_salary',
+          i18nKey: 'route.hrm_salary'
+        },
+        children: [
+          {
+            name: 'hrm_salary_setting',
+            path: '/hrm/salary/setting',
+            meta: {
+              title: 'hrm_salary_setting',
+              i18nKey: 'route.hrm_salary_setting'
+            },
+            children: [
+              {
+                name: 'hrm_salary_setting_item',
+                path: '/hrm/salary/setting/item',
+                component: 'view.hrm_salary_setting_item',
+                meta: {
+                  title: 'hrm_salary_setting_item',
+                  i18nKey: 'route.hrm_salary_setting_item'
+                }
+              },
+              {
+                name: 'hrm_salary_setting_subject',
+                path: '/hrm/salary/setting/subject',
+                component: 'view.hrm_salary_setting_subject',
+                meta: {
+                  title: 'hrm_salary_setting_subject',
+                  i18nKey: 'route.hrm_salary_setting_subject'
+                }
+              }
+            ]
           }
         ]
       },

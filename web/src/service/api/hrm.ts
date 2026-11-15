@@ -779,11 +779,21 @@ export function ImportCandidate(req: Api.Hrm.ImportCandidateRequest) {
   });
 }
 
-
 /** get hrm entry bill (员工入职单 HR201) paginated list — defaults to 「我的单据」 server-side */
 export function GetEntryList(params?: Api.Hrm.EntrySearchParams) {
   return request<Api.Hrm.EntryList>({
     url: '/api/v1/hrm/getEntryList',
+    method: 'get',
+    params
+  });
+}
+
+// ===== HRM-33 薪酬主体与薪资项目 (薪酬管理域 薪酬设置) =====
+
+/** get 薪酬主体 paginated list */
+export function GetSalarySubjectList(params?: Api.Hrm.SalarySubjectSearchParams) {
+  return request<Api.Hrm.SalarySubjectList>({
+    url: '/api/v1/hrm/getSalarySubjectList',
     method: 'get',
     params
   });
@@ -807,10 +817,28 @@ export function AddEntry(req: Api.Hrm.AddEntryRequest) {
   });
 }
 
+/** add 薪酬主体 (关联公司须为 org_type=1 的公司节点) */
+export function AddSalarySubject(req: Api.Hrm.AddSalarySubjectRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addSalarySubject',
+    method: 'post',
+    data: req
+  });
+}
+
 /** edit hrm entry bill (only in editable 单据状态; 已建档的不可改) */
 export function EditEntry(req: Api.Hrm.EditEntryRequest) {
   return request<Api.Common.Empty>({
     url: '/api/v1/hrm/editEntry',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 薪酬主体 (公司名称快照随换随更) */
+export function EditSalarySubject(req: Api.Hrm.EditSalarySubjectRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editSalarySubject',
     method: 'post',
     data: req
   });
@@ -824,5 +852,100 @@ export function DeleteEntry(req: string[]) {
     data: {
       uuids: req
     }
+  });
+}
+/** delete/batch delete 薪酬主体 */
+export function DeleteSalarySubject(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteSalarySubject',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** get 薪资项目 paginated list (默认按计算顺序升序, 同序按 id) */
+export function GetSalaryItemList(params?: Api.Hrm.SalaryItemSearchParams) {
+  return request<Api.Hrm.SalaryItemList>({
+    url: '/api/v1/hrm/getSalaryItemList',
+    method: 'get',
+    params
+  });
+}
+
+/** add 薪资项目 (编码唯一; 预置项目只能由种子迁移产生) */
+export function AddSalaryItem(req: Api.Hrm.AddSalaryItemRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addSalaryItem',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 薪资项目 */
+export function EditSalaryItem(req: Api.Hrm.EditSalaryItemRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editSalaryItem',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 薪资项目 (预置项目 is_preset=1 不可删除) */
+export function DeleteSalaryItem(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteSalaryItem',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** get hrm overtime rule (加班规则) paginated list */
+export function GetOvertimeRuleList(params?: Api.Hrm.OvertimeRuleSearchParams) {
+  return request<Api.Hrm.OvertimeRuleList>({
+    url: '/api/v1/hrm/getOvertimeRuleList',
+    method: 'get',
+    params
+  });
+}
+
+/** add hrm overtime rule */
+export function AddOvertimeRule(req: Api.Hrm.AddOvertimeRuleRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addOvertimeRule',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit hrm overtime rule */
+export function EditOvertimeRule(req: Api.Hrm.EditOvertimeRuleRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editOvertimeRule',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete hrm overtime rules */
+export function DeleteOvertimeRule(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteOvertimeRule',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** toggle hrm overtime rule status (启用/停用) */
+export function ToggleOvertimeRuleStatus(req: { uuid: string; status: Api.Hrm.AttendanceStatus }) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/toggleOvertimeRuleStatus',
+    method: 'post',
+    data: req
   });
 }

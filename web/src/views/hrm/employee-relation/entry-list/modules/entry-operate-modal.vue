@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from 'vue';
-import type { FormInst } from 'naive-ui';
 import { useLoading } from '@sa/hooks';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { AddEntry, EditEntry } from '@/service/api';
@@ -208,7 +207,11 @@ watch(visible, () => {
                   :placeholder="$t('page.hrm.employeeRelation.entry.form.politicalStatus')"
                 />
               </NFormItemGi>
-              <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.employeeRelation.entry.maritalStatus')" path="maritalStatus">
+              <NFormItemGi
+                span="24 s:12 m:8"
+                :label="$t('page.hrm.employeeRelation.entry.maritalStatus')"
+                path="maritalStatus"
+              >
                 <NSelect
                   v-model:value="model.maritalStatus"
                   :options="translateOptions(hrmEmployeeMaritalStatusOptions)"
@@ -216,17 +219,31 @@ watch(visible, () => {
                   clearable
                 />
               </NFormItemGi>
-              <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.employeeRelation.entry.cultureLevel')" path="cultureLevel">
+              <NFormItemGi
+                span="24 s:12 m:8"
+                :label="$t('page.hrm.employeeRelation.entry.cultureLevel')"
+                path="cultureLevel"
+              >
                 <NInput
                   v-model:value="model.cultureLevel"
                   :placeholder="$t('page.hrm.employeeRelation.entry.form.cultureLevel')"
                 />
               </NFormItemGi>
-              <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.employeeRelation.entry.nativePlace')" path="nativePlace">
-                <NInput v-model:value="model.nativePlace" :placeholder="$t('page.hrm.employeeRelation.entry.form.nativePlace')" />
+              <NFormItemGi
+                span="24 s:12 m:8"
+                :label="$t('page.hrm.employeeRelation.entry.nativePlace')"
+                path="nativePlace"
+              >
+                <NInput
+                  v-model:value="model.nativePlace"
+                  :placeholder="$t('page.hrm.employeeRelation.entry.form.nativePlace')"
+                />
               </NFormItemGi>
               <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.employeeRelation.entry.address')" path="address">
-                <NInput v-model:value="model.address" :placeholder="$t('page.hrm.employeeRelation.entry.form.address')" />
+                <NInput
+                  v-model:value="model.address"
+                  :placeholder="$t('page.hrm.employeeRelation.entry.form.address')"
+                />
               </NFormItemGi>
               <NFormItemGi
                 span="24 s:12 m:8"
@@ -259,25 +276,48 @@ watch(visible, () => {
                 />
               </NFormItemGi>
               <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.employeeRelation.entry.bankName')" path="bankName">
-                <NInput v-model:value="model.bankName" :placeholder="$t('page.hrm.employeeRelation.entry.form.bankName')" />
+                <NInput
+                  v-model:value="model.bankName"
+                  :placeholder="$t('page.hrm.employeeRelation.entry.form.bankName')"
+                />
               </NFormItemGi>
-              <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.employeeRelation.entry.bankAccount')" path="bankAccount">
-                <NInput v-model:value="model.bankAccount" :placeholder="$t('page.hrm.employeeRelation.entry.form.bankAccount')" />
+              <NFormItemGi
+                span="24 s:12 m:8"
+                :label="$t('page.hrm.employeeRelation.entry.bankAccount')"
+                path="bankAccount"
+              >
+                <NInput
+                  v-model:value="model.bankAccount"
+                  :placeholder="$t('page.hrm.employeeRelation.entry.form.bankAccount')"
+                />
               </NFormItemGi>
               <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.employeeRelation.entry.avatar')" path="avatar">
                 <NInput v-model:value="model.avatar" :placeholder="$t('page.hrm.employeeRelation.entry.form.avatar')" />
               </NFormItemGi>
               <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.employeeRelation.entry.position')" path="position">
-                <NInput v-model:value="model.position" :placeholder="$t('page.hrm.employeeRelation.entry.form.position')" />
+                <NInput
+                  v-model:value="model.position"
+                  :placeholder="$t('page.hrm.employeeRelation.entry.form.position')"
+                />
               </NFormItemGi>
               <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.employeeRelation.entry.post')" path="post">
                 <NInput v-model:value="model.post" :placeholder="$t('page.hrm.employeeRelation.entry.form.post')" />
               </NFormItemGi>
               <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.employeeRelation.entry.orgUuid')" path="orgUuid">
-                <NInput v-model:value="model.orgUuid" :placeholder="$t('page.hrm.employeeRelation.entry.form.orgUuid')" />
+                <NInput
+                  v-model:value="model.orgUuid"
+                  :placeholder="$t('page.hrm.employeeRelation.entry.form.orgUuid')"
+                />
               </NFormItemGi>
-              <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.employeeRelation.entry.companyUuid')" path="companyUuid">
-                <NInput v-model:value="model.companyUuid" :placeholder="$t('page.hrm.employeeRelation.entry.form.companyUuid')" />
+              <NFormItemGi
+                span="24 s:12 m:8"
+                :label="$t('page.hrm.employeeRelation.entry.companyUuid')"
+                path="companyUuid"
+              >
+                <NInput
+                  v-model:value="model.companyUuid"
+                  :placeholder="$t('page.hrm.employeeRelation.entry.form.companyUuid')"
+                />
               </NFormItemGi>
               <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.employeeRelation.entry.hireDate')" path="hireDate">
                 <NDatePicker
@@ -287,7 +327,11 @@ watch(visible, () => {
                   class="w-full"
                 />
               </NFormItemGi>
-              <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.employeeRelation.entry.probationMonths')" path="probationMonths">
+              <NFormItemGi
+                span="24 s:12 m:8"
+                :label="$t('page.hrm.employeeRelation.entry.probationMonths')"
+                path="probationMonths"
+              >
                 <NInputNumber v-model:value="model.probationMonths" :min="0" class="w-full" />
               </NFormItemGi>
               <NFormItemGi
@@ -303,7 +347,11 @@ watch(visible, () => {
                 />
               </NFormItemGi>
               <NFormItemGi span="24" :label="$t('page.hrm.employeeRelation.entry.remark')" path="remark">
-                <NTextarea v-model:value="model.remark" :rows="2" :placeholder="$t('page.hrm.employeeRelation.entry.form.remark')" />
+                <NTextarea
+                  v-model:value="model.remark"
+                  :rows="2"
+                  :placeholder="$t('page.hrm.employeeRelation.entry.form.remark')"
+                />
               </NFormItemGi>
             </NGrid>
           </NForm>
@@ -324,17 +372,35 @@ watch(visible, () => {
           <NCard v-for="(work, idx) in model.works" :key="idx" size="small" class="mb-8px">
             <NGrid responsive="screen" item-responsive>
               <NGi span="24 s:12 m:6">
-                <NFormItem :label="$t('page.hrm.employeeRelation.entry.workCompany')" label-placement="left" :label-width="80">
-                  <NInput v-model:value="work.company" :placeholder="$t('page.hrm.employeeRelation.entry.form.workCompany')" />
+                <NFormItem
+                  :label="$t('page.hrm.employeeRelation.entry.workCompany')"
+                  label-placement="left"
+                  :label-width="80"
+                >
+                  <NInput
+                    v-model:value="work.company"
+                    :placeholder="$t('page.hrm.employeeRelation.entry.form.workCompany')"
+                  />
                 </NFormItem>
               </NGi>
               <NGi span="24 s:12 m:5">
-                <NFormItem :label="$t('page.hrm.employeeRelation.entry.workPosition')" label-placement="left" :label-width="80">
-                  <NInput v-model:value="work.position" :placeholder="$t('page.hrm.employeeRelation.entry.form.workPosition')" />
+                <NFormItem
+                  :label="$t('page.hrm.employeeRelation.entry.workPosition')"
+                  label-placement="left"
+                  :label-width="80"
+                >
+                  <NInput
+                    v-model:value="work.position"
+                    :placeholder="$t('page.hrm.employeeRelation.entry.form.workPosition')"
+                  />
                 </NFormItem>
               </NGi>
               <NGi span="24 s:12 m:5">
-                <NFormItem :label="$t('page.hrm.employeeRelation.entry.startDate')" label-placement="left" :label-width="80">
+                <NFormItem
+                  :label="$t('page.hrm.employeeRelation.entry.startDate')"
+                  label-placement="left"
+                  :label-width="80"
+                >
                   <NDatePicker
                     v-model:formatted-value="work.startDate"
                     type="date"
@@ -344,7 +410,11 @@ watch(visible, () => {
                 </NFormItem>
               </NGi>
               <NGi span="24 s:12 m:5">
-                <NFormItem :label="$t('page.hrm.employeeRelation.entry.endDate')" label-placement="left" :label-width="80">
+                <NFormItem
+                  :label="$t('page.hrm.employeeRelation.entry.endDate')"
+                  label-placement="left"
+                  :label-width="80"
+                >
                   <NDatePicker
                     v-model:formatted-value="work.endDate"
                     type="date"
@@ -377,22 +447,41 @@ watch(visible, () => {
           <NCard v-for="(edu, idx) in model.educations" :key="idx" size="small" class="mb-8px">
             <NGrid responsive="screen" item-responsive>
               <NGi span="24 s:12 m:6">
-                <NFormItem :label="$t('page.hrm.employeeRelation.entry.school')" label-placement="left" :label-width="80">
+                <NFormItem
+                  :label="$t('page.hrm.employeeRelation.entry.school')"
+                  label-placement="left"
+                  :label-width="80"
+                >
                   <NInput v-model:value="edu.school" :placeholder="$t('page.hrm.employeeRelation.entry.form.school')" />
                 </NFormItem>
               </NGi>
               <NGi span="24 s:12 m:5">
-                <NFormItem :label="$t('page.hrm.employeeRelation.entry.major')" label-placement="left" :label-width="80">
+                <NFormItem
+                  :label="$t('page.hrm.employeeRelation.entry.major')"
+                  label-placement="left"
+                  :label-width="80"
+                >
                   <NInput v-model:value="edu.major" :placeholder="$t('page.hrm.employeeRelation.entry.form.major')" />
                 </NFormItem>
               </NGi>
               <NGi span="24 s:12 m:4">
-                <NFormItem :label="$t('page.hrm.employeeRelation.entry.education')" label-placement="left" :label-width="80">
-                  <NInput v-model:value="edu.education" :placeholder="$t('page.hrm.employeeRelation.entry.form.education')" />
+                <NFormItem
+                  :label="$t('page.hrm.employeeRelation.entry.education')"
+                  label-placement="left"
+                  :label-width="80"
+                >
+                  <NInput
+                    v-model:value="edu.education"
+                    :placeholder="$t('page.hrm.employeeRelation.entry.form.education')"
+                  />
                 </NFormItem>
               </NGi>
               <NGi span="24 s:12 m:4">
-                <NFormItem :label="$t('page.hrm.employeeRelation.entry.startDate')" label-placement="left" :label-width="80">
+                <NFormItem
+                  :label="$t('page.hrm.employeeRelation.entry.startDate')"
+                  label-placement="left"
+                  :label-width="80"
+                >
                   <NDatePicker
                     v-model:formatted-value="edu.startDate"
                     type="date"
@@ -402,7 +491,11 @@ watch(visible, () => {
                 </NFormItem>
               </NGi>
               <NGi span="24 s:12 m:4">
-                <NFormItem :label="$t('page.hrm.employeeRelation.entry.endDate')" label-placement="left" :label-width="80">
+                <NFormItem
+                  :label="$t('page.hrm.employeeRelation.entry.endDate')"
+                  label-placement="left"
+                  :label-width="80"
+                >
                   <NDatePicker
                     v-model:formatted-value="edu.endDate"
                     type="date"
@@ -435,23 +528,51 @@ watch(visible, () => {
           <NCard v-for="(family, idx) in model.families" :key="idx" size="small" class="mb-8px">
             <NGrid responsive="screen" item-responsive>
               <NGi span="24 s:12 m:5">
-                <NFormItem :label="$t('page.hrm.employeeRelation.entry.familyName')" label-placement="left" :label-width="80">
-                  <NInput v-model:value="family.name" :placeholder="$t('page.hrm.employeeRelation.entry.form.familyName')" />
+                <NFormItem
+                  :label="$t('page.hrm.employeeRelation.entry.familyName')"
+                  label-placement="left"
+                  :label-width="80"
+                >
+                  <NInput
+                    v-model:value="family.name"
+                    :placeholder="$t('page.hrm.employeeRelation.entry.form.familyName')"
+                  />
                 </NFormItem>
               </NGi>
               <NGi span="24 s:12 m:5">
-                <NFormItem :label="$t('page.hrm.employeeRelation.entry.relation')" label-placement="left" :label-width="80">
-                  <NInput v-model:value="family.relation" :placeholder="$t('page.hrm.employeeRelation.entry.form.relation')" />
+                <NFormItem
+                  :label="$t('page.hrm.employeeRelation.entry.relation')"
+                  label-placement="left"
+                  :label-width="80"
+                >
+                  <NInput
+                    v-model:value="family.relation"
+                    :placeholder="$t('page.hrm.employeeRelation.entry.form.relation')"
+                  />
                 </NFormItem>
               </NGi>
               <NGi span="24 s:12 m:6">
-                <NFormItem :label="$t('page.hrm.employeeRelation.entry.familyPhone')" label-placement="left" :label-width="80">
-                  <NInput v-model:value="family.phone" :placeholder="$t('page.hrm.employeeRelation.entry.form.familyPhone')" />
+                <NFormItem
+                  :label="$t('page.hrm.employeeRelation.entry.familyPhone')"
+                  label-placement="left"
+                  :label-width="80"
+                >
+                  <NInput
+                    v-model:value="family.phone"
+                    :placeholder="$t('page.hrm.employeeRelation.entry.form.familyPhone')"
+                  />
                 </NFormItem>
               </NGi>
               <NGi span="24 s:12 m:6">
-                <NFormItem :label="$t('page.hrm.employeeRelation.entry.workUnit')" label-placement="left" :label-width="80">
-                  <NInput v-model:value="family.workUnit" :placeholder="$t('page.hrm.employeeRelation.entry.form.workUnit')" />
+                <NFormItem
+                  :label="$t('page.hrm.employeeRelation.entry.workUnit')"
+                  label-placement="left"
+                  :label-width="80"
+                >
+                  <NInput
+                    v-model:value="family.workUnit"
+                    :placeholder="$t('page.hrm.employeeRelation.entry.form.workUnit')"
+                  />
                 </NFormItem>
               </NGi>
               <NGi span="24 s:12 m:2">

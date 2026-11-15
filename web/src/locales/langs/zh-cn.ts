@@ -183,6 +183,7 @@ const local: App.I18n.Schema = {
     'hrm_attendance_setting_attendance-config': '组织默认规则',
     hrm_attendance_setting_shift: '班次管理',
     'hrm_attendance_setting_leave-type': '假期类型',
+    'hrm_attendance_setting_overtime-rule': '加班规则',
     'hrm_employee-relation': '人事管理',
     'hrm_employee-relation_transfer-list': '人事调动',
     'hrm_employee-relation_entry-list': '员工入职',
@@ -198,6 +199,10 @@ const local: App.I18n.Schema = {
     hrm_recruitment: '招聘管理',
     'hrm_recruitment_requirement-list': '招聘需求',
     'hrm_recruitment_candidate-list': '候选人中心',
+    hrm_salary: '薪酬管理',
+    hrm_salary_setting: '薪酬设置',
+    hrm_salary_setting_subject: '薪酬主体',
+    hrm_salary_setting_item: '薪资项目',
     hrm_training_plan: '培训计划',
     hrm_training_session: '培训班次',
     'hrm_training_cert-template': '证书模板',
@@ -261,6 +266,12 @@ const local: App.I18n.Schema = {
         save: '保存组织规则',
         delete: '删除组织规则'
       },
+      overtimerule: {
+        add: '新增加班规则',
+        edit: '编辑加班规则',
+        delete: '删除加班规则',
+        togglestatus: '加班规则启停'
+      },
       transfer: {
         add: '新增调动',
         edit: '编辑调动',
@@ -320,6 +331,16 @@ const local: App.I18n.Schema = {
           revoke: '撤销证书',
           uploadFile: '上传证书扫描件'
         }
+      },
+      salary_subject: {
+        add: '新增薪酬主体',
+        edit: '编辑薪酬主体',
+        delete: '删除薪酬主体'
+      },
+      salary_item: {
+        add: '新增薪资项目',
+        edit: '编辑薪资项目',
+        delete: '删除薪资项目'
       },
       employee: {
         add: '新增员工',
@@ -1126,6 +1147,43 @@ const local: App.I18n.Schema = {
             status: '请选择状态',
             remark: '请输入备注'
           }
+        },
+        overtimeRule: {
+          title: '加班规则',
+          ruleName: '规则名称',
+          workday: '工作日',
+          restday: '休息日',
+          holiday: '法定节假日',
+          dayPolicy: '当天策略',
+          approvalRequired: '审批方式',
+          punchRequired: '打卡要求',
+          compMultiplier: '调休倍数',
+          multiplierTip: '调休×N = 加班 1 小时折算 N 小时调休',
+          multiplierValue: '调休×{n}',
+          needApproval: '需审批',
+          noApproval: '免审批',
+          needPunch: '需打卡',
+          noPunch: '免打卡',
+          minUnitMinutes: '最小单位',
+          minUnitHalfHour: '30分钟',
+          minUnitHour: '1小时',
+          monthlyLimitHours: '月上限',
+          monthlyLimitTip: '0 表示不限制',
+          noLimit: '不限制',
+          usedGroups: '使用的考勤组',
+          boundGroupCount: '{n} 个考勤组',
+          globalFallback: '全部考勤组',
+          addRule: '新增加班规则',
+          editRule: '编辑加班规则',
+          enable: '启用',
+          disable: '停用',
+          status: '状态',
+          remark: '备注',
+          form: {
+            ruleName: '请输入规则名称',
+            status: '请选择状态',
+            remark: '请输入备注'
+          }
         }
       },
       employeeRelation: {
@@ -1292,6 +1350,70 @@ const local: App.I18n.Schema = {
           }
         }
       },
+      salary: {
+        subject: {
+          title: '薪酬主体',
+          subjectName: '主体名称',
+          orgName: '关联公司',
+          payAccount: '发薪账户',
+          payBank: '发薪银行',
+          status: '状态',
+          remark: '备注',
+          addSubject: '新增薪酬主体',
+          editSubject: '编辑薪酬主体',
+          form: {
+            subjectName: '请输入主体名称',
+            orgName: '请选择关联公司',
+            payAccount: '请输入发薪账户',
+            payBank: '请输入发薪银行',
+            status: '请选择状态',
+            remark: '请输入备注'
+          }
+        },
+        item: {
+          title: '薪资项目',
+          itemName: '项目名称',
+          itemCode: '项目编码',
+          itemType: {
+            title: '项目类型',
+            fixed: '固定项',
+            data: '取数项',
+            formula: '公式项'
+          },
+          itemClass: {
+            title: '项目分类',
+            earning: '应发',
+            deduction: '应扣',
+            cost: '成本'
+          },
+          valueMode: {
+            title: '取值方式',
+            manual: '手工维护',
+            system: '系统取数',
+            formula: '公式计算'
+          },
+          calcOrder: '计算顺序',
+          orderNum: '显示顺序',
+          formula: '公式表达式',
+          isPreset: '预置',
+          presetYes: '预置',
+          presetNo: '自定义',
+          status: '状态',
+          remark: '备注',
+          addItem: '新增薪资项目',
+          editItem: '编辑薪资项目',
+          form: {
+            itemName: '请输入项目名称',
+            itemCode: '请输入项目编码（如 OTHER_BONUS）',
+            itemType: '请选择项目类型',
+            itemClass: '请选择项目分类',
+            valueMode: '请选择取值方式',
+            formula: '请输入公式表达式',
+            status: '请选择状态',
+            remark: '请输入备注'
+          }
+        }
+      },
       training: {
         mySessionTitle: '我的班次',
         myCertTitle: '我的培训证书',
@@ -1427,7 +1549,8 @@ const local: App.I18n.Schema = {
           batchIssue: '批量发证',
           batchIssueDone: '本次发证',
           batchIssueSkipped: '跳过（已有证书）',
-          batchIssueTip: '按所选班次的结业学员批量生成证书（证书号=模板前缀-年-流水）；已持有该模板有效证书的学员自动跳过，可重复调用（幂等）。',
+          batchIssueTip:
+            '按所选班次的结业学员批量生成证书（证书号=模板前缀-年-流水）；已持有该模板有效证书的学员自动跳过，可重复调用（幂等）。',
           importExternal: '导入外部证书',
           issue: '发放',
           revoke: '撤销',

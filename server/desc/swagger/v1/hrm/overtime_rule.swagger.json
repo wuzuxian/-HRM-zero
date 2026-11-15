@@ -1,0 +1,670 @@
+{
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/hrm/addOvertimeRule": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:overtimerule:add",
+        "operationId": "v1/Hrm/OvertimeruleAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "groupUuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "holiday": {
+                  "properties": {
+                    "approvalRequired": {
+                      "type": "integer"
+                    },
+                    "compMultiplier": {
+                      "type": "number"
+                    },
+                    "punchRequired": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "approvalRequired",
+                    "punchRequired",
+                    "compMultiplier"
+                  ],
+                  "type": "object"
+                },
+                "minUnitMinutes": {
+                  "type": "integer"
+                },
+                "monthlyLimitHours": {
+                  "type": "number"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "restday": {
+                  "properties": {
+                    "approvalRequired": {
+                      "type": "integer"
+                    },
+                    "compMultiplier": {
+                      "type": "number"
+                    },
+                    "punchRequired": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "approvalRequired",
+                    "punchRequired",
+                    "compMultiplier"
+                  ],
+                  "type": "object"
+                },
+                "ruleName": {
+                  "type": "string"
+                },
+                "status": {
+                  "default": "1",
+                  "example": "1",
+                  "type": "string"
+                },
+                "workday": {
+                  "properties": {
+                    "approvalRequired": {
+                      "type": "integer"
+                    },
+                    "compMultiplier": {
+                      "type": "number"
+                    },
+                    "punchRequired": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "approvalRequired",
+                    "punchRequired",
+                    "compMultiplier"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "ruleName",
+                "workday",
+                "restday",
+                "holiday",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/overtimerule"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteOvertimeRule": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:overtimerule:delete",
+        "operationId": "v1/Hrm/OvertimeruleDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/overtimerule"
+        ]
+      }
+    },
+    "/api/v1/hrm/editOvertimeRule": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:overtimerule:edit",
+        "operationId": "v1/Hrm/OvertimeruleEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "groupUuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "holiday": {
+                  "properties": {
+                    "approvalRequired": {
+                      "type": "integer"
+                    },
+                    "compMultiplier": {
+                      "type": "number"
+                    },
+                    "punchRequired": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "approvalRequired",
+                    "punchRequired",
+                    "compMultiplier"
+                  ],
+                  "type": "object"
+                },
+                "minUnitMinutes": {
+                  "type": "integer"
+                },
+                "monthlyLimitHours": {
+                  "type": "number"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "restday": {
+                  "properties": {
+                    "approvalRequired": {
+                      "type": "integer"
+                    },
+                    "compMultiplier": {
+                      "type": "number"
+                    },
+                    "punchRequired": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "approvalRequired",
+                    "punchRequired",
+                    "compMultiplier"
+                  ],
+                  "type": "object"
+                },
+                "ruleName": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                },
+                "workday": {
+                  "properties": {
+                    "approvalRequired": {
+                      "type": "integer"
+                    },
+                    "compMultiplier": {
+                      "type": "number"
+                    },
+                    "punchRequired": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "approvalRequired",
+                    "punchRequired",
+                    "compMultiplier"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "uuid",
+                "ruleName",
+                "workday",
+                "restday",
+                "holiday",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/overtimerule"
+        ]
+      }
+    },
+    "/api/v1/hrm/getOvertimeRuleList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:overtimerule:list",
+        "operationId": "v1/Hrm/OvertimeruleList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "ruleName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "groupUuids": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "holiday": {
+                        "properties": {
+                          "approvalRequired": {
+                            "type": "integer"
+                          },
+                          "compMultiplier": {
+                            "type": "number"
+                          },
+                          "punchRequired": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "approvalRequired",
+                          "punchRequired",
+                          "compMultiplier"
+                        ],
+                        "type": "object"
+                      },
+                      "minUnitMinutes": {
+                        "type": "integer"
+                      },
+                      "monthlyLimitHours": {
+                        "type": "number"
+                      },
+                      "orgUuid": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "restday": {
+                        "properties": {
+                          "approvalRequired": {
+                            "type": "integer"
+                          },
+                          "compMultiplier": {
+                            "type": "number"
+                          },
+                          "punchRequired": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "approvalRequired",
+                          "punchRequired",
+                          "compMultiplier"
+                        ],
+                        "type": "object"
+                      },
+                      "ruleName": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "workday": {
+                        "properties": {
+                          "approvalRequired": {
+                            "type": "integer"
+                          },
+                          "compMultiplier": {
+                            "type": "number"
+                          },
+                          "punchRequired": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "approvalRequired",
+                          "punchRequired",
+                          "compMultiplier"
+                        ],
+                        "type": "object"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "ruleName",
+                      "workday",
+                      "restday",
+                      "holiday",
+                      "minUnitMinutes",
+                      "monthlyLimitHours",
+                      "groupUuids",
+                      "orgUuid",
+                      "status",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/overtimerule"
+        ]
+      }
+    },
+    "/api/v1/hrm/resolveOvertimeRule": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:overtimerule:resolve",
+        "operationId": "v1/Hrm/OvertimeruleResolve",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "dayType": {
+                  "type": "string"
+                },
+                "groupUuid": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "dayType"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "approvalRequired": {
+                  "type": "boolean"
+                },
+                "compMultiplier": {
+                  "type": "number"
+                },
+                "dayType": {
+                  "type": "string"
+                },
+                "found": {
+                  "type": "boolean"
+                },
+                "minUnitMinutes": {
+                  "type": "integer"
+                },
+                "monthlyLimitHours": {
+                  "type": "number"
+                },
+                "punchRequired": {
+                  "type": "boolean"
+                },
+                "source": {
+                  "type": "string"
+                },
+                "sourceName": {
+                  "type": "string"
+                },
+                "sourceUuid": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Resolve",
+        "tags": [
+          "v1/hrm/overtimerule"
+        ]
+      }
+    },
+    "/api/v1/hrm/toggleOvertimeRuleStatus": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:overtimerule:toggleStatus",
+        "operationId": "v1/Hrm/OvertimeruleToggleStatus",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "ToggleStatus",
+        "tags": [
+          "v1/hrm/overtimerule"
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKey": {
+      "description": "Enter Authorization",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0"
+}
