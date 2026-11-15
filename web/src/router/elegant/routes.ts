@@ -172,6 +172,15 @@ export const generatedRoutes: GeneratedRoute[] = [
             }
           },
           {
+            name: 'hrm_employee-relation_entry-list',
+            path: '/hrm/employee-relation/entry-list',
+            component: 'view.hrm_employee-relation_entry-list',
+            meta: {
+              title: 'hrm_employee-relation_entry-list',
+              i18nKey: 'route.hrm_employee-relation_entry-list'
+            }
+          },
+          {
             name: 'hrm_employee-relation_transfer-list',
             path: '/hrm/employee-relation/transfer-list',
             component: 'view.hrm_employee-relation_transfer-list',

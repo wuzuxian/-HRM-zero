@@ -1,0 +1,210 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/entry"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 员工入职单（HR201，GLOSSARY「单据」）：基本信息节（照片/民族/政治面貌/婚姻状况/文化程度/
+// 籍贯/现居住地/户口所在地/紧急联系人/工资开户行/工资卡账户/职位/职务/试用期(月)/所属部门/
+// 所属公司/入职日期/预计转正日期/备注）+ 工作经历/教育经历/家庭成员三子表 + 附件说明。
+// 生命周期（提交/审批/撤销/审批记录）走共享单据底座 v1/hrm/bill，类型码 201。
+// 审批通过后 OnApproved 事务内自动建员工档案：工号自动生成（复用 HRM-03 NextEmployeeNo）、
+// 预计转正=入职日期+试用期月、三子表落 hrm_employee 档案、回写 employee_uuid（幂等）。
+// 列表默认按「我的单据」过滤（创建人=当前用户），超级管理员可看全部（spec 用户故事 4）。
+// HrmEntryBillWork 工作经历子表行（快照）
+type HrmEntryBillWork {
+	Uuid      string `json:"uuid,optional"`
+	Company   string `json:"company"`
+	Position  string `json:"position"`
+	StartDate string `json:"startDate"`
+	EndDate   string `json:"endDate"`
+	Remark    string `json:"remark,optional"`
+}
+
+// HrmEntryBillEducation 教育经历子表行（快照）
+type HrmEntryBillEducation {
+	Uuid      string `json:"uuid,optional"`
+	School    string `json:"school"`
+	Major     string `json:"major"`
+	Education string `json:"education"`
+	StartDate string `json:"startDate"`
+	EndDate   string `json:"endDate"`
+	Remark    string `json:"remark,optional"`
+}
+
+// HrmEntryBillFamily 家庭成员子表行（快照）
+type HrmEntryBillFamily {
+	Uuid     string `json:"uuid,optional"`
+	Name     string `json:"name"`
+	Relation string `json:"relation"`
+	Phone    string `json:"phone"`
+	WorkUnit string `json:"workUnit"`
+	Remark   string `json:"remark,optional"`
+}
+
+// HrmEntryBill 入职单主表行（列表不带子表, 详情带）
+type HrmEntryBill {
+	Uuid             string                  `json:"uuid"`
+	BillNo           string                  `json:"billNo"` // 单据编号 HR201-...
+	Status           string                  `json:"status"` // 单据状态 unsubmitted/approving/approved/rejected/revoked
+	Name             string                  `json:"name"` // 姓名
+	Phone            string                  `json:"phone"` // 手机号
+	Email            string                  `json:"email"` // 邮箱
+	Gender           string                  `json:"gender"` // 性别 1=男 2=女
+	Birthday         string                  `json:"birthday"` // 出生日期 YYYY-MM-DD
+	Nation           string                  `json:"nation"` // 民族
+	PoliticalStatus  string                  `json:"politicalStatus"` // 政治面貌
+	MaritalStatus    string                  `json:"maritalStatus"` // 婚姻状况 1=未婚 2=已婚 3=离异 4=丧偶
+	CultureLevel     string                  `json:"cultureLevel"` // 文化程度
+	NativePlace      string                  `json:"nativePlace"` // 籍贯
+	Address          string                  `json:"address"` // 现居住地
+	HouseholdAddress string                  `json:"householdAddress"` // 户口所在地
+	EmergencyContact string                  `json:"emergencyContact"` // 紧急联系人
+	EmergencyPhone   string                  `json:"emergencyPhone"` // 紧急联系人电话
+	BankName         string                  `json:"bankName"` // 工资开户行
+	BankAccount      string                  `json:"bankAccount"` // 工资卡账户
+	Avatar           string                  `json:"avatar"` // 员工照片
+	Position         string                  `json:"position"` // 职位
+	Post             string                  `json:"post"` // 职务
+	ProbationMonths  int64                   `json:"probationMonths"` // 试用期(月)
+	OrgUuid          string                  `json:"orgUuid"` // 所属部门（组织 uuid）
+	CompanyUuid      string                  `json:"companyUuid"` // 所属公司（组织 uuid）
+	HireDate         string                  `json:"hireDate"` // 入职日期 YYYY-MM-DD
+	ExpectFormalDate string                  `json:"expectFormalDate"` // 预计转正日期 YYYY-MM-DD
+	AttachmentDesc   string                  `json:"attachmentDesc"` // 附件说明
+	Remark           string                  `json:"remark"` // 备注
+	EmployeeUuid     string                  `json:"employeeUuid"` // 审批通过后创建的员工档案 uuid（空=未建档）
+	CreatorUuid      string                  `json:"creatorUuid"` // 申请人 uuid
+	CreatorName      string                  `json:"creatorName"` // 申请人姓名
+	CreateTime       string                  `json:"createTime"`
+	UpdateTime       string                  `json:"updateTime"`
+	Works            []HrmEntryBillWork      `json:"works,optional"`
+	Educations       []HrmEntryBillEducation `json:"educations,optional"`
+	Families         []HrmEntryBillFamily    `json:"families,optional"`
+}
+
+type ListRequest {
+	PageRequest
+	BillNo string `form:"billNo,optional"` // 单据编号（模糊）
+	Status string `form:"status,optional"` // 单据状态
+	Name   string `form:"name,optional"` // 姓名（模糊）
+	Mine   int64  `form:"mine,optional"` // 1=强制只看我的单据（默认行为即我的单据，管理员可传 0 看全部由后端角色判定兜底）
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmEntryBill `json:"records"`
+}
+
+type DetailRequest {
+	Uuid string `form:"uuid"`
+}
+
+type DetailResponse {
+	Entry HrmEntryBill `json:"entry"`
+}
+
+type AddRequest {
+	Name             string                  `json:"name"`
+	Phone            string                  `json:"phone,optional"`
+	Email            string                  `json:"email,optional"`
+	Gender           string                  `json:"gender,optional"`
+	Birthday         string                  `json:"birthday,optional"`
+	Nation           string                  `json:"nation,optional"`
+	PoliticalStatus  string                  `json:"politicalStatus,optional"`
+	MaritalStatus    string                  `json:"maritalStatus,optional"`
+	CultureLevel     string                  `json:"cultureLevel,optional"`
+	NativePlace      string                  `json:"nativePlace,optional"`
+	Address          string                  `json:"address,optional"`
+	HouseholdAddress string                  `json:"householdAddress,optional"`
+	EmergencyContact string                  `json:"emergencyContact,optional"`
+	EmergencyPhone   string                  `json:"emergencyPhone,optional"`
+	BankName         string                  `json:"bankName,optional"`
+	BankAccount      string                  `json:"bankAccount,optional"`
+	Avatar           string                  `json:"avatar,optional"`
+	Position         string                  `json:"position,optional"`
+	Post             string                  `json:"post,optional"`
+	ProbationMonths  int64                   `json:"probationMonths,optional"` // 试用期(月)，预计转正缺省时=入职日期+试用期月
+	OrgUuid          string                  `json:"orgUuid,optional"`
+	CompanyUuid      string                  `json:"companyUuid,optional"`
+	HireDate         string                  `json:"hireDate"` // YYYY-MM-DD
+	ExpectFormalDate string                  `json:"expectFormalDate,optional"` // YYYY-MM-DD，空=入职日期+试用期月
+	AttachmentDesc   string                  `json:"attachmentDesc,optional"`
+	Remark           string                  `json:"remark,optional"`
+	Works            []HrmEntryBillWork      `json:"works,optional"`
+	Educations       []HrmEntryBillEducation `json:"educations,optional"`
+	Families         []HrmEntryBillFamily    `json:"families,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid             string                  `json:"uuid"`
+	Name             string                  `json:"name"`
+	Phone            string                  `json:"phone,optional"`
+	Email            string                  `json:"email,optional"`
+	Gender           string                  `json:"gender,optional"`
+	Birthday         string                  `json:"birthday,optional"`
+	Nation           string                  `json:"nation,optional"`
+	PoliticalStatus  string                  `json:"politicalStatus,optional"`
+	MaritalStatus    string                  `json:"maritalStatus,optional"`
+	CultureLevel     string                  `json:"cultureLevel,optional"`
+	NativePlace      string                  `json:"nativePlace,optional"`
+	Address          string                  `json:"address,optional"`
+	HouseholdAddress string                  `json:"householdAddress,optional"`
+	EmergencyContact string                  `json:"emergencyContact,optional"`
+	EmergencyPhone   string                  `json:"emergencyPhone,optional"`
+	BankName         string                  `json:"bankName,optional"`
+	BankAccount      string                  `json:"bankAccount,optional"`
+	Avatar           string                  `json:"avatar,optional"`
+	Position         string                  `json:"position,optional"`
+	Post             string                  `json:"post,optional"`
+	ProbationMonths  int64                   `json:"probationMonths,optional"`
+	OrgUuid          string                  `json:"orgUuid,optional"`
+	CompanyUuid      string                  `json:"companyUuid,optional"`
+	HireDate         string                  `json:"hireDate"`
+	ExpectFormalDate string                  `json:"expectFormalDate,optional"`
+	AttachmentDesc   string                  `json:"attachmentDesc,optional"`
+	Remark           string                  `json:"remark,optional"`
+	Works            []HrmEntryBillWork      `json:"works,optional"`
+	Educations       []HrmEntryBillEducation `json:"educations,optional"`
+	Families         []HrmEntryBillFamily    `json:"families,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/entry
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getEntryList (ListRequest) returns (ListResponse)
+
+	@handler Detail
+	get /hrm/getEntryDetail (DetailRequest) returns (DetailResponse)
+
+	@handler Add
+	post /hrm/addEntry (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editEntry (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deleteEntry (DeleteRequest) returns (DeleteResponse)
+}
+

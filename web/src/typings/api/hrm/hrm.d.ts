@@ -1199,7 +1199,8 @@ declare namespace Api {
 
     /** training certificate (admin) search params */
     type TrainingCertificateSearchParams = CommonType.RecordNullable<
-      Pick<TrainingCertificate, 'certNo' | 'certName' | 'certType' | 'status' | 'source' | 'sessionUuid'> & Common.CommonSearchParams
+      Pick<TrainingCertificate, 'certNo' | 'certName' | 'certType' | 'status' | 'source' | 'sessionUuid'> &
+        Common.CommonSearchParams
     >;
 
     /** training certificate (admin) paginated list */
@@ -1536,6 +1537,169 @@ declare namespace Api {
     type ImportCandidateResponse = {
       successCount: number;
     };
+
+    /** 工作经历子表行 (入职单快照, demo-inventory §3.1) */
+    type EntryBillWork = {
+      uuid?: string;
+      company: string;
+      position: string;
+      startDate: string;
+      endDate: string;
+      remark?: string;
+    };
+
+    /** 教育经历子表行 (入职单快照) */
+    type EntryBillEducation = {
+      uuid?: string;
+      school: string;
+      major: string;
+      education: string;
+      startDate: string;
+      endDate: string;
+      remark?: string;
+    };
+
+    /** 家庭成员子表行 (入职单快照) */
+    type EntryBillFamily = {
+      uuid?: string;
+      name: string;
+      relation: string;
+      phone: string;
+      workUnit: string;
+      remark?: string;
+    };
+
+    /** 员工入职单 (HR201, demo-inventory §3.1) — 审批通过自动建员工档案 */
+    type HrmEntryBill = {
+      /** record uuid */
+      uuid: string;
+      /** 单据编号 HR201-... */
+      billNo: string;
+      /** 单据状态 */
+      status: BillStatus | null;
+      /** 姓名 */
+      name: string;
+      /** 手机号 */
+      phone: string;
+      /** 邮箱 */
+      email: string;
+      /** 性别 1=男 2=女 */
+      gender: string;
+      /** 出生日期 YYYY-MM-DD */
+      birthday: string;
+      /** 民族 */
+      nation: string;
+      /** 政治面貌 */
+      politicalStatus: string;
+      /** 婚姻状况 1=未婚 2=已婚 3=离异 4=丧偶 */
+      maritalStatus: string;
+      /** 文化程度 */
+      cultureLevel: string;
+      /** 籍贯 */
+      nativePlace: string;
+      /** 现居住地 */
+      address: string;
+      /** 户口所在地 */
+      householdAddress: string;
+      /** 紧急联系人 */
+      emergencyContact: string;
+      /** 紧急联系人电话 */
+      emergencyPhone: string;
+      /** 工资开户行 */
+      bankName: string;
+      /** 工资卡账户 */
+      bankAccount: string;
+      /** 员工照片 */
+      avatar: string;
+      /** 职位 */
+      position: string;
+      /** 职务 */
+      post: string;
+      /** 试用期(月) */
+      probationMonths: number;
+      /** 所属部门 (组织 uuid) */
+      orgUuid: string;
+      /** 所属公司 (组织 uuid) */
+      companyUuid: string;
+      /** 入职日期 YYYY-MM-DD */
+      hireDate: string;
+      /** 预计转正日期 YYYY-MM-DD */
+      expectFormalDate: string;
+      /** 附件说明 */
+      attachmentDesc: string;
+      /** 备注 */
+      remark: string;
+      /** 审批通过后创建的员工档案 uuid (空=未建档) */
+      employeeUuid: string;
+      /** 申请人 uuid */
+      creatorUuid: string;
+      /** 申请人姓名 */
+      creatorName: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+      /** 工作经历快照 (详情返回) */
+      works?: EntryBillWork[];
+      /** 教育经历快照 (详情返回) */
+      educations?: EntryBillEducation[];
+      /** 家庭成员快照 (详情返回) */
+      families?: EntryBillFamily[];
+    };
+
+    /** entry search params (demo-inventory §3.1: 单据编号/单据状态/姓名) */
+    type EntrySearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.HrmEntryBill, 'billNo' | 'status' | 'name'> & Common.CommonSearchParams
+    >;
+
+    /** entry paginated list */
+    type EntryList = Common.PaginatingQueryRecord<HrmEntryBill>;
+
+    /** add entry request (预计转正空=入职日期+试用期月, 后端计算) */
+    type AddEntryRequest = {
+      name: string;
+      phone: string;
+      email: string;
+      gender: string;
+      birthday: string;
+      nation: string;
+      politicalStatus: string;
+      maritalStatus: string;
+      cultureLevel: string;
+      nativePlace: string;
+      address: string;
+      householdAddress: string;
+      emergencyContact: string;
+      emergencyPhone: string;
+      bankName: string;
+      bankAccount: string;
+      avatar: string;
+      position: string;
+      post: string;
+      probationMonths: number;
+      orgUuid: string;
+      companyUuid: string;
+      /** YYYY-MM-DD */
+      hireDate: string;
+      /** YYYY-MM-DD, 空=入职日期+试用期月 */
+      expectFormalDate: string;
+      attachmentDesc: string;
+      remark: string;
+      works: EntryBillWork[];
+      educations: EntryBillEducation[];
+      families: EntryBillFamily[];
+    };
+
+    /** edit entry request (only in editable 单据状态) */
+    type EditEntryRequest = AddEntryRequest & {
+      uuid: string;
+    };
+
+    /** entry detail (带三子表快照) */
+    type EntryDetail = {
+      entry: HrmEntryBill;
+    };
+
     // ===== HRM-33 薪酬主体与薪资项目 =====
 
     /** 薪酬主体 status: 1 enabled 0 disabled */

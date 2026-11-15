@@ -155,10 +155,7 @@ watch(visible, () => {
     <NScrollbar class="h-480px pr-20px">
       <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" :label-width="110">
         <NFormItem :label="$t('page.hrm.attendance.overtimeRule.ruleName')" path="ruleName">
-          <NInput
-            v-model:value="model.ruleName"
-            :placeholder="$t('page.hrm.attendance.overtimeRule.form.ruleName')"
-          />
+          <NInput v-model:value="model.ruleName" :placeholder="$t('page.hrm.attendance.overtimeRule.form.ruleName')" />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.attendance.overtimeRule.dayPolicy')">
           <NTabs v-model:value="activeDay" type="segment" size="small" class="w-full">
@@ -178,12 +175,7 @@ watch(visible, () => {
           </NRadioGroup>
         </NFormItem>
         <NFormItem :label="$t('page.hrm.attendance.overtimeRule.compMultiplier')">
-          <NInputNumber
-            v-model:value="activePolicy.compMultiplier"
-            :min="0.25"
-            :step="0.5"
-            class="w-200px"
-          />
+          <NInputNumber v-model:value="activePolicy.compMultiplier" :min="0.25" :step="0.5" class="w-200px" />
           <span class="ml-8px text-12px text-gray-400">{{ $t('page.hrm.attendance.overtimeRule.multiplierTip') }}</span>
         </NFormItem>
         <NDivider />
@@ -192,7 +184,9 @@ watch(visible, () => {
         </NFormItem>
         <NFormItem :label="$t('page.hrm.attendance.overtimeRule.monthlyLimitHours')">
           <NInputNumber v-model:value="model.monthlyLimitHours" :min="0" :step="1" class="w-200px" />
-          <span class="ml-8px text-12px text-gray-400">{{ $t('page.hrm.attendance.overtimeRule.monthlyLimitTip') }}</span>
+          <span class="ml-8px text-12px text-gray-400">
+            {{ $t('page.hrm.attendance.overtimeRule.monthlyLimitTip') }}
+          </span>
         </NFormItem>
         <NFormItem :label="$t('page.hrm.attendance.overtimeRule.status')">
           <NRadioGroup v-model:value="model.status">

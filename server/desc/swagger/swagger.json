@@ -956,6 +956,235 @@
         ]
       }
     },
+    "/api/v1/hrm/addEntry": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:entry:add",
+        "operationId": "v1/Hrm/EntryAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "address": {
+                  "type": "string"
+                },
+                "attachmentDesc": {
+                  "type": "string"
+                },
+                "avatar": {
+                  "type": "string"
+                },
+                "bankAccount": {
+                  "type": "string"
+                },
+                "bankName": {
+                  "type": "string"
+                },
+                "birthday": {
+                  "type": "string"
+                },
+                "companyUuid": {
+                  "type": "string"
+                },
+                "cultureLevel": {
+                  "type": "string"
+                },
+                "educations": {
+                  "items": {
+                    "properties": {
+                      "education": {
+                        "type": "string"
+                      },
+                      "endDate": {
+                        "type": "string"
+                      },
+                      "major": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "school": {
+                        "type": "string"
+                      },
+                      "startDate": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "school",
+                      "major",
+                      "education",
+                      "startDate",
+                      "endDate"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "emergencyContact": {
+                  "type": "string"
+                },
+                "emergencyPhone": {
+                  "type": "string"
+                },
+                "expectFormalDate": {
+                  "description": "YYYY-MM-DD，空=入职日期+试用期月",
+                  "type": "string"
+                },
+                "families": {
+                  "items": {
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "phone": {
+                        "type": "string"
+                      },
+                      "relation": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "workUnit": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "relation",
+                      "phone",
+                      "workUnit"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "gender": {
+                  "type": "string"
+                },
+                "hireDate": {
+                  "description": "YYYY-MM-DD",
+                  "type": "string"
+                },
+                "householdAddress": {
+                  "type": "string"
+                },
+                "maritalStatus": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "nation": {
+                  "type": "string"
+                },
+                "nativePlace": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "politicalStatus": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string"
+                },
+                "post": {
+                  "type": "string"
+                },
+                "probationMonths": {
+                  "description": "试用期(月)，预计转正缺省时=入职日期+试用期月",
+                  "type": "integer"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "works": {
+                  "items": {
+                    "properties": {
+                      "company": {
+                        "type": "string"
+                      },
+                      "endDate": {
+                        "type": "string"
+                      },
+                      "position": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "startDate": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "company",
+                      "position",
+                      "startDate",
+                      "endDate"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "name",
+                "hireDate"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/entry"
+        ]
+      }
+    },
     "/api/v1/hrm/addLeaveType": {
       "post": {
         "consumes": [
@@ -2665,6 +2894,59 @@
         ]
       }
     },
+    "/api/v1/hrm/deleteEntry": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:entry:delete",
+        "operationId": "v1/Hrm/EntryDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/entry"
+        ]
+      }
+    },
     "/api/v1/hrm/deleteLeaveType": {
       "post": {
         "consumes": [
@@ -4039,6 +4321,236 @@
         "summary": "Edit",
         "tags": [
           "v1/hrm/employee"
+        ]
+      }
+    },
+    "/api/v1/hrm/editEntry": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:entry:edit",
+        "operationId": "v1/Hrm/EntryEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "address": {
+                  "type": "string"
+                },
+                "attachmentDesc": {
+                  "type": "string"
+                },
+                "avatar": {
+                  "type": "string"
+                },
+                "bankAccount": {
+                  "type": "string"
+                },
+                "bankName": {
+                  "type": "string"
+                },
+                "birthday": {
+                  "type": "string"
+                },
+                "companyUuid": {
+                  "type": "string"
+                },
+                "cultureLevel": {
+                  "type": "string"
+                },
+                "educations": {
+                  "items": {
+                    "properties": {
+                      "education": {
+                        "type": "string"
+                      },
+                      "endDate": {
+                        "type": "string"
+                      },
+                      "major": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "school": {
+                        "type": "string"
+                      },
+                      "startDate": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "school",
+                      "major",
+                      "education",
+                      "startDate",
+                      "endDate"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "emergencyContact": {
+                  "type": "string"
+                },
+                "emergencyPhone": {
+                  "type": "string"
+                },
+                "expectFormalDate": {
+                  "type": "string"
+                },
+                "families": {
+                  "items": {
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "phone": {
+                        "type": "string"
+                      },
+                      "relation": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "workUnit": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "relation",
+                      "phone",
+                      "workUnit"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "gender": {
+                  "type": "string"
+                },
+                "hireDate": {
+                  "type": "string"
+                },
+                "householdAddress": {
+                  "type": "string"
+                },
+                "maritalStatus": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "nation": {
+                  "type": "string"
+                },
+                "nativePlace": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "politicalStatus": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string"
+                },
+                "post": {
+                  "type": "string"
+                },
+                "probationMonths": {
+                  "type": "integer"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                },
+                "works": {
+                  "items": {
+                    "properties": {
+                      "company": {
+                        "type": "string"
+                      },
+                      "endDate": {
+                        "type": "string"
+                      },
+                      "position": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "startDate": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "company",
+                      "position",
+                      "startDate",
+                      "endDate"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuid",
+                "name",
+                "hireDate"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/entry"
         ]
       }
     },
@@ -7348,6 +7860,680 @@
         "summary": "List",
         "tags": [
           "v1/hrm/employee"
+        ]
+      }
+    },
+    "/api/v1/hrm/getEntryDetail": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:entry:detail",
+        "operationId": "v1/Hrm/EntryDetail",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "uuid",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "entry": {
+                  "properties": {
+                    "address": {
+                      "description": "现居住地",
+                      "type": "string"
+                    },
+                    "attachmentDesc": {
+                      "description": "附件说明",
+                      "type": "string"
+                    },
+                    "avatar": {
+                      "description": "员工照片",
+                      "type": "string"
+                    },
+                    "bankAccount": {
+                      "description": "工资卡账户",
+                      "type": "string"
+                    },
+                    "bankName": {
+                      "description": "工资开户行",
+                      "type": "string"
+                    },
+                    "billNo": {
+                      "description": "单据编号 HR201-...",
+                      "type": "string"
+                    },
+                    "birthday": {
+                      "description": "出生日期 YYYY-MM-DD",
+                      "type": "string"
+                    },
+                    "companyUuid": {
+                      "description": "所属公司（组织 uuid）",
+                      "type": "string"
+                    },
+                    "createTime": {
+                      "type": "string"
+                    },
+                    "creatorName": {
+                      "description": "申请人姓名",
+                      "type": "string"
+                    },
+                    "creatorUuid": {
+                      "description": "申请人 uuid",
+                      "type": "string"
+                    },
+                    "cultureLevel": {
+                      "description": "文化程度",
+                      "type": "string"
+                    },
+                    "educations": {
+                      "items": {
+                        "properties": {
+                          "education": {
+                            "type": "string"
+                          },
+                          "endDate": {
+                            "type": "string"
+                          },
+                          "major": {
+                            "type": "string"
+                          },
+                          "remark": {
+                            "type": "string"
+                          },
+                          "school": {
+                            "type": "string"
+                          },
+                          "startDate": {
+                            "type": "string"
+                          },
+                          "uuid": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "school",
+                          "major",
+                          "education",
+                          "startDate",
+                          "endDate"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "email": {
+                      "description": "邮箱",
+                      "type": "string"
+                    },
+                    "emergencyContact": {
+                      "description": "紧急联系人",
+                      "type": "string"
+                    },
+                    "emergencyPhone": {
+                      "description": "紧急联系人电话",
+                      "type": "string"
+                    },
+                    "employeeUuid": {
+                      "description": "审批通过后创建的员工档案 uuid（空=未建档）",
+                      "type": "string"
+                    },
+                    "expectFormalDate": {
+                      "description": "预计转正日期 YYYY-MM-DD",
+                      "type": "string"
+                    },
+                    "families": {
+                      "items": {
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "phone": {
+                            "type": "string"
+                          },
+                          "relation": {
+                            "type": "string"
+                          },
+                          "remark": {
+                            "type": "string"
+                          },
+                          "uuid": {
+                            "type": "string"
+                          },
+                          "workUnit": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "relation",
+                          "phone",
+                          "workUnit"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "gender": {
+                      "description": "性别 1=男 2=女",
+                      "type": "string"
+                    },
+                    "hireDate": {
+                      "description": "入职日期 YYYY-MM-DD",
+                      "type": "string"
+                    },
+                    "householdAddress": {
+                      "description": "户口所在地",
+                      "type": "string"
+                    },
+                    "maritalStatus": {
+                      "description": "婚姻状况 1=未婚 2=已婚 3=离异 4=丧偶",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "姓名",
+                      "type": "string"
+                    },
+                    "nation": {
+                      "description": "民族",
+                      "type": "string"
+                    },
+                    "nativePlace": {
+                      "description": "籍贯",
+                      "type": "string"
+                    },
+                    "orgUuid": {
+                      "description": "所属部门（组织 uuid）",
+                      "type": "string"
+                    },
+                    "phone": {
+                      "description": "手机号",
+                      "type": "string"
+                    },
+                    "politicalStatus": {
+                      "description": "政治面貌",
+                      "type": "string"
+                    },
+                    "position": {
+                      "description": "职位",
+                      "type": "string"
+                    },
+                    "post": {
+                      "description": "职务",
+                      "type": "string"
+                    },
+                    "probationMonths": {
+                      "description": "试用期(月)",
+                      "type": "integer"
+                    },
+                    "remark": {
+                      "description": "备注",
+                      "type": "string"
+                    },
+                    "status": {
+                      "description": "单据状态 unsubmitted/approving/approved/rejected/revoked",
+                      "type": "string"
+                    },
+                    "updateTime": {
+                      "type": "string"
+                    },
+                    "uuid": {
+                      "type": "string"
+                    },
+                    "works": {
+                      "items": {
+                        "properties": {
+                          "company": {
+                            "type": "string"
+                          },
+                          "endDate": {
+                            "type": "string"
+                          },
+                          "position": {
+                            "type": "string"
+                          },
+                          "remark": {
+                            "type": "string"
+                          },
+                          "startDate": {
+                            "type": "string"
+                          },
+                          "uuid": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "company",
+                          "position",
+                          "startDate",
+                          "endDate"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "uuid",
+                    "billNo",
+                    "status",
+                    "name",
+                    "phone",
+                    "email",
+                    "gender",
+                    "birthday",
+                    "nation",
+                    "politicalStatus",
+                    "maritalStatus",
+                    "cultureLevel",
+                    "nativePlace",
+                    "address",
+                    "householdAddress",
+                    "emergencyContact",
+                    "emergencyPhone",
+                    "bankName",
+                    "bankAccount",
+                    "avatar",
+                    "position",
+                    "post",
+                    "probationMonths",
+                    "orgUuid",
+                    "companyUuid",
+                    "hireDate",
+                    "expectFormalDate",
+                    "attachmentDesc",
+                    "remark",
+                    "employeeUuid",
+                    "creatorUuid",
+                    "creatorName",
+                    "createTime",
+                    "updateTime"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Detail",
+        "tags": [
+          "v1/hrm/entry"
+        ]
+      }
+    },
+    "/api/v1/hrm/getEntryList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:entry:list",
+        "operationId": "v1/Hrm/EntryList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据编号（模糊）",
+            "in": "query",
+            "name": "billNo",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "单据状态",
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "姓名（模糊）",
+            "in": "query",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "1=强制只看我的单据（默认行为即我的单据，管理员可传 0 看全部由后端角色判定兜底）",
+            "in": "query",
+            "name": "mine",
+            "type": "integer"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "address": {
+                        "description": "现居住地",
+                        "type": "string"
+                      },
+                      "attachmentDesc": {
+                        "description": "附件说明",
+                        "type": "string"
+                      },
+                      "avatar": {
+                        "description": "员工照片",
+                        "type": "string"
+                      },
+                      "bankAccount": {
+                        "description": "工资卡账户",
+                        "type": "string"
+                      },
+                      "bankName": {
+                        "description": "工资开户行",
+                        "type": "string"
+                      },
+                      "billNo": {
+                        "description": "单据编号 HR201-...",
+                        "type": "string"
+                      },
+                      "birthday": {
+                        "description": "出生日期 YYYY-MM-DD",
+                        "type": "string"
+                      },
+                      "companyUuid": {
+                        "description": "所属公司（组织 uuid）",
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "creatorName": {
+                        "description": "申请人姓名",
+                        "type": "string"
+                      },
+                      "creatorUuid": {
+                        "description": "申请人 uuid",
+                        "type": "string"
+                      },
+                      "cultureLevel": {
+                        "description": "文化程度",
+                        "type": "string"
+                      },
+                      "educations": {
+                        "items": {
+                          "properties": {
+                            "education": {
+                              "type": "string"
+                            },
+                            "endDate": {
+                              "type": "string"
+                            },
+                            "major": {
+                              "type": "string"
+                            },
+                            "remark": {
+                              "type": "string"
+                            },
+                            "school": {
+                              "type": "string"
+                            },
+                            "startDate": {
+                              "type": "string"
+                            },
+                            "uuid": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "school",
+                            "major",
+                            "education",
+                            "startDate",
+                            "endDate"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "email": {
+                        "description": "邮箱",
+                        "type": "string"
+                      },
+                      "emergencyContact": {
+                        "description": "紧急联系人",
+                        "type": "string"
+                      },
+                      "emergencyPhone": {
+                        "description": "紧急联系人电话",
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "description": "审批通过后创建的员工档案 uuid（空=未建档）",
+                        "type": "string"
+                      },
+                      "expectFormalDate": {
+                        "description": "预计转正日期 YYYY-MM-DD",
+                        "type": "string"
+                      },
+                      "families": {
+                        "items": {
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "phone": {
+                              "type": "string"
+                            },
+                            "relation": {
+                              "type": "string"
+                            },
+                            "remark": {
+                              "type": "string"
+                            },
+                            "uuid": {
+                              "type": "string"
+                            },
+                            "workUnit": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "name",
+                            "relation",
+                            "phone",
+                            "workUnit"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "gender": {
+                        "description": "性别 1=男 2=女",
+                        "type": "string"
+                      },
+                      "hireDate": {
+                        "description": "入职日期 YYYY-MM-DD",
+                        "type": "string"
+                      },
+                      "householdAddress": {
+                        "description": "户口所在地",
+                        "type": "string"
+                      },
+                      "maritalStatus": {
+                        "description": "婚姻状况 1=未婚 2=已婚 3=离异 4=丧偶",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "姓名",
+                        "type": "string"
+                      },
+                      "nation": {
+                        "description": "民族",
+                        "type": "string"
+                      },
+                      "nativePlace": {
+                        "description": "籍贯",
+                        "type": "string"
+                      },
+                      "orgUuid": {
+                        "description": "所属部门（组织 uuid）",
+                        "type": "string"
+                      },
+                      "phone": {
+                        "description": "手机号",
+                        "type": "string"
+                      },
+                      "politicalStatus": {
+                        "description": "政治面貌",
+                        "type": "string"
+                      },
+                      "position": {
+                        "description": "职位",
+                        "type": "string"
+                      },
+                      "post": {
+                        "description": "职务",
+                        "type": "string"
+                      },
+                      "probationMonths": {
+                        "description": "试用期(月)",
+                        "type": "integer"
+                      },
+                      "remark": {
+                        "description": "备注",
+                        "type": "string"
+                      },
+                      "status": {
+                        "description": "单据状态 unsubmitted/approving/approved/rejected/revoked",
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "works": {
+                        "items": {
+                          "properties": {
+                            "company": {
+                              "type": "string"
+                            },
+                            "endDate": {
+                              "type": "string"
+                            },
+                            "position": {
+                              "type": "string"
+                            },
+                            "remark": {
+                              "type": "string"
+                            },
+                            "startDate": {
+                              "type": "string"
+                            },
+                            "uuid": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "company",
+                            "position",
+                            "startDate",
+                            "endDate"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "billNo",
+                      "status",
+                      "name",
+                      "phone",
+                      "email",
+                      "gender",
+                      "birthday",
+                      "nation",
+                      "politicalStatus",
+                      "maritalStatus",
+                      "cultureLevel",
+                      "nativePlace",
+                      "address",
+                      "householdAddress",
+                      "emergencyContact",
+                      "emergencyPhone",
+                      "bankName",
+                      "bankAccount",
+                      "avatar",
+                      "position",
+                      "post",
+                      "probationMonths",
+                      "orgUuid",
+                      "companyUuid",
+                      "hireDate",
+                      "expectFormalDate",
+                      "attachmentDesc",
+                      "remark",
+                      "employeeUuid",
+                      "creatorUuid",
+                      "creatorName",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/entry"
         ]
       }
     },

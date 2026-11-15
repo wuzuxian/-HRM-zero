@@ -77,7 +77,10 @@ const {
       title: $t('page.hrm.attendance.overtimeRule.minUnitMinutes'),
       align: 'center',
       width: 110,
-      render: row => (row.minUnitMinutes === 60 ? $t('page.hrm.attendance.overtimeRule.minUnitHour') : $t('page.hrm.attendance.overtimeRule.minUnitHalfHour'))
+      render: row =>
+        row.minUnitMinutes === 60
+          ? $t('page.hrm.attendance.overtimeRule.minUnitHour')
+          : $t('page.hrm.attendance.overtimeRule.minUnitHalfHour')
     },
     {
       key: 'monthlyLimitHours',
@@ -85,9 +88,7 @@ const {
       align: 'center',
       width: 110,
       render: row =>
-        row.monthlyLimitHours === 0
-          ? $t('page.hrm.attendance.overtimeRule.noLimit')
-          : `${row.monthlyLimitHours} h`
+        row.monthlyLimitHours === 0 ? $t('page.hrm.attendance.overtimeRule.noLimit') : `${row.monthlyLimitHours} h`
     },
     {
       key: 'groupUuids',
@@ -131,7 +132,9 @@ const {
             size="small"
             onClick={() => handleToggle(row)}
           >
-            {row.status === '1' ? $t('page.hrm.attendance.overtimeRule.disable') : $t('page.hrm.attendance.overtimeRule.enable')}
+            {row.status === '1'
+              ? $t('page.hrm.attendance.overtimeRule.disable')
+              : $t('page.hrm.attendance.overtimeRule.enable')}
           </NButton>
           <NPopconfirm onPositiveClick={() => handleDelete(row.uuid)}>
             {{
@@ -153,9 +156,13 @@ const {
 function renderPolicy(policy: Api.Hrm.DayOvertimePolicy) {
   return (
     <span>
-      {policy.approvalRequired === 1 ? $t('page.hrm.attendance.overtimeRule.needApproval') : $t('page.hrm.attendance.overtimeRule.noApproval')}
+      {policy.approvalRequired === 1
+        ? $t('page.hrm.attendance.overtimeRule.needApproval')
+        : $t('page.hrm.attendance.overtimeRule.noApproval')}
       {' · '}
-      {policy.punchRequired === 1 ? $t('page.hrm.attendance.overtimeRule.needPunch') : $t('page.hrm.attendance.overtimeRule.noPunch')}
+      {policy.punchRequired === 1
+        ? $t('page.hrm.attendance.overtimeRule.needPunch')
+        : $t('page.hrm.attendance.overtimeRule.noPunch')}
       {' · '}
       {$t('page.hrm.attendance.overtimeRule.multiplierValue', { n: policy.compMultiplier })}
     </span>

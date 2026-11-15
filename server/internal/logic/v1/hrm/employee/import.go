@@ -140,7 +140,7 @@ func (l *Import) Import(req *types.ImportRequest) (resp *types.ImportResponse, e
 			}
 
 			if addReq.PersonStatus == "" {
-				addReq.PersonStatus = personStatusRegular
+				addReq.PersonStatus = PersonStatusRegular
 			}
 			if addReq.Gender == "" {
 				addReq.Gender = genderMale
@@ -202,21 +202,21 @@ func parseGender(v string) (string, error) {
 func parsePersonStatus(v string) (string, error) {
 	switch strings.TrimSpace(v) {
 	case "正式":
-		return personStatusRegular, nil
+		return PersonStatusRegular, nil
 	case "试用期":
-		return personStatusProbation, nil
+		return PersonStatusProbation, nil
 	case "实习生":
-		return personStatusIntern, nil
+		return PersonStatusIntern, nil
 	case "临时工":
-		return personStatusTemp, nil
+		return PersonStatusTemp, nil
 	case "离职":
-		return personStatusResigned, nil
+		return PersonStatusResigned, nil
 	case "退休":
-		return personStatusRetired, nil
+		return PersonStatusRetired, nil
 	case "":
-		return personStatusRegular, nil
-	case personStatusRegular, personStatusProbation, personStatusIntern,
-		personStatusTemp, personStatusResigned, personStatusRetired:
+		return PersonStatusRegular, nil
+	case PersonStatusRegular, PersonStatusProbation, PersonStatusIntern,
+		PersonStatusTemp, PersonStatusResigned, PersonStatusRetired:
 		return strings.TrimSpace(v), nil
 	default:
 		return "", status.ErrorMessage(errcodes.EmployeeImportInvalidCode,
@@ -247,17 +247,17 @@ func parseMaritalStatus(v string) (string, error) {
 // inverses used by Export.
 func personStatusLabel(v string) string {
 	switch v {
-	case personStatusRegular:
+	case PersonStatusRegular:
 		return "正式"
-	case personStatusProbation:
+	case PersonStatusProbation:
 		return "试用期"
-	case personStatusIntern:
+	case PersonStatusIntern:
 		return "实习生"
-	case personStatusTemp:
+	case PersonStatusTemp:
 		return "临时工"
-	case personStatusResigned:
+	case PersonStatusResigned:
 		return "离职"
-	case personStatusRetired:
+	case PersonStatusRetired:
 		return "退休"
 	default:
 		return ""

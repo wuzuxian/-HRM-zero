@@ -57,12 +57,7 @@ async function search() {
                 clearable
               />
             </NFormItemGi>
-            <NFormItemGi
-              span="24 s:12 m:6"
-              :label="$t('page.hrm.salary.item.status')"
-              path="status"
-              class="pr-24px"
-            >
+            <NFormItemGi span="24 s:12 m:6" :label="$t('page.hrm.salary.item.status')" path="status" class="pr-24px">
               <NSelect
                 v-model:value="model.status"
                 :placeholder="$t('page.hrm.salary.item.form.status')"

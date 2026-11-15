@@ -36,12 +36,15 @@ const (
 	maritalDivorced  = "3"
 	maritalWidowed   = "4"
 
-	personStatusRegular     = "1"
-	personStatusProbation   = "2"
-	personStatusIntern      = "3"
-	personStatusTemp        = "4"
-	personStatusResigned    = "5"
-	personStatusRetired     = "6"
+	// 人员状态 enum (GLOSSARY「人员状态」): 1=正式 2=试用期 3=实习生 4=临时工 5=离职 6=退休.
+	// Exported so downstream document logics (入职单 HRM-07 自动建档等) reuse the
+	// same vocabulary instead of re-declaring literals.
+	PersonStatusRegular   = "1"
+	PersonStatusProbation = "2"
+	PersonStatusIntern    = "3"
+	PersonStatusTemp      = "4"
+	PersonStatusResigned  = "5"
+	PersonStatusRetired   = "6"
 
 	userStatusCreated = "1"
 	userStatusNone    = "0"
@@ -56,8 +59,8 @@ func validMaritalStatus(v string) bool {
 }
 
 func validPersonStatus(v string) bool {
-	return v == personStatusRegular || v == personStatusProbation || v == personStatusIntern ||
-		v == personStatusTemp || v == personStatusResigned || v == personStatusRetired
+	return v == PersonStatusRegular || v == PersonStatusProbation || v == PersonStatusIntern ||
+		v == PersonStatusTemp || v == PersonStatusResigned || v == PersonStatusRetired
 }
 
 // employeeToType converts a model row into the API record (UserStatus 由
@@ -211,6 +214,31 @@ func saveChildren(ctx context.Context, session sqlx.Session, svcCtx *svc.Service
 		}
 	}
 	return nil
+}
+
+// GenerateEmployeeNo resolves the 工号 for a new employee inside the caller's
+// transaction: provided employee_no is duplicate-checked; blank employee_no is
+// generated as 最大工号+1 (8 位补零). Exported wrapper around generateEmployeeNo
+// for downstream document logics (入职单 HRM-07 审批通过自动建档 reuses the same
+// numbering instead of re-deriving it).
+func GenerateEmployeeNo(ctx context.Context, session sqlx.Session, svcCtx *svc.ServiceContext, employeeNo string) (string, error) {
+	return generateEmployeeNo(ctx, session, svcCtx, employeeNo)
+}
+
+// InsertEmployeeRow writes a fully-built hrm_employee master row inside the
+// caller's transaction. Exported for 入职单 HRM-07 自动建档, which snapshots the
+// approved 入职单 into a new archive row and manages its own sub-tables
+// (SaveEmployeeChildren below for the archive-side sub-table write).
+func InsertEmployeeRow(ctx context.Context, session sqlx.Session, svcCtx *svc.ServiceContext, row *hrm_employee.HrmEmployee) error {
+	return svcCtx.Model.HrmEmployee.InsertV2(ctx, session, row)
+}
+
+// SaveEmployeeChildren 全删全插 the three archive sub-tables (教育经历/工作经历/家属)
+// for an employee inside the caller's transaction. Exported wrapper around
+// saveChildren for downstream document logics (入职单 HRM-07 三子表落档案).
+func SaveEmployeeChildren(ctx context.Context, session sqlx.Session, svcCtx *svc.ServiceContext, employeeUuid string,
+	educations []types.HrmEmployeeEducation, works []types.HrmEmployeeWork, families []types.HrmEmployeeFamily) error {
+	return saveChildren(ctx, session, svcCtx, employeeUuid, educations, works, families)
 }
 
 // insertEmployee writes the master row (+ any provided sub-table rows) inside

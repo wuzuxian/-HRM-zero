@@ -49,7 +49,16 @@ const title = computed(() => {
 
 type Model = Pick<
   Api.Hrm.AddSalaryItemRequest,
-  'itemCode' | 'itemName' | 'itemType' | 'itemClass' | 'valueMode' | 'calcOrder' | 'orderNum' | 'formula' | 'status' | 'remark'
+  | 'itemCode'
+  | 'itemName'
+  | 'itemType'
+  | 'itemClass'
+  | 'valueMode'
+  | 'calcOrder'
+  | 'orderNum'
+  | 'formula'
+  | 'status'
+  | 'remark'
 >;
 
 const model: Model = reactive(createDefaultModel());
@@ -159,7 +168,11 @@ watch(visible, () => {
           <NInputNumber v-model:value="model.orderNum" :min="0" class="w-full" />
         </NFormItem>
         <NFormItem v-if="model.itemType === 'formula'" :label="$t('page.hrm.salary.item.formula')" path="formula">
-          <NInput v-model:value="model.formula" type="textarea" :placeholder="$t('page.hrm.salary.item.form.formula')" />
+          <NInput
+            v-model:value="model.formula"
+            type="textarea"
+            :placeholder="$t('page.hrm.salary.item.form.formula')"
+          />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.salary.item.status')" path="status">
           <NRadioGroup v-model:value="model.status">
@@ -172,11 +185,7 @@ watch(visible, () => {
           </NRadioGroup>
         </NFormItem>
         <NFormItem :label="$t('page.hrm.salary.item.remark')" path="remark">
-          <NInput
-            v-model:value="model.remark"
-            type="textarea"
-            :placeholder="$t('page.hrm.salary.item.form.remark')"
-          />
+          <NInput v-model:value="model.remark" type="textarea" :placeholder="$t('page.hrm.salary.item.form.remark')" />
         </NFormItem>
       </NForm>
     </NScrollbar>

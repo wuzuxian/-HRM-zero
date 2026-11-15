@@ -5,7 +5,6 @@ import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { AddSalarySubject, EditSalarySubject, GetOrgTree } from '@/service/api';
 import { $t } from '@/locales';
 import { hrmSalaryStatusOptions } from '@/constants/business';
-import { translateOptions } from '@/utils/common';
 
 defineOptions({
   name: 'SalarySubjectOperateModal'
@@ -136,10 +135,7 @@ watch(visible, () => {
     <NScrollbar class="h-360px pr-20px">
       <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" :label-width="120">
         <NFormItem :label="$t('page.hrm.salary.subject.subjectName')" path="subjectName">
-          <NInput
-            v-model:value="model.subjectName"
-            :placeholder="$t('page.hrm.salary.subject.form.subjectName')"
-          />
+          <NInput v-model:value="model.subjectName" :placeholder="$t('page.hrm.salary.subject.form.subjectName')" />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.salary.subject.orgName')" path="orgUuid">
           <NSelect
@@ -150,10 +146,7 @@ watch(visible, () => {
           />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.salary.subject.payAccount')" path="payAccount">
-          <NInput
-            v-model:value="model.payAccount"
-            :placeholder="$t('page.hrm.salary.subject.form.payAccount')"
-          />
+          <NInput v-model:value="model.payAccount" :placeholder="$t('page.hrm.salary.subject.form.payAccount')" />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.salary.subject.payBank')" path="payBank">
           <NInput v-model:value="model.payBank" :placeholder="$t('page.hrm.salary.subject.form.payBank')" />

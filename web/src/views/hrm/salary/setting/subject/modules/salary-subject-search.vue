@@ -42,17 +42,9 @@ async function search() {
               path="subjectName"
               class="pr-24px"
             >
-              <NInput
-                v-model:value="model.subjectName"
-                :placeholder="$t('page.hrm.salary.subject.form.subjectName')"
-              />
+              <NInput v-model:value="model.subjectName" :placeholder="$t('page.hrm.salary.subject.form.subjectName')" />
             </NFormItemGi>
-            <NFormItemGi
-              span="24 s:12 m:6"
-              :label="$t('page.hrm.salary.subject.status')"
-              path="status"
-              class="pr-24px"
-            >
+            <NFormItemGi span="24 s:12 m:6" :label="$t('page.hrm.salary.subject.status')" path="status" class="pr-24px">
               <NSelect
                 v-model:value="model.status"
                 :placeholder="$t('page.hrm.salary.subject.form.status')"
