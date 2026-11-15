@@ -197,6 +197,10 @@ const local: App.I18n.Schema = {
     hrm_recruitment: 'Recruitment',
     'hrm_recruitment_requirement-list': 'Requirement',
     'hrm_recruitment_candidate-list': 'Candidates',
+    hrm_salary: 'Salary',
+    hrm_salary_setting: 'Salary Settings',
+    'hrm_salary_setting_subject': 'Salary Subjects',
+    'hrm_salary_setting_item': 'Salary Items',
     hrm_training_plan: 'Training Plan',
     hrm_training_session: 'Training Session',
     hrm_employee: 'HR Archive',
@@ -299,6 +303,16 @@ const local: App.I18n.Schema = {
           delete: 'Delete Session',
           participants: 'Participants'
         }
+      },
+      salary_subject: {
+        add: 'Add Salary Subject',
+        edit: 'Edit Salary Subject',
+        delete: 'Delete Salary Subject'
+      },
+      salary_item: {
+        add: 'Add Salary Item',
+        edit: 'Edit Salary Item',
+        delete: 'Delete Salary Item'
       },
       employee: {
         add: 'Add Employee',
@@ -1168,6 +1182,70 @@ const local: App.I18n.Schema = {
             org: 'Please select org',
             transferReason: 'Please enter reason',
             effectiveDateRequired: 'Effective date is required when not effective immediately'
+          }
+        }
+      },
+      salary: {
+        subject: {
+          title: 'Salary Subjects',
+          subjectName: 'Subject Name',
+          orgName: 'Linked Company',
+          payAccount: 'Pay Account',
+          payBank: 'Pay Bank',
+          status: 'Status',
+          remark: 'Remark',
+          addSubject: 'Add Salary Subject',
+          editSubject: 'Edit Salary Subject',
+          form: {
+            subjectName: 'Please enter subject name',
+            orgName: 'Please select linked company',
+            payAccount: 'Please enter pay account',
+            payBank: 'Please enter pay bank',
+            status: 'Please select status',
+            remark: 'Please enter remark'
+          }
+        },
+        item: {
+          title: 'Salary Items',
+          itemName: 'Item Name',
+          itemCode: 'Item Code',
+          itemType: {
+            title: 'Item Type',
+            fixed: 'Fixed',
+            data: 'Data-driven',
+            formula: 'Formula'
+          },
+          itemClass: {
+            title: 'Item Class',
+            earning: 'Earning',
+            deduction: 'Deduction',
+            cost: 'Cost'
+          },
+          valueMode: {
+            title: 'Value Mode',
+            manual: 'Manual',
+            system: 'System',
+            formula: 'Formula'
+          },
+          calcOrder: 'Calc Order',
+          orderNum: 'Display Order',
+          formula: 'Formula Expression',
+          isPreset: 'Preset',
+          presetYes: 'Preset',
+          presetNo: 'Custom',
+          status: 'Status',
+          remark: 'Remark',
+          addItem: 'Add Salary Item',
+          editItem: 'Edit Salary Item',
+          form: {
+            itemName: 'Please enter item name',
+            itemCode: 'Please enter item code (e.g. OTHER_BONUS)',
+            itemType: 'Please select item type',
+            itemClass: 'Please select item class',
+            valueMode: 'Please select value mode',
+            formula: 'Please enter formula expression',
+            status: 'Please select status',
+            remark: 'Please enter remark'
           }
         }
       },

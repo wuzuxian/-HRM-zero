@@ -240,6 +240,34 @@ export const generatedRoutes: GeneratedRoute[] = [
         ]
       },
       {
+        name: 'hrm_recruitment',
+        path: '/hrm/recruitment',
+        meta: {
+          title: 'hrm_recruitment',
+          i18nKey: 'route.hrm_recruitment'
+        },
+        children: [
+          {
+            name: 'hrm_recruitment_candidate-list',
+            path: '/hrm/recruitment/candidate-list',
+            component: 'view.hrm_recruitment_candidate-list',
+            meta: {
+              title: 'hrm_recruitment_candidate-list',
+              i18nKey: 'route.hrm_recruitment_candidate-list'
+            }
+          },
+          {
+            name: 'hrm_recruitment_requirement-list',
+            path: '/hrm/recruitment/requirement-list',
+            component: 'view.hrm_recruitment_requirement-list',
+            meta: {
+              title: 'hrm_recruitment_requirement-list',
+              i18nKey: 'route.hrm_recruitment_requirement-list'
+            }
+          }
+        ]
+      },
+      {
         name: 'hrm_reward',
         path: '/hrm/reward',
         meta: {
@@ -259,30 +287,40 @@ export const generatedRoutes: GeneratedRoute[] = [
         ]
       },
       {
-        name: 'hrm_recruitment',
-        path: '/hrm/recruitment',
+        name: 'hrm_salary',
+        path: '/hrm/salary',
         meta: {
-          title: 'hrm_recruitment',
-          i18nKey: 'route.hrm_recruitment'
+          title: 'hrm_salary',
+          i18nKey: 'route.hrm_salary'
         },
         children: [
           {
-            name: 'hrm_recruitment_requirement-list',
-            path: '/hrm/recruitment/requirement-list',
-            component: 'view.hrm_recruitment_requirement-list',
+            name: 'hrm_salary_setting',
+            path: '/hrm/salary/setting',
             meta: {
-              title: 'hrm_recruitment_requirement-list',
-              i18nKey: 'route.hrm_recruitment_requirement-list'
-            }
-          },
-          {
-            name: 'hrm_recruitment_candidate-list',
-            path: '/hrm/recruitment/candidate-list',
-            component: 'view.hrm_recruitment_candidate-list',
-            meta: {
-              title: 'hrm_recruitment_candidate-list',
-              i18nKey: 'route.hrm_recruitment_candidate-list'
-            }
+              title: 'hrm_salary_setting',
+              i18nKey: 'route.hrm_salary_setting'
+            },
+            children: [
+              {
+                name: 'hrm_salary_setting_item',
+                path: '/hrm/salary/setting/item',
+                component: 'view.hrm_salary_setting_item',
+                meta: {
+                  title: 'hrm_salary_setting_item',
+                  i18nKey: 'route.hrm_salary_setting_item'
+                }
+              },
+              {
+                name: 'hrm_salary_setting_subject',
+                path: '/hrm/salary/setting/subject',
+                component: 'view.hrm_salary_setting_subject',
+                meta: {
+                  title: 'hrm_salary_setting_subject',
+                  i18nKey: 'route.hrm_salary_setting_subject'
+                }
+              }
+            ]
           }
         ]
       },

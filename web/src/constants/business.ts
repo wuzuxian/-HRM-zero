@@ -217,3 +217,38 @@ export const hrmCandidateEducationRecord: Record<Api.Hrm.CandidateEducation, App
 };
 
 export const hrmCandidateEducationOptions = transformRecordToOption(hrmCandidateEducationRecord);
+
+/** 薪酬主体/薪资项目 启停状态 (HRM-33, 与考勤/组织 1=启用 0=停用 同构) */
+export const hrmSalaryStatusRecord: Record<Api.Hrm.SalarySubjectStatus, App.I18n.I18nKey> = {
+  '1': 'page.hrm.attendance.status.enabled',
+  '0': 'page.hrm.attendance.status.disabled'
+};
+
+export const hrmSalaryStatusOptions = transformRecordToOption(hrmSalaryStatusRecord);
+
+/** 薪资项目类型 (GLOSSARY「薪资项目」): 固定项/取数项/公式项 */
+export const hrmSalaryItemTypeRecord: Record<Api.Hrm.SalaryItemType, App.I18n.I18nKey> = {
+  fixed: 'page.hrm.salary.item.itemType.fixed',
+  data: 'page.hrm.salary.item.itemType.data',
+  formula: 'page.hrm.salary.item.itemType.formula'
+};
+
+export const hrmSalaryItemTypeOptions = transformRecordToOption(hrmSalaryItemTypeRecord);
+
+/** 薪资项目分类: 应发/应扣/成本 */
+export const hrmSalaryItemClassRecord: Record<Api.Hrm.SalaryItemClass, App.I18n.I18nKey> = {
+  earning: 'page.hrm.salary.item.itemClass.earning',
+  deduction: 'page.hrm.salary.item.itemClass.deduction',
+  cost: 'page.hrm.salary.item.itemClass.cost'
+};
+
+export const hrmSalaryItemClassOptions = transformRecordToOption(hrmSalaryItemClassRecord);
+
+/** 取值方式: 手工维护/系统取数/公式计算 */
+export const hrmSalaryItemValueModeRecord: Record<Api.Hrm.SalaryItemValueMode, App.I18n.I18nKey> = {
+  manual: 'page.hrm.salary.item.valueMode.manual',
+  system: 'page.hrm.salary.item.valueMode.system',
+  formula: 'page.hrm.salary.item.valueMode.formula'
+};
+
+export const hrmSalaryItemValueModeOptions = transformRecordToOption(hrmSalaryItemValueModeRecord);

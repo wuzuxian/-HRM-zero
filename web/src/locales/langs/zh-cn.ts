@@ -197,6 +197,10 @@ const local: App.I18n.Schema = {
     hrm_recruitment: '招聘管理',
     'hrm_recruitment_requirement-list': '招聘需求',
     'hrm_recruitment_candidate-list': '候选人中心',
+    hrm_salary: '薪酬管理',
+    hrm_salary_setting: '薪酬设置',
+    'hrm_salary_setting_subject': '薪酬主体',
+    'hrm_salary_setting_item': '薪资项目',
     hrm_training_plan: '培训计划',
     hrm_training_session: '培训班次',
     hrm_employee: '人事档案',
@@ -299,6 +303,16 @@ const local: App.I18n.Schema = {
           delete: '删除班次',
           participants: '班次学员'
         }
+      },
+      salary_subject: {
+        add: '新增薪酬主体',
+        edit: '编辑薪酬主体',
+        delete: '删除薪酬主体'
+      },
+      salary_item: {
+        add: '新增薪资项目',
+        edit: '编辑薪资项目',
+        delete: '删除薪资项目'
       },
       employee: {
         add: '新增员工',
@@ -1168,6 +1182,70 @@ const local: App.I18n.Schema = {
             org: '请选择组织',
             transferReason: '请输入调动原因',
             effectiveDateRequired: '非立即生效时必须选择生效日期'
+          }
+        }
+      },
+      salary: {
+        subject: {
+          title: '薪酬主体',
+          subjectName: '主体名称',
+          orgName: '关联公司',
+          payAccount: '发薪账户',
+          payBank: '发薪银行',
+          status: '状态',
+          remark: '备注',
+          addSubject: '新增薪酬主体',
+          editSubject: '编辑薪酬主体',
+          form: {
+            subjectName: '请输入主体名称',
+            orgName: '请选择关联公司',
+            payAccount: '请输入发薪账户',
+            payBank: '请输入发薪银行',
+            status: '请选择状态',
+            remark: '请输入备注'
+          }
+        },
+        item: {
+          title: '薪资项目',
+          itemName: '项目名称',
+          itemCode: '项目编码',
+          itemType: {
+            title: '项目类型',
+            fixed: '固定项',
+            data: '取数项',
+            formula: '公式项'
+          },
+          itemClass: {
+            title: '项目分类',
+            earning: '应发',
+            deduction: '应扣',
+            cost: '成本'
+          },
+          valueMode: {
+            title: '取值方式',
+            manual: '手工维护',
+            system: '系统取数',
+            formula: '公式计算'
+          },
+          calcOrder: '计算顺序',
+          orderNum: '显示顺序',
+          formula: '公式表达式',
+          isPreset: '预置',
+          presetYes: '预置',
+          presetNo: '自定义',
+          status: '状态',
+          remark: '备注',
+          addItem: '新增薪资项目',
+          editItem: '编辑薪资项目',
+          form: {
+            itemName: '请输入项目名称',
+            itemCode: '请输入项目编码（如 OTHER_BONUS）',
+            itemType: '请选择项目类型',
+            itemClass: '请选择项目分类',
+            valueMode: '请选择取值方式',
+            formula: '请输入公式表达式',
+            status: '请选择状态',
+            remark: '请输入备注'
           }
         }
       },

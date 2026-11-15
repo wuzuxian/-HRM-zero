@@ -1285,5 +1285,140 @@ declare namespace Api {
     type ImportCandidateResponse = {
       successCount: number;
     };
+    // ===== HRM-33 薪酬主体与薪资项目 =====
+
+    /** 薪酬主体 status: 1 enabled 0 disabled */
+    type SalarySubjectStatus = '1' | '0';
+
+    /** hrm salary subject (薪酬主体, GLOSSARY: 发薪的法人实体, 关联一个公司) */
+    type SalarySubject = {
+      /** record uuid */
+      uuid: string;
+      /** subject name */
+      subjectName: string;
+      /** linked company uuid (hrm_org org_type=1) */
+      orgUuid: string;
+      /** linked company name snapshot */
+      orgName: string;
+      /** pay account */
+      payAccount: string;
+      /** pay bank */
+      payBank: string;
+      /** status: enabled/disabled */
+      status: SalarySubjectStatus | null;
+      /** remark */
+      remark: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** salary subject search params */
+    type SalarySubjectSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.SalarySubject, 'subjectName' | 'status'> & Common.CommonSearchParams
+    >;
+
+    /** salary subject paginated list */
+    type SalarySubjectList = Common.PaginatingQueryRecord<SalarySubject>;
+
+    /** add salary subject request */
+    type AddSalarySubjectRequest = {
+      subjectName: string;
+      orgUuid: string;
+      payAccount: string;
+      payBank: string;
+      status: SalarySubjectStatus | null;
+      remark: string;
+    };
+
+    /** edit salary subject request */
+    type EditSalarySubjectRequest = {
+      uuid: string;
+      subjectName: string;
+      orgUuid: string;
+      payAccount: string;
+      payBank: string;
+      status: SalarySubjectStatus | null;
+      remark: string;
+    };
+
+    /** 薪资项目类型: fixed=固定项 data=取数项 formula=公式项 */
+    type SalaryItemType = 'fixed' | 'data' | 'formula';
+
+    /** 薪资项目分类: earning=应发 deduction=应扣 cost=成本 */
+    type SalaryItemClass = 'earning' | 'deduction' | 'cost';
+
+    /** 取值方式: manual=手工维护 system=系统取数 formula=公式计算 */
+    type SalaryItemValueMode = 'manual' | 'system' | 'formula';
+
+    /** hrm salary item (薪资项目, GLOSSARY: 薪资计算的最小条目) */
+    type SalaryItem = {
+      /** record uuid */
+      uuid: string;
+      /** item code (BASIC_SALARY/NET_SALARY…) */
+      itemCode: string;
+      /** item name */
+      itemName: string;
+      /** item type */
+      itemType: SalaryItemType;
+      /** item class */
+      itemClass: SalaryItemClass;
+      /** value mode */
+      valueMode: SalaryItemValueMode;
+      /** calc order (试算按此升序消费, 同序按 id) */
+      calcOrder: number;
+      /** display order */
+      orderNum: number;
+      /** formula expression (formula items only) */
+      formula: string;
+      /** preset flag: 1 preset (不可删除) */
+      isPreset: number;
+      /** status: enabled/disabled */
+      status: SalarySubjectStatus | null;
+      /** remark */
+      remark: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** salary item search params */
+    type SalaryItemSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.SalaryItem, 'itemName' | 'itemClass' | 'status'> & Common.CommonSearchParams
+    >;
+
+    /** salary item paginated list */
+    type SalaryItemList = Common.PaginatingQueryRecord<SalaryItem>;
+
+    /** add salary item request */
+    type AddSalaryItemRequest = {
+      itemCode: string;
+      itemName: string;
+      itemType: SalaryItemType;
+      itemClass: SalaryItemClass;
+      valueMode: SalaryItemValueMode;
+      calcOrder: number;
+      orderNum: number;
+      formula: string;
+      status: SalarySubjectStatus | null;
+      remark: string;
+    };
+
+    /** edit salary item request */
+    type EditSalaryItemRequest = {
+      uuid: string;
+      itemCode: string;
+      itemName: string;
+      itemType: SalaryItemType;
+      itemClass: SalaryItemClass;
+      valueMode: SalaryItemValueMode;
+      calcOrder: number;
+      orderNum: number;
+      formula: string;
+      status: SalarySubjectStatus | null;
+      remark: string;
+    };
   }
 }

@@ -493,6 +493,16 @@ declare namespace App {
               participants: string;
             };
           };
+          salary_subject: {
+            add: string;
+            edit: string;
+            delete: string;
+          };
+          salary_item: {
+            add: string;
+            edit: string;
+            delete: string;
+          };
           employee: {
             add: string;
             edit: string;
@@ -1248,6 +1258,70 @@ declare namespace App {
               currentPosition: string;
               expectSalary: string;
               remark: string;
+            };
+          };
+          salary: {
+            subject: {
+              title: string;
+              subjectName: string;
+              orgName: string;
+              payAccount: string;
+              payBank: string;
+              status: string;
+              remark: string;
+              addSubject: string;
+              editSubject: string;
+              form: {
+                subjectName: string;
+                orgName: string;
+                payAccount: string;
+                payBank: string;
+                status: string;
+                remark: string;
+              };
+            };
+            item: {
+              title: string;
+              itemName: string;
+              itemCode: string;
+              itemType: {
+                title: string;
+                fixed: string;
+                data: string;
+                formula: string;
+              };
+              itemClass: {
+                title: string;
+                earning: string;
+                deduction: string;
+                cost: string;
+              };
+              valueMode: {
+                title: string;
+                manual: string;
+                system: string;
+                formula: string;
+              };
+              calcOrder: string;
+              orderNum: string;
+              formula: string;
+              isPreset: string;
+              presetYes: string;
+              presetNo: string;
+              status: string;
+              remark: string;
+              addItem: string;
+              editItem: string;
+              form: {
+                itemName: string;
+                itemCode: string;
+                itemType: string;
+                itemClass: string;
+                valueMode: string;
+                formula: string;
+                status: string;
+                remark: string;
+              };
             };
           };
           training: {
