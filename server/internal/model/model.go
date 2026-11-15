@@ -22,6 +22,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_template"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_template_item"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_shift"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_cert_template"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_certificate"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_plan"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_session"
@@ -51,6 +52,7 @@ type Model struct {
 	HrmPerfTemplate               hrm_perf_template.HrmPerfTemplateModel
 	HrmPerfTemplateItem           hrm_perf_template_item.HrmPerfTemplateItemModel
 	HrmShift                      hrm_shift.HrmShiftModel
+	HrmTrainingCertTemplate       hrm_training_cert_template.HrmTrainingCertTemplateModel
 	HrmTrainingCertificate        hrm_training_certificate.HrmTrainingCertificateModel
 	HrmTrainingPlan               hrm_training_plan.HrmTrainingPlanModel
 	HrmTrainingSession            hrm_training_session.HrmTrainingSessionModel
@@ -81,6 +83,7 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmPerfTemplate:               hrm_perf_template.NewHrmPerfTemplateModel(conn, op...),
 		HrmPerfTemplateItem:           hrm_perf_template_item.NewHrmPerfTemplateItemModel(conn, op...),
 		HrmShift:                      hrm_shift.NewHrmShiftModel(conn, op...),
+		HrmTrainingCertTemplate:       hrm_training_cert_template.NewHrmTrainingCertTemplateModel(conn, op...),
 		HrmTrainingCertificate:        hrm_training_certificate.NewHrmTrainingCertificateModel(conn, op...),
 		HrmTrainingPlan:               hrm_training_plan.NewHrmTrainingPlanModel(conn, op...),
 		HrmTrainingSession:            hrm_training_session.NewHrmTrainingSessionModel(conn, op...),

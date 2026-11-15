@@ -475,6 +475,19 @@ declare namespace App {
               delete: string;
               participants: string;
             };
+            certTemplate: {
+              add: string;
+              edit: string;
+              toggleStatus: string;
+              delete: string;
+            };
+            certificate: {
+              batchIssue: string;
+              import: string;
+              issue: string;
+              revoke: string;
+              uploadFile: string;
+            };
           };
           employee: {
             add: string;
@@ -1158,6 +1171,67 @@ declare namespace App {
                 status: string;
                 participantsPlaceholder: string;
                 endTimeBeforeStart: string;
+              };
+            };
+            certTemplate: {
+              title: string;
+              templateName: string;
+              certType: string;
+              sourceLabel: string;
+              noPrefix: string;
+              statusLabel: string;
+              remark: string;
+              addTemplate: string;
+              editTemplate: string;
+              enable: string;
+              disable: string;
+              confirmEnable: string;
+              confirmDisable: string;
+              source: {
+                system: string;
+                org: string;
+              };
+              status: {
+                enabled: string;
+                disabled: string;
+              };
+              form: {
+                templateName: string;
+                certType: string;
+                source: string;
+                noPrefix: string;
+              };
+            };
+            certificate: {
+              title: string;
+              student: string;
+              template: string;
+              sourceLabel: string;
+              source: {
+                session: string;
+                import: string;
+              };
+              session: string;
+              batchIssue: string;
+              batchIssueDone: string;
+              batchIssueSkipped: string;
+              batchIssueTip: string;
+              importExternal: string;
+              issue: string;
+              revoke: string;
+              upload: string;
+              chooseFile: string;
+              confirmIssue: string;
+              confirmRevoke: string;
+              form: {
+                session: string;
+                template: string;
+                student: string;
+                certName: string;
+                certType: string;
+                certNo: string;
+                status: string;
+                source: string;
               };
             };
           };

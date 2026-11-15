@@ -531,3 +531,117 @@ export function DeleteAttendanceConfig(req: string[]) {
     }
   });
 }
+
+// ---- HRM 证书模板 (HRM-30) ----
+
+/** get 证书模板 paginated list (筛选: 模板名称/证书类型/来源/状态) */
+export function GetCertTemplateList(params?: Api.Hrm.CertTemplateSearchParams) {
+  return request<Api.Hrm.CertTemplateList>({
+    url: '/api/v1/hrm/getCertTemplateList',
+    method: 'get',
+    params
+  });
+}
+
+/** add 证书模板 (编号前缀唯一, 初始启用) */
+export function AddCertTemplate(req: Api.Hrm.AddCertTemplateRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addCertTemplate',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 证书模板 (前缀变更时保持唯一) */
+export function EditCertTemplate(req: Api.Hrm.EditCertTemplateRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editCertTemplate',
+    method: 'post',
+    data: req
+  });
+}
+
+/** toggle 证书模板 status (1=启用 2=停用, 停用后不可发证) */
+export function ToggleCertTemplateStatus(req: Api.Hrm.ToggleCertTemplateStatusRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/toggleCertTemplateStatus',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 证书模板 */
+export function DeleteCertTemplate(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteCertTemplate',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+// ---- HRM 证书发放 (HRM-30) ----
+
+/** get 证书发放 paginated list (筛选: 证书号/名称/类型/状态/来源/班次) */
+export function GetCertificateList(params?: Api.Hrm.TrainingCertificateSearchParams) {
+  return request<Api.Hrm.TrainingCertificateList>({
+    url: '/api/v1/hrm/getCertificateList',
+    method: 'get',
+    params
+  });
+}
+
+/** 批量发证: 班次结业学员按模板生成证书号=前缀-年-流水 (幂等, 跳过已有有效证书) */
+export function BatchIssueCertificates(req: Api.Hrm.BatchIssueRequest) {
+  return request<Api.Hrm.BatchIssueResponse>({
+    url: '/api/v1/hrm/batchIssueCertificates',
+    method: 'post',
+    data: req
+  });
+}
+
+/** 发放: 待发(0) → 已发(1), 置发证时间 */
+export function IssueCertificates(uuids: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/issueCertificates',
+    method: 'post',
+    data: { uuids }
+  });
+}
+
+/** 撤销: 已发(1) → 已撤销(2) */
+export function RevokeCertificates(uuids: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/revokeCertificates',
+    method: 'post',
+    data: { uuids }
+  });
+}
+
+/** 导入外部证书 (source='2', 证书号手动录入且唯一) */
+export function ImportExternalCertificate(req: Api.Hrm.ImportExternalCertificateRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/importExternalCertificate',
+    method: 'post',
+    data: req
+  });
+}
+
+/** 上传/替换证书扫描件 (base64) */
+export function UploadCertificateFile(req: Api.Hrm.UploadCertificateFileRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/uploadCertificateFile',
+    method: 'post',
+    data: req
+  });
+}
+
+/** 证书扫描件预览/下载 (base64, 与我的培训同一返回模式) */
+export function DownloadCertificateFile(uuid: string) {
+  return request<Api.Hrm.DownloadCertificateFileResponse>({
+    url: '/api/v1/hrm/downloadCertificateFile',
+    method: 'get',
+    params: { uuid }
+  });
+}

@@ -194,6 +194,8 @@ const local: App.I18n.Schema = {
     hrm_training_my: '我的培训',
     hrm_training_plan: '培训计划',
     hrm_training_session: '培训班次',
+    'hrm_training_cert-template': '证书模板',
+    'hrm_training_cert-issue': '证书发放',
     hrm_employee: '人事档案',
     'hrm_employee_employee-archive-list': '员工档案',
     exception: '异常页',
@@ -276,6 +278,19 @@ const local: App.I18n.Schema = {
           edit: '编辑班次',
           delete: '删除班次',
           participants: '班次学员'
+        },
+        certTemplate: {
+          add: '新增模板',
+          edit: '编辑模板',
+          toggleStatus: '启用/停用模板',
+          delete: '删除模板'
+        },
+        certificate: {
+          batchIssue: '批量发证',
+          import: '导入外部证书',
+          issue: '发放证书',
+          revoke: '撤销证书',
+          uploadFile: '上传证书扫描件'
         }
       },
       employee: {
@@ -1073,6 +1088,67 @@ const local: App.I18n.Schema = {
             status: '请选择状态',
             participantsPlaceholder: '搜索并选择学员（账号/姓名）',
             endTimeBeforeStart: '结束时间必须晚于开始时间'
+          }
+        },
+        certTemplate: {
+          title: '证书模板',
+          templateName: '模板名称',
+          certType: '证书类型',
+          sourceLabel: '来源',
+          noPrefix: '编号前缀',
+          statusLabel: '状态',
+          remark: '备注',
+          addTemplate: '新增模板',
+          editTemplate: '编辑模板',
+          enable: '启用',
+          disable: '停用',
+          confirmEnable: '确认启用该模板？启用后可用于发证。',
+          confirmDisable: '确认停用该模板？停用后不可发证。',
+          source: {
+            system: '系统',
+            org: '企业'
+          },
+          status: {
+            enabled: '启用',
+            disabled: '停用'
+          },
+          form: {
+            templateName: '请输入模板名称',
+            certType: '请输入证书类型',
+            source: '请选择来源',
+            noPrefix: '请输入编号前缀（如 JN/AQ/HF，证书号=前缀-年-流水）'
+          }
+        },
+        certificate: {
+          title: '证书发放',
+          student: '学员',
+          template: '证书模板',
+          sourceLabel: '来源',
+          source: {
+            session: '班次结业',
+            import: '外部导入'
+          },
+          session: '班次',
+          batchIssue: '批量发证',
+          batchIssueDone: '本次发证',
+          batchIssueSkipped: '跳过（已有证书）',
+          batchIssueTip: '按所选班次的结业学员批量生成证书（证书号=模板前缀-年-流水）；已持有该模板有效证书的学员自动跳过，可重复调用（幂等）。',
+          importExternal: '导入外部证书',
+          issue: '发放',
+          revoke: '撤销',
+          upload: '上传扫描件',
+          chooseFile: '选择文件',
+          confirmIssue: '确认发放该证书？发放后可在我的培训中查看。',
+          confirmRevoke: '确认撤销该证书？撤销后学员端显示已撤销（终态）。',
+          form: {
+            session: '请选择班次（已结束）',
+            template: '请选择证书模板（启用中）',
+            student: '搜索并选择学员（账号/姓名）',
+            certName: '请输入证书名称',
+            certType: '请输入证书类型',
+            certNo: '请输入外部证书号（唯一）',
+            status: '请选择状态',
+            source: '请选择来源'
           }
         }
       }

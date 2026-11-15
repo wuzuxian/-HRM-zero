@@ -1,0 +1,99 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/cert_template"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 证书模板（HRM-30）：模板名称/证书类型/来源 系统|企业/编号前缀/启用停用。
+// 编号前缀决定证书号=前缀-年-流水（hrm_bill_sequence 按前缀+年分配流水）。
+// 证书发放（HRM-30）按模板发证；模板停用后不可发证。
+type HrmCertTemplate {
+	Uuid         string `json:"uuid"`
+	TemplateName string `json:"templateName"` // 模板名称
+	CertType     string `json:"certType"` // 证书类型（合格证/继续教育/荣誉/安全培训证/结业证/技能证明/上岗证/企业…）
+	Source       string `json:"source"` // 来源 1=系统 2=企业
+	NoPrefix     string `json:"noPrefix"` // 编号前缀（HF/CE/YX/XF/RZ/JN/SG/AQ/HG/JX…）
+	Status       string `json:"status"` // 1=启用 2=停用
+	Remark       string `json:"remark"`
+	CreateTime   string `json:"createTime"`
+	UpdateTime   string `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	TemplateName string `form:"templateName,optional"` // 模板名称（模糊）
+	CertType     string `form:"certType,optional"` // 证书类型
+	Source       string `form:"source,optional"` // 来源
+	Status       string `form:"status,optional"` // 状态
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmCertTemplate `json:"records"`
+}
+
+type AddRequest {
+	TemplateName string `json:"templateName"`
+	CertType     string `json:"certType"`
+	Source       string `json:"source"` // 1=系统 2=企业
+	NoPrefix     string `json:"noPrefix"`
+	Remark       string `json:"remark,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid         string `json:"uuid"`
+	TemplateName string `json:"templateName"`
+	CertType     string `json:"certType"`
+	Source       string `json:"source"`
+	NoPrefix     string `json:"noPrefix"`
+	Remark       string `json:"remark,optional"`
+}
+
+type EditResponse {}
+
+// 启用/停用（行开关）：status 1=启用 2=停用，停用后不可发证。
+type ToggleStatusRequest {
+	Uuid   string `json:"uuid"`
+	Status string `json:"status"` // 1=启用 2=停用
+}
+
+type ToggleStatusResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/cert_template
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getCertTemplateList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addCertTemplate (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editCertTemplate (EditRequest) returns (EditResponse)
+
+	// 启用/停用（行操作）
+	@handler ToggleStatus
+	post /hrm/toggleCertTemplateStatus (ToggleStatusRequest) returns (ToggleStatusResponse)
+
+	@handler Delete
+	post /hrm/deleteCertTemplate (DeleteRequest) returns (DeleteResponse)
+}
+
