@@ -176,6 +176,10 @@ const local: App.I18n.Schema = {
     hrm_org: '组织',
     hrm_org_orginfo: '组织管理',
     'hrm_org_org-chart': '组织架构图',
+    hrm_attendance: '假勤管理',
+    hrm_attendance_setting: '假勤设置',
+    hrm_attendance_setting_shift: '班次管理',
+    'hrm_attendance_setting_leave-type': '假期类型',
     hrm_performance: '绩效管理',
     hrm_performance_setting: '绩效设置',
     hrm_performance_setting_indicator: '指标库',
@@ -214,6 +218,16 @@ const local: App.I18n.Schema = {
         delete: '删除组织',
         import: '导入组织',
         export: '导出组织'
+      },
+      shift: {
+        add: '新增班次',
+        edit: '编辑班次',
+        delete: '删除班次'
+      },
+      leavetype: {
+        add: '新增假期类型',
+        edit: '编辑假期类型',
+        delete: '删除假期类型'
       },
       performance: {
         indicator: {
@@ -550,6 +564,61 @@ const local: App.I18n.Schema = {
           refresh: '刷新',
           empty: '暂无组织数据，请先在组织管理中维护组织',
           noLeader: '未设置'
+        }
+      },
+      attendance: {
+        yes: '是',
+        no: '否',
+        status: {
+          enabled: '启用',
+          disabled: '停用'
+        },
+        shift: {
+          title: '班次管理',
+          shiftName: '班次名称',
+          workTime: '上下班时间',
+          crossDay: '跨天',
+          nextDay: '次日',
+          restTime: '休息时段',
+          noRest: '无休息',
+          standardHours: '标准工时',
+          flexibleMinutes: '弹性',
+          notFlexible: '不弹性',
+          flexibleMinutesValue: '弹性 {n} 分钟',
+          status: '状态',
+          remark: '备注',
+          addShift: '新增班次',
+          editShift: '编辑班次',
+          form: {
+            shiftName: '请输入班次名称',
+            startTime: '请选择上班时间',
+            endTime: '请选择下班时间',
+            rest: '休息时段（可选）',
+            flexibleMinutes: '请输入弹性分钟数',
+            status: '请选择状态',
+            remark: '请输入备注'
+          }
+        },
+        leaveType: {
+          title: '假期类型',
+          typeName: '类型名称',
+          typeCode: '类型编码',
+          typeValue: '类型值',
+          balanceEnabled: '余额管理',
+          attachmentRequired: '需要附件',
+          defaultDays: '默认天数',
+          orderNum: '排序',
+          status: '状态',
+          remark: '备注',
+          addLeaveType: '新增假期类型',
+          editLeaveType: '编辑假期类型',
+          form: {
+            typeName: '请输入类型名称',
+            typeCode: '请输入类型编码（如 annual_leave）',
+            typeValue: '请输入类型值',
+            status: '请选择状态',
+            remark: '请输入备注'
+          }
         }
       }
     }

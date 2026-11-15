@@ -95,7 +95,7 @@ type (
 		ScoreRule     string    `db:"score_rule"`     // 评分规则：formula=公式评分 manual=手工评分
 		DataSource    string    `db:"data_source"`    // 数据来源：system=系统取数 manual=手工填报
 		DefaultWeight float64   `db:"default_weight"` // 默认权重（百分比，如 40.00 表示 40%）
-		Status        string    `db:"status"`         // 状态：1=启用 0=停用
+		Status        string    `db:"status"`         // 状态：1=启用 2=停用
 		Remark        string    `db:"remark"`         // 备注
 	}
 )

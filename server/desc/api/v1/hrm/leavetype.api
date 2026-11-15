@@ -1,0 +1,93 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/leavetype"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+type HrmLeaveType {
+	Uuid               string  `json:"uuid"`
+	TypeCode           string  `json:"typeCode"`
+	TypeName           string  `json:"typeName"`
+	TypeValue          int64   `json:"typeValue"`
+	BalanceEnabled     int64   `json:"balanceEnabled"`
+	AttachmentRequired int64   `json:"attachmentRequired"`
+	DefaultDays        float64 `json:"defaultDays"`
+	OrderNum           int64   `json:"orderNum"`
+	Status             string  `json:"status"`
+	Remark             string  `json:"remark"`
+	CreateTime         string  `json:"createTime"`
+	UpdateTime         string  `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	TypeName string `form:"typeName,optional"`
+	Status   string `form:"status,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmLeaveType `json:"records"`
+}
+
+type AddRequest {
+	TypeCode           string  `json:"typeCode"`
+	TypeName           string  `json:"typeName"`
+	TypeValue          int64   `json:"typeValue,optional"`
+	BalanceEnabled     int64   `json:"balanceEnabled,optional"`
+	AttachmentRequired int64   `json:"attachmentRequired,optional"`
+	DefaultDays        float64 `json:"defaultDays,optional"`
+	OrderNum           int64   `json:"orderNum,optional"`
+	Status             string  `json:"status,default=1"`
+	Remark             string  `json:"remark,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid               string  `json:"uuid"`
+	TypeCode           string  `json:"typeCode"`
+	TypeName           string  `json:"typeName"`
+	TypeValue          int64   `json:"typeValue,optional"`
+	BalanceEnabled     int64   `json:"balanceEnabled,optional"`
+	AttachmentRequired int64   `json:"attachmentRequired,optional"`
+	DefaultDays        float64 `json:"defaultDays,optional"`
+	OrderNum           int64   `json:"orderNum,optional"`
+	Status             string  `json:"status"`
+	Remark             string  `json:"remark,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/leavetype
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getLeaveTypeList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addLeaveType (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editLeaveType (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deleteLeaveType (DeleteRequest) returns (DeleteResponse)
+}
+

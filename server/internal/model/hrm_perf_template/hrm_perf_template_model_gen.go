@@ -82,7 +82,7 @@ type (
 		CreateTime time.Time `db:"create_time"`
 		UpdateTime time.Time `db:"update_time"`
 		Name       string    `db:"name"`   // 模板名称
-		Status     string    `db:"status"` // 状态：1=启用 0=停用
+		Status     string    `db:"status"` // 状态：1=启用 2=停用
 		Remark     string    `db:"remark"` // 备注
 	}
 )

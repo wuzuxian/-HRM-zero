@@ -428,6 +428,16 @@ declare namespace App {
             import: string;
             export: string;
           };
+          shift: {
+            add: string;
+            edit: string;
+            delete: string;
+          };
+          leavetype: {
+            add: string;
+            edit: string;
+            delete: string;
+          };
           performance: {
             indicator: {
               add: string;
@@ -762,6 +772,61 @@ declare namespace App {
               refresh: string;
               empty: string;
               noLeader: string;
+            };
+          };
+          attendance: {
+            yes: string;
+            no: string;
+            status: {
+              enabled: string;
+              disabled: string;
+            };
+            shift: {
+              title: string;
+              shiftName: string;
+              workTime: string;
+              crossDay: string;
+              nextDay: string;
+              restTime: string;
+              noRest: string;
+              standardHours: string;
+              flexibleMinutes: string;
+              notFlexible: string;
+              flexibleMinutesValue: string;
+              status: string;
+              remark: string;
+              addShift: string;
+              editShift: string;
+              form: {
+                shiftName: string;
+                startTime: string;
+                endTime: string;
+                rest: string;
+                flexibleMinutes: string;
+                status: string;
+                remark: string;
+              };
+            };
+            leaveType: {
+              title: string;
+              typeName: string;
+              typeCode: string;
+              typeValue: string;
+              balanceEnabled: string;
+              attachmentRequired: string;
+              defaultDays: string;
+              orderNum: string;
+              status: string;
+              remark: string;
+              addLeaveType: string;
+              editLeaveType: string;
+              form: {
+                typeName: string;
+                typeCode: string;
+                typeValue: string;
+                status: string;
+                remark: string;
+              };
             };
           };
         };

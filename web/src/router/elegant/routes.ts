@@ -71,6 +71,44 @@ export const generatedRoutes: GeneratedRoute[] = [
     },
     children: [
       {
+        name: 'hrm_attendance',
+        path: '/hrm/attendance',
+        meta: {
+          title: 'hrm_attendance',
+          i18nKey: 'route.hrm_attendance'
+        },
+        children: [
+          {
+            name: 'hrm_attendance_setting',
+            path: '/hrm/attendance/setting',
+            meta: {
+              title: 'hrm_attendance_setting',
+              i18nKey: 'route.hrm_attendance_setting'
+            },
+            children: [
+              {
+                name: 'hrm_attendance_setting_leave-type',
+                path: '/hrm/attendance/setting/leave-type',
+                component: 'view.hrm_attendance_setting_leave-type',
+                meta: {
+                  title: 'hrm_attendance_setting_leave-type',
+                  i18nKey: 'route.hrm_attendance_setting_leave-type'
+                }
+              },
+              {
+                name: 'hrm_attendance_setting_shift',
+                path: '/hrm/attendance/setting/shift',
+                component: 'view.hrm_attendance_setting_shift',
+                meta: {
+                  title: 'hrm_attendance_setting_shift',
+                  i18nKey: 'route.hrm_attendance_setting_shift'
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
         name: 'hrm_org',
         path: '/hrm/org',
         meta: {

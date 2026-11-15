@@ -42,3 +42,10 @@ export const hrmOrgStatusRecord: Record<Api.Hrm.OrgStatus, App.I18n.I18nKey> = {
 };
 
 export const hrmOrgStatusOptions = transformRecordToOption(hrmOrgStatusRecord);
+
+export const hrmAttendanceStatusRecord: Record<Api.Hrm.AttendanceStatus, App.I18n.I18nKey> = {
+  '1': 'page.hrm.attendance.status.enabled',
+  '0': 'page.hrm.attendance.status.disabled'
+};
+
+export const hrmAttendanceStatusOptions = transformRecordToOption(hrmAttendanceStatusRecord);

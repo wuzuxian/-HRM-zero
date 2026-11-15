@@ -474,6 +474,84 @@
         ]
       }
     },
+    "/api/v1/hrm/addLeaveType": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:leavetype:add",
+        "operationId": "v1/Hrm/LeavetypeAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "attachmentRequired": {
+                  "type": "integer"
+                },
+                "balanceEnabled": {
+                  "type": "integer"
+                },
+                "defaultDays": {
+                  "type": "number"
+                },
+                "orderNum": {
+                  "type": "integer"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "status": {
+                  "default": "1",
+                  "example": "1",
+                  "type": "string"
+                },
+                "typeCode": {
+                  "type": "string"
+                },
+                "typeName": {
+                  "type": "string"
+                },
+                "typeValue": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "typeCode",
+                "typeName",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/leavetype"
+        ]
+      }
+    },
     "/api/v1/hrm/addOrg": {
       "post": {
         "consumes": [
@@ -783,6 +861,82 @@
         ]
       }
     },
+    "/api/v1/hrm/addShift": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:shift:add",
+        "operationId": "v1/Hrm/ShiftAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "endTime": {
+                  "type": "string"
+                },
+                "flexibleMinutes": {
+                  "type": "integer"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "restEnd": {
+                  "type": "string"
+                },
+                "restStart": {
+                  "type": "string"
+                },
+                "shiftName": {
+                  "type": "string"
+                },
+                "startTime": {
+                  "type": "string"
+                },
+                "status": {
+                  "default": "1",
+                  "example": "1",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "shiftName",
+                "startTime",
+                "endTime",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/shift"
+        ]
+      }
+    },
     "/api/v1/hrm/approveBill": {
       "post": {
         "consumes": [
@@ -840,6 +994,59 @@
         "summary": "Approve",
         "tags": [
           "v1/hrm/bill"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteLeaveType": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:leavetype:delete",
+        "operationId": "v1/Hrm/LeavetypeDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/leavetype"
         ]
       }
     },
@@ -999,6 +1206,139 @@
         "summary": "Delete",
         "tags": [
           "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteShift": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:shift:delete",
+        "operationId": "v1/Hrm/ShiftDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/shift"
+        ]
+      }
+    },
+    "/api/v1/hrm/editLeaveType": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:leavetype:edit",
+        "operationId": "v1/Hrm/LeavetypeEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "attachmentRequired": {
+                  "type": "integer"
+                },
+                "balanceEnabled": {
+                  "type": "integer"
+                },
+                "defaultDays": {
+                  "type": "number"
+                },
+                "orderNum": {
+                  "type": "integer"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "typeCode": {
+                  "type": "string"
+                },
+                "typeName": {
+                  "type": "string"
+                },
+                "typeValue": {
+                  "type": "integer"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "typeCode",
+                "typeName",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/leavetype"
         ]
       }
     },
@@ -1234,6 +1574,84 @@
         "summary": "Edit",
         "tags": [
           "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/editShift": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:shift:edit",
+        "operationId": "v1/Hrm/ShiftEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "endTime": {
+                  "type": "string"
+                },
+                "flexibleMinutes": {
+                  "type": "integer"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "restEnd": {
+                  "type": "string"
+                },
+                "restStart": {
+                  "type": "string"
+                },
+                "shiftName": {
+                  "type": "string"
+                },
+                "startTime": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "shiftName",
+                "startTime",
+                "endTime",
+                "status"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/shift"
         ]
       }
     },
@@ -1546,6 +1964,132 @@
         "summary": "GetApprovalRecordList",
         "tags": [
           "v1/hrm/bill"
+        ]
+      }
+    },
+    "/api/v1/hrm/getLeaveTypeList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:leavetype:list",
+        "operationId": "v1/Hrm/LeavetypeList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "typeName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "attachmentRequired": {
+                        "type": "integer"
+                      },
+                      "balanceEnabled": {
+                        "type": "integer"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "defaultDays": {
+                        "type": "number"
+                      },
+                      "orderNum": {
+                        "type": "integer"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "typeCode": {
+                        "type": "string"
+                      },
+                      "typeName": {
+                        "type": "string"
+                      },
+                      "typeValue": {
+                        "type": "integer"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "typeCode",
+                      "typeName",
+                      "typeValue",
+                      "balanceEnabled",
+                      "attachmentRequired",
+                      "defaultDays",
+                      "orderNum",
+                      "status",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/leavetype"
         ]
       }
     },
@@ -2246,6 +2790,136 @@
         "summary": "List",
         "tags": [
           "v1/hrm/perf_template"
+        ]
+      }
+    },
+    "/api/v1/hrm/getShiftList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:shift:list",
+        "operationId": "v1/Hrm/ShiftList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "shiftName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "crossDay": {
+                        "type": "integer"
+                      },
+                      "endTime": {
+                        "type": "string"
+                      },
+                      "flexibleMinutes": {
+                        "type": "integer"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "restEnd": {
+                        "type": "string"
+                      },
+                      "restStart": {
+                        "type": "string"
+                      },
+                      "shiftName": {
+                        "type": "string"
+                      },
+                      "standardHours": {
+                        "type": "number"
+                      },
+                      "startTime": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "shiftName",
+                      "startTime",
+                      "endTime",
+                      "crossDay",
+                      "restStart",
+                      "restEnd",
+                      "standardHours",
+                      "flexibleMinutes",
+                      "status",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/shift"
         ]
       }
     },
