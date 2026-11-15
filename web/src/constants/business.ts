@@ -91,10 +91,7 @@ export const hrmRewardLevelRecord: Record<Api.Hrm.RewardLevel, App.I18n.I18nKey>
 export const hrmRewardLevelOptions = transformRecordToOption(hrmRewardLevelRecord);
 
 /** 岗位类别 (招聘需求单 HR207) */
-export const hrmRequirementPostCategoryRecord: Record<
-  Api.Hrm.RequirementPostCategory,
-  App.I18n.I18nKey
-> = {
+export const hrmRequirementPostCategoryRecord: Record<Api.Hrm.RequirementPostCategory, App.I18n.I18nKey> = {
   tech: 'page.hrm.requirement.postCategory.tech',
   product: 'page.hrm.requirement.postCategory.product',
   design: 'page.hrm.requirement.postCategory.design',
@@ -185,3 +182,38 @@ export const hrmEmployeeUserStatusRecord: Record<Api.Hrm.UserStatus, App.I18n.I1
   '1': 'page.hrm.employee.userStatus.created',
   '0': 'page.hrm.employee.userStatus.none'
 };
+
+/** 候选人状态 (HRM-26 候选人中心): 新线索→已投递→面试中→已发Offer→录用通过; 不通过 */
+export const hrmCandidateStatusRecord: Record<Api.Hrm.CandidateStatus, App.I18n.I18nKey> = {
+  new: 'page.hrm.candidate.status.new',
+  delivered: 'page.hrm.candidate.status.delivered',
+  interviewing: 'page.hrm.candidate.status.interviewing',
+  offer: 'page.hrm.candidate.status.offer',
+  hired: 'page.hrm.candidate.status.hired',
+  rejected: 'page.hrm.candidate.status.rejected'
+};
+
+export const hrmCandidateStatusOptions = transformRecordToOption(hrmCandidateStatusRecord);
+
+/** 候选人来源渠道 (demo-inventory §5 筛选项) */
+export const hrmCandidateSourceChannelRecord: Record<Api.Hrm.CandidateSourceChannel, App.I18n.I18nKey> = {
+  recommend: 'page.hrm.candidate.sourceChannel.recommend',
+  website: 'page.hrm.candidate.sourceChannel.website',
+  campus: 'page.hrm.candidate.sourceChannel.campus',
+  headhunter: 'page.hrm.candidate.sourceChannel.headhunter',
+  other: 'page.hrm.candidate.sourceChannel.other'
+};
+
+export const hrmCandidateSourceChannelOptions = transformRecordToOption(hrmCandidateSourceChannelRecord);
+
+/** 候选人最高学历 (demo-inventory §5 列) */
+export const hrmCandidateEducationRecord: Record<Api.Hrm.CandidateEducation, App.I18n.I18nKey> = {
+  doctor: 'page.hrm.candidate.education.doctor',
+  master: 'page.hrm.candidate.education.master',
+  bachelor: 'page.hrm.candidate.education.bachelor',
+  associate: 'page.hrm.candidate.education.associate',
+  senior: 'page.hrm.candidate.education.senior',
+  other: 'page.hrm.candidate.education.other'
+};
+
+export const hrmCandidateEducationOptions = transformRecordToOption(hrmCandidateEducationRecord);

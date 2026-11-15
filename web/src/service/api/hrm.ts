@@ -611,3 +611,61 @@ export function DeleteRequirement(req: string[]) {
     }
   });
 }
+
+// ---- HRM 候选人中心 (HRM-26, Excel 导入) ----
+
+/** get 候选人 paginated list (筛选 姓名/手机号/来源渠道/状态) */
+export function GetCandidateList(params?: Api.Hrm.CandidateSearchParams) {
+  return request<Api.Hrm.CandidateList>({
+    url: '/api/v1/hrm/getCandidateList',
+    method: 'get',
+    params
+  });
+}
+
+/** add 候选人 (初始状态 新线索) */
+export function AddCandidate(req: Api.Hrm.AddCandidateRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addCandidate',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 候选人 (状态走 updateCandidateStatus 流转) */
+export function EditCandidate(req: Api.Hrm.EditCandidateRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editCandidate',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 候选人 (普通实体, 不限状态) */
+export function DeleteCandidate(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteCandidate',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** 候选人状态流转 (新线索→已投递→…→录用通过; 不可跳级/不可回退) */
+export function UpdateCandidateStatus(req: Api.Hrm.UpdateCandidateStatusRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/updateCandidateStatus',
+    method: 'post',
+    data: req
+  });
+}
+
+/** import 候选人 from a base64-encoded xlsx file (AI 入库通道按 ADR-0002 裁剪) */
+export function ImportCandidate(req: Api.Hrm.ImportCandidateRequest) {
+  return request<Api.Hrm.ImportCandidateResponse>({
+    url: '/api/v1/hrm/importCandidate',
+    method: 'post',
+    data: req
+  });
+}

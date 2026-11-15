@@ -196,6 +196,7 @@ const local: App.I18n.Schema = {
     hrm_reward_bill: 'Reward Bill',
     hrm_recruitment: 'Recruitment',
     'hrm_recruitment_requirement-list': 'Requirement',
+    'hrm_recruitment_candidate-list': 'Candidates',
     hrm_training_plan: 'Training Plan',
     hrm_training_session: 'Training Session',
     hrm_employee: 'HR Archive',
@@ -271,6 +272,13 @@ const local: App.I18n.Schema = {
         add: 'Add Requirement',
         edit: 'Edit Requirement',
         delete: 'Delete Requirement'
+      },
+      candidate: {
+        add: 'Add Candidate',
+        edit: 'Edit Candidate',
+        delete: 'Delete Candidate',
+        import: 'Import Candidates',
+        updatestatus: 'Candidate Status Transition'
       },
       bill: {
         submit: 'Submit Bill',
@@ -633,6 +641,66 @@ const local: App.I18n.Schema = {
           urgency: 'Please select urgency',
           org: 'Please select department',
           requirementDesc: 'Please enter requirement description'
+        }
+      },
+      candidate: {
+        title: 'Candidate Center',
+        name: 'Name',
+        phone: 'Phone',
+        email: 'Email',
+        sourceChannel: {
+          title: 'Source Channel',
+          recommend: 'Referral',
+          website: 'Job Site',
+          campus: 'Campus',
+          headhunter: 'Headhunter',
+          other: 'Other'
+        },
+        education: {
+          title: 'Highest Education',
+          doctor: 'Doctor',
+          master: 'Master',
+          bachelor: 'Bachelor',
+          associate: 'Associate',
+          senior: 'Senior High',
+          other: 'Other'
+        },
+        currentCompany: 'Current Company',
+        currentPosition: 'Current Position',
+        expectSalary: 'Expected Salary',
+        remark: 'Remark',
+        status: {
+          title: 'Status',
+          new: 'New Lead',
+          delivered: 'Delivered',
+          interviewing: 'Interviewing',
+          offer: 'Offer Sent',
+          hired: 'Hired',
+          rejected: 'Rejected'
+        },
+        createTime: 'Create Time',
+        advanceTo: 'Advance to {status}',
+        confirmAdvance: "Advance this candidate's status to {status}?",
+        confirmReject: 'Mark this candidate as rejected?',
+        reject: 'Reject',
+        import: 'Excel Import',
+        importModalTitle: 'Import Candidates',
+        importSuccess: 'Import succeeded',
+        importTemplateTip:
+          'Template columns: Name, Phone, Email, Source Channel (Referral/Job Site/Campus/Headhunter/Other), Highest Education (Doctor/Master/Bachelor/Associate/Senior High/Other), Current Company, Current Position, Expected Salary',
+        chooseFileTip: 'Please choose an xlsx file',
+        addCandidate: 'Add Candidate',
+        editCandidate: 'Edit Candidate',
+        form: {
+          name: 'Please enter name',
+          phone: 'Please enter phone',
+          email: 'Please enter email',
+          sourceChannel: 'Please select source channel',
+          education: 'Please select highest education',
+          currentCompany: 'Please enter current company',
+          currentPosition: 'Please enter current position',
+          expectSalary: 'Please enter expected salary (e.g. 20k-30k)',
+          remark: 'Please enter remark'
         }
       },
       performance: {

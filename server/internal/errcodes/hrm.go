@@ -99,6 +99,18 @@ const (
 	RequirementOrgRequiredCode = 10432
 	// RequirementNotEditableCode 单据当前状态不允许修改/删除（仅 未提交/审批不通过/已撤销 可改）
 	RequirementNotEditableCode = 10433
+
+	// HRM 候选人中心（HRM-26）业务错误码。10440-10441（10441 与 HRM-24 seam 注释中
+	// 「需求未审批通过不可发布职位」候选码重叠，最终归属以合并两侧声明为准；
+	// 10442+ 预留给 HRM-25 录用审批）。
+	// CandidateNotFoundCode 候选人不存在
+	CandidateNotFoundCode = 10440
+	// CandidateInvalidCode 候选人参数非法（姓名/来源渠道/最高学历等）
+	CandidateInvalidCode = 10441
+	// CandidateStatusTransitionInvalidCode 候选人状态流转非法（不可跳级/不可回退）
+	CandidateStatusTransitionInvalidCode = 10442
+	// CandidateImportInvalidCode 导入候选人文件非法
+	CandidateImportInvalidCode = 10443
 )
 
 func init() {
@@ -151,4 +163,9 @@ func init() {
 	status.Register(RequirementInvalidCode)
 	status.Register(RequirementOrgRequiredCode)
 	status.Register(RequirementNotEditableCode)
+
+	status.Register(CandidateNotFoundCode)
+	status.Register(CandidateInvalidCode)
+	status.Register(CandidateStatusTransitionInvalidCode)
+	status.Register(CandidateImportInvalidCode)
 }

@@ -202,6 +202,7 @@ const routeMap: RouteMap = {
   "hrm_reward": "/hrm/reward",
   "hrm_reward_bill": "/hrm/reward/bill",
   "hrm_recruitment": "/hrm/recruitment",
+  "hrm_recruitment_candidate-list": "/hrm/recruitment/candidate-list",
   "hrm_recruitment_requirement-list": "/hrm/recruitment/requirement-list",
   "hrm_training": "/hrm/training",
   "hrm_training_my": "/hrm/training/my",

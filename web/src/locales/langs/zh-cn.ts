@@ -196,6 +196,7 @@ const local: App.I18n.Schema = {
     hrm_reward_bill: '奖惩单',
     hrm_recruitment: '招聘管理',
     'hrm_recruitment_requirement-list': '招聘需求',
+    'hrm_recruitment_candidate-list': '候选人中心',
     hrm_training_plan: '培训计划',
     hrm_training_session: '培训班次',
     hrm_employee: '人事档案',
@@ -271,6 +272,13 @@ const local: App.I18n.Schema = {
         add: '新增招聘需求',
         edit: '编辑招聘需求',
         delete: '删除招聘需求'
+      },
+      candidate: {
+        add: '新增候选人',
+        edit: '编辑候选人',
+        delete: '删除候选人',
+        import: '导入候选人',
+        updatestatus: '候选人状态流转'
       },
       bill: {
         submit: '提交单据',
@@ -633,6 +641,66 @@ const local: App.I18n.Schema = {
           urgency: '请选择紧急度',
           org: '请选择所属部门',
           requirementDesc: '请输入需求说明/任职要求'
+        }
+      },
+      candidate: {
+        title: '候选人中心',
+        name: '姓名',
+        phone: '手机号',
+        email: '邮箱',
+        sourceChannel: {
+          title: '来源渠道',
+          recommend: '内部推荐',
+          website: '招聘网站',
+          campus: '校园招聘',
+          headhunter: '猎头',
+          other: '其他'
+        },
+        education: {
+          title: '最高学历',
+          doctor: '博士',
+          master: '硕士',
+          bachelor: '本科',
+          associate: '大专',
+          senior: '高中',
+          other: '其他'
+        },
+        currentCompany: '当前公司',
+        currentPosition: '当前岗位',
+        expectSalary: '期望薪资',
+        remark: '备注',
+        status: {
+          title: '状态',
+          new: '新线索',
+          delivered: '已投递',
+          interviewing: '面试中',
+          offer: '已发Offer',
+          hired: '录用通过',
+          rejected: '不通过'
+        },
+        createTime: '创建时间',
+        advanceTo: '推进到{status}',
+        confirmAdvance: '确认将该候选人的状态推进到 {status}？',
+        confirmReject: '确认标记该候选人不通过？',
+        reject: '不通过',
+        import: 'Excel导入',
+        importModalTitle: '导入候选人',
+        importSuccess: '导入成功',
+        importTemplateTip:
+          '模板列：姓名、手机号、邮箱、来源渠道（内部推荐/招聘网站/校园招聘/猎头/其他）、最高学历（博士/硕士/本科/大专/高中/其他）、当前公司、当前岗位、期望薪资',
+        chooseFileTip: '请选择 xlsx 文件',
+        addCandidate: '新增候选人',
+        editCandidate: '编辑候选人',
+        form: {
+          name: '请输入姓名',
+          phone: '请输入手机号',
+          email: '请输入邮箱',
+          sourceChannel: '请选择来源渠道',
+          education: '请选择最高学历',
+          currentCompany: '请输入当前公司',
+          currentPosition: '请输入当前岗位',
+          expectSalary: '请输入期望薪资（如 20k-30k）',
+          remark: '请输入备注'
         }
       },
       performance: {

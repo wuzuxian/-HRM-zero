@@ -466,6 +466,13 @@ declare namespace App {
             edit: string;
             delete: string;
           };
+          candidate: {
+            add: string;
+            edit: string;
+            delete: string;
+            import: string;
+            updatestatus: string;
+          };
           bill: {
             submit: string;
             approve: string;
@@ -1182,6 +1189,65 @@ declare namespace App {
               urgency: string;
               org: string;
               requirementDesc: string;
+            };
+          };
+          candidate: {
+            title: string;
+            name: string;
+            phone: string;
+            email: string;
+            sourceChannel: {
+              title: string;
+              recommend: string;
+              website: string;
+              campus: string;
+              headhunter: string;
+              other: string;
+            };
+            education: {
+              title: string;
+              doctor: string;
+              master: string;
+              bachelor: string;
+              associate: string;
+              senior: string;
+              other: string;
+            };
+            currentCompany: string;
+            currentPosition: string;
+            expectSalary: string;
+            remark: string;
+            status: {
+              title: string;
+              new: string;
+              delivered: string;
+              interviewing: string;
+              offer: string;
+              hired: string;
+              rejected: string;
+            };
+            createTime: string;
+            advanceTo: string;
+            confirmAdvance: string;
+            confirmReject: string;
+            reject: string;
+            import: string;
+            importModalTitle: string;
+            importSuccess: string;
+            importTemplateTip: string;
+            chooseFileTip: string;
+            addCandidate: string;
+            editCandidate: string;
+            form: {
+              name: string;
+              phone: string;
+              email: string;
+              sourceChannel: string;
+              education: string;
+              currentCompany: string;
+              currentPosition: string;
+              expectSalary: string;
+              remark: string;
             };
           };
           training: {

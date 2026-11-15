@@ -1157,10 +1157,7 @@ declare namespace Api {
 
     /** requirement search params */
     type RequirementSearchParams = CommonType.RecordNullable<
-      Pick<
-        Api.Hrm.HrmRequirement,
-        'billNo' | 'status' | 'postName' | 'postCategory' | 'urgency' | 'orgUuid'
-      > &
+      Pick<Api.Hrm.HrmRequirement, 'billNo' | 'status' | 'postName' | 'postCategory' | 'urgency' | 'orgUuid'> &
         Common.CommonSearchParams
     >;
 
@@ -1182,6 +1179,111 @@ declare namespace Api {
     /** edit requirement request */
     type EditRequirementRequest = AddRequirementRequest & {
       uuid: string;
+    };
+
+    /**
+     * candidate source channel (来源渠道, demo-inventory §5)
+     *
+     * - "recommend": 内部推荐
+     * - "website": 招聘网站
+     * - "campus": 校园招聘
+     * - "headhunter": 猎头
+     * - "other": 其他
+     */
+    type CandidateSourceChannel = 'recommend' | 'website' | 'campus' | 'headhunter' | 'other';
+
+    /**
+     * candidate education (最高学历, demo-inventory §5)
+     *
+     * - "doctor": 博士
+     * - "master": 硕士
+     * - "bachelor": 本科
+     * - "associate": 大专
+     * - "senior": 高中
+     * - "other": 其他
+     */
+    type CandidateEducation = 'doctor' | 'master' | 'bachelor' | 'associate' | 'senior' | 'other';
+
+    /**
+     * candidate status (候选人状态, demo-inventory §5)
+     *
+     * - "new": 新线索
+     * - "delivered": 已投递
+     * - "interviewing": 面试中
+     * - "offer": 已发Offer
+     * - "hired": 录用通过
+     * - "rejected": 不通过
+     */
+    type CandidateStatus = 'new' | 'delivered' | 'interviewing' | 'offer' | 'hired' | 'rejected';
+
+    /** recruitment candidate (候选人, HRM-26 候选人中心; 普通实体, 非单据底座) */
+    type HrmCandidate = {
+      /** record uuid */
+      uuid: string;
+      /** 姓名 */
+      name: string;
+      /** 手机号 */
+      phone: string;
+      /** 邮箱 */
+      email: string;
+      /** 来源渠道 */
+      sourceChannel: CandidateSourceChannel | null;
+      /** 最高学历 */
+      education: CandidateEducation | null;
+      /** 当前公司 */
+      currentCompany: string;
+      /** 当前岗位 */
+      currentPosition: string;
+      /** 期望薪资（自由文本，如 20k-30k） */
+      expectSalary: string;
+      /** 候选人状态 */
+      status: CandidateStatus | null;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** candidate search params (demo-inventory §5: 筛选姓名/手机号/来源渠道) */
+    type CandidateSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.HrmCandidate, 'name' | 'phone' | 'sourceChannel' | 'status'> & Common.CommonSearchParams
+    >;
+
+    /** candidate paginated list */
+    type CandidateList = Common.PaginatingQueryRecord<HrmCandidate>;
+
+    /** add candidate request (初始状态 新线索) */
+    type AddCandidateRequest = {
+      name: string;
+      phone: string;
+      email: string;
+      sourceChannel: CandidateSourceChannel | null;
+      education: CandidateEducation | null;
+      currentCompany: string;
+      currentPosition: string;
+      expectSalary: string;
+      remark: string;
+    };
+
+    /** edit candidate request (状态不在此接口修改) */
+    type EditCandidateRequest = AddCandidateRequest & {
+      uuid: string;
+    };
+
+    /** candidate status transition request (不可跳级/不可回退) */
+    type UpdateCandidateStatusRequest = {
+      uuid: string;
+      status: CandidateStatus;
+    };
+
+    /** import candidates request (base64 xlsx, mirrors employee import) */
+    type ImportCandidateRequest = {
+      fileName: string;
+      content: string;
+    };
+
+    type ImportCandidateResponse = {
+      successCount: number;
     };
   }
 }
