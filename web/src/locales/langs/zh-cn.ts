@@ -208,6 +208,7 @@ const local: App.I18n.Schema = {
     hrm_performance_setting_indicator: '指标库',
     hrm_performance_setting_template: '模板管理',
     hrm_performance_scheme: '绩效方案',
+    'hrm_performance_period-list': '考核批次工作台',
     hrm_training: '培训管理',
     hrm_training_my: '我的培训',
     hrm_reward: '奖惩管理',
@@ -500,6 +501,12 @@ const local: App.I18n.Schema = {
           add: '新增方案',
           edit: '编辑方案',
           delete: '删除方案'
+        },
+        period: {
+          add: '新增批次',
+          edit: '编辑批次',
+          delete: '删除批次',
+          publish: '发布批次'
         }
       }
     }
@@ -1023,6 +1030,59 @@ const local: App.I18n.Schema = {
           },
           addScheme: '新增方案',
           editScheme: '编辑方案'
+        },
+        periodType: {
+          month: '月度',
+          quarter: '季度'
+        },
+        periodStatus: {
+          draft: '草稿',
+          ongoing: '进行中',
+          confirming: '待确认',
+          calibrating: '待校准',
+          resultPublished: '结果已发布',
+          published: '已发布'
+        },
+        period: {
+          title: '考核批次工作台',
+          periodNo: '批次编码',
+          name: '批次名称',
+          periodType: '批次类型',
+          schemeName: '绩效方案',
+          periodRange: '周期开始/结束',
+          periodStart: '周期开始',
+          periodEnd: '周期结束',
+          resultPublishDate: '结果发布日期',
+          participantCount: '参与人数',
+          status: '状态',
+          remark: '备注',
+          scopeDivider: '适用范围（多维筛选，留空不限）',
+          companyUuids: '公司',
+          orgUuids: '部门（含下级）',
+          positions: '职位',
+          posts: '职务',
+          personStatuses: '人员状态',
+          form: {
+            name: '请输入批次名称',
+            periodType: '请选择批次类型',
+            schemeUuid: '请选择绩效方案',
+            periodStart: '请选择周期开始',
+            periodEnd: '请选择周期结束',
+            resultPublishDate: '请选择结果发布日期',
+            remark: '请输入备注',
+            companyUuids: '请选择公司（留空不限）',
+            orgUuids: '请选择部门（含下级，留空不限）',
+            positions: '请输入职位（回车添加，留空不限）',
+            posts: '请输入职务（回车添加，留空不限）',
+            personStatuses: '请选择人员状态（留空不限）'
+          },
+          addPeriod: '新增批次',
+          editPeriod: '编辑批次',
+          publish: '发布',
+          publishConfirm: '发布后批次进入进行中，且不可再编辑参与人，确认发布？',
+          publishSuccess: '批次已发布，进入进行中',
+          advance: '推进阶段',
+          more: '更多'
         }
       },
       org: {

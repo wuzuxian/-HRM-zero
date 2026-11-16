@@ -208,6 +208,7 @@ const local: App.I18n.Schema = {
     hrm_performance_setting_indicator: 'Indicator Library',
     hrm_performance_setting_template: 'Template Management',
     hrm_performance_scheme: 'Scheme',
+    'hrm_performance_period-list': 'Assessment Period Workbench',
     hrm_training: 'Training',
     hrm_training_my: 'My Training',
     hrm_reward: 'Reward & Discipline',
@@ -500,6 +501,12 @@ const local: App.I18n.Schema = {
           add: 'Add Scheme',
           edit: 'Edit Scheme',
           delete: 'Delete Scheme'
+        },
+        period: {
+          add: 'Add Period',
+          edit: 'Edit Period',
+          delete: 'Delete Period',
+          publish: 'Publish Period'
         }
       }
     }
@@ -1023,6 +1030,59 @@ const local: App.I18n.Schema = {
           },
           addScheme: 'Add Scheme',
           editScheme: 'Edit Scheme'
+        },
+        periodType: {
+          month: 'Monthly',
+          quarter: 'Quarterly'
+        },
+        periodStatus: {
+          draft: 'Draft',
+          ongoing: 'Ongoing',
+          confirming: 'Pending Confirmation',
+          calibrating: 'Pending Calibration',
+          resultPublished: 'Result Published',
+          published: 'Published'
+        },
+        period: {
+          title: 'Assessment Period Workbench',
+          periodNo: 'Period No.',
+          name: 'Period Name',
+          periodType: 'Period Type',
+          schemeName: 'Scheme',
+          periodRange: 'Period Start/End',
+          periodStart: 'Period Start',
+          periodEnd: 'Period End',
+          resultPublishDate: 'Result Publish Date',
+          participantCount: 'Participants',
+          status: 'Status',
+          remark: 'Remark',
+          scopeDivider: 'Scope (multi-dim filters, empty = unrestricted)',
+          companyUuids: 'Company',
+          orgUuids: 'Department (incl. descendants)',
+          positions: 'Position',
+          posts: 'Post',
+          personStatuses: 'Person Status',
+          form: {
+            name: 'Please enter period name',
+            periodType: 'Please select period type',
+            schemeUuid: 'Please select a scheme',
+            periodStart: 'Please select period start',
+            periodEnd: 'Please select period end',
+            resultPublishDate: 'Please select result publish date',
+            remark: 'Please enter remark',
+            companyUuids: 'Select companies (empty = unrestricted)',
+            orgUuids: 'Select departments incl. descendants (empty = unrestricted)',
+            positions: 'Type a position and press Enter (empty = unrestricted)',
+            posts: 'Type a post and press Enter (empty = unrestricted)',
+            personStatuses: 'Select person statuses (empty = unrestricted)'
+          },
+          addPeriod: 'Add Period',
+          editPeriod: 'Edit Period',
+          publish: 'Publish',
+          publishConfirm: 'Publishing moves the period to Ongoing and locks participants. Confirm?',
+          publishSuccess: 'Period published (ongoing)',
+          advance: 'Advance Stage',
+          more: 'More'
         }
       },
       org: {

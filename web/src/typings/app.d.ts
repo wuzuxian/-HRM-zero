@@ -660,6 +660,12 @@ declare namespace App {
               edit: string;
               delete: string;
             };
+            period: {
+              add: string;
+              edit: string;
+              delete: string;
+              publish: string;
+            };
           };
         };
       };
@@ -975,6 +981,59 @@ declare namespace App {
               };
               addScheme: string;
               editScheme: string;
+            };
+            periodType: {
+              month: string;
+              quarter: string;
+            };
+            periodStatus: {
+              draft: string;
+              ongoing: string;
+              confirming: string;
+              calibrating: string;
+              resultPublished: string;
+              published: string;
+            };
+            period: {
+              title: string;
+              periodNo: string;
+              name: string;
+              periodType: string;
+              schemeName: string;
+              periodRange: string;
+              periodStart: string;
+              periodEnd: string;
+              resultPublishDate: string;
+              participantCount: string;
+              status: string;
+              remark: string;
+              scopeDivider: string;
+              companyUuids: string;
+              orgUuids: string;
+              positions: string;
+              posts: string;
+              personStatuses: string;
+              form: {
+                name: string;
+                periodType: string;
+                schemeUuid: string;
+                periodStart: string;
+                periodEnd: string;
+                resultPublishDate: string;
+                remark: string;
+                companyUuids: string;
+                orgUuids: string;
+                positions: string;
+                posts: string;
+                personStatuses: string;
+              };
+              addPeriod: string;
+              editPeriod: string;
+              publish: string;
+              publishConfirm: string;
+              publishSuccess: string;
+              advance: string;
+              more: string;
             };
           };
           org: {

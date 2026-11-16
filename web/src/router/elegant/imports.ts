@@ -47,6 +47,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   "hrm_employee_employee-contract-renewable": () => import("@/views/hrm/employee/employee-contract-renewable/index.vue"),
   "hrm_org_org-chart": () => import("@/views/hrm/org/org-chart/index.vue"),
   hrm_org_orginfo: () => import("@/views/hrm/org/orginfo/index.vue"),
+  "hrm_performance_period-list": () => import("@/views/hrm/performance/period-list/index.vue"),
   hrm_performance_scheme: () => import("@/views/hrm/performance/scheme/index.vue"),
   hrm_performance_setting_indicator: () => import("@/views/hrm/performance/setting/indicator/index.vue"),
   hrm_performance_setting_template: () => import("@/views/hrm/performance/setting/template/index.vue"),
