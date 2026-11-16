@@ -20,6 +20,64 @@ type ApprovalListResponse struct {
 	Records []HrmPerfResultApproval `json:"records"`
 }
 
+type DashboardResponse struct {
+	Metrics      HrmPerfDashboardMetric        `json:"metrics"`
+	LowScores    []HrmPerfDashboardLowScore    `json:"lowScores"`
+	OverdueTasks []HrmPerfDashboardOverdueTask `json:"overdueTasks"`
+	Appeals      []HrmPerfDashboardAppeal      `json:"appeals"`
+}
+
+type HrmPerfDashboardAppeal struct {
+	PeriodUuid   string `json:"periodUuid"`
+	PeriodNo     string `json:"periodNo"`
+	EmployeeUuid string `json:"employeeUuid"`
+	EmployeeName string `json:"employeeName"`
+	AssessmentNo string `json:"assessmentNo"`
+	CurrentNode  string `json:"currentNode"`
+}
+
+type HrmPerfDashboardLowScore struct {
+	PeriodUuid   string  `json:"periodUuid"`
+	PeriodNo     string  `json:"periodNo"`
+	EmployeeUuid string  `json:"employeeUuid"`
+	EmployeeName string  `json:"employeeName"`
+	CompanyName  string  `json:"companyName"`
+	OrgName      string  `json:"orgName"`
+	Score        float64 `json:"score"`
+	Grade        string  `json:"grade"`
+	Coefficient  float64 `json:"coefficient"`
+	PerfAmount   float64 `json:"perfAmount"`
+	Signed       int64   `json:"signed"`
+}
+
+type HrmPerfDashboardMetric struct {
+	OngoingPeriodCount int64   `json:"ongoingPeriodCount"`
+	CompletionRate     float64 `json:"completionRate"`
+	OverdueTaskCount   int64   `json:"overdueTaskCount"`
+	RiskEmployeeCount  int64   `json:"riskEmployeeCount"`
+	AvgScore           float64 `json:"avgScore"`
+	AppealCount        int64   `json:"appealCount"`
+	LowScore           float64 `json:"lowScore"`
+}
+
+type HrmPerfDashboardOverdueTask struct {
+	PeriodUuid   string `json:"periodUuid"`
+	PeriodNo     string `json:"periodNo"`
+	PeriodEnd    string `json:"periodEnd"`
+	EmployeeUuid string `json:"employeeUuid"`
+	EmployeeName string `json:"employeeName"`
+	CurrentNode  string `json:"currentNode"`
+	TaskStatus   string `json:"taskStatus"`
+	AssessmentNo string `json:"assessmentNo"`
+}
+
+type HrmPerfDashboardRequest struct {
+	CompanyUuid string  `form:"companyUuid,optional"`
+	OrgUuid     string  `form:"orgUuid,optional"`
+	PeriodUuid  string  `form:"periodUuid,optional"`
+	LowScore    float64 `form:"lowScore,optional"`
+}
+
 type HrmPerfResult struct {
 	Uuid           string  `json:"uuid"`
 	ApprovalUuid   string  `json:"approvalUuid"`
@@ -83,7 +141,10 @@ type ResultListRequest struct {
 	PageRequest
 	PeriodUuid   string `form:"periodUuid,optional"`
 	EmployeeUuid string `form:"employeeUuid,optional"`
+	CompanyUuid  string `form:"companyUuid,optional"`
+	OrgUuid      string `form:"orgUuid,optional"`
 	Signed       string `form:"signed,optional"`
+	SalarySynced string `form:"salarySynced,optional"`
 	Mine         bool   `form:"mine,optional"`
 }
 

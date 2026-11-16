@@ -228,3 +228,14 @@ export function SignPerfResult(uuid: string) {
     data: { uuid }
   });
 }
+
+// ---- 绩效驾驶舱（HRM-46，演示站 9.3 /hrm/performance/dashboard） ----
+
+/** get perf dashboard（单聚合端点：指标卡 + 风险预警明细） */
+export function GetPerfDashboard(params?: Api.Hrm.Performance.PerfDashboardSearchParams) {
+  return request<Api.Hrm.Performance.PerfDashboardResponse>({
+    url: '/api/v1/hrm/getPerfDashboard',
+    method: 'get',
+    params
+  });
+}

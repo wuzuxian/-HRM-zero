@@ -212,6 +212,7 @@ const local: App.I18n.Schema = {
     'hrm_performance_period-list': '考核批次工作台',
     'hrm_performance_result-confirm-list': '批次结果审批',
     'hrm_performance_result-list': '绩效结果',
+    hrm_performance_dashboard: '绩效驾驶舱',
     'hrm_performance_assessment-task': '考核任务',
     'hrm_performance_assessment-task_plan-list': '目标确认',
     'hrm_performance_assessment-task_self-review-list': '自评填报',

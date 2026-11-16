@@ -41,6 +41,15 @@ func (l *ResultList) ResultList(req *types.ResultListRequest) (resp *types.Resul
 	if req.Signed != "" {
 		chain = chain.Equal(hrm_perf_result.Signed, req.Signed)
 	}
+	if req.CompanyUuid != "" {
+		chain = chain.Equal(hrm_perf_result.CompanyUuid, req.CompanyUuid)
+	}
+	if req.OrgUuid != "" {
+		chain = chain.Equal(hrm_perf_result.OrgUuid, req.OrgUuid)
+	}
+	if req.SalarySynced != "" {
+		chain = chain.Equal(hrm_perf_result.SalarySynced, req.SalarySynced)
+	}
 	if req.Mine {
 		employeeUuid, rerr := actorEmployeeUuid(l.ctx, l.svcCtx.SqlxConn)
 		if rerr != nil {

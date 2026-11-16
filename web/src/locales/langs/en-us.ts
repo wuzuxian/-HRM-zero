@@ -212,6 +212,7 @@ const local: App.I18n.Schema = {
     'hrm_performance_period-list': 'Assessment Period Workbench',
     'hrm_performance_result-confirm-list': 'Batch Result Approval',
     'hrm_performance_result-list': 'Performance Results',
+    hrm_performance_dashboard: 'Perf Dashboard',
     'hrm_performance_assessment-task': 'Assessment Tasks',
     'hrm_performance_assessment-task_plan-list': 'Plan Confirm',
     'hrm_performance_assessment-task_self-review-list': 'Self Review',
