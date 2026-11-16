@@ -40,7 +40,11 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Api.Hrm.AddTrainingSessionRequest;
+type Model = Omit<Api.Hrm.AddTrainingSessionRequest, 'startTime' | 'endTime'> & {
+  // NDatePicker 的 formatted-value 不能是空串（解析 "" 抛 Invalid time value），未选择时必须为 null
+  startTime: string | null;
+  endTime: string | null;
+};
 
 const model: Model = reactive(createDefaultModel());
 
@@ -51,8 +55,8 @@ function createDefaultModel(): Model {
     lecturer: '',
     location: '',
     hours: 0,
-    startTime: '',
-    endTime: '',
+    startTime: null,
+    endTime: null,
     remark: ''
   };
 }
@@ -97,8 +101,9 @@ function handleInitModel() {
       lecturer: props.rowData.lecturer,
       location: props.rowData.location,
       hours: props.rowData.hours,
-      startTime: props.rowData.startTime,
-      endTime: props.rowData.endTime,
+      // DB 列 NOT NULL DEFAULT ''，编辑回填可能拿到空串；空串会让 NDatePicker 抛 Invalid time value
+      startTime: props.rowData.startTime || null,
+      endTime: props.rowData.endTime || null,
       remark: props.rowData.remark
     });
   }
@@ -111,7 +116,8 @@ function closeModel() {
 
 async function handleSubmit() {
   await validate();
-  if (model.endTime <= model.startTime) {
+  // validate() 已拦截 null；此比较仅对非空时间串有意义，null 参与比较会得到 false 不触发拦截
+  if (model.startTime && model.endTime && model.endTime <= model.startTime) {
     window.$message?.error($t('page.hrm.training.session.form.endTimeBeforeStart'));
     return;
   }
@@ -119,8 +125,13 @@ async function handleSubmit() {
 
   const request =
     props.operateType === 'add'
-      ? AddTrainingSession({ ...model })
-      : EditTrainingSession({ ...model, uuid: props.rowData?.uuid ?? '' });
+      ? AddTrainingSession({ ...model, startTime: model.startTime ?? '', endTime: model.endTime ?? '' })
+      : EditTrainingSession({
+          ...model,
+          startTime: model.startTime ?? '',
+          endTime: model.endTime ?? '',
+          uuid: props.rowData?.uuid ?? ''
+        });
 
   const { error } = await request;
   if (!error) {

@@ -41,7 +41,10 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Api.Hrm.AddRegularizationRequest;
+type Model = Omit<Api.Hrm.AddRegularizationRequest, 'formalDate'> & {
+  // NDatePicker 的 formatted-value 不能是空串（解析 "" 抛 Invalid time value），未选择时必须为 null
+  formalDate: string | null;
+};
 
 const model: Model = reactive(createDefaultModel());
 
@@ -57,7 +60,7 @@ function createDefaultModel(): Model {
     personStatus: '',
     hireDate: '',
     expectedFormalDate: '',
-    formalDate: '',
+    formalDate: null,
     remark: ''
   };
 }
@@ -119,6 +122,8 @@ function handleInitModel() {
 
   if (props.operateType === 'edit' && props.rowData) {
     Object.assign(model, props.rowData);
+    // DB 列 NOT NULL DEFAULT ''，编辑回填可能拿到空串；空串会让 NDatePicker 抛 Invalid time value
+    model.formalDate = props.rowData.formalDate || null;
   }
   loadEmployeeOptions();
 }
@@ -133,8 +138,8 @@ async function handleSubmit() {
 
   const request =
     props.operateType === 'add'
-      ? AddRegularization({ ...model })
-      : EditRegularization({ ...model, uuid: props.rowData?.uuid ?? '' });
+      ? AddRegularization({ ...model, formalDate: model.formalDate ?? '' })
+      : EditRegularization({ ...model, formalDate: model.formalDate ?? '', uuid: props.rowData?.uuid ?? '' });
 
   const { error } = await request;
   if (!error) {
@@ -271,8 +276,8 @@ watch(visible, () => {
           </NFormItemGi>
           <NFormItemGi span="24" :label="$t('page.hrm.employeeRelation.regularization.remark')" path="remark">
             <NInput
-  type="textarea"
               v-model:value="model.remark"
+              type="textarea"
               :rows="2"
               :placeholder="$t('page.hrm.employeeRelation.regularization.form.remark')"
             />

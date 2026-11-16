@@ -42,7 +42,11 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Api.Hrm.AddTrainingPlanRequest;
+type Model = Omit<Api.Hrm.AddTrainingPlanRequest, 'startDate' | 'endDate'> & {
+  // NDatePicker 的 formatted-value 不能是空串（解析 "" 抛 Invalid time value），未选择时必须为 null
+  startDate: string | null;
+  endDate: string | null;
+};
 
 const model: Model = reactive(createDefaultModel());
 
@@ -52,8 +56,8 @@ function createDefaultModel(): Model {
     theme: '',
     planYear: String(new Date().getFullYear()),
     planType: 'special',
-    startDate: '',
-    endDate: ''
+    startDate: null,
+    endDate: null
   };
 }
 
@@ -72,6 +76,9 @@ function handleInitModel() {
 
   if (props.operateType === 'edit' && props.rowData) {
     Object.assign(model, props.rowData);
+    // DB 列 NOT NULL DEFAULT ''，编辑回填可能拿到空串；空串会让 NDatePicker 抛 Invalid time value
+    model.startDate = props.rowData.startDate || null;
+    model.endDate = props.rowData.endDate || null;
   }
 }
 
@@ -81,7 +88,8 @@ function closeModel() {
 
 async function handleSubmit() {
   await validate();
-  if (model.endDate < model.startDate) {
+  // validate() 已拦截 null；此比较仅对非空日期串有意义，null 参与比较会得到 false 不触发拦截
+  if (model.startDate && model.endDate && model.endDate < model.startDate) {
     window.$message?.error($t('page.hrm.training.plan.form.endDateBeforeStart'));
     return;
   }
@@ -89,8 +97,13 @@ async function handleSubmit() {
 
   const request =
     props.operateType === 'add'
-      ? AddTrainingPlan({ ...model })
-      : EditTrainingPlan({ ...model, uuid: props.rowData?.uuid ?? '' });
+      ? AddTrainingPlan({ ...model, startDate: model.startDate ?? '', endDate: model.endDate ?? '' })
+      : EditTrainingPlan({
+          ...model,
+          startDate: model.startDate ?? '',
+          endDate: model.endDate ?? '',
+          uuid: props.rowData?.uuid ?? ''
+        });
 
   const { error } = await request;
   if (!error) {

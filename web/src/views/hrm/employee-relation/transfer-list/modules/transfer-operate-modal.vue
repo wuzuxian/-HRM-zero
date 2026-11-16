@@ -42,7 +42,10 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Api.Hrm.AddTransferRequest;
+type Model = Omit<Api.Hrm.AddTransferRequest, 'effectiveDate'> & {
+  // NDatePicker 的 formatted-value 不能是空串（解析 "" 抛 Invalid time value），未选择时必须为 null
+  effectiveDate: string | null;
+};
 
 const model: Model = reactive(createDefaultModel());
 
@@ -63,7 +66,7 @@ function createDefaultModel(): Model {
     newSalary: 0,
     transferReason: '',
     effectiveImmediately: 1,
-    effectiveDate: ''
+    effectiveDate: null
   };
 }
 
@@ -108,6 +111,8 @@ function handleInitModel() {
 
   if (props.operateType === 'edit' && props.rowData) {
     Object.assign(model, props.rowData);
+    // DB 列 NOT NULL DEFAULT ''，编辑回填可能拿到空串；空串会让 NDatePicker 抛 Invalid time value
+    model.effectiveDate = props.rowData.effectiveDate || null;
   }
   loadOrgOptions();
 }
@@ -126,8 +131,8 @@ async function handleSubmit() {
 
   const request =
     props.operateType === 'add'
-      ? AddTransfer({ ...model })
-      : EditTransfer({ ...model, uuid: props.rowData?.uuid ?? '' });
+      ? AddTransfer({ ...model, effectiveDate: model.effectiveDate ?? '' })
+      : EditTransfer({ ...model, effectiveDate: model.effectiveDate ?? '', uuid: props.rowData?.uuid ?? '' });
 
   const { error } = await request;
   if (!error) {
@@ -291,8 +296,8 @@ watch(visible, () => {
           </NFormItemGi>
           <NFormItemGi span="24" :label="$t('page.hrm.employeeRelation.transfer.transferReason')" path="transferReason">
             <NInput
-  type="textarea"
               v-model:value="model.transferReason"
+              type="textarea"
               :rows="2"
               :placeholder="$t('page.hrm.employeeRelation.transfer.form.transferReason')"
             />

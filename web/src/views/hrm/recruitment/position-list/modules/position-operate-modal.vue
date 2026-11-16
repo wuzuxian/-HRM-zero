@@ -42,7 +42,10 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Api.Hrm.AddPositionRequest;
+type Model = Omit<Api.Hrm.AddPositionRequest, 'publishDate'> & {
+  // NDatePicker 的 formatted-value 不能是空串（解析 "" 抛 Invalid time value），未选择时必须为 null
+  publishDate: string | null;
+};
 
 const model: Model = reactive(createDefaultModel());
 
@@ -54,7 +57,7 @@ function createDefaultModel(): Model {
     ownerUuid: '',
     ownerName: '',
     headcount: 1,
-    publishDate: '',
+    publishDate: null,
     remark: ''
   };
 }
@@ -95,6 +98,8 @@ function handleInitModel() {
 
   if (props.operateType === 'edit' && props.rowData) {
     Object.assign(model, props.rowData);
+    // DB 列 NOT NULL DEFAULT ''，编辑回填可能拿到空串；空串会让 NDatePicker 抛 Invalid time value
+    model.publishDate = props.rowData.publishDate || null;
   }
   loadRequirementOptions();
 }
@@ -109,8 +114,8 @@ async function handleSubmit() {
 
   const request =
     props.operateType === 'add'
-      ? AddPosition({ ...model })
-      : EditPosition({ ...model, uuid: props.rowData?.uuid ?? '' });
+      ? AddPosition({ ...model, publishDate: model.publishDate ?? '' })
+      : EditPosition({ ...model, publishDate: model.publishDate ?? '', uuid: props.rowData?.uuid ?? '' });
 
   const { error } = await request;
   if (!error) {
@@ -137,11 +142,7 @@ watch(visible, () => {
           <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.position.postName')" path="postName">
             <NInput v-model:value="model.postName" :placeholder="$t('page.hrm.position.form.postName')" />
           </NFormItemGi>
-          <NFormItemGi
-            span="24 s:12 m:8"
-            :label="$t('page.hrm.position.requirement')"
-            path="requirementUuid"
-          >
+          <NFormItemGi span="24 s:12 m:8" :label="$t('page.hrm.position.requirement')" path="requirementUuid">
             <NSelect
               v-model:value="model.requirementUuid"
               :options="requirementOptions"
@@ -172,8 +173,8 @@ watch(visible, () => {
           </NFormItemGi>
           <NFormItemGi span="24" :label="$t('page.hrm.position.remark')" path="remark">
             <NInput
-              type="textarea"
               v-model:value="model.remark"
+              type="textarea"
               :rows="2"
               :placeholder="$t('page.hrm.position.form.remark')"
             />

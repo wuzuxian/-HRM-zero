@@ -42,7 +42,10 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Api.Hrm.AddRewardRequest;
+type Model = Omit<Api.Hrm.AddRewardRequest, 'occurDate'> & {
+  // NDatePicker 的 formatted-value 不能是空串（解析 "" 抛 Invalid time value），未选择时必须为 null
+  occurDate: string | null;
+};
 
 const model: Model = reactive(createDefaultModel());
 
@@ -54,7 +57,7 @@ function createDefaultModel(): Model {
     rewardType: 'reward',
     rewardLevel: 'company',
     docNo: '',
-    occurDate: '',
+    occurDate: null,
     amount: 0,
     reason: '',
     salaryMonth: ''
@@ -76,6 +79,8 @@ function handleInitModel() {
 
   if (props.operateType === 'edit' && props.rowData) {
     Object.assign(model, props.rowData);
+    // DB 列 NOT NULL DEFAULT ''，编辑回填可能拿到空串；空串会让 NDatePicker 抛 Invalid time value
+    model.occurDate = props.rowData.occurDate || null;
   }
 }
 
@@ -88,7 +93,9 @@ async function handleSubmit() {
   confirmStartLoading();
 
   const request =
-    props.operateType === 'add' ? AddReward({ ...model }) : EditReward({ ...model, uuid: props.rowData?.uuid ?? '' });
+    props.operateType === 'add'
+      ? AddReward({ ...model, occurDate: model.occurDate ?? '' })
+      : EditReward({ ...model, occurDate: model.occurDate ?? '', uuid: props.rowData?.uuid ?? '' });
 
   const { error } = await request;
   if (!error) {
@@ -156,7 +163,11 @@ watch(visible, () => {
           </NFormItemGi>
           <NFormItemGi span="24" :label="$t('page.hrm.reward.reason')" path="reason">
             <NInput
-  type="textarea" v-model:value="model.reason" :rows="2" :placeholder="$t('page.hrm.reward.form.reason')" />
+              v-model:value="model.reason"
+              type="textarea"
+              :rows="2"
+              :placeholder="$t('page.hrm.reward.form.reason')"
+            />
           </NFormItemGi>
         </NGrid>
       </NForm>

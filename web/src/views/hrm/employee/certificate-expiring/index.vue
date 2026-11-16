@@ -201,6 +201,9 @@ function handleSubmitted() {
   getDataByPage();
 }
 
+const checkedRowKeys = ref<string[]>([]);
+const hasCheckedRows = computed(() => checkedRowKeys.value.length === 0);
+
 async function handleBatchDelete() {
   const uuids: string[] = [...checkedRowKeys.value];
   uuids.forEach(uuid => {
@@ -226,15 +229,16 @@ async function handleDelete(uuid: string) {
   getData();
 }
 
-const checkedRowKeys = ref<string[]>([]);
-const hasCheckedRows = computed(() => checkedRowKeys.value.length === 0);
-
 // ---- inline maintain modal ----
 const { formRef: certFormRef, validate: certValidate, restoreValidation: certRestoreValidation } = useNaiveForm();
 const { defaultRequiredRule } = useFormRules();
 const { loading: confirmLoading, startLoading: confirmStartLoading, endLoading: confirmEndLoading } = useLoading();
 
-type CertModel = Api.Hrm.AddEmployeeCertificateRequest;
+type CertModel = Omit<Api.Hrm.AddEmployeeCertificateRequest, 'issueDate' | 'expiryDate'> & {
+  // NDatePicker 的 formatted-value 不能是空串（解析 "" 抛 Invalid time value），未选择时必须为 null
+  issueDate: string | null;
+  expiryDate: string | null;
+};
 
 const certModel: CertModel = reactive(createDefaultCertModel());
 
@@ -243,8 +247,8 @@ function createDefaultCertModel(): CertModel {
     employeeUuid: '',
     certType: '',
     certNo: '',
-    issueDate: '',
-    expiryDate: '',
+    issueDate: null,
+    expiryDate: null,
     remark: ''
   };
 }
@@ -281,8 +285,9 @@ function handleInitCertModel() {
       employeeUuid: editingData.value.employeeUuid,
       certType: editingData.value.certType,
       certNo: editingData.value.certNo, // 脱敏回显；原样提交视为未修改
-      issueDate: editingData.value.issueDate,
-      expiryDate: editingData.value.expiryDate,
+      // DB 默认 ''，空串会让 NDatePicker 抛 Invalid time value，统一归一为 null
+      issueDate: editingData.value.issueDate || null,
+      expiryDate: editingData.value.expiryDate || null,
       remark: editingData.value.remark
     });
   }
@@ -295,8 +300,17 @@ async function handleCertSubmit() {
   confirmStartLoading();
   const request =
     operateType.value === 'add'
-      ? AddEmployeeCertificate({ ...certModel })
-      : EditEmployeeCertificate({ ...certModel, uuid: editingData.value?.uuid ?? '' });
+      ? AddEmployeeCertificate({
+          ...certModel,
+          issueDate: certModel.issueDate ?? undefined,
+          expiryDate: certModel.expiryDate ?? undefined
+        })
+      : EditEmployeeCertificate({
+          ...certModel,
+          issueDate: certModel.issueDate ?? undefined,
+          expiryDate: certModel.expiryDate ?? undefined,
+          uuid: editingData.value?.uuid ?? ''
+        });
   const { error } = await request;
   if (!error) {
     window.$message?.success(operateType.value === 'add' ? $t('common.addSuccess') : $t('common.updateSuccess'));
@@ -462,8 +476,7 @@ watch(operateVisible, () => {
               />
             </NFormItemGi>
             <NFormItemGi span="24" :label="$t('page.hrm.employee.certExpiring.remark')" path="remark">
-              <NInput
-  type="textarea" v-model:value="certModel.remark" :rows="2" />
+              <NInput v-model:value="certModel.remark" type="textarea" :rows="2" />
             </NFormItemGi>
           </NGrid>
         </NForm>

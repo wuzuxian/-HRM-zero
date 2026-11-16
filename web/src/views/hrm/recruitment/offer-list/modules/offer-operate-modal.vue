@@ -42,7 +42,10 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Api.Hrm.AddOfferRequest;
+type Model = Omit<Api.Hrm.AddOfferRequest, 'planEntryDate'> & {
+  // NDatePicker 的 formatted-value 不能是空串（解析 "" 抛 Invalid time value），未选择时必须为 null
+  planEntryDate: string | null;
+};
 
 const model: Model = reactive(createDefaultModel());
 
@@ -50,7 +53,7 @@ function createDefaultModel(): Model {
   return {
     candidateUuid: '',
     positionUuid: '',
-    planEntryDate: '',
+    planEntryDate: null,
     probationMonths: 0,
     rankLevel: 'junior',
     reporterName: ''
@@ -111,7 +114,8 @@ function handleInitModel() {
     Object.assign(model, {
       candidateUuid: props.rowData.candidateUuid,
       positionUuid: props.rowData.positionUuid,
-      planEntryDate: props.rowData.planEntryDate,
+      // DB 列 NOT NULL DEFAULT ''，编辑回填可能拿到空串；空串会让 NDatePicker 抛 Invalid time value
+      planEntryDate: props.rowData.planEntryDate || null,
       probationMonths: props.rowData.probationMonths,
       rankLevel: props.rowData.rankLevel,
       reporterName: props.rowData.reporterName
@@ -131,8 +135,8 @@ async function handleSubmit() {
 
   const request =
     props.operateType === 'add'
-      ? AddOffer({ ...model })
-      : EditOffer({ ...model, uuid: props.rowData?.uuid ?? '' });
+      ? AddOffer({ ...model, planEntryDate: model.planEntryDate ?? '' })
+      : EditOffer({ ...model, planEntryDate: model.planEntryDate ?? '', uuid: props.rowData?.uuid ?? '' });
 
   const { error } = await request;
   if (!error) {

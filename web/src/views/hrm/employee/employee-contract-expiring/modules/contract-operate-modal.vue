@@ -40,7 +40,12 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Api.Hrm.AddContractRequest & { status: string };
+type Model = Omit<Api.Hrm.AddContractRequest, 'startDate' | 'endDate'> & {
+  status: string;
+  // NDatePicker 的 formatted-value 不能是空串（解析 "" 抛 Invalid time value），未选择时必须为 null
+  startDate: string | null;
+  endDate: string | null;
+};
 
 const model: Model = reactive(createDefaultModel());
 
@@ -48,8 +53,8 @@ function createDefaultModel(): Model {
   return {
     employeeUuid: '',
     contractNo: '',
-    startDate: '',
-    endDate: '',
+    startDate: null,
+    endDate: null,
     status: '1',
     remark: ''
   };
@@ -106,8 +111,9 @@ function handleInitModel() {
     Object.assign(model, {
       employeeUuid: props.rowData.employeeUuid,
       contractNo: props.rowData.contractNo,
-      startDate: props.rowData.startDate,
-      endDate: props.rowData.endDate,
+      // DB 列 NOT NULL DEFAULT ''，编辑回填可能拿到空串；空串会让 NDatePicker 抛 Invalid time value
+      startDate: props.rowData.startDate || null,
+      endDate: props.rowData.endDate || null,
       status: props.rowData.status || '1',
       remark: props.rowData.remark
     });
@@ -125,8 +131,13 @@ async function handleSubmit() {
 
   const request =
     props.operateType === 'add'
-      ? AddEmployeeContract({ ...model })
-      : EditEmployeeContract({ ...model, uuid: props.rowData?.uuid ?? '' });
+      ? AddEmployeeContract({ ...model, startDate: model.startDate ?? '', endDate: model.endDate ?? '' })
+      : EditEmployeeContract({
+          ...model,
+          startDate: model.startDate ?? '',
+          endDate: model.endDate ?? '',
+          uuid: props.rowData?.uuid ?? ''
+        });
 
   const { error } = await request;
   if (!error) {
@@ -190,8 +201,8 @@ watch(visible, () => {
           </NFormItemGi>
           <NFormItemGi span="24" :label="$t('page.hrm.employee.contractExpiring.remark')" path="remark">
             <NInput
-  type="textarea"
               v-model:value="model.remark"
+              type="textarea"
               :rows="2"
               :placeholder="$t('page.hrm.employee.contractExpiring.form.remark')"
             />

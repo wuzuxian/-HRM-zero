@@ -42,7 +42,13 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Api.Hrm.AddResignationRequest;
+type Model = Omit<Api.Hrm.AddResignationRequest, 'applyDate' | 'resignDate' | 'lastWorkDate' | 'salarySettleDate'> & {
+  // NDatePicker 的 formatted-value 不能是空串（解析 "" 抛 Invalid time value），未选择时必须为 null
+  applyDate: string | null;
+  resignDate: string | null;
+  lastWorkDate: string | null;
+  salarySettleDate: string | null;
+};
 
 const model: Model = reactive(createDefaultModel());
 
@@ -57,11 +63,11 @@ function createDefaultModel(): Model {
     post: '',
     resignType: '',
     resignReason: '',
-    applyDate: '',
-    resignDate: '',
-    lastWorkDate: '',
+    applyDate: null,
+    resignDate: null,
+    lastWorkDate: null,
     handoverPerson: '',
-    salarySettleDate: ''
+    salarySettleDate: null
   };
 }
 
@@ -114,6 +120,11 @@ function handleInitModel() {
 
   if (props.operateType === 'edit' && props.rowData) {
     Object.assign(model, props.rowData);
+    // DB 列 NOT NULL DEFAULT ''，编辑回填可能拿到空串；空串会让 NDatePicker 抛 Invalid time value
+    model.applyDate = props.rowData.applyDate || null;
+    model.resignDate = props.rowData.resignDate || null;
+    model.lastWorkDate = props.rowData.lastWorkDate || null;
+    model.salarySettleDate = props.rowData.salarySettleDate || null;
   }
   loadEmployeeOptions();
 }
@@ -128,8 +139,21 @@ async function handleSubmit() {
 
   const request =
     props.operateType === 'add'
-      ? AddResignation({ ...model })
-      : EditResignation({ ...model, uuid: props.rowData?.uuid ?? '' });
+      ? AddResignation({
+          ...model,
+          applyDate: model.applyDate ?? '',
+          resignDate: model.resignDate ?? '',
+          lastWorkDate: model.lastWorkDate ?? '',
+          salarySettleDate: model.salarySettleDate ?? ''
+        })
+      : EditResignation({
+          ...model,
+          applyDate: model.applyDate ?? '',
+          resignDate: model.resignDate ?? '',
+          lastWorkDate: model.lastWorkDate ?? '',
+          salarySettleDate: model.salarySettleDate ?? '',
+          uuid: props.rowData?.uuid ?? ''
+        });
 
   const { error } = await request;
   if (!error) {
@@ -294,8 +318,8 @@ watch(visible, () => {
           </NFormItemGi>
           <NFormItemGi span="24" :label="$t('page.hrm.employeeRelation.resignation.resignReason')" path="resignReason">
             <NInput
-  type="textarea"
               v-model:value="model.resignReason"
+              type="textarea"
               :rows="2"
               :placeholder="$t('page.hrm.employeeRelation.resignation.form.resignReason')"
             />

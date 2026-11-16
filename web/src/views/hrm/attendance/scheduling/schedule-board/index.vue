@@ -1,19 +1,14 @@
 <script setup lang="tsx">
-import { computed, ref } from 'vue';
-import type { UploadFileInfo } from 'naive-ui';
+import { computed, onMounted, ref } from 'vue';
 import { NButton } from 'naive-ui';
 import {
-  CopyScheduleWeek,
   ExportScheduleBoard,
-  GenerateScheduleFromCycle,
   GetScheduleMatrix,
   GetShiftList,
-  ImportScheduleBoard,
   PublishScheduleMonth,
   SaveScheduleCell
 } from '@/service/api';
 import { $t } from '@/locales';
-import { useAppStore } from '@/store/modules/app';
 import ScheduleBoardSearch from './modules/schedule-board-search.vue';
 import ScheduleGenerateModal from './modules/schedule-generate-modal.vue';
 import ScheduleCopyWeekModal from './modules/schedule-copy-week-modal.vue';
@@ -23,12 +18,17 @@ defineOptions({
   name: 'ScheduleBoard'
 });
 
-const appStore = useAppStore();
-
 // ---- 查询状态（考勤组 + 月份） ----
 const groupUuid = ref('');
-const month = ref('');
+// 初始化为当前月：NDatePicker 的 formatted-value 不能是空串（解析 "" 抛 Invalid time value，
+// 组件 setup 崩溃导致整页空白）；只能为 null 或合法格式串，故用当前月占位
+const currentMonth = (() => {
+  const d = new Date();
+  return `${d.getFullYear()}-${`${d.getMonth() + 1}`.padStart(2, '0')}`;
+})();
+const month = ref(currentMonth);
 const boardLoading = ref(false);
+const searchParams = ref({ name: '', employeeNo: '', orgName: '' });
 
 type MatrixRow = Api.Hrm.ScheduleMatrixRow;
 
@@ -87,11 +87,14 @@ async function loadBoard() {
 }
 
 // ---- 搜索筛选 ----
-const searchParams = ref({ name: '', employeeNo: '', orgName: '' });
-
 function handleSearch() {
   loadBoard();
 }
+
+// 班次列表是全局模板（不随考勤组变化），进页加载一次供单元格缩写渲染
+onMounted(() => {
+  loadShifts();
+});
 
 // ---- 矩阵列（当月每日一列，key 用真实字段 cells 的下标不行 → 用 date 字符串作 key 前缀列） ----
 // NDataTable 列 key 不能是虚拟值；列数组按 monthDays 动态生成，key = 日期字符串。
@@ -128,6 +131,18 @@ function nextShift(current: string): string {
   return enabled[(idx + 1) % enabled.length]!.uuid;
 }
 
+const publishedDays = computed(() => {
+  const set = new Set<string>();
+  for (const row of rows.value) {
+    for (const cell of row.cells) {
+      if (cell.published === '1' && cell.shiftUuid) {
+        set.add(`${row.employeeUuid}:${cell.date}`);
+      }
+    }
+  }
+  return set;
+});
+
 async function handleCellClick(row: BoardTableData, date: string) {
   if (publishedDays.value.has(`${row.uuid}:${date}`)) {
     window.$message?.warning($t('page.hrm.attendance.scheduleBoard.publishedLocked'));
@@ -144,18 +159,6 @@ async function handleCellClick(row: BoardTableData, date: string) {
   if (error) return;
   row[date] = target;
 }
-
-const publishedDays = computed(() => {
-  const set = new Set<string>();
-  for (const row of rows.value) {
-    for (const cell of row.cells) {
-      if (cell.published === '1' && cell.shiftUuid) {
-        set.add(`${row.employeeUuid}:${cell.date}`);
-      }
-    }
-  }
-  return set;
-});
 
 type BoardColumn = import('naive-ui').DataTableColumns<BoardTableData>[number];
 
@@ -232,7 +235,6 @@ const boardColumns = computed<import('naive-ui').DataTableColumns<BoardTableData
 const generateVisible = ref(false);
 const copyWeekVisible = ref(false);
 const importVisible = ref(false);
-const importing = ref(false);
 const exporting = ref(false);
 const publishing = ref(false);
 
@@ -298,7 +300,13 @@ function handleUploaded() {
           <NButton v-auth="'hrm:scheduleboard:export'" :loading="exporting" @click="handleExport">
             {{ $t('page.hrm.attendance.scheduleBoard.export') }}
           </NButton>
-          <NButton v-auth="'hrm:scheduleboard:publish'" type="warning" ghost :loading="publishing" @click="handlePublish">
+          <NButton
+            v-auth="'hrm:scheduleboard:publish'"
+            type="warning"
+            ghost
+            :loading="publishing"
+            @click="handlePublish"
+          >
             {{ $t('page.hrm.attendance.scheduleBoard.publish') }}
           </NButton>
         </div>

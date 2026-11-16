@@ -42,7 +42,20 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Api.Hrm.AddEntryRequest;
+type Model = Omit<Api.Hrm.AddEntryRequest, 'birthday' | 'hireDate' | 'expectFormalDate' | 'works' | 'educations'> & {
+  // NDatePicker 的 formatted-value 不能是空串（解析 "" 抛 Invalid time value），未选择时必须为 null
+  birthday: string | null;
+  hireDate: string | null;
+  expectFormalDate: string | null;
+  works: (Omit<Api.Hrm.EntryBillWork, 'startDate' | 'endDate'> & {
+    startDate: string | null;
+    endDate: string | null;
+  })[];
+  educations: (Omit<Api.Hrm.EntryBillEducation, 'startDate' | 'endDate'> & {
+    startDate: string | null;
+    endDate: string | null;
+  })[];
+};
 
 const model: Model = reactive(createDefaultModel());
 
@@ -52,7 +65,7 @@ function createDefaultModel(): Model {
     phone: '',
     email: '',
     gender: '',
-    birthday: '',
+    birthday: null,
     nation: '',
     politicalStatus: '',
     maritalStatus: '',
@@ -70,8 +83,8 @@ function createDefaultModel(): Model {
     probationMonths: 0,
     orgUuid: '',
     companyUuid: '',
-    hireDate: '',
-    expectFormalDate: '',
+    hireDate: null,
+    expectFormalDate: null,
     attachmentDesc: '',
     remark: '',
     works: [],
@@ -98,11 +111,18 @@ function removeRow<T>(rows: T[], idx: number) {
 }
 
 function addWork() {
-  addRow(model.works, () => ({ company: '', position: '', startDate: '', endDate: '', remark: '' }));
+  addRow(model.works, () => ({ company: '', position: '', startDate: null, endDate: null, remark: '' }));
 }
 
 function addEducation() {
-  addRow(model.educations, () => ({ school: '', major: '', education: '', startDate: '', endDate: '', remark: '' }));
+  addRow(model.educations, () => ({
+    school: '',
+    major: '',
+    education: '',
+    startDate: null,
+    endDate: null,
+    remark: ''
+  }));
 }
 
 function addFamily() {
@@ -115,8 +135,20 @@ function handleInitModel() {
   if (props.operateType === 'edit' && props.rowData) {
     const { works, educations, families, ...rest } = props.rowData;
     Object.assign(model, rest);
-    model.works = (works ?? []).map(item => ({ ...item }));
-    model.educations = (educations ?? []).map(item => ({ ...item }));
+    // DB 列 NOT NULL DEFAULT ''，编辑回填可能拿到空串；空串会让 NDatePicker 抛 Invalid time value
+    model.birthday = rest.birthday || null;
+    model.hireDate = rest.hireDate || null;
+    model.expectFormalDate = rest.expectFormalDate || null;
+    model.works = (works ?? []).map(item => ({
+      ...item,
+      startDate: item.startDate || null,
+      endDate: item.endDate || null
+    }));
+    model.educations = (educations ?? []).map(item => ({
+      ...item,
+      startDate: item.startDate || null,
+      endDate: item.endDate || null
+    }));
     model.families = (families ?? []).map(item => ({ ...item }));
   }
 }
@@ -129,11 +161,18 @@ async function handleSubmit() {
   await validate();
   confirmStartLoading();
 
-  // 空行剔除后再提交
+  // 空行剔除后再提交；日期字段 null → ''（后端按空串校验，required 规则已在客户端拦截必填项）
   const payload: Api.Hrm.AddEntryRequest = {
     ...model,
-    works: model.works.filter(item => item.company || item.position),
-    educations: model.educations.filter(item => item.school || item.major),
+    birthday: model.birthday ?? '',
+    hireDate: model.hireDate ?? '',
+    expectFormalDate: model.expectFormalDate ?? '',
+    works: model.works
+      .filter(item => item.company || item.position)
+      .map(item => ({ ...item, startDate: item.startDate ?? '', endDate: item.endDate ?? '' })),
+    educations: model.educations
+      .filter(item => item.school || item.major)
+      .map(item => ({ ...item, startDate: item.startDate ?? '', endDate: item.endDate ?? '' })),
     families: model.families.filter(item => item.name || item.relation)
   };
 

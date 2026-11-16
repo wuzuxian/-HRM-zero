@@ -42,7 +42,10 @@ const title = computed(() => {
   return titles[props.operateType];
 });
 
-type Model = Api.Hrm.AddRequirementRequest;
+type Model = Omit<Api.Hrm.AddRequirementRequest, 'expectDate'> & {
+  // NDatePicker 的 formatted-value 不能是空串（解析 "" 抛 Invalid time value），未选择时必须为 null
+  expectDate: string | null;
+};
 
 const model: Model = reactive(createDefaultModel());
 
@@ -52,7 +55,7 @@ function createDefaultModel(): Model {
     postCategory: 'tech',
     headcount: 1,
     urgency: 'normal',
-    expectDate: '',
+    expectDate: null,
     orgUuid: '',
     orgName: '',
     requirementDesc: ''
@@ -105,6 +108,8 @@ function handleInitModel() {
 
   if (props.operateType === 'edit' && props.rowData) {
     Object.assign(model, props.rowData);
+    // DB 列 NOT NULL DEFAULT ''，编辑回填可能拿到空串；空串会让 NDatePicker 抛 Invalid time value
+    model.expectDate = props.rowData.expectDate || null;
   }
   loadOrgOptions();
 }
@@ -119,8 +124,8 @@ async function handleSubmit() {
 
   const request =
     props.operateType === 'add'
-      ? AddRequirement({ ...model })
-      : EditRequirement({ ...model, uuid: props.rowData?.uuid ?? '' });
+      ? AddRequirement({ ...model, expectDate: model.expectDate ?? '' })
+      : EditRequirement({ ...model, expectDate: model.expectDate ?? '', uuid: props.rowData?.uuid ?? '' });
 
   const { error } = await request;
   if (!error) {
@@ -183,8 +188,8 @@ watch(visible, () => {
           </NFormItemGi>
           <NFormItemGi span="24" :label="$t('page.hrm.requirement.requirementDesc')" path="requirementDesc">
             <NInput
-  type="textarea"
               v-model:value="model.requirementDesc"
+              type="textarea"
               :rows="2"
               :placeholder="$t('page.hrm.requirement.form.requirementDesc')"
             />
