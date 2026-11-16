@@ -33,10 +33,11 @@ const (
 	AppealAdjusted = "2" // 已裁决-调整得分
 )
 
-// API 权限码（与菜单种子/前端 hasAuth 一致，route2code 自动生成同名码）。
+// API 权限码（须与 route2code.go 生成映射及菜单种子一致；
+// review/calibrate 是前端按钮码命名，API 码以端点动作为准）。
 const (
-	PermAssessmentReview    = "v1:hrm:perf_assessment:review"    // 上级评审
-	PermAssessmentCalibrate = "v1:hrm:perf_assessment:calibrate" // 校准填报 + 申诉裁决
+	PermAssessmentReview    = "v1:hrm:perf_assessment:submitLeaderReview" // 上级评审
+	PermAssessmentCalibrate = "v1:hrm:perf_assessment:submitCalibration"  // 校准填报 + 申诉裁决
 )
 
 // AssessmentDoneNode is the 当前节点 value once the whole chain is done

@@ -194,7 +194,7 @@ type AppealRequest {
 type AppealResponse {}
 
 type HandleAppealRequest {
-	// 申诉 uuid
+	// 考核任务 uuid（裁决其最新待处理申诉）
 	Uuid string `json:"uuid"`
 	// 裁决：1=维持原结果 2=调整得分
 	Decision string `json:"decision"`
