@@ -1,0 +1,20 @@
+CREATE TABLE `hrm_perf_appeal` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(36) NOT NULL UNIQUE,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `assessment_uuid` varchar(36) NOT NULL COMMENT '考核任务 uuid（hrm_perf_assessment）',
+  `period_uuid` varchar(36) NOT NULL COMMENT '绩效批次 uuid',
+  `employee_uuid` varchar(36) NOT NULL COMMENT '发起申诉的被考核人',
+  `reason` varchar(500) NOT NULL COMMENT '申诉原因',
+  `status` varchar(1) NOT NULL DEFAULT '0' COMMENT '申诉状态：0=待处理 1=已裁决-维持原结果 2=已裁决-调整得分',
+  `decision_comment` varchar(500) NOT NULL DEFAULT '' COMMENT '裁决说明',
+  `adjusted_score` decimal(8,2) NOT NULL DEFAULT 0 COMMENT '调整后最终得分（status=2 时生效）',
+  `adjusted_grade` varchar(8) NOT NULL DEFAULT '' COMMENT '调整后最终等级（status=2 时生效）',
+  `handled_by` varchar(64) NOT NULL DEFAULT '' COMMENT '裁决人（校准人）',
+  `handled_time` varchar(20) NOT NULL DEFAULT '' COMMENT '裁决时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_hrm_perf_appeal_assessment` (`assessment_uuid`),
+  KEY `idx_hrm_perf_appeal_period` (`period_uuid`),
+  KEY `idx_hrm_perf_appeal_status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci

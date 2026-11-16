@@ -1,0 +1,935 @@
+{
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/hrm/appealPerfAssessment": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:perf_assessment:appeal",
+        "operationId": "v1/Hrm/PerfAssessmentAppeal",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "assessmentUuid": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "assessmentUuid",
+                "reason"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Appeal",
+        "tags": [
+          "v1/hrm/perf_assessment"
+        ]
+      }
+    },
+    "/api/v1/hrm/confirmPerfAssessmentPlan": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:perf_assessment:confirmPlan",
+        "operationId": "v1/Hrm/PerfAssessmentConfirmPlan",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "comment": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "ConfirmPlan",
+        "tags": [
+          "v1/hrm/perf_assessment"
+        ]
+      }
+    },
+    "/api/v1/hrm/confirmPerfAssessmentResult": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:perf_assessment:confirmResult",
+        "operationId": "v1/Hrm/PerfAssessmentConfirmResult",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "ConfirmResult",
+        "tags": [
+          "v1/hrm/perf_assessment"
+        ]
+      }
+    },
+    "/api/v1/hrm/generatePerfAssessment": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:perf_assessment:generate",
+        "operationId": "v1/Hrm/PerfAssessmentGenerate",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "periodUuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "periodUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "generatedCount": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Generate",
+        "tags": [
+          "v1/hrm/perf_assessment"
+        ]
+      }
+    },
+    "/api/v1/hrm/getPerfAssessmentDetail": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:perf_assessment:getDetail",
+        "operationId": "v1/Hrm/PerfAssessmentGetDetail",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "uuid",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "appealStatus": {
+                  "type": "string"
+                },
+                "assessmentNo": {
+                  "type": "string"
+                },
+                "calibBy": {
+                  "type": "string"
+                },
+                "calibComment": {
+                  "type": "string"
+                },
+                "calibTime": {
+                  "type": "string"
+                },
+                "createTime": {
+                  "type": "string"
+                },
+                "currentNode": {
+                  "type": "string"
+                },
+                "employeeName": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "finalGrade": {
+                  "type": "string"
+                },
+                "finalScore": {
+                  "type": "number"
+                },
+                "items": {
+                  "items": {
+                    "properties": {
+                      "dataSource": {
+                        "type": "string"
+                      },
+                      "indicatorCode": {
+                        "type": "string"
+                      },
+                      "indicatorName": {
+                        "type": "string"
+                      },
+                      "indicatorType": {
+                        "type": "string"
+                      },
+                      "indicatorUuid": {
+                        "type": "string"
+                      },
+                      "scoreRule": {
+                        "type": "string"
+                      },
+                      "unit": {
+                        "type": "string"
+                      },
+                      "weight": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "indicatorUuid",
+                      "indicatorCode",
+                      "indicatorName",
+                      "indicatorType",
+                      "unit",
+                      "scoreRule",
+                      "dataSource",
+                      "weight"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "periodName": {
+                  "type": "string"
+                },
+                "periodNo": {
+                  "type": "string"
+                },
+                "periodUuid": {
+                  "type": "string"
+                },
+                "planBy": {
+                  "type": "string"
+                },
+                "planTime": {
+                  "type": "string"
+                },
+                "resultBy": {
+                  "type": "string"
+                },
+                "resultTime": {
+                  "type": "string"
+                },
+                "reviewBy": {
+                  "type": "string"
+                },
+                "reviewComment": {
+                  "type": "string"
+                },
+                "reviewGrade": {
+                  "type": "string"
+                },
+                "reviewItems": {
+                  "items": {
+                    "properties": {
+                      "indicatorUuid": {
+                        "type": "string"
+                      },
+                      "score": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "indicatorUuid",
+                      "score"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "reviewScore": {
+                  "type": "number"
+                },
+                "reviewTime": {
+                  "type": "string"
+                },
+                "selfBy": {
+                  "type": "string"
+                },
+                "selfComment": {
+                  "type": "string"
+                },
+                "selfGrade": {
+                  "type": "string"
+                },
+                "selfItems": {
+                  "items": {
+                    "properties": {
+                      "indicatorUuid": {
+                        "type": "string"
+                      },
+                      "score": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "indicatorUuid",
+                      "score"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "selfScore": {
+                  "type": "number"
+                },
+                "selfTime": {
+                  "type": "string"
+                },
+                "taskStatus": {
+                  "type": "string"
+                },
+                "templateName": {
+                  "type": "string"
+                },
+                "templateUuid": {
+                  "type": "string"
+                },
+                "updateTime": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "GetDetail",
+        "tags": [
+          "v1/hrm/perf_assessment"
+        ]
+      }
+    },
+    "/api/v1/hrm/getPerfAssessmentList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:perf_assessment:list",
+        "operationId": "v1/Hrm/PerfAssessmentList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "periodUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "currentNode",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "taskStatus",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "appealStatus": {
+                        "type": "string"
+                      },
+                      "assessmentNo": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "currentNode": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "finalGrade": {
+                        "type": "string"
+                      },
+                      "finalScore": {
+                        "type": "number"
+                      },
+                      "items": {
+                        "items": {
+                          "properties": {
+                            "dataSource": {
+                              "type": "string"
+                            },
+                            "indicatorCode": {
+                              "type": "string"
+                            },
+                            "indicatorName": {
+                              "type": "string"
+                            },
+                            "indicatorType": {
+                              "type": "string"
+                            },
+                            "indicatorUuid": {
+                              "type": "string"
+                            },
+                            "scoreRule": {
+                              "type": "string"
+                            },
+                            "unit": {
+                              "type": "string"
+                            },
+                            "weight": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "indicatorUuid",
+                            "indicatorCode",
+                            "indicatorName",
+                            "indicatorType",
+                            "unit",
+                            "scoreRule",
+                            "dataSource",
+                            "weight"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "periodName": {
+                        "type": "string"
+                      },
+                      "periodNo": {
+                        "type": "string"
+                      },
+                      "periodUuid": {
+                        "type": "string"
+                      },
+                      "reviewGrade": {
+                        "type": "string"
+                      },
+                      "reviewScore": {
+                        "type": "number"
+                      },
+                      "selfGrade": {
+                        "type": "string"
+                      },
+                      "selfScore": {
+                        "type": "number"
+                      },
+                      "taskStatus": {
+                        "type": "string"
+                      },
+                      "templateName": {
+                        "type": "string"
+                      },
+                      "templateUuid": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "assessmentNo",
+                      "periodUuid",
+                      "periodNo",
+                      "periodName",
+                      "employeeUuid",
+                      "employeeName",
+                      "templateUuid",
+                      "templateName",
+                      "items",
+                      "currentNode",
+                      "taskStatus",
+                      "finalScore",
+                      "finalGrade",
+                      "selfScore",
+                      "selfGrade",
+                      "reviewScore",
+                      "reviewGrade",
+                      "appealStatus",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/perf_assessment"
+        ]
+      }
+    },
+    "/api/v1/hrm/handlePerfAssessmentAppeal": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:perf_assessment:handleAppeal",
+        "operationId": "v1/Hrm/PerfAssessmentHandleAppeal",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "adjustedGrade": {
+                  "type": "string"
+                },
+                "adjustedScore": {
+                  "type": "number"
+                },
+                "comment": {
+                  "type": "string"
+                },
+                "decision": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "decision"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "HandleAppeal",
+        "tags": [
+          "v1/hrm/perf_assessment"
+        ]
+      }
+    },
+    "/api/v1/hrm/submitPerfAssessmentCalibration": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:perf_assessment:submitCalibration",
+        "operationId": "v1/Hrm/PerfAssessmentSubmitCalibration",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "comment": {
+                  "type": "string"
+                },
+                "finalGrade": {
+                  "type": "string"
+                },
+                "finalScore": {
+                  "type": "number"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "finalScore"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "SubmitCalibration",
+        "tags": [
+          "v1/hrm/perf_assessment"
+        ]
+      }
+    },
+    "/api/v1/hrm/submitPerfAssessmentLeaderReview": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:perf_assessment:submitLeaderReview",
+        "operationId": "v1/Hrm/PerfAssessmentSubmitLeaderReview",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "comment": {
+                  "type": "string"
+                },
+                "items": {
+                  "items": {
+                    "properties": {
+                      "indicatorUuid": {
+                        "type": "string"
+                      },
+                      "score": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "indicatorUuid",
+                      "score"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "items"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "SubmitLeaderReview",
+        "tags": [
+          "v1/hrm/perf_assessment"
+        ]
+      }
+    },
+    "/api/v1/hrm/submitPerfAssessmentSelfReview": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:perf_assessment:submitSelfReview",
+        "operationId": "v1/Hrm/PerfAssessmentSubmitSelfReview",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "comment": {
+                  "type": "string"
+                },
+                "items": {
+                  "items": {
+                    "properties": {
+                      "indicatorUuid": {
+                        "type": "string"
+                      },
+                      "score": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "indicatorUuid",
+                      "score"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "items"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "SubmitSelfReview",
+        "tags": [
+          "v1/hrm/perf_assessment"
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKey": {
+      "description": "Enter Authorization",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0"
+}

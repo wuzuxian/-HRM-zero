@@ -27,6 +27,7 @@ import (
 	v1hrmorg "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/org"
 	v1hrmovertimebill "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/overtimebill"
 	v1hrmovertimerule "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/overtimerule"
+	v1hrmperf_assessment "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_assessment"
 	v1hrmperf_indicator "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_indicator"
 	v1hrmperf_period "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_period"
 	v1hrmperf_scheme "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_scheme"
@@ -791,6 +792,67 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodPost,
 						Path:    "/hrm/toggleOvertimeRuleStatus",
 						Handler: v1hrmovertimerule.ToggleStatus(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/appealPerfAssessment",
+						Handler: v1hrmperf_assessment.Appeal(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/confirmPerfAssessmentPlan",
+						Handler: v1hrmperf_assessment.ConfirmPlan(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/confirmPerfAssessmentResult",
+						Handler: v1hrmperf_assessment.ConfirmResult(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/generatePerfAssessment",
+						Handler: v1hrmperf_assessment.Generate(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getPerfAssessmentDetail",
+						Handler: v1hrmperf_assessment.GetDetail(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getPerfAssessmentList",
+						Handler: v1hrmperf_assessment.List(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/handlePerfAssessmentAppeal",
+						Handler: v1hrmperf_assessment.HandleAppeal(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/submitPerfAssessmentCalibration",
+						Handler: v1hrmperf_assessment.SubmitCalibration(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/submitPerfAssessmentLeaderReview",
+						Handler: v1hrmperf_assessment.SubmitLeaderReview(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/submitPerfAssessmentSelfReview",
+						Handler: v1hrmperf_assessment.SubmitSelfReview(serverCtx),
 					},
 				}...,
 			),

@@ -1,0 +1,269 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/perf_assessment"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 考核任务（HRM-43，演示站 9.2 批次与任务流，GLOSSARY「考核任务」）：
+// 绩效批次展开到个人的任务链（考核单号 PA-年-流水）：
+// 目标确认 → 自评填报 → 上级评审 → 校准填报 → 结果确认（可发起申诉）。
+// 五个填报列表页共用本表（current_node/task_status/当前得分/当前等级列）；
+// 申诉走 hrm_perf_appeal（发起→校准人裁决→关闭）。
+// 评分按模板快照 items 权重汇总（percent 百分制→等级 A/B/C/D；grade/amount 直存）。
+type AssessmentItemSnapshot {
+	// 指标 uuid
+	IndicatorUuid string `json:"indicatorUuid"`
+	// 指标编码（快照）
+	IndicatorCode string `json:"indicatorCode"`
+	// 指标名称（快照）
+	IndicatorName string `json:"indicatorName"`
+	// 指标类型 kpi|behavior
+	IndicatorType string `json:"indicatorType"`
+	// 计量单位
+	Unit string `json:"unit"`
+	// 评分规则 formula|manual
+	ScoreRule string `json:"scoreRule"`
+	// 数据来源 system|manual
+	DataSource string `json:"dataSource"`
+	// 权重（百分比，快照自模板配置）
+	Weight float64 `json:"weight"`
+}
+
+// 逐项得分（自评/评审提交项）
+type ScoreItemRequest {
+	// 指标 uuid
+	IndicatorUuid string `json:"indicatorUuid"`
+	// 该项得分（百分制 0-100；等级制/金额制为原始值）
+	Score float64 `json:"score"`
+}
+
+type HrmPerfAssessment {
+	Uuid string `json:"uuid"`
+	// 考核单号 PA-年-流水
+	AssessmentNo string `json:"assessmentNo"`
+	// 绩效批次 uuid
+	PeriodUuid string `json:"periodUuid"`
+	// 批次编号（展示快照）
+	PeriodNo string `json:"periodNo"`
+	// 批次名称（展示快照）
+	PeriodName string `json:"periodName"`
+	// 被考核人 uuid（hrm_employee）
+	EmployeeUuid string `json:"employeeUuid"`
+	// 被考核人姓名（展示快照）
+	EmployeeName string `json:"employeeName"`
+	// 考核模板 uuid（快照来源）
+	TemplateUuid string `json:"templateUuid"`
+	// 模板名称（展示快照）
+	TemplateName string `json:"templateName"`
+	// 模板快照 items+权重（列表行为空数组，详情返回）
+	Items []AssessmentItemSnapshot `json:"items"`
+	// 当前节点：1=目标确认 2=自评填报 3=上级评审 4=校准填报 5=结果确认
+	CurrentNode string `json:"currentNode"`
+	// 任务状态：0=进行中 1=已完成 2=申诉中
+	TaskStatus string `json:"taskStatus"`
+	// 最终得分（校准人调整后；未到校准=0）
+	FinalScore float64 `json:"finalScore"`
+	// 最终等级（A/B/C/D 或方案等级制原值）
+	FinalGrade string `json:"finalGrade"`
+	// 自评得分
+	SelfScore float64 `json:"selfScore"`
+	// 自评等级
+	SelfGrade string `json:"selfGrade"`
+	// 上级评审得分
+	ReviewScore float64 `json:"reviewScore"`
+	// 上级评审等级
+	ReviewGrade string `json:"reviewGrade"`
+	// 申诉状态（最近一次申诉）：''=无申诉 0=待处理 1=维持 2=已调整
+	AppealStatus string `json:"appealStatus"`
+	CreateTime   string `json:"createTime"`
+	UpdateTime   string `json:"updateTime"`
+}
+
+type HrmPerfAssessmentDetail {
+	HrmPerfAssessment
+	// 目标确认时间
+	PlanTime string `json:"planTime"`
+	PlanBy   string `json:"planBy"`
+	// 自评逐项得分+说明
+	SelfItems   []ScoreItemRequest `json:"selfItems"`
+	SelfComment string             `json:"selfComment"`
+	SelfTime    string             `json:"selfTime"`
+	SelfBy      string             `json:"selfBy"`
+	// 评审逐项得分+意见
+	ReviewItems   []ScoreItemRequest `json:"reviewItems"`
+	ReviewComment string             `json:"reviewComment"`
+	ReviewTime    string             `json:"reviewTime"`
+	ReviewBy      string             `json:"reviewBy"`
+	// 校准结果
+	CalibComment string `json:"calibComment"`
+	CalibTime    string `json:"calibTime"`
+	CalibBy      string `json:"calibBy"`
+	// 结果确认
+	ResultTime string `json:"resultTime"`
+	ResultBy   string `json:"resultBy"`
+}
+
+type ListRequest {
+	PageRequest
+	// 按批次筛选
+	PeriodUuid string `form:"periodUuid,optional"`
+	// 按被考核人筛选（uuid）
+	EmployeeUuid string `form:"employeeUuid,optional"`
+	// 按当前节点筛选：1-5
+	CurrentNode string `form:"currentNode,optional"`
+	// 按任务状态筛选：0=进行中 1=已完成 2=申诉中
+	TaskStatus string `form:"taskStatus,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmPerfAssessment `json:"records"`
+}
+
+type GetDetailRequest {
+	Uuid string `form:"uuid"`
+}
+
+type GetDetailResponse {
+	HrmPerfAssessmentDetail
+}
+
+type ConfirmPlanRequest {
+	// 考核任务 uuid
+	Uuid string `json:"uuid"`
+	// 目标确认说明（可选）
+	Comment string `json:"comment,optional"`
+}
+
+type ConfirmPlanResponse {}
+
+type SubmitSelfReviewRequest {
+	// 考核任务 uuid
+	Uuid string `json:"uuid"`
+	// 逐项得分（须覆盖模板快照全部指标）
+	Items []ScoreItemRequest `json:"items"`
+	// 自评说明（可选）
+	Comment string `json:"comment,optional"`
+}
+
+type SubmitSelfReviewResponse {}
+
+type SubmitLeaderReviewRequest {
+	// 考核任务 uuid
+	Uuid string `json:"uuid"`
+	// 逐项评分（须覆盖模板快照全部指标）
+	Items []ScoreItemRequest `json:"items"`
+	// 评审意见（可选）
+	Comment string `json:"comment,optional"`
+}
+
+type SubmitLeaderReviewResponse {}
+
+type SubmitCalibrationRequest {
+	// 考核任务 uuid
+	Uuid string `json:"uuid"`
+	// 最终得分（校准人调整；percent=百分制加权汇总默认值，grade/amount=直存原值）
+	FinalScore float64 `json:"finalScore"`
+	// 最终等级（可选；percent 自动映射 A/B/C/D，grade 直存）
+	FinalGrade string `json:"finalGrade,optional"`
+	// 校准说明（可选）
+	Comment string `json:"comment,optional"`
+}
+
+type SubmitCalibrationResponse {}
+
+type ConfirmResultRequest {
+	// 考核任务 uuid
+	Uuid string `json:"uuid"`
+}
+
+type ConfirmResultResponse {}
+
+type AppealRequest {
+	// 考核任务 uuid
+	AssessmentUuid string `json:"assessmentUuid"`
+	// 申诉原因
+	Reason string `json:"reason"`
+}
+
+type AppealResponse {}
+
+type HandleAppealRequest {
+	// 申诉 uuid
+	Uuid string `json:"uuid"`
+	// 裁决：1=维持原结果 2=调整得分
+	Decision string `json:"decision"`
+	// 裁决说明
+	Comment string `json:"comment,optional"`
+	// 调整后最终得分（decision=2 时必填）
+	AdjustedScore float64 `json:"adjustedScore,optional"`
+	// 调整后最终等级（decision=2 时可选）
+	AdjustedGrade string `json:"adjustedGrade,optional"`
+}
+
+type HandleAppealResponse {}
+
+type GenerateRequest {
+	// 绩效批次 uuid（须为进行中状态）
+	PeriodUuid string `json:"periodUuid"`
+}
+
+type GenerateResponse {
+	// 本次生成/补齐的任务数（幂等：已存在者跳过）
+	GeneratedCount int64 `json:"generatedCount"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/perf_assessment
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	// 目标确认列表（demo-inventory 9.2 /hrm/performance/assessment-task/plan-list）
+	@handler List
+	get /hrm/getPerfAssessmentList (ListRequest) returns (ListResponse)
+
+	// 考核任务详情（含模板快照 items + 各阶段填报记录）
+	@handler GetDetail
+	get /hrm/getPerfAssessmentDetail (GetDetailRequest) returns (GetDetailResponse)
+
+	// 生成任务（批次发布后调用；按参与人幂等生成）
+	@handler Generate
+	post /hrm/generatePerfAssessment (GenerateRequest) returns (GenerateResponse)
+
+	// 阶段1：目标确认（被考核人）
+	@handler ConfirmPlan
+	post /hrm/confirmPerfAssessmentPlan (ConfirmPlanRequest) returns (ConfirmPlanResponse)
+
+	// 阶段2：自评填报（被考核人）
+	@handler SubmitSelfReview
+	post /hrm/submitPerfAssessmentSelfReview (SubmitSelfReviewRequest) returns (SubmitSelfReviewResponse)
+
+	// 阶段3：上级评审（有 hrm:perf_assessment:review 码者）
+	@handler SubmitLeaderReview
+	post /hrm/submitPerfAssessmentLeaderReview (SubmitLeaderReviewRequest) returns (SubmitLeaderReviewResponse)
+
+	// 阶段4：校准填报（校准人=有 hrm:perf_assessment:calibrate 码者）
+	@handler SubmitCalibration
+	post /hrm/submitPerfAssessmentCalibration (SubmitCalibrationRequest) returns (SubmitCalibrationResponse)
+
+	// 阶段5：结果确认（被考核人确认）
+	@handler ConfirmResult
+	post /hrm/confirmPerfAssessmentResult (ConfirmResultRequest) returns (ConfirmResultResponse)
+
+	// 发起申诉（被考核人，仅结果确认阶段）
+	@handler Appeal
+	post /hrm/appealPerfAssessment (AppealRequest) returns (AppealResponse)
+
+	// 申诉裁决（校准人：维持/调整得分→关闭申诉）
+	@handler HandleAppeal
+	post /hrm/handlePerfAssessmentAppeal (HandleAppealRequest) returns (HandleAppealResponse)
+}
+
