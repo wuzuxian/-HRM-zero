@@ -394,6 +394,52 @@ export const generatedRoutes: GeneratedRoute[] = [
         },
         children: [
           {
+            name: 'hrm_performance_assessment-task',
+            path: '/hrm/performance/assessment-task',
+            meta: {
+              title: 'hrm_performance_assessment-task',
+              i18nKey: 'route.hrm_performance_assessment-task'
+            },
+            children: [
+              {
+                name: 'hrm_performance_assessment-task_leader-review-list',
+                path: '/hrm/performance/assessment-task/leader-review-list',
+                component: 'view.hrm_performance_assessment-task_leader-review-list',
+                meta: {
+                  title: 'hrm_performance_assessment-task_leader-review-list',
+                  i18nKey: 'route.hrm_performance_assessment-task_leader-review-list'
+                }
+              },
+              {
+                name: 'hrm_performance_assessment-task_plan-list',
+                path: '/hrm/performance/assessment-task/plan-list',
+                component: 'view.hrm_performance_assessment-task_plan-list',
+                meta: {
+                  title: 'hrm_performance_assessment-task_plan-list',
+                  i18nKey: 'route.hrm_performance_assessment-task_plan-list'
+                }
+              },
+              {
+                name: 'hrm_performance_assessment-task_result-confirm-task-list',
+                path: '/hrm/performance/assessment-task/result-confirm-task-list',
+                component: 'view.hrm_performance_assessment-task_result-confirm-task-list',
+                meta: {
+                  title: 'hrm_performance_assessment-task_result-confirm-task-list',
+                  i18nKey: 'route.hrm_performance_assessment-task_result-confirm-task-list'
+                }
+              },
+              {
+                name: 'hrm_performance_assessment-task_self-review-list',
+                path: '/hrm/performance/assessment-task/self-review-list',
+                component: 'view.hrm_performance_assessment-task_self-review-list',
+                meta: {
+                  title: 'hrm_performance_assessment-task_self-review-list',
+                  i18nKey: 'route.hrm_performance_assessment-task_self-review-list'
+                }
+              }
+            ]
+          },
+          {
             name: 'hrm_performance_period-list',
             path: '/hrm/performance/period-list',
             component: 'view.hrm_performance_period-list',

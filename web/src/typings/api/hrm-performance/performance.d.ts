@@ -342,6 +342,143 @@ declare namespace Api {
       type PublishPerfPeriodResponse = {};
       // eslint-disable-next-line @typescript-eslint/no-empty-object-type
       type AdvancePerfPeriodResponse = {};
+
+      // ---- 考核任务链（HRM-43，演示站 9.2 五个填报列表页共用） ----
+
+      /**
+       * 考核任务当前节点（GLOSSARY「考核任务」五阶段）
+       *
+       * - "1": 目标确认（被考核人）
+       * - "2": 自评填报（被考核人）
+       * - "3": 上级评审（有 review 码者）
+       * - "4": 校准填报（校准人）
+       * - "5": 结果确认（被考核人）
+       */
+      type AssessmentNode = '1' | '2' | '3' | '4' | '5';
+
+      /**
+       * 考核任务状态
+       *
+       * - "0": 进行中
+       * - "1": 已完成
+       * - "2": 申诉中
+       */
+      type AssessmentTaskStatus = '0' | '1' | '2';
+
+      /**
+       * 申诉状态
+       *
+       * - "0": 待处理
+       * - "1": 已裁决-维持原结果
+       * - "2": 已裁决-调整得分
+       */
+      type AssessmentAppealStatus = '0' | '1' | '2';
+
+      /** 考核任务-模板快照项（items+权重，生成任务时固化） */
+      type AssessmentItemSnapshot = {
+        indicatorUuid: string;
+        indicatorCode: string;
+        indicatorName: string;
+        indicatorType: IndicatorType;
+        unit: string;
+        scoreRule: ScoreRule;
+        dataSource: DataSource;
+        weight: number;
+      };
+
+      /** 逐项得分（自评/评审提交项） */
+      type ScoreItem = {
+        indicatorUuid: string;
+        score: number;
+      };
+
+      /** 考核任务 */
+      type PerfAssessment = {
+        uuid: string;
+        /** 考核单号 PA-年-流水 */
+        assessmentNo: string;
+        periodUuid: string;
+        /** 批次编号（展示快照） */
+        periodNo: string;
+        /** 批次名称（展示快照） */
+        periodName: string;
+        employeeUuid: string;
+        /** 被考核人姓名（展示快照） */
+        employeeName: string;
+        templateUuid: string;
+        /** 考核模板名称（展示快照） */
+        templateName: string;
+        /** 模板快照 items（列表行为空数组，详情返回） */
+        items: AssessmentItemSnapshot[];
+        /** 当前节点 */
+        currentNode: AssessmentNode;
+        /** 任务状态 */
+        taskStatus: AssessmentTaskStatus;
+        /** 最终得分（校准后） */
+        finalScore: number;
+        /** 最终等级 */
+        finalGrade: string;
+        selfScore: number;
+        selfGrade: string;
+        reviewScore: number;
+        reviewGrade: string;
+        /** 申诉状态（''=无申诉） */
+        appealStatus: '' | AssessmentAppealStatus;
+        createTime: string;
+        updateTime: string;
+      };
+
+      /** 考核任务 search params */
+      type AssessmentSearchParams = CommonType.RecordNullable<
+        Pick<PerfAssessment, 'periodUuid' | 'employeeUuid' | 'currentNode' | 'taskStatus'> &
+          Common.CommonSearchParams
+      >;
+
+      /** 考核任务 list */
+      type AssessmentList = Common.PaginatingQueryRecord<PerfAssessment>;
+
+      /** 考核任务详情 */
+      type AssessmentDetail = PerfAssessment & {
+        planTime: string;
+        planBy: string;
+        selfItems: ScoreItem[];
+        selfComment: string;
+        selfTime: string;
+        selfBy: string;
+        reviewItems: ScoreItem[];
+        reviewComment: string;
+        reviewTime: string;
+        reviewBy: string;
+        calibComment: string;
+        calibTime: string;
+        calibBy: string;
+        resultTime: string;
+        resultBy: string;
+      };
+
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      type ConfirmPlanResponse = {};
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      type SubmitSelfReviewResponse = {};
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      type SubmitLeaderReviewResponse = {};
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      type SubmitCalibrationResponse = {};
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      type ConfirmResultResponse = {};
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      type AppealResponse = {};
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      type HandleAppealResponse = {};
+
+      type HandleAppealRequest = {
+        uuid: string;
+        /** 裁决："1"=维持原结果 "2"=调整得分 */
+        decision: AssessmentAppealStatus;
+        comment: string;
+        adjustedScore?: number;
+        adjustedGrade?: string;
+      };
     }
   }
 }

@@ -113,3 +113,72 @@ export function perfPeriodStatusTag(status: Api.Hrm.Performance.PeriodStatus | n
       return null;
   }
 }
+
+// ---- 考核任务链（HRM-43）领域枚举：当前节点 / 任务状态 / 申诉状态 ----
+
+export const perfAssessmentNodeRecord: Record<Api.Hrm.Performance.AssessmentNode, App.I18n.I18nKey> = {
+  '1': 'page.hrm.performance.assessmentNode.planConfirm',
+  '2': 'page.hrm.performance.assessmentNode.selfReview',
+  '3': 'page.hrm.performance.assessmentNode.leaderReview',
+  '4': 'page.hrm.performance.assessmentNode.calibration',
+  '5': 'page.hrm.performance.assessmentNode.resultConfirm'
+};
+
+export const perfAssessmentNodeOptions = transformRecordToOption(perfAssessmentNodeRecord);
+
+export function perfAssessmentNodeTag(node: Api.Hrm.Performance.AssessmentNode): NaiveUI.ThemeColor {
+  switch (node) {
+    case '1':
+      return 'info';
+    case '2':
+      return 'primary';
+    case '3':
+      return 'warning';
+    case '4':
+      return 'warning';
+    case '5':
+      return 'success';
+    default:
+      return 'default';
+  }
+}
+
+export const perfAssessmentTaskStatusRecord: Record<Api.Hrm.Performance.AssessmentTaskStatus, App.I18n.I18nKey> = {
+  '0': 'page.hrm.performance.assessmentTaskStatus.ongoing',
+  '1': 'page.hrm.performance.assessmentTaskStatus.done',
+  '2': 'page.hrm.performance.assessmentTaskStatus.appealed'
+};
+
+export const perfAssessmentTaskStatusOptions = transformRecordToOption(perfAssessmentTaskStatusRecord);
+
+export function perfAssessmentTaskStatusTag(status: Api.Hrm.Performance.AssessmentTaskStatus): NaiveUI.ThemeColor {
+  switch (status) {
+    case '0':
+      return 'info';
+    case '1':
+      return 'success';
+    case '2':
+      return 'error';
+    default:
+      return 'default';
+  }
+}
+
+export const perfAssessmentAppealStatusRecord: Record<Api.Hrm.Performance.AssessmentAppealStatus, App.I18n.I18nKey> = {
+  '0': 'page.hrm.performance.assessmentAppealStatus.pending',
+  '1': 'page.hrm.performance.assessmentAppealStatus.upheld',
+  '2': 'page.hrm.performance.assessmentAppealStatus.adjusted'
+};
+
+export function perfAssessmentAppealStatusTag(status: Api.Hrm.Performance.AssessmentAppealStatus): NaiveUI.ThemeColor {
+  switch (status) {
+    case '0':
+      return 'warning';
+    case '1':
+      return 'info';
+    case '2':
+      return 'success';
+    default:
+      return 'default';
+  }
+}
