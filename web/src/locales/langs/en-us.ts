@@ -1267,7 +1267,8 @@ const local: App.I18n.Schema = {
           goHandle: 'Go',
           handlerMe: 'Me',
           handlerReviewer: 'Reviewer',
-          handlerCalibrator: 'Calibrator',
+          handlerCalibrator: 'Calibrator'
+        },
         resultApprovalStatus: {
           unsubmitted: 'Unsubmitted',
           approving: 'Approving',

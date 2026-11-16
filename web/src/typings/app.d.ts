@@ -1221,7 +1221,6 @@ declare namespace App {
               normal: string;
               voided: string;
             };
-            };
           };
           org: {
             title: string;
