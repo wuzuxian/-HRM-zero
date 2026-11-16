@@ -43,7 +43,7 @@ const (
 // (结果确认完成 — node 5 has no successor; the row keeps node 5 + status 1).
 const AssessmentDoneNode = NodeResultConfirm
 
-// sentinel errors（wrapBizErr 映射到注册错误码 10640-10647）。
+// sentinel errors（wrapBizErr 映射到注册错误码 10660-10667）。
 var (
 	// ErrAssessmentNotFound: 考核任务不存在。
 	ErrAssessmentNotFound = errors.New("考核任务不存在")
