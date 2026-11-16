@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import './plugins/assets';
 import {
   setupAppVersionNotification,
+  setupAuthDirectives,
   setupDayjs,
   setupIconifyOffline,
   setupLoading,
@@ -28,6 +29,8 @@ async function setupApp() {
   const app = createApp(App);
 
   setupStore(app);
+
+  setupAuthDirectives(app);
 
   await setupRouter(app);
 

@@ -49,6 +49,9 @@ async function scrollToActiveTab() {
       const clientX = left + width / 2;
 
       setTimeout(() => {
+        // 路由快速切换时 tab 可能已被卸载，跳过已脱离文档的节点
+        if (!child.isConnected) return;
+
         scrollByClientX(clientX);
       }, 50);
 
