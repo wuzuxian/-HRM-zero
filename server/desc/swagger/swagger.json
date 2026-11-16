@@ -9875,6 +9875,76 @@
         ]
       }
     },
+    "/api/v1/hrm/exportAttendanceMonthReport": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:monthreport:export",
+        "operationId": "v1/Hrm/MonthreportExport",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "attGroupName": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "onlyAbnormal": {
+                  "type": "string"
+                },
+                "onlyChanged": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "yearMonth": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Export",
+        "tags": [
+          "v1/hrm/monthreport"
+        ]
+      }
+    },
     "/api/v1/hrm/exportEmployee": {
       "get": {
         "description": "接口权限编码:v1:hrm:employee:export",
@@ -11350,6 +11420,358 @@
         "summary": "ShiftUsage",
         "tags": [
           "v1/hrm/attendancegroup"
+        ]
+      }
+    },
+    "/api/v1/hrm/getAttendanceMonthLockRecords": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:monthreport:lockRecords",
+        "operationId": "v1/Hrm/MonthreportLockRecords",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "yearMonth",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "action": {
+                        "type": "string"
+                      },
+                      "actionName": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "operatorName": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "yearMonth": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "yearMonth",
+                      "action",
+                      "actionName",
+                      "operatorName",
+                      "remark",
+                      "createTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "LockRecords",
+        "tags": [
+          "v1/hrm/monthreport"
+        ]
+      }
+    },
+    "/api/v1/hrm/getAttendanceMonthReport": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:monthreport:list",
+        "operationId": "v1/Hrm/MonthreportList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "yearMonth",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "orgUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "attGroupName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "onlyAbnormal",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "onlyChanged",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "lockHint": {
+                  "type": "string"
+                },
+                "locked": {
+                  "type": "boolean"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "abnormalTotal": {
+                        "type": "integer"
+                      },
+                      "absentDays": {
+                        "type": "integer"
+                      },
+                      "attGroupName": {
+                        "type": "string"
+                      },
+                      "attendDays": {
+                        "type": "integer"
+                      },
+                      "changed": {
+                        "type": "boolean"
+                      },
+                      "compAccrueH": {
+                        "type": "number"
+                      },
+                      "earlyCount": {
+                        "type": "integer"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "expectedDays": {
+                        "type": "integer"
+                      },
+                      "holidayOtH": {
+                        "type": "number"
+                      },
+                      "lateCount": {
+                        "type": "integer"
+                      },
+                      "missingCount": {
+                        "type": "integer"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "orgUuid": {
+                        "type": "string"
+                      },
+                      "restdayOtH": {
+                        "type": "number"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "workdayOtH": {
+                        "type": "number"
+                      },
+                      "yearMonth": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "yearMonth",
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "orgUuid",
+                      "orgName",
+                      "attGroupName",
+                      "expectedDays",
+                      "attendDays",
+                      "lateCount",
+                      "earlyCount",
+                      "missingCount",
+                      "absentDays",
+                      "workdayOtH",
+                      "restdayOtH",
+                      "holidayOtH",
+                      "compAccrueH",
+                      "abnormalTotal",
+                      "changed"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/monthreport"
+        ]
+      }
+    },
+    "/api/v1/hrm/getAttendanceMonthReportDetail": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:monthreport:detail",
+        "operationId": "v1/Hrm/MonthreportDetail",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "employeeUuid",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "yearMonth",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "clockInTime": {
+                        "type": "string"
+                      },
+                      "clockOutTime": {
+                        "type": "string"
+                      },
+                      "punchDate": {
+                        "type": "string"
+                      },
+                      "settleEarlyMinutes": {
+                        "type": "integer"
+                      },
+                      "settleLateMinutes": {
+                        "type": "integer"
+                      },
+                      "settleStatus": {
+                        "type": "string"
+                      },
+                      "settleWorkHours": {
+                        "type": "number"
+                      },
+                      "weekday": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "punchDate",
+                      "weekday",
+                      "settleStatus",
+                      "clockInTime",
+                      "clockOutTime",
+                      "settleLateMinutes",
+                      "settleEarlyMinutes",
+                      "settleWorkHours"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Detail",
+        "tags": [
+          "v1/hrm/monthreport"
         ]
       }
     },
@@ -14558,6 +14980,184 @@
         ]
       }
     },
+    "/api/v1/hrm/getMyAssessmentWorkbench": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:perf_assessment:getMyWorkbench",
+        "operationId": "v1/Hrm/PerfAssessmentGetMyWorkbench",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "appeals": {
+                  "items": {
+                    "properties": {
+                      "appealStatus": {
+                        "type": "string"
+                      },
+                      "assessmentNo": {
+                        "type": "string"
+                      },
+                      "currentNode": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "myRole": {
+                        "type": "string"
+                      },
+                      "periodName": {
+                        "type": "string"
+                      },
+                      "periodNo": {
+                        "type": "string"
+                      },
+                      "periodUuid": {
+                        "type": "string"
+                      },
+                      "taskStatus": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "assessmentNo",
+                      "periodUuid",
+                      "periodName",
+                      "periodNo",
+                      "employeeUuid",
+                      "employeeName",
+                      "myRole",
+                      "currentNode",
+                      "taskStatus",
+                      "appealStatus",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "cards": {
+                  "properties": {
+                    "appeal": {
+                      "type": "integer"
+                    },
+                    "calibration": {
+                      "type": "integer"
+                    },
+                    "leaderReview": {
+                      "type": "integer"
+                    },
+                    "planConfirm": {
+                      "type": "integer"
+                    },
+                    "resultConfirm": {
+                      "type": "integer"
+                    },
+                    "selfReview": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "planConfirm",
+                    "selfReview",
+                    "leaderReview",
+                    "calibration",
+                    "resultConfirm",
+                    "appeal"
+                  ],
+                  "type": "object"
+                },
+                "todos": {
+                  "items": {
+                    "properties": {
+                      "appealStatus": {
+                        "type": "string"
+                      },
+                      "assessmentNo": {
+                        "type": "string"
+                      },
+                      "currentNode": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "myRole": {
+                        "type": "string"
+                      },
+                      "periodName": {
+                        "type": "string"
+                      },
+                      "periodNo": {
+                        "type": "string"
+                      },
+                      "periodUuid": {
+                        "type": "string"
+                      },
+                      "taskStatus": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "assessmentNo",
+                      "periodUuid",
+                      "periodName",
+                      "periodNo",
+                      "employeeUuid",
+                      "employeeName",
+                      "myRole",
+                      "currentNode",
+                      "taskStatus",
+                      "appealStatus",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "GetMyWorkbench",
+        "tags": [
+          "v1/hrm/perf_assessment"
+        ]
+      }
+    },
     "/api/v1/hrm/getMyDashboard": {
       "get": {
         "description": "接口权限编码:v1:hrm:dashboard:getMyDashboard",
@@ -16790,6 +17390,342 @@
         "summary": "List",
         "tags": [
           "v1/hrm/perf_period"
+        ]
+      }
+    },
+    "/api/v1/hrm/getPerfResultApprovalList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:perf_result:approvalList",
+        "operationId": "v1/Hrm/PerfResultApprovalList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "periodUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "approveBy": {
+                        "type": "string"
+                      },
+                      "approveTime": {
+                        "type": "string"
+                      },
+                      "avgScore": {
+                        "type": "number"
+                      },
+                      "billNo": {
+                        "type": "string"
+                      },
+                      "companySnapshot": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "opinion": {
+                        "type": "string"
+                      },
+                      "orgSnapshot": {
+                        "type": "string"
+                      },
+                      "participantCount": {
+                        "type": "integer"
+                      },
+                      "periodName": {
+                        "type": "string"
+                      },
+                      "periodNo": {
+                        "type": "string"
+                      },
+                      "periodUuid": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "submitBy": {
+                        "type": "string"
+                      },
+                      "submitTime": {
+                        "type": "string"
+                      },
+                      "totalAmount": {
+                        "type": "number"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "billNo",
+                      "periodUuid",
+                      "periodNo",
+                      "periodName",
+                      "companySnapshot",
+                      "orgSnapshot",
+                      "participantCount",
+                      "avgScore",
+                      "totalAmount",
+                      "status",
+                      "submitBy",
+                      "submitTime",
+                      "approveBy",
+                      "approveTime",
+                      "opinion",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "ApprovalList",
+        "tags": [
+          "v1/hrm/perf_result"
+        ]
+      }
+    },
+    "/api/v1/hrm/getPerfResultList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:perf_result:resultList",
+        "operationId": "v1/Hrm/PerfResultResultList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "periodUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "signed",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "mine",
+            "type": "boolean"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "approvalUuid": {
+                        "type": "string"
+                      },
+                      "assessmentUuid": {
+                        "type": "string"
+                      },
+                      "bonusAmount": {
+                        "type": "number"
+                      },
+                      "coefficient": {
+                        "type": "number"
+                      },
+                      "companyName": {
+                        "type": "string"
+                      },
+                      "companyUuid": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "grade": {
+                        "type": "string"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "orgUuid": {
+                        "type": "string"
+                      },
+                      "perfAmount": {
+                        "type": "number"
+                      },
+                      "periodNo": {
+                        "type": "string"
+                      },
+                      "periodUuid": {
+                        "type": "string"
+                      },
+                      "published": {
+                        "type": "integer"
+                      },
+                      "resultStatus": {
+                        "type": "string"
+                      },
+                      "salarySynced": {
+                        "type": "integer"
+                      },
+                      "score": {
+                        "type": "number"
+                      },
+                      "signBy": {
+                        "type": "string"
+                      },
+                      "signTime": {
+                        "type": "string"
+                      },
+                      "signed": {
+                        "type": "integer"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "approvalUuid",
+                      "assessmentUuid",
+                      "periodUuid",
+                      "periodNo",
+                      "employeeUuid",
+                      "employeeName",
+                      "companyUuid",
+                      "companyName",
+                      "orgUuid",
+                      "orgName",
+                      "score",
+                      "grade",
+                      "coefficient",
+                      "perfAmount",
+                      "bonusAmount",
+                      "resultStatus",
+                      "published",
+                      "signed",
+                      "signTime",
+                      "signBy",
+                      "salarySynced",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "ResultList",
+        "tags": [
+          "v1/hrm/perf_result"
         ]
       }
     },
@@ -22135,6 +23071,59 @@
         ]
       }
     },
+    "/api/v1/hrm/lockAttendanceMonthReport": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:monthreport:lock",
+        "operationId": "v1/Hrm/MonthreportLock",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "remark": {
+                  "type": "string"
+                },
+                "yearMonth": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "yearMonth"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Lock",
+        "tags": [
+          "v1/hrm/monthreport"
+        ]
+      }
+    },
     "/api/v1/hrm/maintainTaxSpecialDeduction": {
       "post": {
         "consumes": [
@@ -22565,6 +23554,64 @@
         "summary": "Punch",
         "tags": [
           "v1/hrm/punch"
+        ]
+      }
+    },
+    "/api/v1/hrm/recalcAttendanceMonthReport": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:monthreport:recalc",
+        "operationId": "v1/Hrm/MonthreportRecalc",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "yearMonth": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "yearMonth"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "changedCount": {
+                  "type": "integer"
+                },
+                "locked": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Recalc",
+        "tags": [
+          "v1/hrm/monthreport"
         ]
       }
     },
@@ -23227,6 +24274,56 @@
         ]
       }
     },
+    "/api/v1/hrm/signPerfResult": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:perf_result:signResult",
+        "operationId": "v1/Hrm/PerfResultSignResult",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "SignResult",
+        "tags": [
+          "v1/hrm/perf_result"
+        ]
+      }
+    },
     "/api/v1/hrm/signinForParticipant": {
       "post": {
         "consumes": [
@@ -23601,6 +24698,64 @@
         ]
       }
     },
+    "/api/v1/hrm/submitPerfResultApproval": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:perf_result:submitApproval",
+        "operationId": "v1/Hrm/PerfResultSubmitApproval",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "opinion": {
+                  "type": "string"
+                },
+                "periodUuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "periodUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "SubmitApproval",
+        "tags": [
+          "v1/hrm/perf_result"
+        ]
+      }
+    },
     "/api/v1/hrm/toggleAttendanceGroupStatus": {
       "post": {
         "consumes": [
@@ -23891,6 +25046,59 @@
         "summary": "Trial",
         "tags": [
           "v1/hrm/salary_batch"
+        ]
+      }
+    },
+    "/api/v1/hrm/unlockAttendanceMonthReport": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:monthreport:unlock",
+        "operationId": "v1/Hrm/MonthreportUnlock",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "remark": {
+                  "type": "string"
+                },
+                "yearMonth": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "yearMonth"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Unlock",
+        "tags": [
+          "v1/hrm/monthreport"
         ]
       }
     },

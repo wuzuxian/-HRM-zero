@@ -14,8 +14,21 @@
               "statusMessage": "generated-file guard"
             }
           ]
+        },
+        {
+          "matcher": "Bash",
+          "hooks": [
+            {
+              "type": "process",
+              "command": "python3",
+              "args": ["${ZCODE_PROJECT_DIR}/.zcode/hooks/no-bash-edit-generated.py"],
+              "timeoutMs": 5000,
+              "statusMessage": "bash generated-file guard"
+            }
+          ]
         }
       ]
     }
   }
 }
+

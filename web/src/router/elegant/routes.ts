@@ -133,6 +133,15 @@ export const generatedRoutes: GeneratedRoute[] = [
                 }
               },
               {
+                name: 'hrm_attendance_data_month-report',
+                path: '/hrm/attendance/data/month-report',
+                component: 'view.hrm_attendance_data_month-report',
+                meta: {
+                  title: 'hrm_attendance_data_month-report',
+                  i18nKey: 'route.hrm_attendance_data_month-report'
+                }
+              },
+              {
                 name: 'hrm_attendance_data_punch-record',
                 path: '/hrm/attendance/data/punch-record',
                 component: 'view.hrm_attendance_data_punch-record',
@@ -436,6 +445,15 @@ export const generatedRoutes: GeneratedRoute[] = [
                   title: 'hrm_performance_assessment-task_self-review-list',
                   i18nKey: 'route.hrm_performance_assessment-task_self-review-list'
                 }
+              },
+              {
+                name: 'hrm_performance_assessment-task_workbench',
+                path: '/hrm/performance/assessment-task/workbench',
+                component: 'view.hrm_performance_assessment-task_workbench',
+                meta: {
+                  title: 'hrm_performance_assessment-task_workbench',
+                  i18nKey: 'route.hrm_performance_assessment-task_workbench'
+                }
               }
             ]
           },
@@ -446,6 +464,24 @@ export const generatedRoutes: GeneratedRoute[] = [
             meta: {
               title: 'hrm_performance_period-list',
               i18nKey: 'route.hrm_performance_period-list'
+            }
+          },
+          {
+            name: 'hrm_performance_result-confirm-list',
+            path: '/hrm/performance/result-confirm-list',
+            component: 'view.hrm_performance_result-confirm-list',
+            meta: {
+              title: 'hrm_performance_result-confirm-list',
+              i18nKey: 'route.hrm_performance_result-confirm-list'
+            }
+          },
+          {
+            name: 'hrm_performance_result-list',
+            path: '/hrm/performance/result-list',
+            component: 'view.hrm_performance_result-list',
+            meta: {
+              title: 'hrm_performance_result-list',
+              i18nKey: 'route.hrm_performance_result-list'
             }
           },
           {

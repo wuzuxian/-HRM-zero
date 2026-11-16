@@ -219,6 +219,184 @@
         ]
       }
     },
+    "/api/v1/hrm/getMyAssessmentWorkbench": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:perf_assessment:getMyWorkbench",
+        "operationId": "v1/Hrm/PerfAssessmentGetMyWorkbench",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "appeals": {
+                  "items": {
+                    "properties": {
+                      "appealStatus": {
+                        "type": "string"
+                      },
+                      "assessmentNo": {
+                        "type": "string"
+                      },
+                      "currentNode": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "myRole": {
+                        "type": "string"
+                      },
+                      "periodName": {
+                        "type": "string"
+                      },
+                      "periodNo": {
+                        "type": "string"
+                      },
+                      "periodUuid": {
+                        "type": "string"
+                      },
+                      "taskStatus": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "assessmentNo",
+                      "periodUuid",
+                      "periodName",
+                      "periodNo",
+                      "employeeUuid",
+                      "employeeName",
+                      "myRole",
+                      "currentNode",
+                      "taskStatus",
+                      "appealStatus",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "cards": {
+                  "properties": {
+                    "appeal": {
+                      "type": "integer"
+                    },
+                    "calibration": {
+                      "type": "integer"
+                    },
+                    "leaderReview": {
+                      "type": "integer"
+                    },
+                    "planConfirm": {
+                      "type": "integer"
+                    },
+                    "resultConfirm": {
+                      "type": "integer"
+                    },
+                    "selfReview": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "planConfirm",
+                    "selfReview",
+                    "leaderReview",
+                    "calibration",
+                    "resultConfirm",
+                    "appeal"
+                  ],
+                  "type": "object"
+                },
+                "todos": {
+                  "items": {
+                    "properties": {
+                      "appealStatus": {
+                        "type": "string"
+                      },
+                      "assessmentNo": {
+                        "type": "string"
+                      },
+                      "currentNode": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "myRole": {
+                        "type": "string"
+                      },
+                      "periodName": {
+                        "type": "string"
+                      },
+                      "periodNo": {
+                        "type": "string"
+                      },
+                      "periodUuid": {
+                        "type": "string"
+                      },
+                      "taskStatus": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "assessmentNo",
+                      "periodUuid",
+                      "periodName",
+                      "periodNo",
+                      "employeeUuid",
+                      "employeeName",
+                      "myRole",
+                      "currentNode",
+                      "taskStatus",
+                      "appealStatus",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "GetMyWorkbench",
+        "tags": [
+          "v1/hrm/perf_assessment"
+        ]
+      }
+    },
     "/api/v1/hrm/getPerfAssessmentDetail": {
       "get": {
         "description": "接口权限编码:v1:hrm:perf_assessment:getDetail",

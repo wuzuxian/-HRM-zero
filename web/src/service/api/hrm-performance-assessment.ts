@@ -100,3 +100,13 @@ export function HandlePerfAssessmentAppeal(req: Api.Hrm.Performance.HandleAppeal
     data: req
   });
 }
+
+// ---- 考核任务工作台（HRM-44，单聚合端点，只读） ----
+
+/** 考核任务工作台：全周期待办汇总卡 + 最近待办 + 申诉单列 */
+export function GetMyAssessmentWorkbench() {
+  return request<Api.Hrm.Performance.AssessmentWorkbench>({
+    url: '/api/v1/hrm/getMyAssessmentWorkbench',
+    method: 'get'
+  });
+}

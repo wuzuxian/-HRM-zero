@@ -1,0 +1,171 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/perf_result"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 批次结果审批与绩效结果（HRM-45，演示站 9.3 结果，GLOSSARY「绩效结果」）：
+// HR211 批次结果审批单（单号 HR211-…，复用 HRM-06 单据公共组件单步审批）：
+// 批次到达 '4'结果已发布后提交，聚合快照（人数/平均得分/绩效金额合计 + 公司/部门快照）；
+// 审批通过事务内生成 hrm_perf_result 结果行（得分/等级/系数/绩效金额）+ 批次
+// AdvancePeriod '4'→'5'已发布 + 结果行 published=1。签收：员工本人 signed=1+签收时间。
+// salarySynced（已同步薪酬）由 HRM-49 联薪写入，本域只读。
+type HrmPerfResultApproval {
+	Uuid string `json:"uuid"`
+	// 审批单号 HR211-{YYYYMMDD}{5位流水}
+	BillNo string `json:"billNo"`
+	// 绩效批次 uuid
+	PeriodUuid string `json:"periodUuid"`
+	// 批次编号快照
+	PeriodNo string `json:"periodNo"`
+	// 批次名称快照
+	PeriodName string `json:"periodName"`
+	// 公司名称快照（JSON 数组字符串，参与人去重）
+	CompanySnapshot string `json:"companySnapshot"`
+	// 部门名称快照（JSON 数组字符串，参与人去重）
+	OrgSnapshot string `json:"orgSnapshot"`
+	// 人数（结果行数）
+	ParticipantCount int64 `json:"participantCount"`
+	// 平均得分（final_score 均值，2 位小数）
+	AvgScore float64 `json:"avgScore"`
+	// 绩效金额合计
+	TotalAmount float64 `json:"totalAmount"`
+	// 单据状态：unsubmitted/approving/approved/rejected/revoked
+	Status      string `json:"status"`
+	SubmitBy    string `json:"submitBy"`
+	SubmitTime  string `json:"submitTime"`
+	ApproveBy   string `json:"approveBy"`
+	ApproveTime string `json:"approveTime"`
+	// 审批意见（最近一次）
+	Opinion    string `json:"opinion"`
+	CreateTime string `json:"createTime"`
+	UpdateTime string `json:"updateTime"`
+}
+
+type ApprovalListRequest {
+	PageRequest
+	// 按批次筛选
+	PeriodUuid string `form:"periodUuid,optional"`
+	// 按单据状态筛选
+	Status string `form:"status,optional"`
+}
+
+type ApprovalListResponse {
+	PageResponse
+	Records []HrmPerfResultApproval `json:"records"`
+}
+
+type SubmitApprovalRequest {
+	// 绩效批次 uuid（须为 '4'结果已发布 状态；一批次一张审批单，重复提交重新聚合）
+	PeriodUuid string `json:"periodUuid"`
+	// 提交意见（可选）
+	Opinion string `json:"opinion,optional"`
+}
+
+type SubmitApprovalResponse {
+	// 审批单 uuid
+	Uuid string `json:"uuid"`
+}
+
+type HrmPerfResult {
+	Uuid string `json:"uuid"`
+	// 审批单 uuid
+	ApprovalUuid string `json:"approvalUuid"`
+	// 考核任务 uuid
+	AssessmentUuid string `json:"assessmentUuid"`
+	// 绩效批次 uuid
+	PeriodUuid string `json:"periodUuid"`
+	// 批次编号快照
+	PeriodNo string `json:"periodNo"`
+	// 员工 uuid
+	EmployeeUuid string `json:"employeeUuid"`
+	// 员工姓名快照
+	EmployeeName string `json:"employeeName"`
+	// 公司 uuid 快照
+	CompanyUuid string `json:"companyUuid"`
+	// 公司名称快照
+	CompanyName string `json:"companyName"`
+	// 部门 uuid 快照
+	OrgUuid string `json:"orgUuid"`
+	// 部门名称快照
+	OrgName string `json:"orgName"`
+	// 得分（assessment.final_score）
+	Score float64 `json:"score"`
+	// 等级（A/B/C/D 或等级制原值）
+	Grade string `json:"grade"`
+	// 绩效系数（A=1.2 B=1.0 C=0.8 D=0.6 其他=1.0）
+	Coefficient float64 `json:"coefficient"`
+	// 绩效金额（金额制=final_score；系数制=系数×基数，基数 HRM-49 联薪回填）
+	PerfAmount float64 `json:"perfAmount"`
+	// 奖金金额（默认 0）
+	BonusAmount float64 `json:"bonusAmount"`
+	// 结果状态：1=正常 2=已作废
+	ResultStatus string `json:"resultStatus"`
+	// 已发布：0=否 1=是
+	Published int64 `json:"published"`
+	// 已签收：0=否 1=是
+	Signed int64 `json:"signed"`
+	// 签收时间
+	SignTime string `json:"signTime"`
+	// 签收人
+	SignBy string `json:"signBy"`
+	// 已同步薪酬：0=否 1=是（HRM-49 写入）
+	SalarySynced int64  `json:"salarySynced"`
+	CreateTime   string `json:"createTime"`
+	UpdateTime   string `json:"updateTime"`
+}
+
+type ResultListRequest {
+	PageRequest
+	// 按批次筛选
+	PeriodUuid string `form:"periodUuid,optional"`
+	// 按员工筛选（uuid）
+	EmployeeUuid string `form:"employeeUuid,optional"`
+	// 按签收状态筛选：0=未签收 1=已签收
+	Signed string `form:"signed,optional"`
+	// 仅看本人结果（当前登录账号绑定的员工）
+	Mine bool `form:"mine,optional"`
+}
+
+type ResultListResponse {
+	PageResponse
+	Records []HrmPerfResult `json:"records"`
+}
+
+type SignResultRequest {
+	// 绩效结果行 uuid
+	Uuid string `json:"uuid"`
+}
+
+type SignResultResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/perf_result
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	// 批次结果审批列表（demo-inventory 9.3 /hrm/performance/result-confirm-list）
+	@handler ApprovalList
+	get /hrm/getPerfResultApprovalList (ApprovalListRequest) returns (ApprovalListResponse)
+
+	// 提交批次结果审批（HR211；批次须 '4'结果已发布；幂等：一批次一张单，重复提交重新聚合）
+	@handler SubmitApproval
+	post /hrm/submitPerfResultApproval (SubmitApprovalRequest) returns (SubmitApprovalResponse)
+
+	// 绩效结果列表（demo-inventory 9.3 /hrm/performance/result-list；mine=仅本人）
+	@handler ResultList
+	get /hrm/getPerfResultList (ResultListRequest) returns (ResultListResponse)
+
+	// 签收结果（员工本人；幂等：已签收直接成功）
+	@handler SignResult
+	post /hrm/signPerfResult (SignResultRequest) returns (SignResultResponse)
+}
+
