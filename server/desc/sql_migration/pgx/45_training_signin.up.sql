@@ -54,9 +54,15 @@ VALUES
     ('aaa10000-1111-4000-8000-000000000382','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000000307','3','管理员补签',0,'',1,'','','','','1','button.hrm.training.signin.signFor',0,'',0,0,'[]','[{"code":"v1:hrm:signin:signinForParticipant","desc":"管理员补签"}]',0,'v1:hrm:signin:signinForParticipant'),
     ('aaa10000-1111-4000-8000-000000000383','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000000307','3','导出签到明细',0,'',2,'','','','','1','button.hrm.training.signin.export',0,'',0,0,'[]','[{"code":"v1:hrm:signin:exportSigninDetail","desc":"导出签到明细"}]',0,'v1:hrm:signin:exportSigninDetail');
 
+-- 扫码签到落地页（hide_in_menu=1 不进菜单，课堂动态码 URL 直达；同 1_init 用户详情隐藏页先例）
+INSERT INTO "manage_menu" (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+VALUES
+    ('aaa10000-1111-4000-8000-000000000308','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000000307','2','扫码签到',1,'',0,'hrm_training_signin_scan','/hrm/training/signin/scan','view.hrm_training_signin_scan','','1','route.hrm_training_signin_scan',0,'',0,0,'[]','[]',1,'');
+
 -- 超级管理员 gets the new menus (casbin rules are derived from these at startup)
 INSERT INTO "manage_role_menu" (uuid, create_time, update_time, role_uuid, menu_uuid, is_home)
 VALUES
+    ('aaa20000-1111-4000-8000-000000000308','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000000308',0),
     ('aaa20000-1111-4000-8000-000000000307','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000000307',0),
     ('aaa20000-1111-4000-8000-000000000381','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000000381',0),
     ('aaa20000-1111-4000-8000-000000000382','2026-11-16 00:00:00','2026-11-16 00:00:00','1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d','aaa10000-1111-4000-8000-000000000382',0),
