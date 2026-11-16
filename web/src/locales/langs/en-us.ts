@@ -485,6 +485,7 @@ const local: App.I18n.Schema = {
         edit: 'Edit Salary Batch',
         delete: 'Delete Salary Batch',
         trial: 'Payroll Trial'
+      },
       salary_payslip: {
         publish: 'Publish Payslips'
       },
@@ -1338,6 +1339,36 @@ const local: App.I18n.Schema = {
         resultStatus: {
           normal: 'Normal',
           voided: 'Voided'
+        },
+        dashboard: {
+          title: 'Perf Dashboard',
+          company: 'Company',
+          companyFilter: 'Select company',
+          org: 'Department',
+          orgFilter: 'Select department',
+          period: 'Period',
+          periodFilter: 'Select period',
+          lowScore: 'Low-score threshold',
+          lowScoreFilter: 'Scores below threshold count as risk',
+          metric: {
+            ongoingPeriods: 'Ongoing periods',
+            completionRate: 'Completion rate',
+            overdueTasks: 'Overdue tasks',
+            riskEmployees: 'At-risk employees',
+            avgScore: 'Avg score',
+            appeals: 'Under appeal'
+          },
+          riskTitle: 'Risk Alerts',
+          tabLowScores: 'Low-score details',
+          tabOverdueTasks: 'Overdue task details',
+          appealTitle: 'Under-appeal list',
+          periodEnd: 'Period end',
+          employee: 'Employee',
+          score: 'Score',
+          grade: 'Grade',
+          assessmentNo: 'Assessment No.',
+          currentNode: 'Current node',
+          taskStatus: 'Task status'
         }
       },
       org: {

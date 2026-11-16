@@ -2021,12 +2021,6 @@ export function DeleteOffer(req: string[]) {
 export function GetSalaryBatchList(params?: Api.Hrm.SalaryBatchSearchParams) {
   return request<Api.Hrm.SalaryBatchList>({
     url: '/api/v1/hrm/getSalaryBatchList',
-// ===== HRM-39 工资条与薪资统计台账 =====
-
-/** get salary payslip list (管理端: 筛选 批次/员工姓名/年月/已读状态) */
-export function GetSalaryPayslipList(params?: Api.Hrm.SalaryPayslipSearchParams) {
-  return request<Api.Hrm.SalaryPayslipList>({
-    url: '/api/v1/hrm/getSalaryPayslipList',
     method: 'get',
     params
   });
@@ -2082,6 +2076,26 @@ export function GetSalaryBatchResult(batchUuid: string) {
     }
   });
 }
+// ===== HRM-39 工资条与薪资统计台账 =====
+
+/** get salary payslip list (管理端: 筛选 批次/员工姓名/年月/已读状态) */
+export function GetSalaryPayslipList(params?: Api.Hrm.SalaryPayslipSearchParams) {
+  return request<Api.Hrm.SalaryPayslipList>({
+    url: '/api/v1/hrm/getSalaryPayslipList',
+    method: 'get',
+    params
+  });
+}
+
+/** get salary ledger (薪资统计台账: 统计卡 + 批次×员工明细) */
+export function GetSalaryLedger(params?: Api.Hrm.SalaryLedgerSearchParams) {
+  return request<Api.Hrm.SalaryLedgerResponse>({
+    url: '/api/v1/hrm/getSalaryLedger',
+    method: 'get',
+    params
+  });
+}
+
 /** get my salary payslip list (员工本人) */
 export function GetMySalaryPayslipList(params?: Api.Hrm.SalaryPayslipMineSearchParams) {
   return request<Api.Hrm.SalaryPayslipList>({
@@ -2108,14 +2122,5 @@ export function ReadSalaryPayslip(uuid: string) {
     data: {
       uuid
     }
-  });
-}
-
-/** get salary ledger (薪资统计台账: 统计卡 + 批次×员工明细) */
-export function GetSalaryLedger(params?: Api.Hrm.SalaryLedgerSearchParams) {
-  return request<Api.Hrm.SalaryLedgerResponse>({
-    url: '/api/v1/hrm/getSalaryLedger',
-    method: 'get',
-    params
   });
 }

@@ -22,7 +22,7 @@ const statCards = ref({
 });
 
 // GetSalaryLedger 返回 {records,...} 之外还带统计卡字段；包装成 useTable 需要的分页形状
-async function ledgerTableApiFn(params: Api.Hrm.SalaryLedgerSearchParams) {
+const ledgerTableApiFn: NaiveUI.TableApiFn<Api.Hrm.SalaryLedgerRow, Api.Hrm.SalaryLedgerSearchParams> = async params => {
   const res = await GetSalaryLedger(params);
   if (!res.error && res.data) {
     statCards.value = {
@@ -33,8 +33,8 @@ async function ledgerTableApiFn(params: Api.Hrm.SalaryLedgerSearchParams) {
       laborCostTotal: res.data.laborCostTotal
     };
   }
-  return res as { data: Api.Common.PaginatingQueryRecord<Api.Hrm.SalaryLedgerRow> | null; error: unknown };
-}
+  return res;
+};
 
 const {
   columns,

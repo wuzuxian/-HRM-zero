@@ -627,6 +627,7 @@ declare namespace App {
             edit: string;
             delete: string;
             trial: string;
+          };
           salary_payslip: {
             publish: string;
           };
@@ -1228,6 +1229,36 @@ declare namespace App {
             resultStatus: {
               normal: string;
               voided: string;
+            };
+            dashboard: {
+              title: string;
+              company: string;
+              companyFilter: string;
+              org: string;
+              orgFilter: string;
+              period: string;
+              periodFilter: string;
+              lowScore: string;
+              lowScoreFilter: string;
+              metric: {
+                ongoingPeriods: string;
+                completionRate: string;
+                overdueTasks: string;
+                riskEmployees: string;
+                avgScore: string;
+                appeals: string;
+              };
+              riskTitle: string;
+              tabLowScores: string;
+              tabOverdueTasks: string;
+              appealTitle: string;
+              periodEnd: string;
+              employee: string;
+              score: string;
+              grade: string;
+              assessmentNo: string;
+              currentNode: string;
+              taskStatus: string;
             };
           };
           org: {
@@ -2700,7 +2731,7 @@ declare namespace App {
                 };
               };
             };
-              payslip: {
+            payslip: {
               pageTitle: string;
               title: string;
               employeeNo: string;

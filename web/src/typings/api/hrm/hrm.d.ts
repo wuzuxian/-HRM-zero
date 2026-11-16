@@ -5039,23 +5039,17 @@ declare namespace Api {
     };
 
     /** 薪资统计台账 search params（筛选 批次/姓名/部门/仅看异常） */
-    type SalaryLedgerSearchParams = {
-      batchUuid?: string | null;
-      employeeName?: string | null;
-      orgName?: string | null;
-      onlyAbnormal?: boolean | null;
-      current?: number | null;
-      size?: number | null;
-    };
+    type SalaryLedgerSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.SalaryLedgerRow, 'batchUuid' | 'employeeName' | 'orgName'> & { onlyAbnormal?: boolean } & Common.CommonSearchParams
+    >;
 
-    /** 薪资统计台账 response（统计卡 + 明细行） */
-    type SalaryLedgerResponse = {
+    /** 薪资统计台账 response（统计卡 + 明细行；分页字段 = PageResponse） */
+    type SalaryLedgerResponse = Common.PaginatingQueryRecord<SalaryLedgerRow> & {
       employeeCount: number;
       earningTotal: number;
       deductionTotal: number;
       netTotal: number;
       laborCostTotal: number;
-      records: SalaryLedgerRow[];
     };
   }
 }

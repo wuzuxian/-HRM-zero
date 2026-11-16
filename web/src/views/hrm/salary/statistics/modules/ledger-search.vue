@@ -17,11 +17,6 @@ const { formRef, validate, restoreValidation } = useNaiveForm();
 
 const model = defineModel<Api.Hrm.SalaryLedgerSearchParams>('model', { required: true });
 
-const onlyAbnormalOptions = [
-  { label: $t('common.yesOrNo.yes'), value: true },
-  { label: $t('common.yesOrNo.no'), value: false }
-];
-
 async function reset() {
   await restoreValidation();
   emit('reset');
@@ -64,12 +59,7 @@ async function search() {
               path="onlyAbnormal"
               class="pr-24px"
             >
-              <NSelect
-                v-model:value="model.onlyAbnormal"
-                :options="onlyAbnormalOptions"
-                :placeholder="$t('page.hrm.salary.statistics.onlyAbnormal')"
-                clearable
-              />
+              <NSwitch :value="model.onlyAbnormal === true" @update:value="(v: boolean) => (model.onlyAbnormal = v)" />
             </NFormItemGi>
             <NFormItemGi span="24 m:12" class="pr-24px">
               <NSpace class="w-full" justify="end">

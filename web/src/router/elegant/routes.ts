@@ -612,6 +612,9 @@ export const generatedRoutes: GeneratedRoute[] = [
             meta: {
               title: 'hrm_salary_batch',
               i18nKey: 'route.hrm_salary_batch'
+            }
+          },
+          {
             name: 'hrm_salary_payslip',
             path: '/hrm/salary/payslip',
             component: 'view.hrm_salary_payslip',
