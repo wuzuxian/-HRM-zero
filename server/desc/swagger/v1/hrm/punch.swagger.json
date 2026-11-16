@@ -644,6 +644,340 @@
         ]
       }
     },
+    "/api/v1/hrm/getPunchStatistics": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:punch:statistics",
+        "operationId": "v1/Hrm/PunchStatistics",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "startDate",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "endDate",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "onlyAbnormal",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "cards": {
+                  "properties": {
+                    "abnormalEmployees": {
+                      "type": "integer"
+                    },
+                    "earlyCount": {
+                      "type": "integer"
+                    },
+                    "lateCount": {
+                      "type": "integer"
+                    },
+                    "missingCount": {
+                      "type": "integer"
+                    },
+                    "recordCount": {
+                      "type": "integer"
+                    },
+                    "statEmployees": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "statEmployees",
+                    "abnormalEmployees",
+                    "lateCount",
+                    "earlyCount",
+                    "missingCount",
+                    "recordCount"
+                  ],
+                  "type": "object"
+                },
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "abnormalSummary": {
+                        "type": "string"
+                      },
+                      "abnormalTotal": {
+                        "type": "integer"
+                      },
+                      "absentDays": {
+                        "type": "integer"
+                      },
+                      "attendDays": {
+                        "type": "integer"
+                      },
+                      "earlyCount": {
+                        "type": "integer"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "expectedDays": {
+                        "type": "integer"
+                      },
+                      "lateCount": {
+                        "type": "integer"
+                      },
+                      "missingCount": {
+                        "type": "integer"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "totalWorkHours": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "orgName",
+                      "expectedDays",
+                      "attendDays",
+                      "absentDays",
+                      "lateCount",
+                      "earlyCount",
+                      "missingCount",
+                      "abnormalTotal",
+                      "abnormalSummary",
+                      "totalWorkHours"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Statistics",
+        "tags": [
+          "v1/hrm/punch"
+        ]
+      }
+    },
+    "/api/v1/hrm/getPunchStatisticsDetail": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:punch:statisticsDetail",
+        "operationId": "v1/Hrm/PunchStatisticsDetail",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "employeeUuid",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "startDate",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "endDate",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "clockInLocation": {
+                        "type": "string"
+                      },
+                      "clockInStatus": {
+                        "type": "string"
+                      },
+                      "clockInTime": {
+                        "type": "string"
+                      },
+                      "clockOutLocation": {
+                        "type": "string"
+                      },
+                      "clockOutStatus": {
+                        "type": "string"
+                      },
+                      "clockOutTime": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "overtime": {
+                        "type": "string"
+                      },
+                      "punchDate": {
+                        "type": "string"
+                      },
+                      "ruleSource": {
+                        "type": "string"
+                      },
+                      "settleEarlyMinutes": {
+                        "type": "integer"
+                      },
+                      "settleLateMinutes": {
+                        "type": "integer"
+                      },
+                      "settleStatus": {
+                        "type": "string"
+                      },
+                      "settleTime": {
+                        "type": "string"
+                      },
+                      "settleWorkHours": {
+                        "type": "number"
+                      },
+                      "source": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "userUuid": {
+                        "type": "string"
+                      },
+                      "username": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "weekday": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "punchDate",
+                      "employeeUuid",
+                      "userUuid",
+                      "username",
+                      "employeeNo",
+                      "employeeName",
+                      "orgName",
+                      "weekday",
+                      "clockInTime",
+                      "clockInStatus",
+                      "clockInLocation",
+                      "clockOutTime",
+                      "clockOutStatus",
+                      "clockOutLocation",
+                      "overtime",
+                      "source",
+                      "ruleSource",
+                      "settleStatus",
+                      "settleLateMinutes",
+                      "settleEarlyMinutes",
+                      "settleWorkHours",
+                      "settleTime",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "StatisticsDetail",
+        "tags": [
+          "v1/hrm/punch"
+        ]
+      }
+    },
     "/api/v1/hrm/importPunchRecord": {
       "post": {
         "consumes": [

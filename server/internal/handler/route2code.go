@@ -140,6 +140,8 @@ var RoutesCodesMap = map[string]string{
 	"POST:/api/v1/hrm/exportPunchRecord":                "v1:hrm:punch:export",
 	"GET:/api/v1/hrm/getMyPunchList":                    "v1:hrm:punch:myList",
 	"GET:/api/v1/hrm/getPunchList":                      "v1:hrm:punch:list",
+	"GET:/api/v1/hrm/getPunchStatistics":                "v1:hrm:punch:statistics",
+	"GET:/api/v1/hrm/getPunchStatisticsDetail":          "v1:hrm:punch:statisticsDetail",
 	"POST:/api/v1/hrm/importPunchRecord":                "v1:hrm:punch:import",
 	"POST:/api/v1/hrm/punch":                            "v1:hrm:punch:punch",
 	"POST:/api/v1/hrm/settlePunchDay":                   "v1:hrm:punch:settle",

@@ -955,6 +955,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Handler: v1hrmpunch.List(serverCtx),
 					},
 					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getPunchStatistics",
+						Handler: v1hrmpunch.Statistics(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getPunchStatisticsDetail",
+						Handler: v1hrmpunch.StatisticsDetail(serverCtx),
+					},
+					{
 						Method:  http.MethodPost,
 						Path:    "/hrm/importPunchRecord",
 						Handler: v1hrmpunch.Import(serverCtx),
