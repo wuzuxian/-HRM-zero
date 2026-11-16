@@ -5,12 +5,12 @@ import (
 	"errors"
 	"net/http"
 
+	"github.com/jzero-io/jzero/core/status"
 	"github.com/zeromicro/go-zero/core/logx"
 
 	"github.com/jzero-io/jzero-admin/server/internal/errcodes"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_scheme"
 	"github.com/jzero-io/jzero-admin/server/internal/svc"
-	"github.com/jzero-io/jzero/core/status"
 	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/salary_scheme"
 )
 

@@ -234,6 +234,7 @@ const local: App.I18n.Schema = {
     hrm_salary_setting_item: '薪资项目',
     hrm_salary_setting_scheme: '薪酬方案',
     'hrm_salary_archive-list': '员工薪资档案',
+    hrm_salary_batch: '薪资批次',
     hrm_salary_tax: '个税管理',
     'hrm_salary_tax_tax-profile': '员工个税档案',
     'hrm_salary_tax_special-deduction': '专项附加扣除',
@@ -477,6 +478,12 @@ const local: App.I18n.Schema = {
         add: '新增薪资档案',
         edit: '编辑薪资档案',
         delete: '删除薪资档案'
+      },
+      salary_batch: {
+        add: '新增薪资批次',
+        edit: '编辑薪资批次',
+        delete: '删除薪资批次',
+        trial: '薪资试算'
       },
       tax_profile: {
         add: '新增个税档案',
@@ -2618,6 +2625,69 @@ const local: App.I18n.Schema = {
             scheme: '请选择薪酬方案（可留空）',
             effectiveDateRequired: '生效日期不能为空',
             status: '请选择状态',
+            remark: '请输入备注'
+          }
+        },
+        batch: {
+          title: '薪资批次',
+          batchNo: '批次编号',
+          batchName: '批次名称',
+          subject: '薪酬主体',
+          year: '年份',
+          month: '月份',
+          period: '薪资年月',
+          batchType: '批次类型',
+          batchTypeEnum: {
+            monthly: '月度批次'
+          },
+          headcount: '人数',
+          earningTotal: '应发合计',
+          deductionTotal: '应扣合计',
+          netTotal: '实发合计',
+          progress: '试算/确认/发薪/工资条',
+          progressEnum: {
+            trial: '试算',
+            confirm: '确认',
+            pay: '发薪',
+            payslip: '工资条'
+          },
+          trialTime: '试算时间',
+          trialStatus: '试算状态',
+          viewResult: '查看结果',
+          trial: '试算',
+          trialDone: '试算完成，共 {count} 人',
+          resultTitle: '试算结果',
+          noResult: '暂无明细数据',
+          itemName: '薪资项目',
+          itemClass: '分类',
+          itemClassEnum: {
+            earning: '应发',
+            deduction: '应扣',
+            cost: '成本'
+          },
+          amount: '金额',
+          source: '来源',
+          sourceEnum: {
+            archive: '档案',
+            scheme_override: '方案覆盖',
+            reward: '奖惩单',
+            attendance: '考勤',
+            perf: '绩效',
+            tax: '个税引擎',
+            si_missing: '社保未配置',
+            formula: '公式',
+            zero: '兜底'
+          },
+          sourceDetail: '取数说明',
+          addBatch: '新增薪资批次',
+          editBatch: '编辑薪资批次',
+          remark: '备注',
+          form: {
+            batchName: '请输入批次名称',
+            subject: '请选择薪酬主体',
+            yearRequired: '年份不能为空',
+            monthRequired: '月份不能为空',
+            trialStatus: '请选择试算状态',
             remark: '请输入备注'
           }
         },

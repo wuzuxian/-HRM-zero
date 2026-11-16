@@ -2014,3 +2014,65 @@ export function DeleteOffer(req: string[]) {
     }
   });
 }
+
+// ===== HRM-37 薪资批次与试算引擎 =====
+
+/** get 薪资批次分页列表 (demo-inventory 8.4) */
+export function GetSalaryBatchList(params?: Api.Hrm.SalaryBatchSearchParams) {
+  return request<Api.Hrm.SalaryBatchList>({
+    url: '/api/v1/hrm/getSalaryBatchList',
+    method: 'get',
+    params
+  });
+}
+
+/** add 新增薪资批次 (主体+年月+批次类型唯一；批次编号 SA 由后端分配) */
+export function AddSalaryBatch(req: Api.Hrm.AddSalaryBatchRequest) {
+  return request<{ uuid: string }>({
+    url: '/api/v1/hrm/addSalaryBatch',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 编辑薪资批次 (名称/年月/备注；年月变更重置试算态) */
+export function EditSalaryBatch(req: Api.Hrm.EditSalaryBatchRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editSalaryBatch',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 薪资批次 (连同试算明细) */
+export function DeleteSalaryBatch(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteSalaryBatch',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** trial 薪资试算 (按批次员工集逐人试算，幂等重算 version+1；HRM-38/39 消费同一产出) */
+export function TrialSalaryBatch(batchUuid: string) {
+  return request<Api.Hrm.SalaryBatchTrialResponse>({
+    url: '/api/v1/hrm/trialSalaryBatch',
+    method: 'post',
+    data: {
+      batchUuid
+    }
+  });
+}
+
+/** getBatchResult 查看试算结果 (批次行 + 全员明细行) */
+export function GetSalaryBatchResult(batchUuid: string) {
+  return request<Api.Hrm.SalaryBatchResult>({
+    url: '/api/v1/hrm/getSalaryBatchResult',
+    method: 'get',
+    params: {
+      batchUuid
+    }
+  });
+}

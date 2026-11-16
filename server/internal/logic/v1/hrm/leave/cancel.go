@@ -34,6 +34,7 @@ func NewCancel(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request)
 // 余额按差额多退少补（同一事务内）：
 //   - 实际 < 预计：leavebalance.RefundLeave 退回差额（used -= diff，refund 流水）
 //   - 实际 > 预计：leavebalance.ConsumeLeave 再扣差额（可用不足 → 10513 整体回滚）
+//
 // 幂等：settled=1（已销假）后再次销假 → 10542。
 func (l *Cancel) Cancel(req *types.CancelRequest) (resp *types.CancelResponse, err error) {
 	actualDays, err := CalcLeaveDays(req.ActualStartTime, req.ActualEndTime)

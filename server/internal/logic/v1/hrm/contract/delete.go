@@ -4,10 +4,10 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_contract"
 	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/zeromicro/go-zero/core/logx"
 
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_contract"
 	"github.com/jzero-io/jzero-admin/server/internal/svc"
 	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/contract"
 )
