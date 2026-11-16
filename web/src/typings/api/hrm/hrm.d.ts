@@ -4772,5 +4772,70 @@ declare namespace Api {
       scheme: SalaryArchiveEffectiveScheme;
       items: SalaryArchiveEffectiveItem[];
     };
+    /** HRM-27 录用审批 职级 (demo-inventory §5: 初级/中级/高级/专家) */
+    type OfferRankLevel = 'junior' | 'intermediate' | 'senior' | 'expert';
+
+    /** 录用审批单 (HR208, demo-inventory §5; 审批通过事务内三联动: 职位已录用+1 / 候选人→hired / 草稿HR201入职单) */
+    type HrmOffer = {
+      /** record uuid */
+      uuid: string;
+      /** 单据编号 HR208-... */
+      billNo: string;
+      /** 单据状态 */
+      status: BillStatus | null;
+      /** 候选人 uuid (仅 status=offer 可发起录用) */
+      candidateUuid: string;
+      /** 候选人姓名 (快照) */
+      candidateName: string;
+      /** 招聘职位 uuid (仅 status=open 可录用) */
+      positionUuid: string;
+      /** 岗位名称 (快照) */
+      postName: string;
+      /** 所属部门 uuid (需求单快照) */
+      orgUuid: string;
+      /** 部门名称 (快照) */
+      orgName: string;
+      /** 计划入职日期 YYYY-MM-DD */
+      planEntryDate: string;
+      /** 试用期(月) */
+      probationMonths: number;
+      /** 职级 */
+      rankLevel: OfferRankLevel | null;
+      /** 汇报人 */
+      reporterName: string;
+      /** 审批通过后创建的入职单 uuid (衔接员工入职) */
+      entryBillUuid: string;
+      /** 申请人 uuid */
+      creatorUuid: string;
+      /** 申请人姓名 */
+      creatorName: string;
+      /** record create time */
+      createTime: string;
+      /** record update time */
+      updateTime: string;
+    };
+
+    /** offer search params (demo-inventory §5: 筛选 单据编号/状态/候选人) */
+    type OfferSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.HrmOffer, 'billNo' | 'status' | 'candidateUuid'> & Common.CommonSearchParams
+    >;
+
+    /** offer paginated list */
+    type OfferList = Common.PaginatingQueryRecord<HrmOffer>;
+
+    /** add offer request (候选人仅 status=offer、职位仅 status=open; rankLevel 缺省 junior) */
+    type AddOfferRequest = {
+      candidateUuid: string;
+      positionUuid: string;
+      planEntryDate: string;
+      probationMonths: number;
+      rankLevel: OfferRankLevel | null;
+      reporterName: string;
+    };
+
+    /** edit offer request (only in editable 单据状态) */
+    type EditOfferRequest = AddOfferRequest & {
+      uuid: string;
+    };
   }
 }

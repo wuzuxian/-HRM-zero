@@ -25,6 +25,7 @@ import (
 	v1hrmleavebalance "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/leavebalance"
 	v1hrmleavetype "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/leavetype"
 	v1hrmmonthreport "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/monthreport"
+	v1hrmoffer "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/offer"
 	v1hrmorg "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/org"
 	v1hrmovertimebill "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/overtimebill"
 	v1hrmovertimerule "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/overtimerule"
@@ -707,6 +708,26 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodPost,
 						Path:    "/hrm/unlockAttendanceMonthReport",
 						Handler: v1hrmmonthreport.Unlock(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addOffer",
+						Handler: v1hrmoffer.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deleteOffer",
+						Handler: v1hrmoffer.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editOffer",
+						Handler: v1hrmoffer.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getOfferList",
+						Handler: v1hrmoffer.List(serverCtx),
 					},
 				}...,
 			),

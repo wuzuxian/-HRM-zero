@@ -382,3 +382,13 @@ export const hrmPositionPostCategoryRecord: Record<Api.Hrm.RequirementPostCatego
 };
 
 export const hrmPositionPostCategoryOptions = transformRecordToOption(hrmPositionPostCategoryRecord);
+
+/** HRM-27 录用审批 职级 (demo-inventory §5: 初级/中级/高级/专家) */
+export const hrmOfferRankLevelRecord: Record<Api.Hrm.OfferRankLevel, App.I18n.I18nKey> = {
+  junior: 'page.hrm.offer.rankLevel.junior',
+  intermediate: 'page.hrm.offer.rankLevel.intermediate',
+  senior: 'page.hrm.offer.rankLevel.senior',
+  expert: 'page.hrm.offer.rankLevel.expert'
+};
+
+export const hrmOfferRankLevelOptions = transformRecordToOption(hrmOfferRankLevelRecord);

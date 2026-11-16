@@ -1,0 +1,101 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/offer"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 录用审批单（HR208，GLOSSARY「单据」）：对 offer（已发Offer）阶段候选人发起录用，
+// 选择招聘职位（open 招聘中）、计划入职日期、试用期(月)、职级（初级/中级/高级/专家）、
+// 汇报人。审批通过事务内三联动：职位已录用+1（IncreaseHiredCountTx，每单恰好一次）、
+// 候选人状态推进至 hired、创建草稿 HR201 入职单（衔接员工入职，HR 仍可补全入职详情）。
+// 生命周期（提交/审批/撤销/审批记录）走共享单据底座 v1/hrm/bill，类型码 208。
+// 列表默认按「我的单据」过滤（创建人=当前用户），超级管理员可看全部（spec 用户故事 4）。
+type HrmOffer {
+	Uuid            string `json:"uuid"`
+	BillNo          string `json:"billNo"` // 单据编号 HR208-...
+	Status          string `json:"status"` // 单据状态 unsubmitted/approving/approved/rejected/revoked
+	CandidateUuid   string `json:"candidateUuid"` // 候选人 uuid
+	CandidateName   string `json:"candidateName"` // 候选人姓名（快照）
+	PositionUuid    string `json:"positionUuid"` // 招聘职位 uuid
+	PostName        string `json:"postName"` // 岗位名称（快照）
+	OrgUuid         string `json:"orgUuid"` // 所属部门（组织 uuid，快照）
+	OrgName         string `json:"orgName"` // 部门名称（快照）
+	PlanEntryDate   string `json:"planEntryDate"` // 计划入职日期 YYYY-MM-DD
+	ProbationMonths int64  `json:"probationMonths"` // 试用期(月)
+	RankLevel       string `json:"rankLevel"` // 职级 junior/intermediate/senior/expert
+	ReporterName    string `json:"reporterName"` // 汇报人
+	EntryBillUuid   string `json:"entryBillUuid"` // 审批通过后创建的入职单 uuid
+	CreatorUuid     string `json:"creatorUuid"` // 申请人 uuid
+	CreatorName     string `json:"creatorName"` // 申请人姓名
+	CreateTime      string `json:"createTime"`
+	UpdateTime      string `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	BillNo        string `form:"billNo,optional"` // 单据编号（模糊）
+	Status        string `form:"status,optional"` // 单据状态
+	CandidateUuid string `form:"candidateUuid,optional"` // 候选人（筛选）
+	Mine          int64  `form:"mine,optional"` // 1=强制只看我的单据
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmOffer `json:"records"`
+}
+
+type AddRequest {
+	CandidateUuid   string `json:"candidateUuid"` // 候选人（仅 status=offer）
+	PositionUuid    string `json:"positionUuid"` // 招聘职位（仅 status=open）
+	PlanEntryDate   string `json:"planEntryDate"` // 计划入职日期 YYYY-MM-DD
+	ProbationMonths int64  `json:"probationMonths"` // 试用期(月)
+	RankLevel       string `json:"rankLevel,optional"` // 职级，默认 junior
+	ReporterName    string `json:"reporterName,optional"` // 汇报人
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid            string `json:"uuid"`
+	CandidateUuid   string `json:"candidateUuid"`
+	PositionUuid    string `json:"positionUuid"`
+	PlanEntryDate   string `json:"planEntryDate"`
+	ProbationMonths int64  `json:"probationMonths"`
+	RankLevel       string `json:"rankLevel,optional"`
+	ReporterName    string `json:"reporterName,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/offer
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getOfferList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addOffer (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editOffer (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deleteOffer (DeleteRequest) returns (DeleteResponse)
+}
+

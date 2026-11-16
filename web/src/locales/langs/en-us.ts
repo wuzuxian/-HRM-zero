@@ -223,6 +223,7 @@ const local: App.I18n.Schema = {
     'hrm_recruitment_requirement-list': 'Requirement',
     'hrm_recruitment_candidate-list': 'Candidates',
     'hrm_recruitment_position-list': 'Positions',
+    'hrm_recruitment_offer-list': 'Offer Approval',
     hrm_salary: 'Salary',
     hrm_salary_setting: 'Salary Settings',
     hrm_salary_setting_subject: 'Salary Subjects',
@@ -409,6 +410,11 @@ const local: App.I18n.Schema = {
         edit: 'Edit Position',
         delete: 'Delete Position',
         updatestatus: 'Position Status Transition'
+      },
+      offer: {
+        add: 'Add Offer',
+        edit: 'Edit Offer',
+        delete: 'Delete Offer'
       },
       bill: {
         submit: 'Submit Bill',
@@ -895,6 +901,51 @@ const local: App.I18n.Schema = {
           owner: 'Please enter owner name',
           status: 'Please select status',
           remark: 'Please enter remark'
+        }
+      },
+      offer: {
+        title: 'Offer Approval',
+        billNo: 'Bill No.',
+        billStatus: {
+          title: 'Status'
+        },
+        candidate: 'Candidate',
+        candidateName: 'Candidate',
+        position: 'Position',
+        postName: 'Position',
+        orgName: 'Department',
+        planEntryDate: 'Planned Entry Date',
+        probationMonths: 'Probation (Months)',
+        rankLevel: {
+          title: 'Rank Level',
+          junior: 'Junior',
+          intermediate: 'Intermediate',
+          senior: 'Senior',
+          expert: 'Expert'
+        },
+        reporterName: 'Reporter',
+        creatorName: 'Applicant',
+        createTime: 'Created At',
+        submit: 'Submit',
+        approve: 'Approve',
+        reject: 'Reject',
+        revoke: 'Revoke',
+        records: 'Records',
+        noRecords: 'No approval records',
+        confirmSubmit: 'Submit this offer bill?',
+        confirmApprove: 'Approve? Position hired count +1, candidate becomes hired, and an entry bill is created.',
+        confirmReject: 'Reject this bill?',
+        confirmRevoke: 'Revoke this bill?',
+        addOffer: 'Add Offer',
+        editOffer: 'Edit Offer',
+        form: {
+          billNo: 'Please enter bill no.',
+          status: 'Please select status',
+          candidate: 'Please select a candidate at offer stage',
+          position: 'Please select an open position',
+          planEntryDate: 'Please select planned entry date',
+          rankLevel: 'Please select rank level',
+          reporter: 'Please enter reporter'
         }
       },
       candidate: {

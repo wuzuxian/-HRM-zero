@@ -1974,3 +1974,43 @@ export function DeleteSalaryArchive(req: string[]) {
     }
   });
 }
+
+// ===== HRM-27 录用审批单 (HR208, 招聘管理域) =====
+
+/** get 录用审批单 (HR208) paginated list — 筛选 单据编号/状态/候选人; defaults to 「我的单据」 server-side */
+export function GetOfferList(params?: Api.Hrm.OfferSearchParams) {
+  return request<Api.Hrm.OfferList>({
+    url: '/api/v1/hrm/getOfferList',
+    method: 'get',
+    params
+  });
+}
+
+/** add 录用审批单 (候选人仅 status=offer、职位仅 status=open; 审批通过事务内三联动) */
+export function AddOffer(req: Api.Hrm.AddOfferRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/addOffer',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 录用审批单 (only in editable 单据状态) */
+export function EditOffer(req: Api.Hrm.EditOfferRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editOffer',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 录用审批单 (only in editable 单据状态) */
+export function DeleteOffer(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteOffer',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
