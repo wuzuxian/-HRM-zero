@@ -688,6 +688,34 @@ export const generatedRoutes: GeneratedRoute[] = [
               title: 'hrm_training_session',
               i18nKey: 'route.hrm_training_session'
             }
+          },
+          {
+            name: 'hrm_training_signin',
+            path: '/hrm/training/signin',
+            meta: {
+              title: 'hrm_training_signin',
+              i18nKey: 'route.hrm_training_signin'
+            },
+            children: [
+              {
+                name: 'hrm_training_signin_manage',
+                path: '/hrm/training/signin/manage',
+                component: 'view.hrm_training_signin_manage',
+                meta: {
+                  title: 'hrm_training_signin_manage',
+                  i18nKey: 'route.hrm_training_signin_manage'
+                }
+              },
+              {
+                name: 'hrm_training_signin_scan',
+                path: '/hrm/training/signin/scan',
+                component: 'view.hrm_training_signin_scan',
+                meta: {
+                  title: 'hrm_training_signin_scan',
+                  i18nKey: 'route.hrm_training_signin_scan'
+                }
+              }
+            ]
           }
         ]
       }

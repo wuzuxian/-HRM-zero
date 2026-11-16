@@ -26,12 +26,16 @@ var (
 )
 
 const (
-	Id          condition.Field = "id"
-	Uuid        condition.Field = "uuid"
-	CreateTime  condition.Field = "create_time"
-	UpdateTime  condition.Field = "update_time"
-	SessionUuid condition.Field = "session_uuid"
-	UserUuid    condition.Field = "user_uuid"
+	Id           condition.Field = "id"
+	Uuid         condition.Field = "uuid"
+	CreateTime   condition.Field = "create_time"
+	UpdateTime   condition.Field = "update_time"
+	SessionUuid  condition.Field = "session_uuid"
+	UserUuid     condition.Field = "user_uuid"
+	SignInTime   condition.Field = "sign_in_time"
+	SignInMethod condition.Field = "sign_in_method"
+	SignInBy     condition.Field = "sign_in_by"
+	SignInReason condition.Field = "sign_in_reason"
 )
 
 func initHrmTrainingSessionParticipantVars(flavor sqlbuilder.Flavor) {
@@ -77,12 +81,16 @@ type (
 	}
 
 	HrmTrainingSessionParticipant struct {
-		Id          int64     `db:"id"`
-		Uuid        string    `db:"uuid"`
-		CreateTime  time.Time `db:"create_time"`
-		UpdateTime  time.Time `db:"update_time"`
-		SessionUuid string    `db:"session_uuid"` // 班次 uuid
-		UserUuid    string    `db:"user_uuid"`    // 学员（manage_user.uuid）
+		Id           int64        `db:"id"`
+		Uuid         string       `db:"uuid"`
+		CreateTime   time.Time    `db:"create_time"`
+		UpdateTime   time.Time    `db:"update_time"`
+		SessionUuid  string       `db:"session_uuid"`   // 班次 uuid
+		UserUuid     string       `db:"user_uuid"`      // 学员（manage_user.uuid）
+		SignInTime   sql.NullTime `db:"sign_in_time"`   // 签到时间（NULL=未签到）
+		SignInMethod string       `db:"sign_in_method"` // 签到方式 1=扫码自签 2=管理员补签（空=未签）
+		SignInBy     string       `db:"sign_in_by"`     // 签到操作人（自签=本人 user_uuid，补签=管理员 user_uuid）
+		SignInReason string       `db:"sign_in_reason"` // 补签原因
 	}
 )
 
@@ -213,7 +221,7 @@ func (m *defaultHrmTrainingSessionParticipantModel) Insert(ctx context.Context, 
 	statement, args := sqlbuilder.NewInsertBuilder().
 		InsertInto(m.table).
 		Cols(hrmTrainingSessionParticipantRowsExpectAutoSet).
-		Values(data.Uuid, data.SessionUuid, data.UserUuid).BuildWithFlavor(m.flavor)
+		Values(data.Uuid, data.SessionUuid, data.UserUuid, data.SignInTime, data.SignInMethod, data.SignInBy, data.SignInReason).BuildWithFlavor(m.flavor)
 	if session != nil {
 		return session.ExecCtx(ctx, statement, args...)
 	}
@@ -227,12 +235,12 @@ func (m *defaultHrmTrainingSessionParticipantModel) InsertV2(ctx context.Context
 		statement, args = sqlbuilder.NewInsertBuilder().
 			InsertInto(m.table).
 			Cols(hrmTrainingSessionParticipantRowsExpectAutoSet).
-			Values(data.Uuid, data.SessionUuid, data.UserUuid).Returning("id").BuildWithFlavor(m.flavor)
+			Values(data.Uuid, data.SessionUuid, data.UserUuid, data.SignInTime, data.SignInMethod, data.SignInBy, data.SignInReason).Returning("id").BuildWithFlavor(m.flavor)
 	} else {
 		statement, args = sqlbuilder.NewInsertBuilder().
 			InsertInto(m.table).
 			Cols(hrmTrainingSessionParticipantRowsExpectAutoSet).
-			Values(data.Uuid, data.SessionUuid, data.UserUuid).BuildWithFlavor(m.flavor)
+			Values(data.Uuid, data.SessionUuid, data.UserUuid, data.SignInTime, data.SignInMethod, data.SignInBy, data.SignInReason).BuildWithFlavor(m.flavor)
 	}
 	var primaryKey int64
 	var err error
@@ -293,6 +301,18 @@ func (m *defaultHrmTrainingSessionParticipantModel) Update(ctx context.Context, 
 	if slices.Contains(hrmTrainingSessionParticipantRowsExpectAutoFieldNames, condition.QuoteWithFlavor(m.flavor, "user_uuid")) {
 		assigns = append(assigns, sb.Assign(condition.QuoteWithFlavor(m.flavor, "user_uuid"), data.UserUuid))
 	}
+	if slices.Contains(hrmTrainingSessionParticipantRowsExpectAutoFieldNames, condition.QuoteWithFlavor(m.flavor, "sign_in_time")) {
+		assigns = append(assigns, sb.Assign(condition.QuoteWithFlavor(m.flavor, "sign_in_time"), data.SignInTime))
+	}
+	if slices.Contains(hrmTrainingSessionParticipantRowsExpectAutoFieldNames, condition.QuoteWithFlavor(m.flavor, "sign_in_method")) {
+		assigns = append(assigns, sb.Assign(condition.QuoteWithFlavor(m.flavor, "sign_in_method"), data.SignInMethod))
+	}
+	if slices.Contains(hrmTrainingSessionParticipantRowsExpectAutoFieldNames, condition.QuoteWithFlavor(m.flavor, "sign_in_by")) {
+		assigns = append(assigns, sb.Assign(condition.QuoteWithFlavor(m.flavor, "sign_in_by"), data.SignInBy))
+	}
+	if slices.Contains(hrmTrainingSessionParticipantRowsExpectAutoFieldNames, condition.QuoteWithFlavor(m.flavor, "sign_in_reason")) {
+		assigns = append(assigns, sb.Assign(condition.QuoteWithFlavor(m.flavor, "sign_in_reason"), data.SignInReason))
+	}
 
 	sb.Set(assigns...)
 	sb.Where(sb.EQ(condition.QuoteWithFlavor(m.flavor, "`id`"), data.Id))
@@ -336,7 +356,7 @@ func (m *customHrmTrainingSessionParticipantModel) BulkInsert(ctx context.Contex
 	sb.Cols(hrmTrainingSessionParticipantRowsExpectAutoSet)
 
 	for _, data := range datas {
-		sb.Values(data.Uuid, data.SessionUuid, data.UserUuid)
+		sb.Values(data.Uuid, data.SessionUuid, data.UserUuid, data.SignInTime, data.SignInMethod, data.SignInBy, data.SignInReason)
 	}
 
 	statement, args := sb.BuildWithFlavor(m.flavor)

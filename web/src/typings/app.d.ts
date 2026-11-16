@@ -584,6 +584,11 @@ declare namespace App {
               revoke: string;
               uploadFile: string;
             };
+            signin: {
+              refreshToken: string;
+              signFor: string;
+              export: string;
+            };
           };
           salary_subject: {
             add: string;
@@ -2579,6 +2584,49 @@ declare namespace App {
                 certNo: string;
                 status: string;
                 source: string;
+              };
+            };
+            signin: {
+              title: string;
+              selectSession: string;
+              sessionPlaceholder: string;
+              refreshData: string;
+              expected: string;
+              signed: string;
+              absent: string;
+              qrTitle: string;
+              qrExpireTip: string;
+              qrTip: string;
+              refreshToken: string;
+              refreshTokenConfirm: string;
+              tokenRefreshed: string;
+              detailTitle: string;
+              nickName: string;
+              username: string;
+              employeeNo: string;
+              orgName: string;
+              signInTime: string;
+              signInMethod: string;
+              signInByName: string;
+              signInReason: string;
+              methodAbsent: string;
+              methodSelf: string;
+              methodFor: string;
+              signFor: string;
+              signForTitle: string;
+              signForReasonLabel: string;
+              signForReasonPlaceholder: string;
+              signForConfirm: string;
+              signForConfirmTip: string;
+              signForSuccess: string;
+              signForFirstAbsent: string;
+              signForFirstAbsentTip: string;
+              export: string;
+              scan: {
+                title: string;
+                noToken: string;
+                successTitle: string;
+                errorTitle: string;
               };
             };
           };

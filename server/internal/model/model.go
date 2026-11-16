@@ -60,6 +60,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_plan"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_session"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_session_participant"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_training_signin_token"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_transfer_bill"
 	"github.com/jzero-io/jzero-admin/server/internal/model/manage_email"
 	"github.com/jzero-io/jzero-admin/server/internal/model/manage_menu"
@@ -123,6 +124,7 @@ type Model struct {
 	HrmTrainingPlan               hrm_training_plan.HrmTrainingPlanModel
 	HrmTrainingSession            hrm_training_session.HrmTrainingSessionModel
 	HrmTrainingSessionParticipant hrm_training_session_participant.HrmTrainingSessionParticipantModel
+	HrmTrainingSigninToken        hrm_training_signin_token.HrmTrainingSigninTokenModel
 	HrmTransferBill               hrm_transfer_bill.HrmTransferBillModel
 	ManageEmail                   manage_email.ManageEmailModel
 	ManageMenu                    manage_menu.ManageMenuModel
@@ -187,6 +189,7 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmTrainingPlan:               hrm_training_plan.NewHrmTrainingPlanModel(conn, op...),
 		HrmTrainingSession:            hrm_training_session.NewHrmTrainingSessionModel(conn, op...),
 		HrmTrainingSessionParticipant: hrm_training_session_participant.NewHrmTrainingSessionParticipantModel(conn, op...),
+		HrmTrainingSigninToken:        hrm_training_signin_token.NewHrmTrainingSigninTokenModel(conn, op...),
 		HrmTransferBill:               hrm_transfer_bill.NewHrmTransferBillModel(conn, op...),
 		ManageEmail:                   manage_email.NewManageEmailModel(conn, op...),
 		ManageMenu:                    manage_menu.NewManageMenuModel(conn, op...),

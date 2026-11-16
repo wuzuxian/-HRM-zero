@@ -472,6 +472,62 @@ export function SetSessionParticipants(req: Api.Hrm.SetSessionParticipantsReques
   });
 }
 
+// ---- HRM 培训签到 (HRM-29: 动态码 / 补签 / 明细) ----
+
+/** get 签到明细 list (名册=应到名单, 一行一位学员) */
+export function GetSigninDetailList(sessionUuid: string) {
+  return request<Api.Hrm.SigninDetailList>({
+    url: '/api/v1/hrm/getSigninDetailList',
+    method: 'get',
+    params: { sessionUuid }
+  });
+}
+
+/** get 签到统计 (应到/已签/未到) */
+export function GetSigninStats(sessionUuid: string) {
+  return request<Api.Hrm.SigninStats>({
+    url: '/api/v1/hrm/getSigninStats',
+    method: 'get',
+    params: { sessionUuid }
+  });
+}
+
+/** refresh 课堂动态码 (短时效轮换, 旧码立即失效; 返回签到 URL 供前端渲染二维码) */
+export function RefreshSigninToken(sessionUuid: string) {
+  return request<Api.Hrm.RefreshSigninTokenResponse>({
+    url: '/api/v1/hrm/refreshSigninToken',
+    method: 'post',
+    data: { sessionUuid }
+  });
+}
+
+/** 管理员补签 (方式/操作人/原因 落库; 幂等不覆盖首次记录) */
+export function SigninForParticipant(req: Api.Hrm.SigninForParticipantRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/signinForParticipant',
+    method: 'post',
+    data: req
+  });
+}
+
+/** export 签到明细 xlsx (base64, 同明细口径) */
+export function ExportSigninDetail(sessionUuid: string) {
+  return request<Api.Hrm.ExportSigninDetailResponse>({
+    url: '/api/v1/hrm/exportSigninDetail',
+    method: 'post',
+    data: { sessionUuid }
+  });
+}
+
+/** 学员扫码签到 (jwt+token 双验; 幂等返回首次签到时间) */
+export function DoSignin(token: string) {
+  return request<Api.Hrm.DoSigninResponse>({
+    url: '/api/v1/hrm/doSignin',
+    method: 'post',
+    data: { token }
+  });
+}
+
 /** get 考勤组 paginated list (筛选: 名称/班制/状态) */
 export function GetAttendanceGroupList(params?: Api.Hrm.AttendanceGroupSearchParams) {
   return request<Api.Hrm.AttendanceGroupList>({

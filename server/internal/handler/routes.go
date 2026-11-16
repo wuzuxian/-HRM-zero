@@ -45,6 +45,7 @@ import (
 	v1hrmscheduleboard "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/scheduleboard"
 	v1hrmschedulecycle "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/schedulecycle"
 	v1hrmshift "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/shift"
+	v1hrmsignin "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/signin"
 	v1hrmtax_opening "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/tax_opening"
 	v1hrmtax_profile "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/tax_profile"
 	v1hrmtax_special_deduction "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/tax_special_deduction"
@@ -1485,6 +1486,47 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodGet,
 						Path:    "/hrm/getShiftList",
 						Handler: v1hrmshift.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/doSignin",
+						Handler: v1hrmsignin.DoSignin(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/exportSigninDetail",
+						Handler: v1hrmsignin.ExportSigninDetail(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getSigninDetailList",
+						Handler: v1hrmsignin.GetSigninDetailList(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getSigninStats",
+						Handler: v1hrmsignin.GetSigninStats(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/refreshSigninToken",
+						Handler: v1hrmsignin.RefreshSigninToken(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/signinForParticipant",
+						Handler: v1hrmsignin.SigninForParticipant(serverCtx),
 					},
 				}...,
 			),
