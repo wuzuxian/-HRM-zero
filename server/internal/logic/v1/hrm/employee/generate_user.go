@@ -41,6 +41,11 @@ func (l *GenerateUser) GenerateUser(req *types.GenerateUserRequest) (resp *types
 	}
 
 	initialPassword := l.svcCtx.MustGetConfig().Hrm.InitialUserPassword
+	// 兜底: configcenter 装载路径不应用 struct 的 default 标签 (实测 InitialUserPassword 为空),
+	// 空密码会让生成的账号永远无法登录; 与配置注释的默认值保持一致
+	if initialPassword == "" {
+		initialPassword = "123456"
+	}
 
 	err = l.svcCtx.SqlxConn.TransactCtx(l.ctx, func(ctx context.Context, session sqlx.Session) error {
 		for _, employeeUuid := range req.Uuids {
