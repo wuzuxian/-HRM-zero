@@ -77,3 +77,22 @@ func RolesHoldCode(ctx context.Context, svcCtx *svc.ServiceContext, roleUuids []
 	}
 	return false, nil
 }
+
+// CanSeeAllBills reports whether the current user may list all documents
+// instead of only its own (spec 用户故事 4: 列表默认按「我的单据」过滤，管理员可看全部).
+// Superadmin role OR any role granted the shared 审批通过 code
+// (v1:hrm:bill:approve — seeded only on approval buttons, so only admin/HR
+// roles carry it). Document-list logics use:
+//
+//	onlyMine := req.Mine == 1 || !hrmuser.CanSeeAllBills(ctx, svcCtx, user)
+func CanSeeAllBills(ctx context.Context, svcCtx *svc.ServiceContext, user User) bool {
+	if user.IsSuperAdmin() {
+		return true
+	}
+	ok, err := RolesHoldCode(ctx, svcCtx, user.RoleUuids, BillApproveCode)
+	if err != nil {
+		// resolution failure → fail closed to mine-only (spec default)
+		return false
+	}
+	return ok
+}

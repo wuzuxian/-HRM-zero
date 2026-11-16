@@ -31,11 +31,11 @@ func NewList(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request) *
 
 // List 录用审批单分页列表，支持按 单据编号（模糊）/单据状态/候选人 筛选
 // （demo-inventory §5：单据编号/状态/候选人）。默认按「我的单据」过滤
-// （创建人=当前用户，spec 用户故事 4）；超级管理员可看全部，
+// （创建人=当前用户，spec 用户故事 4）；管理员级角色（持共享审批码 v1:hrm:bill:approve）可看全部，
 // 传 mine=1 时管理员也只看自己的单据.
 func (l *List) List(req *types.ListRequest) (resp *types.ListResponse, err error) {
 	user := hrmuser.Current(l.ctx)
-	onlyMine := req.Mine == 1 || !user.IsSuperAdmin()
+	onlyMine := req.Mine == 1 || !hrmuser.CanSeeAllBills(l.ctx, l.svcCtx, user)
 
 	chain := condition.NewChain().
 		Equal(hrm_offer_bill.CreateBy, user.Uuid, condition.WithSkip(!onlyMine)).
