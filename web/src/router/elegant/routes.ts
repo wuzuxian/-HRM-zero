@@ -133,6 +133,15 @@ export const generatedRoutes: GeneratedRoute[] = [
                 }
               },
               {
+                name: 'hrm_attendance_data_month-report',
+                path: '/hrm/attendance/data/month-report',
+                component: 'view.hrm_attendance_data_month-report',
+                meta: {
+                  title: 'hrm_attendance_data_month-report',
+                  i18nKey: 'route.hrm_attendance_data_month-report'
+                }
+              },
+              {
                 name: 'hrm_attendance_data_punch-record',
                 path: '/hrm/attendance/data/punch-record',
                 component: 'view.hrm_attendance_data_punch-record',

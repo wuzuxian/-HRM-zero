@@ -4278,6 +4278,120 @@ declare namespace Api {
       records: Punch[];
     };
 
+    /** 考勤月报行 (HRM-23, demo-inventory 4.4 考勤月报) */
+    type MonthReportRow = {
+      uuid: string;
+      yearMonth: string;
+      employeeUuid: string;
+      employeeNo: string;
+      employeeName: string;
+      orgUuid: string;
+      orgName: string;
+      /** 考勤组名称（生效规则快照；组织默认/无规则为空） */
+      attGroupName: string;
+      /** 应出勤天（月内工作日数，WorkDays 口径） */
+      expectedDays: number;
+      /** 实出勤天（normal/late/early） */
+      attendDays: number;
+      lateCount: number;
+      earlyCount: number;
+      missingCount: number;
+      /** 旷工天（missing 且双卡空，同 HRM-22 口径） */
+      absentDays: number;
+      /** 工作日加班(h) */
+      workdayOtH: number;
+      /** 休息日加班(h) */
+      restdayOtH: number;
+      /** 节假日加班(h) */
+      holidayOtH: number;
+      /** 调休入账(h) */
+      compAccrueH: number;
+      /** 异常合计 = late+early+missing+absent */
+      abnormalTotal: number;
+      /** 锁定后变更标记（锁定月重算 diff） */
+      changed: boolean;
+    };
+
+    /** 考勤月报查询参数 */
+    type MonthReportSearchParams = CommonType.RecordNullable<
+      Pick<Common.CommonSearchParams, 'current' | 'size'> & {
+        yearMonth?: string;
+        orgUuid?: string;
+        attGroupName?: string;
+        name?: string;
+        onlyAbnormal?: string;
+        onlyChanged?: string;
+      }
+    >;
+
+    /** 考勤月报列表响应 */
+    type MonthReportListResponse = {
+      current: number;
+      size: number;
+      total: number;
+      /** 当前月份是否已锁定 */
+      locked: boolean;
+      /** 锁定日提示（次月 MM-05 锁定） */
+      lockHint: string;
+      records: MonthReportRow[];
+    };
+
+    /** 考勤月报日明细行 */
+    type MonthReportDetailDay = {
+      punchDate: string;
+      weekday: string;
+      settleStatus: string;
+      clockInTime: string;
+      clockOutTime: string;
+      settleLateMinutes: number;
+      settleEarlyMinutes: number;
+      settleWorkHours: number;
+    };
+
+    /** 考勤月报日明细请求 */
+    type MonthReportDetailRequest = {
+      employeeUuid: string;
+      yearMonth?: string;
+    };
+
+    /** 考勤月报日明细响应 */
+    type MonthReportDetailResponse = {
+      records: MonthReportDetailDay[];
+    };
+
+    /** 锁定/解锁月报请求 */
+    type MonthReportLockRequest = {
+      yearMonth: string;
+      remark?: string;
+    };
+
+    /** 重新计算响应（锁定月 diff 标记生效） */
+    type MonthReportRecalcResponse = {
+      locked: boolean;
+      changedCount: number;
+    };
+
+    /** 锁定记录行（谁何时锁/解锁流水） */
+    type MonthReportLockRecord = {
+      uuid: string;
+      yearMonth: string;
+      action: string;
+      actionName: string;
+      operatorName: string;
+      remark: string;
+      createTime: string;
+    };
+
+    /** 导出月报请求（同列表筛选条件） */
+    type MonthReportExportRequest = {
+      yearMonth?: string;
+      orgUuid?: string;
+      attGroupName?: string;
+      name?: string;
+      onlyAbnormal?: string;
+      onlyChanged?: string;
+    };
+
     /** hrm schedule board (排班表, HRM-15): 单格 = 员工+日期+班次(空=休) */
     type ScheduleCell = {
       /** 员工 uuid */

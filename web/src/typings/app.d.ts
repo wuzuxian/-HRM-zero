@@ -488,6 +488,13 @@ declare namespace App {
             statistics: string;
             statisticsDetail: string;
           };
+          monthreport: {
+            lockRecords: string;
+            recalc: string;
+            lock: string;
+            unlock: string;
+            export: string;
+          };
           overtimerule: {
             add: string;
             edit: string;
@@ -1706,6 +1713,60 @@ declare namespace App {
               form: {
                 name: string;
                 onlyAbnormal: string;
+              };
+            };
+            monthReport: {
+              title: string;
+              yearMonth: string;
+              org: string;
+              attGroup: string;
+              name: string;
+              onlyAbnormal: string;
+              onlyAbnormalYes: string;
+              onlyChanged: string;
+              onlyChangedYes: string;
+              orgName: string;
+              attGroupName: string;
+              employeeName: string;
+              expectedDays: string;
+              attendDays: string;
+              lateCount: string;
+              earlyCount: string;
+              missingCount: string;
+              absentDays: string;
+              workdayOtH: string;
+              restdayOtH: string;
+              holidayOtH: string;
+              compAccrueH: string;
+              lockStatus: string;
+              lockedTag: string;
+              unlockedTag: string;
+              changed: string;
+              dayDetail: string;
+              detailTitle: string;
+              detailDate: string;
+              lockRecords: string;
+              lockRecordTime: string;
+              lockRecordAction: string;
+              lockRecordOperator: string;
+              lockRecordRemark: string;
+              lock: string;
+              unlock: string;
+              recalc: string;
+              export: string;
+              lockSuccess: string;
+              unlockSuccess: string;
+              recalcSuccess: string;
+              recalcChanged: string;
+              lockConfirm: string;
+              unlockConfirm: string;
+              form: {
+                yearMonth: string;
+                org: string;
+                attGroup: string;
+                name: string;
+                onlyAbnormal: string;
+                onlyChanged: string;
               };
             };
             overtimeRule: {

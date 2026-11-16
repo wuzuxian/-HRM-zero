@@ -1,0 +1,176 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/monthreport"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 考勤月报行（demo-inventory 4.4 考勤月报）。
+type HrmMonthReportRow {
+	Uuid          string  `json:"uuid"`
+	YearMonth     string  `json:"yearMonth"`
+	EmployeeUuid  string  `json:"employeeUuid"`
+	EmployeeNo    string  `json:"employeeNo"`
+	EmployeeName  string  `json:"employeeName"`
+	OrgUuid       string  `json:"orgUuid"`
+	OrgName       string  `json:"orgName"`
+	AttGroupName  string  `json:"attGroupName"`
+	ExpectedDays  int64   `json:"expectedDays"`
+	AttendDays    int64   `json:"attendDays"`
+	LateCount     int64   `json:"lateCount"`
+	EarlyCount    int64   `json:"earlyCount"`
+	MissingCount  int64   `json:"missingCount"`
+	AbsentDays    int64   `json:"absentDays"`
+	WorkdayOtH    float64 `json:"workdayOtH"`
+	RestdayOtH    float64 `json:"restdayOtH"`
+	HolidayOtH    float64 `json:"holidayOtH"`
+	CompAccrueH   float64 `json:"compAccrueH"`
+	AbnormalTotal int64   `json:"abnormalTotal"`
+	// Changed 锁定后变更标记（锁定快照 hash 与重算结果不一致的行）
+	Changed bool `json:"changed"`
+}
+
+// ListRequest 月报列表（锁定月显示锁定快照行，未锁定月实时聚合）。
+type ListRequest {
+	PageRequest
+	// YearMonth 月份 yyyy-MM（缺省=当月）
+	YearMonth string `form:"yearMonth,optional"`
+	// OrgUuid 部门（含下级）
+	OrgUuid string `form:"orgUuid,optional"`
+	// AttGroupName 考勤组名称（模糊）
+	AttGroupName string `form:"attGroupName,optional"`
+	Name         string `form:"name,optional"`
+	// OnlyAbnormal 1=只看异常行（late/early/missing/absent 任一 >0）
+	OnlyAbnormal string `form:"onlyAbnormal,optional"`
+	// OnlyChanged 1=只看锁定后变更行（锁定月重算 diff 标记）
+	OnlyChanged string `form:"onlyChanged,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	// Locked 当前月份是否已锁定
+	Locked bool `json:"locked"`
+	// LockHint 锁定日提示（次月 5 号锁定，Dashboard.DefaultLockDay 常量口径）
+	LockHint string              `json:"lockHint"`
+	Records  []HrmMonthReportRow `json:"records"`
+}
+
+// DetailRequest 行操作「日明细」：某员工当月逐日 settle 详情（复用打卡记录数据）。
+type DetailRequest {
+	EmployeeUuid string `form:"employeeUuid"`
+	// YearMonth 月份 yyyy-MM（缺省=当月）
+	YearMonth string `form:"yearMonth,optional"`
+}
+
+type DetailResponse {
+	Records []HrmPunchDetailDay `json:"records"`
+}
+
+// HrmPunchDetailDay 日明细行（月报页精简版打卡记录）。
+type HrmPunchDetailDay {
+	PunchDate          string  `json:"punchDate"`
+	Weekday            string  `json:"weekday"`
+	SettleStatus       string  `json:"settleStatus"`
+	ClockInTime        string  `json:"clockInTime"`
+	ClockOutTime       string  `json:"clockOutTime"`
+	SettleLateMinutes  int64   `json:"settleLateMinutes"`
+	SettleEarlyMinutes int64   `json:"settleEarlyMinutes"`
+	SettleWorkHours    float64 `json:"settleWorkHours"`
+}
+
+// LockRequest 锁定月报：当前实时聚合结果写入月报表作为锁定快照。
+type LockRequest {
+	YearMonth string `json:"yearMonth"`
+	Remark    string `json:"remark,optional"`
+}
+
+type LockResponse {}
+
+// UnlockRequest 解锁（管理员）：解锁后月报恢复实时聚合，变更标记清零。
+type UnlockRequest {
+	YearMonth string `json:"yearMonth"`
+	Remark    string `json:"remark,optional"`
+}
+
+type UnlockResponse {}
+
+// RecalcRequest 重新计算：重跑聚合写入月报表（未锁定月直接覆盖；
+// 锁定月重算后与锁定快照 diff，不一致行标 changed=1）。
+type RecalcRequest {
+	YearMonth string `json:"yearMonth"`
+}
+
+type RecalcResponse {
+	// Locked 是否为锁定月重算（锁定月 diff 标记生效）
+	Locked       bool  `json:"locked"`
+	ChangedCount int64 `json:"changedCount"`
+}
+
+// LockRecordsRequest 锁定记录（谁何时锁/解锁流水）。
+type LockRecordsRequest {
+	YearMonth string `form:"yearMonth,optional"`
+}
+
+type LockRecord {
+	Uuid         string `json:"uuid"`
+	YearMonth    string `json:"yearMonth"`
+	Action       string `json:"action"`
+	ActionName   string `json:"actionName"`
+	OperatorName string `json:"operatorName"`
+	Remark       string `json:"remark"`
+	CreateTime   string `json:"createTime"`
+}
+
+type LockRecordsResponse {
+	Records []LockRecord `json:"records"`
+}
+
+// ExportRequest 导出月报 xlsx（同列表筛选条件，base64）。
+type ExportRequest {
+	YearMonth    string `json:"yearMonth,optional"`
+	OrgUuid      string `json:"orgUuid,optional"`
+	AttGroupName string `json:"attGroupName,optional"`
+	Name         string `json:"name,optional"`
+	OnlyAbnormal string `json:"onlyAbnormal,optional"`
+	OnlyChanged  string `json:"onlyChanged,optional"`
+}
+
+type ExportResponse {
+	FileName string `json:"fileName"`
+	Content  string `json:"content"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/monthreport
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getAttendanceMonthReport (ListRequest) returns (ListResponse)
+
+	@handler Detail
+	get /hrm/getAttendanceMonthReportDetail (DetailRequest) returns (DetailResponse)
+
+	@handler Lock
+	post /hrm/lockAttendanceMonthReport (LockRequest) returns (LockResponse)
+
+	@handler Unlock
+	post /hrm/unlockAttendanceMonthReport (UnlockRequest) returns (UnlockResponse)
+
+	@handler Recalc
+	post /hrm/recalcAttendanceMonthReport (RecalcRequest) returns (RecalcResponse)
+
+	@handler LockRecords
+	get /hrm/getAttendanceMonthLockRecords (LockRecordsRequest) returns (LockRecordsResponse)
+
+	@handler Export
+	post /hrm/exportAttendanceMonthReport (ExportRequest) returns (ExportResponse)
+}
+

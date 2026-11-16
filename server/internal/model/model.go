@@ -10,6 +10,8 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_approval_record"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_attendance_config"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_attendance_group"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_attendance_month_lock"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_attendance_month_report"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_bill_sequence"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_card_replacement_bill"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee"
@@ -77,6 +79,8 @@ type Model struct {
 	HrmApprovalRecord             hrm_approval_record.HrmApprovalRecordModel
 	HrmAttendanceConfig           hrm_attendance_config.HrmAttendanceConfigModel
 	HrmAttendanceGroup            hrm_attendance_group.HrmAttendanceGroupModel
+	HrmAttendanceMonthLock        hrm_attendance_month_lock.HrmAttendanceMonthLockModel
+	HrmAttendanceMonthReport      hrm_attendance_month_report.HrmAttendanceMonthReportModel
 	HrmBillSequence               hrm_bill_sequence.HrmBillSequenceModel
 	HrmCardReplacementBill        hrm_card_replacement_bill.HrmCardReplacementBillModel
 	HrmEmployee                   hrm_employee.HrmEmployeeModel
@@ -145,6 +149,8 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmApprovalRecord:             hrm_approval_record.NewHrmApprovalRecordModel(conn, op...),
 		HrmAttendanceConfig:           hrm_attendance_config.NewHrmAttendanceConfigModel(conn, op...),
 		HrmAttendanceGroup:            hrm_attendance_group.NewHrmAttendanceGroupModel(conn, op...),
+		HrmAttendanceMonthLock:        hrm_attendance_month_lock.NewHrmAttendanceMonthLockModel(conn, op...),
+		HrmAttendanceMonthReport:      hrm_attendance_month_report.NewHrmAttendanceMonthReportModel(conn, op...),
 		HrmBillSequence:               hrm_bill_sequence.NewHrmBillSequenceModel(conn, op...),
 		HrmCardReplacementBill:        hrm_card_replacement_bill.NewHrmCardReplacementBillModel(conn, op...),
 		HrmEmployee:                   hrm_employee.NewHrmEmployeeModel(conn, op...),
