@@ -212,6 +212,7 @@ const local: App.I18n.Schema = {
     'hrm_performance_period-list': 'Assessment Period Workbench',
     'hrm_performance_result-confirm-list': 'Batch Result Approval',
     'hrm_performance_result-list': 'Performance Results',
+    hrm_performance_dashboard: 'Perf Dashboard',
     'hrm_performance_assessment-task': 'Assessment Tasks',
     'hrm_performance_assessment-task_plan-list': 'Plan Confirm',
     'hrm_performance_assessment-task_self-review-list': 'Self Review',
@@ -1339,6 +1340,36 @@ const local: App.I18n.Schema = {
         resultStatus: {
           normal: 'Normal',
           voided: 'Voided'
+        },
+        dashboard: {
+          title: 'Perf Dashboard',
+          company: 'Company',
+          companyFilter: 'Select company',
+          org: 'Department',
+          orgFilter: 'Select department',
+          period: 'Period',
+          periodFilter: 'Select period',
+          lowScore: 'Low-score threshold',
+          lowScoreFilter: 'Scores below threshold count as risk',
+          metric: {
+            ongoingPeriods: 'Ongoing periods',
+            completionRate: 'Completion rate',
+            overdueTasks: 'Overdue tasks',
+            riskEmployees: 'At-risk employees',
+            avgScore: 'Avg score',
+            appeals: 'Under appeal'
+          },
+          riskTitle: 'Risk Alerts',
+          tabLowScores: 'Low-score details',
+          tabOverdueTasks: 'Overdue task details',
+          appealTitle: 'Under-appeal list',
+          periodEnd: 'Period end',
+          employee: 'Employee',
+          score: 'Score',
+          grade: 'Grade',
+          assessmentNo: 'Assessment No.',
+          currentNode: 'Current node',
+          taskStatus: 'Task status'
         }
       },
       org: {

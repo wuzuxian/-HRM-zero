@@ -81,3 +81,21 @@ func SubmitApproval(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 	}
 }
+
+func Dashboard(svcCtx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.HrmPerfDashboardRequest
+		if err := httpx.Parse(r, &req); err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+			return
+		}
+
+		l := perf_result.NewDashboard(r.Context(), svcCtx, r)
+		resp, err := l.Dashboard(&req)
+		if err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+		} else {
+			httpx.OkJsonCtx(r.Context(), w, resp)
+		}
+	}
+}

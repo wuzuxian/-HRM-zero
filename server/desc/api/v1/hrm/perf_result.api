@@ -126,9 +126,15 @@ type ResultListRequest {
 	PeriodUuid string `form:"periodUuid,optional"`
 	// 按员工筛选（uuid）
 	EmployeeUuid string `form:"employeeUuid,optional"`
+	// 按公司筛选（快照列 company_uuid；HRM-46）
+	CompanyUuid string `form:"companyUuid,optional"`
+	// 按部门筛选（快照列 org_uuid；HRM-46）
+	OrgUuid string `form:"orgUuid,optional"`
 	// 按签收状态筛选：0=未签收 1=已签收
 	Signed string `form:"signed,optional"`
-	// 仅看本人结果（当前登录账号绑定的员工）
+	// 按同步薪酬状态筛选：0=未同步 1=已同步（HRM-46）
+	SalarySynced string `form:"salarySynced,optional"`
+	// 仅看本人结果（当前登录账号绑定的员工；员工视角只看本人）
 	Mine bool `form:"mine,optional"`
 }
 
@@ -167,5 +173,116 @@ service server {
 	// 签收结果（员工本人；幂等：已签收直接成功）
 	@handler SignResult
 	post /hrm/signPerfResult (SignResultRequest) returns (SignResultResponse)
+}
+
+// ---- HRM-46 绩效结果列表增强 + 绩效驾驶舱（demo-inventory 9.3） ----
+// 结果列表补充筛选：公司/部门（快照列直读）、已同步薪酬；员工视角 mine=只看本人。
+// 驾驶舱：单聚合端点 getPerfDashboard，口径（pre-decided，写 hrm-46-notes）：
+//   进行中批次数 = hrm_perf_period.status='1' 且范围匹配的批次数；
+//   考核完成率 = 范围内批次任务 task_status='1' 数 / 批次任务总数（0 任务时=100%）；
+//   逾期待办数 = 批次 period_end < 今天 且该批次存在 task_status='0' 任务的批次数
+//     —— 简化口径：逾期未完成任务数（任务级：period_end < 今天 且 task_status='0'）；
+//   风险人数 = 范围内已发布结果行 score < lowScoreThreshold 的人数（去重员工）；
+//   平均得分 = 范围内已发布结果行 score 均值（round2；无行=0）；
+//   申诉中数 = 范围内批次任务 task_status='2' 数。
+// 风险预警明细（两个 Tab）：低分明细（结果行 score<阈值）/ 逾期任务明细（任务级）+
+// 申诉中名单列（task_status='2' 任务，简化"申诉积压"）。
+type HrmPerfDashboardRequest {
+	// 公司 uuid（org_uuid 快照匹配；空=不限）
+	CompanyUuid string `form:"companyUuid,optional"`
+	// 部门 uuid（org_uuid 快照匹配；空=不限）
+	OrgUuid string `form:"orgUuid,optional"`
+	// 批次 uuid（空=范围内全部批次）
+	PeriodUuid string `form:"periodUuid,optional"`
+	// 低分阈值（风险人数/低分明细口径，score < threshold 计入；空=60）
+	LowScore float64 `form:"lowScore,optional"`
+}
+
+type HrmPerfDashboardMetric {
+	// 进行中批次数（period.status='1'）
+	OngoingPeriodCount int64 `json:"ongoingPeriodCount"`
+	// 考核完成率（0-100，round2；task_status='1'/总任务）
+	CompletionRate float64 `json:"completionRate"`
+	// 逾期待办数（任务级：period_end < 今天 且 task_status='0'）
+	OverdueTaskCount int64 `json:"overdueTaskCount"`
+	// 风险人数（已发布结果 score < lowScore 去重员工数）
+	RiskEmployeeCount int64 `json:"riskEmployeeCount"`
+	// 平均得分（已发布结果行 score 均值 round2）
+	AvgScore float64 `json:"avgScore"`
+	// 申诉中数（task_status='2' 任务数）
+	AppealCount int64 `json:"appealCount"`
+	// 低分阈值（回显生效值）
+	LowScore float64 `json:"lowScore"`
+}
+
+// 低分明细行（风险预警 Tab1：结果行 score < 阈值）
+type HrmPerfDashboardLowScore {
+	// 批次 uuid / 编号
+	PeriodUuid string `json:"periodUuid"`
+	PeriodNo   string `json:"periodNo"`
+	// 员工
+	EmployeeUuid string `json:"employeeUuid"`
+	EmployeeName string `json:"employeeName"`
+	// 公司/部门快照
+	CompanyName string `json:"companyName"`
+	OrgName     string `json:"orgName"`
+	// 得分/等级/系数/绩效金额（直读结果行）
+	Score       float64 `json:"score"`
+	Grade       string  `json:"grade"`
+	Coefficient float64 `json:"coefficient"`
+	PerfAmount  float64 `json:"perfAmount"`
+	// 签收状态
+	Signed int64 `json:"signed"`
+}
+
+// 逾期任务明细行（风险预警 Tab2：period_end<今天 且任务未完成）
+type HrmPerfDashboardOverdueTask {
+	// 批次
+	PeriodUuid string `json:"periodUuid"`
+	PeriodNo   string `json:"periodNo"`
+	// 周期结束日期
+	PeriodEnd string `json:"periodEnd"`
+	// 被考核人
+	EmployeeUuid string `json:"employeeUuid"`
+	EmployeeName string `json:"employeeName"`
+	// 当前节点 / 任务状态（0=进行中 2=申诉中）
+	CurrentNode string `json:"currentNode"`
+	TaskStatus  string `json:"taskStatus"`
+	// 考核单号
+	AssessmentNo string `json:"assessmentNo"`
+}
+
+// 申诉中名单行（简化"申诉积压"口径：task_status='2' 任务列）
+type HrmPerfDashboardAppeal {
+	PeriodUuid   string `json:"periodUuid"`
+	PeriodNo     string `json:"periodNo"`
+	EmployeeUuid string `json:"employeeUuid"`
+	EmployeeName string `json:"employeeName"`
+	AssessmentNo string `json:"assessmentNo"`
+	// 当前节点
+	CurrentNode string `json:"currentNode"`
+}
+
+type DashboardResponse {
+	Metrics HrmPerfDashboardMetric `json:"metrics"`
+	// 风险预警 Tab1：低分明细（score < lowScore）
+	LowScores []HrmPerfDashboardLowScore `json:"lowScores"`
+	// 风险预警 Tab2：逾期任务明细（period_end < 今天 且 task_status != '1'）
+	OverdueTasks []HrmPerfDashboardOverdueTask `json:"overdueTasks"`
+	// 申诉中名单（task_status='2'，简化"申诉积压"）
+	Appeals []HrmPerfDashboardAppeal `json:"appeals"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/perf_result
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	// 绩效驾驶舱（demo-inventory 9.3 /hrm/performance/dashboard；单聚合端点）
+	@handler Dashboard
+	get /hrm/getPerfDashboard (HrmPerfDashboardRequest) returns (DashboardResponse)
 }
 

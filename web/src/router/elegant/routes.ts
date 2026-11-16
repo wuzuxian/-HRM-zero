@@ -458,6 +458,15 @@ export const generatedRoutes: GeneratedRoute[] = [
             ]
           },
           {
+            name: 'hrm_performance_dashboard',
+            path: '/hrm/performance/dashboard',
+            component: 'view.hrm_performance_dashboard',
+            meta: {
+              title: 'hrm_performance_dashboard',
+              i18nKey: 'route.hrm_performance_dashboard'
+            }
+          },
+          {
             name: 'hrm_performance_period-list',
             path: '/hrm/performance/period-list',
             component: 'view.hrm_performance_period-list',

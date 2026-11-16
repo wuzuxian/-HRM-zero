@@ -212,6 +212,7 @@ const local: App.I18n.Schema = {
     'hrm_performance_period-list': '考核批次工作台',
     'hrm_performance_result-confirm-list': '批次结果审批',
     'hrm_performance_result-list': '绩效结果',
+    hrm_performance_dashboard: '绩效驾驶舱',
     'hrm_performance_assessment-task': '考核任务',
     'hrm_performance_assessment-task_plan-list': '目标确认',
     'hrm_performance_assessment-task_self-review-list': '自评填报',
@@ -1340,6 +1341,36 @@ const local: App.I18n.Schema = {
           normal: '正常',
           voided: '已作废'
         },
+        dashboard: {
+          title: '绩效驾驶舱',
+          company: '公司',
+          companyFilter: '请选择公司',
+          org: '部门',
+          orgFilter: '请选择部门',
+          period: '批次',
+          periodFilter: '请选择批次',
+          lowScore: '低分阈值',
+          lowScoreFilter: '得分低于阈值计入风险',
+          metric: {
+            ongoingPeriods: '进行中批次',
+            completionRate: '考核完成率',
+            overdueTasks: '逾期待办',
+            riskEmployees: '风险人数',
+            avgScore: '平均得分',
+            appeals: '申诉中'
+          },
+          riskTitle: '风险预警',
+          tabLowScores: '低分明细',
+          tabOverdueTasks: '逾期任务明细',
+          appealTitle: '申诉中名单',
+          periodEnd: '周期结束',
+          employee: '员工',
+          score: '得分',
+          grade: '等级',
+          assessmentNo: '考核单号',
+          currentNode: '当前节点',
+          taskStatus: '任务状态'
+        }
       },
       org: {
         title: '组织管理',

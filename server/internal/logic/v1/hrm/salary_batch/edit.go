@@ -74,11 +74,11 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 	// 年月变更仅影响试算取数月份；已试算数据按未试算态展示（trial_status 重置）。
 	resetTrial := req.BatchYear != batch.BatchYear || req.BatchMonth != batch.BatchMonth
 	fields := map[string]any{
-		"batch_name": req.BatchName,
-		"batch_type": req.BatchType,
-		"batch_year": req.BatchYear,
+		"batch_name":  req.BatchName,
+		"batch_type":  req.BatchType,
+		"batch_year":  req.BatchYear,
 		"batch_month": req.BatchMonth,
-		"remark":     req.Remark,
+		"remark":      req.Remark,
 	}
 	if resetTrial {
 		fields["trial_status"] = "0"

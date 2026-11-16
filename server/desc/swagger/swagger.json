@@ -17099,6 +17099,228 @@
         ]
       }
     },
+    "/api/v1/hrm/getPerfDashboard": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:perf_result:dashboard",
+        "operationId": "v1/Hrm/PerfResultDashboard",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "companyUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "orgUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "periodUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "lowScore",
+            "type": "number"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "appeals": {
+                  "items": {
+                    "properties": {
+                      "assessmentNo": {
+                        "type": "string"
+                      },
+                      "currentNode": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "periodNo": {
+                        "type": "string"
+                      },
+                      "periodUuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "periodUuid",
+                      "periodNo",
+                      "employeeUuid",
+                      "employeeName",
+                      "assessmentNo",
+                      "currentNode"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "lowScores": {
+                  "items": {
+                    "properties": {
+                      "coefficient": {
+                        "type": "number"
+                      },
+                      "companyName": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "grade": {
+                        "type": "string"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "perfAmount": {
+                        "type": "number"
+                      },
+                      "periodNo": {
+                        "type": "string"
+                      },
+                      "periodUuid": {
+                        "type": "string"
+                      },
+                      "score": {
+                        "type": "number"
+                      },
+                      "signed": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "periodUuid",
+                      "periodNo",
+                      "employeeUuid",
+                      "employeeName",
+                      "companyName",
+                      "orgName",
+                      "score",
+                      "grade",
+                      "coefficient",
+                      "perfAmount",
+                      "signed"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "metrics": {
+                  "properties": {
+                    "appealCount": {
+                      "type": "integer"
+                    },
+                    "avgScore": {
+                      "type": "number"
+                    },
+                    "completionRate": {
+                      "type": "number"
+                    },
+                    "lowScore": {
+                      "type": "number"
+                    },
+                    "ongoingPeriodCount": {
+                      "type": "integer"
+                    },
+                    "overdueTaskCount": {
+                      "type": "integer"
+                    },
+                    "riskEmployeeCount": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "ongoingPeriodCount",
+                    "completionRate",
+                    "overdueTaskCount",
+                    "riskEmployeeCount",
+                    "avgScore",
+                    "appealCount",
+                    "lowScore"
+                  ],
+                  "type": "object"
+                },
+                "overdueTasks": {
+                  "items": {
+                    "properties": {
+                      "assessmentNo": {
+                        "type": "string"
+                      },
+                      "currentNode": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "periodEnd": {
+                        "type": "string"
+                      },
+                      "periodNo": {
+                        "type": "string"
+                      },
+                      "periodUuid": {
+                        "type": "string"
+                      },
+                      "taskStatus": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "periodUuid",
+                      "periodNo",
+                      "periodEnd",
+                      "employeeUuid",
+                      "employeeName",
+                      "currentNode",
+                      "taskStatus",
+                      "assessmentNo"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Dashboard",
+        "tags": [
+          "v1/hrm/perf_result"
+        ]
+      }
+    },
     "/api/v1/hrm/getPerfIndicatorList": {
       "get": {
         "description": "接口权限编码:v1:hrm:perf_indicator:list",
@@ -17577,7 +17799,25 @@
           {
             "allowEmptyValue": true,
             "in": "query",
+            "name": "companyUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "orgUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
             "name": "signed",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "salarySynced",
             "type": "string"
           },
           {
