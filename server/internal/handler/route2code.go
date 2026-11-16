@@ -124,6 +124,7 @@ var RoutesCodesMap = map[string]string{
 	"POST:/api/v1/hrm/confirmPerfAssessmentPlan":        "v1:hrm:perf_assessment:confirmPlan",
 	"POST:/api/v1/hrm/confirmPerfAssessmentResult":      "v1:hrm:perf_assessment:confirmResult",
 	"POST:/api/v1/hrm/generatePerfAssessment":           "v1:hrm:perf_assessment:generate",
+	"GET:/api/v1/hrm/getMyAssessmentWorkbench":          "v1:hrm:perf_assessment:getMyWorkbench",
 	"GET:/api/v1/hrm/getPerfAssessmentDetail":           "v1:hrm:perf_assessment:getDetail",
 	"GET:/api/v1/hrm/getPerfAssessmentList":             "v1:hrm:perf_assessment:list",
 	"POST:/api/v1/hrm/handlePerfAssessmentAppeal":       "v1:hrm:perf_assessment:handleAppeal",

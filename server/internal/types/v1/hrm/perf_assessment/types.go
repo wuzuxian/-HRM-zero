@@ -28,6 +28,30 @@ type AssessmentItemSnapshot struct {
 	Weight        float64 `json:"weight"`
 }
 
+type AssessmentWorkbenchCards struct {
+	PlanConfirm   int64 `json:"planConfirm"`
+	SelfReview    int64 `json:"selfReview"`
+	LeaderReview  int64 `json:"leaderReview"`
+	Calibration   int64 `json:"calibration"`
+	ResultConfirm int64 `json:"resultConfirm"`
+	Appeal        int64 `json:"appeal"`
+}
+
+type AssessmentWorkbenchTodo struct {
+	Uuid         string `json:"uuid"`
+	AssessmentNo string `json:"assessmentNo"`
+	PeriodUuid   string `json:"periodUuid"`
+	PeriodName   string `json:"periodName"`
+	PeriodNo     string `json:"periodNo"`
+	EmployeeUuid string `json:"employeeUuid"`
+	EmployeeName string `json:"employeeName"`
+	MyRole       string `json:"myRole"`
+	CurrentNode  string `json:"currentNode"`
+	TaskStatus   string `json:"taskStatus"`
+	AppealStatus string `json:"appealStatus"`
+	UpdateTime   string `json:"updateTime"`
+}
+
 type ConfirmPlanRequest struct {
 	Uuid    string `json:"uuid"`
 	Comment string `json:"comment,optional"`
@@ -57,6 +81,15 @@ type GetDetailRequest struct {
 
 type GetDetailResponse struct {
 	HrmPerfAssessmentDetail
+}
+
+type GetMyAssessmentWorkbenchRequest struct {
+}
+
+type GetMyAssessmentWorkbenchResponse struct {
+	Cards   AssessmentWorkbenchCards  `json:"cards"`
+	Todos   []AssessmentWorkbenchTodo `json:"todos"`
+	Appeals []AssessmentWorkbenchTodo `json:"appeals"`
 }
 
 type HandleAppealRequest struct {

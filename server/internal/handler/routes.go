@@ -859,6 +859,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					},
 					{
 						Method:  http.MethodGet,
+						Path:    "/hrm/getMyAssessmentWorkbench",
+						Handler: v1hrmperf_assessment.GetMyWorkbench(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
 						Path:    "/hrm/getPerfAssessmentDetail",
 						Handler: v1hrmperf_assessment.GetDetail(serverCtx),
 					},

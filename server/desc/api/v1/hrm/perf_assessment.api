@@ -265,5 +265,66 @@ service server {
 	// 申诉裁决（校准人：维持/调整得分→关闭申诉）
 	@handler HandleAppeal
 	post /hrm/handlePerfAssessmentAppeal (HandleAppealRequest) returns (HandleAppealResponse)
+
+	// 考核任务工作台（当前登录人视角聚合：汇总卡 + 最近待办 + 申诉单列，只读）
+	@handler GetMyWorkbench
+	get /hrm/getMyAssessmentWorkbench (GetMyAssessmentWorkbenchRequest) returns (GetMyAssessmentWorkbenchResponse)
+}
+
+// ---- HRM-44 考核任务工作台（demo-inventory 9.2 /hrm/performance/assessment-task/workbench） ----
+// 当前登录人视角的单聚合端点：全周期待办汇总卡（六卡）+ 最近待办列表 + 申诉中单列。
+// 汇总卡口径：统计当前用户在各节点的实际待办任务数（被考核人阶段按 employee_uuid=我，
+// 评审按 v1:hrm:perf_assessment:review 码、校准/申诉裁决按 calibrate 码区分角色）。
+type AssessmentWorkbenchTodo {
+	// 考核任务 uuid（操作跳转参数）
+	Uuid string `json:"uuid"`
+	// 考核单号 PA-年-流水
+	AssessmentNo string `json:"assessmentNo"`
+	// 绩效批次 uuid
+	PeriodUuid string `json:"periodUuid"`
+	// 批次名称（展示快照）
+	PeriodName string `json:"periodName"`
+	// 批次编号（展示快照）
+	PeriodNo string `json:"periodNo"`
+	// 被考核人 uuid
+	EmployeeUuid string `json:"employeeUuid"`
+	// 被考核人姓名（展示快照）
+	EmployeeName string `json:"employeeName"`
+	// 我的角色：owner=被考核人 reviewer=评审 calibrator=校准/裁决
+	MyRole string `json:"myRole"`
+	// 当前节点：1-5
+	CurrentNode string `json:"currentNode"`
+	// 任务状态：0=进行中 1=已完成 2=申诉中
+	TaskStatus string `json:"taskStatus"`
+	// 申诉状态（申诉中任务携带）：0=待处理 1=维持 2=已调整
+	AppealStatus string `json:"appealStatus"`
+	// 更新时间
+	UpdateTime string `json:"updateTime"`
+}
+
+type AssessmentWorkbenchCards {
+	// 目标确认待办（被考核人，节点1）
+	PlanConfirm int64 `json:"planConfirm"`
+	// 自评填报待办（被考核人，节点2）
+	SelfReview int64 `json:"selfReview"`
+	// 上级评审待办（考核人，节点3）
+	LeaderReview int64 `json:"leaderReview"`
+	// 校准填报待办（校准人，节点4）
+	Calibration int64 `json:"calibration"`
+	// 结果确认待办（被考核人，节点5）
+	ResultConfirm int64 `json:"resultConfirm"`
+	// 申诉处理待办（校准人，任务状态=申诉中）
+	Appeal int64 `json:"appeal"`
+}
+
+type GetMyAssessmentWorkbenchRequest {}
+
+type GetMyAssessmentWorkbenchResponse {
+	// 全周期待办汇总卡（六卡，按当前用户角色口径）
+	Cards AssessmentWorkbenchCards `json:"cards"`
+	// 最近待办列表（按更新时间倒序，默认前 20）
+	Todos []AssessmentWorkbenchTodo `json:"todos"`
+	// 申诉中的任务单列
+	Appeals []AssessmentWorkbenchTodo `json:"appeals"`
 }
 
