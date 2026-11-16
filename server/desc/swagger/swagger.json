@@ -15388,6 +15388,185 @@
         ]
       }
     },
+    "/api/v1/hrm/getMySalaryPayslipList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:salary_payslip:mineList",
+        "operationId": "v1/Hrm/SalaryPayslipMineList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "yearMonth",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "batchName": {
+                        "type": "string"
+                      },
+                      "batchNo": {
+                        "type": "string"
+                      },
+                      "batchUuid": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "deductionTotal": {
+                        "type": "number"
+                      },
+                      "earningTotal": {
+                        "type": "number"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "items": {
+                        "items": {
+                          "properties": {
+                            "amount": {
+                              "type": "number"
+                            },
+                            "itemClass": {
+                              "type": "string"
+                            },
+                            "itemCode": {
+                              "type": "string"
+                            },
+                            "itemName": {
+                              "type": "string"
+                            },
+                            "source": {
+                              "type": "string"
+                            },
+                            "sourceDetail": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "itemCode",
+                            "itemName",
+                            "itemClass",
+                            "amount",
+                            "source",
+                            "sourceDetail"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "netTotal": {
+                        "type": "number"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "published": {
+                        "type": "integer"
+                      },
+                      "readStatus": {
+                        "type": "integer"
+                      },
+                      "readTime": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "yearMonth": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "batchUuid",
+                      "batchNo",
+                      "batchName",
+                      "yearMonth",
+                      "title",
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "orgName",
+                      "earningTotal",
+                      "deductionTotal",
+                      "netTotal",
+                      "items",
+                      "published",
+                      "readStatus",
+                      "readTime",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "MineList",
+        "tags": [
+          "v1/hrm/salary_payslip"
+        ]
+      }
+    },
     "/api/v1/hrm/getMyTrainingCertificateList": {
       "get": {
         "description": "接口权限编码:v1:hrm:training:getMyCertificateList",
@@ -20097,6 +20276,367 @@
         ]
       }
     },
+    "/api/v1/hrm/getSalaryLedger": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:salary_payslip:ledger",
+        "operationId": "v1/Hrm/SalaryPayslipLedger",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "batchUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "orgName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "onlyAbnormal",
+            "type": "boolean"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "deductionTotal": {
+                  "type": "number"
+                },
+                "earningTotal": {
+                  "type": "number"
+                },
+                "employeeCount": {
+                  "type": "integer"
+                },
+                "laborCostTotal": {
+                  "type": "number"
+                },
+                "netTotal": {
+                  "type": "number"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "abnormal": {
+                        "description": "试算告警文本透传（''=无异常）",
+                        "type": "string"
+                      },
+                      "batchName": {
+                        "type": "string"
+                      },
+                      "batchNo": {
+                        "type": "string"
+                      },
+                      "batchUuid": {
+                        "type": "string"
+                      },
+                      "companyName": {
+                        "type": "string"
+                      },
+                      "deductionTotal": {
+                        "type": "number"
+                      },
+                      "earningTotal": {
+                        "type": "number"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "laborCostTotal": {
+                        "type": "number"
+                      },
+                      "netTotal": {
+                        "type": "number"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "paid": {
+                        "description": "已发薪（批次 pay_status 只读透传）",
+                        "type": "integer"
+                      },
+                      "payslipped": {
+                        "description": "已发条（批次 payslip_status 只读透传）",
+                        "type": "integer"
+                      },
+                      "yearMonth": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "batchUuid",
+                      "batchNo",
+                      "batchName",
+                      "yearMonth",
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "companyName",
+                      "orgName",
+                      "earningTotal",
+                      "deductionTotal",
+                      "netTotal",
+                      "laborCostTotal",
+                      "abnormal",
+                      "paid",
+                      "payslipped"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Ledger",
+        "tags": [
+          "v1/hrm/salary_payslip"
+        ]
+      }
+    },
+    "/api/v1/hrm/getSalaryPayslipList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:salary_payslip:list",
+        "operationId": "v1/Hrm/SalaryPayslipList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "batchUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "yearMonth",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "''=全部 '0'=未读 '1'=已读",
+            "in": "query",
+            "name": "readStatus",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "batchName": {
+                        "type": "string"
+                      },
+                      "batchNo": {
+                        "type": "string"
+                      },
+                      "batchUuid": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "deductionTotal": {
+                        "type": "number"
+                      },
+                      "earningTotal": {
+                        "type": "number"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "items": {
+                        "items": {
+                          "properties": {
+                            "amount": {
+                              "type": "number"
+                            },
+                            "itemClass": {
+                              "type": "string"
+                            },
+                            "itemCode": {
+                              "type": "string"
+                            },
+                            "itemName": {
+                              "type": "string"
+                            },
+                            "source": {
+                              "type": "string"
+                            },
+                            "sourceDetail": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "itemCode",
+                            "itemName",
+                            "itemClass",
+                            "amount",
+                            "source",
+                            "sourceDetail"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "netTotal": {
+                        "type": "number"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "published": {
+                        "type": "integer"
+                      },
+                      "readStatus": {
+                        "type": "integer"
+                      },
+                      "readTime": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "yearMonth": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "batchUuid",
+                      "batchNo",
+                      "batchName",
+                      "yearMonth",
+                      "title",
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "orgName",
+                      "earningTotal",
+                      "deductionTotal",
+                      "netTotal",
+                      "items",
+                      "published",
+                      "readStatus",
+                      "readTime",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/salary_payslip"
+        ]
+      }
+    },
     "/api/v1/hrm/getSalarySchemeDetail": {
       "get": {
         "description": "接口权限编码:v1:hrm:salary_scheme:getSchemeDetail",
@@ -23247,6 +23787,64 @@
         ]
       }
     },
+    "/api/v1/hrm/publishSalaryPayslip": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_payslip:publish",
+        "operationId": "v1/Hrm/SalaryPayslipPublish",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "batchUuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "batchUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "batchUuid": {
+                  "type": "string"
+                },
+                "count": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Publish",
+        "tags": [
+          "v1/hrm/salary_payslip"
+        ]
+      }
+    },
     "/api/v1/hrm/publishScheduleMonth": {
       "post": {
         "consumes": [
@@ -23376,6 +23974,56 @@
         "summary": "Punch",
         "tags": [
           "v1/hrm/punch"
+        ]
+      }
+    },
+    "/api/v1/hrm/readSalaryPayslip": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_payslip:read",
+        "operationId": "v1/Hrm/SalaryPayslipRead",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Read",
+        "tags": [
+          "v1/hrm/salary_payslip"
         ]
       }
     },

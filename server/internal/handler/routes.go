@@ -44,6 +44,7 @@ import (
 	v1hrmsalary_archive "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_archive"
 	v1hrmsalary_batch "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_batch"
 	v1hrmsalary_item "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_item"
+	v1hrmsalary_payslip "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_payslip"
 	v1hrmsalary_scheme "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_scheme"
 	v1hrmsalary_subject "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_subject"
 	v1hrmscheduleboard "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/scheduleboard"
@@ -1449,6 +1450,42 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodGet,
 						Path:    "/hrm/getSalaryItemList",
 						Handler: v1hrmsalary_item.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getMySalaryPayslipList",
+						Handler: v1hrmsalary_payslip.MineList(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getSalaryLedger",
+						Handler: v1hrmsalary_payslip.Ledger(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getSalaryPayslipList",
+						Handler: v1hrmsalary_payslip.List(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/publishSalaryPayslip",
+						Handler: v1hrmsalary_payslip.Publish(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/readSalaryPayslip",
+						Handler: v1hrmsalary_payslip.Read(serverCtx),
 					},
 				}...,
 			),

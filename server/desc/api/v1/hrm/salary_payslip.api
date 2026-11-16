@@ -1,0 +1,154 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/salary_payslip"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// HrmSalaryPayslip 工资条（HRM-39，demo-inventory 8.4 发薪流程 /hrm/salary/payslip）：
+// 按批次从试算明细行（hrm_salary_batch_item）聚合生成每员工一张工资条，
+// 明细按薪资项目 JSON 快照（[{code,name,class,amount,source,sourceDetail}]）。
+// 发布守卫：批次须已确认（hrm_salary_batch.confirm_status='1'，HRM-38 确认审批写回，
+// 本票只读消费）；发放登记（pay_status）由 HRM-38 发薪登记写回，本票只读透传。
+type HrmSalaryPayslip {
+	Uuid           string                 `json:"uuid"`
+	BatchUuid      string                 `json:"batchUuid"`
+	BatchNo        string                 `json:"batchNo"`
+	BatchName      string                 `json:"batchName"`
+	YearMonth      string                 `json:"yearMonth"`
+	Title          string                 `json:"title"`
+	EmployeeUuid   string                 `json:"employeeUuid"`
+	EmployeeNo     string                 `json:"employeeNo"`
+	EmployeeName   string                 `json:"employeeName"`
+	OrgName        string                 `json:"orgName"`
+	EarningTotal   float64                `json:"earningTotal"`
+	DeductionTotal float64                `json:"deductionTotal"`
+	NetTotal       float64                `json:"netTotal"`
+	Items          []HrmSalaryPayslipItem `json:"items"`
+	Published      int64                  `json:"published"`
+	ReadStatus     int64                  `json:"readStatus"`
+	ReadTime       string                 `json:"readTime"`
+	CreateTime     string                 `json:"createTime"`
+	UpdateTime     string                 `json:"updateTime"`
+}
+
+// HrmSalaryPayslipItem 工资条明细行（按薪资项目 JSON 快照）。
+type HrmSalaryPayslipItem {
+	ItemCode     string  `json:"itemCode"`
+	ItemName     string  `json:"itemName"`
+	ItemClass    string  `json:"itemClass"`
+	Amount       float64 `json:"amount"`
+	Source       string  `json:"source"`
+	SourceDetail string  `json:"sourceDetail"`
+}
+
+type ListRequest {
+	PageRequest
+	BatchUuid    string `form:"batchUuid,optional"`
+	EmployeeName string `form:"employeeName,optional"`
+	YearMonth    string `form:"yearMonth,optional"`
+	ReadStatus   string `form:"readStatus,optional"` // ''=全部 '0'=未读 '1'=已读
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmSalaryPayslip `json:"records"`
+}
+
+// PublishRequest 按批次发布工资条：批次须已确认，从批次试算明细聚合生成
+// 每员工工资条（幂等重发布覆盖旧明细）。
+type PublishRequest {
+	BatchUuid string `json:"batchUuid"`
+}
+
+type PublishResponse {
+	BatchUuid string `json:"batchUuid"`
+	Count     int64  `json:"count"`
+}
+
+// MineListRequest 我的工资条（员工本人端点；JWT 登录账号 → hrm_employee.user_uuid 反查）。
+type MineListRequest {
+	PageRequest
+	YearMonth string `form:"yearMonth,optional"`
+}
+
+type MineListResponse {
+	PageResponse
+	Records []HrmSalaryPayslip `json:"records"`
+}
+
+// ReadRequest 员工本人查看工资条记 已读+已读时间（幂等不覆盖首次）。
+type ReadRequest {
+	Uuid string `json:"uuid"`
+}
+
+type ReadResponse {}
+
+// LedgerRequest 薪资统计台账（demo-inventory 8.4 /hrm/salary/statistics）：
+// 统计卡 + 按批次×员工明细（应发/应扣/实发/人工成本/异常/已发薪/已发条）。
+type LedgerRequest {
+	PageRequest
+	BatchUuid    string `form:"batchUuid,optional"`
+	EmployeeName string `form:"employeeName,optional"`
+	OrgName      string `form:"orgName,optional"`
+	OnlyAbnormal bool   `form:"onlyAbnormal,optional"`
+}
+
+// LedgerRow 台账明细行（批次×员工粒度）。
+type LedgerRow {
+	BatchUuid      string  `json:"batchUuid"`
+	BatchNo        string  `json:"batchNo"`
+	BatchName      string  `json:"batchName"`
+	YearMonth      string  `json:"yearMonth"`
+	EmployeeUuid   string  `json:"employeeUuid"`
+	EmployeeNo     string  `json:"employeeNo"`
+	EmployeeName   string  `json:"employeeName"`
+	CompanyName    string  `json:"companyName"`
+	OrgName        string  `json:"orgName"`
+	EarningTotal   float64 `json:"earningTotal"`
+	DeductionTotal float64 `json:"deductionTotal"`
+	NetTotal       float64 `json:"netTotal"`
+	LaborCostTotal float64 `json:"laborCostTotal"`
+	Abnormal       string  `json:"abnormal"` // 试算告警文本透传（''=无异常）
+	Paid           int64   `json:"paid"` // 已发薪（批次 pay_status 只读透传）
+	Payslipped     int64   `json:"payslipped"` // 已发条（批次 payslip_status 只读透传）
+}
+
+type LedgerResponse {
+	// 统计卡：员工数（台账明细行数）/ 应发合计 / 应扣合计 / 实发合计 / 人工成本
+	EmployeeCount  int64       `json:"employeeCount"`
+	EarningTotal   float64     `json:"earningTotal"`
+	DeductionTotal float64     `json:"deductionTotal"`
+	NetTotal       float64     `json:"netTotal"`
+	LaborCostTotal float64     `json:"laborCostTotal"`
+	Records        []LedgerRow `json:"records"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/salary_payslip
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getSalaryPayslipList (ListRequest) returns (ListResponse)
+
+	@handler Publish
+	post /hrm/publishSalaryPayslip (PublishRequest) returns (PublishResponse)
+
+	@handler MineList
+	get /hrm/getMySalaryPayslipList (MineListRequest) returns (MineListResponse)
+
+	@handler Read
+	post /hrm/readSalaryPayslip (ReadRequest) returns (ReadResponse)
+
+	@handler Ledger
+	get /hrm/getSalaryLedger (LedgerRequest) returns (LedgerResponse)
+}
+
