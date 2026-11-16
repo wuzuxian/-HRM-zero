@@ -1,0 +1,21 @@
+CREATE TABLE `hrm_salary_payment` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(36) NOT NULL UNIQUE,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `batch_uuid` varchar(36) NOT NULL COMMENT '薪资批次 uuid（hrm_salary_batch；一批次一条发薪登记）',
+  `batch_no` varchar(20) NOT NULL DEFAULT '' COMMENT '批次编号快照 SA...',
+  `batch_name` varchar(100) NOT NULL DEFAULT '' COMMENT '批次名称快照',
+  `subject_uuid` varchar(36) NOT NULL DEFAULT '' COMMENT '薪酬主体 uuid 快照',
+  `subject_name` varchar(100) NOT NULL DEFAULT '' COMMENT '薪酬主体名称快照',
+  `pay_amount` decimal(18,2) NOT NULL DEFAULT 0 COMMENT '发薪金额（默认=批次实发合计，可改）',
+  `pay_mode` varchar(16) NOT NULL DEFAULT 'bank' COMMENT '发薪方式：bank=银行代发 cash=现金 other=其他',
+  `receipt_no` varchar(64) NOT NULL DEFAULT '' COMMENT '回执编号',
+  `arrive_time` varchar(20) NOT NULL DEFAULT '' COMMENT '到账时间',
+  `register_by` varchar(36) NOT NULL DEFAULT '' COMMENT '登记人用户 uuid',
+  `register_name` varchar(100) NOT NULL DEFAULT '' COMMENT '登记人姓名（快照）',
+  `register_time` varchar(20) NOT NULL DEFAULT '' COMMENT '登记时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_hrm_salary_payment_batch` (`batch_uuid`),
+  KEY `idx_hrm_salary_payment_batch` (`batch_uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

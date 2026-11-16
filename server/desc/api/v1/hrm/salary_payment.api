@@ -1,0 +1,95 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/salary_payment"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// HR210 发薪登记（演示站 8.4 发薪流程，GLOSSARY「薪资批次」）：
+// 对 已确认（confirm_status='1'）且未发薪（pay_status='0'）的批次登记发薪凭证：
+// 发薪金额（默认=批次实发合计，可改）、发薪方式（银行代发/现金/其他）、回执编号、
+// 到账时间。登记成功事务内批次 pay_status='1'（HRM-39 工资条发布以 pay_status
+// 与 confirm_status 为前置，台账透传已发薪标记）。一批次一条登记（UNIQUE(batch_uuid)）。
+type HrmSalaryPayment {
+	Uuid string `json:"uuid"`
+	// 薪资批次 uuid
+	BatchUuid string `json:"batchUuid"`
+	// 批次编号快照 SA...
+	BatchNo string `json:"batchNo"`
+	// 批次名称快照
+	BatchName string `json:"batchName"`
+	// 薪酬主体 uuid 快照
+	SubjectUuid string `json:"subjectUuid"`
+	// 薪酬主体名称快照
+	SubjectName string `json:"subjectName"`
+	// 发薪金额（默认=批次实发合计，可改）
+	PayAmount float64 `json:"payAmount"`
+	// 发薪方式：bank=银行代发 cash=现金 other=其他
+	PayMode string `json:"payMode"`
+	// 回执编号
+	ReceiptNo string `json:"receiptNo"`
+	// 到账时间
+	ArriveTime string `json:"arriveTime"`
+	// 登记人用户 uuid
+	RegisterBy string `json:"registerBy"`
+	// 登记人姓名（快照）
+	RegisterName string `json:"registerName"`
+	// 登记时间
+	RegisterTime string `json:"registerTime"`
+	CreateTime   string `json:"createTime"`
+	UpdateTime   string `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	// 按批次筛选
+	BatchUuid string `form:"batchUuid,optional"`
+	// 按发薪方式筛选 bank/cash/other
+	PayMode string `form:"payMode,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmSalaryPayment `json:"records"`
+}
+
+// RegisterRequest 发薪登记：批次须 已确认未发薪（confirm_status='1' 且
+// pay_status='0'）；发薪金额留空默认取批次实发合计。
+type RegisterRequest {
+	BatchUuid string `json:"batchUuid"`
+	// 发薪金额（<=0 时默认取批次实发合计）
+	PayAmount float64 `json:"payAmount,optional"`
+	// 发薪方式 bank/cash/other（默认 bank）
+	PayMode string `json:"payMode,optional"`
+	// 回执编号（可选）
+	ReceiptNo string `json:"receiptNo,optional"`
+	// 到账时间（可选，YYYY-MM-DD HH:MM:SS）
+	ArriveTime string `json:"arriveTime,optional"`
+}
+
+type RegisterResponse {
+	// 登记行 uuid
+	Uuid string `json:"uuid"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/salary_payment
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	// 发薪登记列表（demo-inventory 8.4 /hrm/salary/payment-list）
+	@handler List
+	get /hrm/getSalaryPaymentList (ListRequest) returns (ListResponse)
+
+	// 发薪登记（HR210；批次须 已确认未发薪；事务内批次 pay_status='1'）
+	@handler Register
+	post /hrm/registerSalaryPayment (RegisterRequest) returns (RegisterResponse)
+}
+

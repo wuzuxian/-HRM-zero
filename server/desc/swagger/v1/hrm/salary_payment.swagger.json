@@ -1,0 +1,232 @@
+{
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/hrm/getSalaryPaymentList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:salary_payment:list",
+        "operationId": "v1/Hrm/SalaryPaymentList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "batchUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "payMode",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "arriveTime": {
+                        "type": "string"
+                      },
+                      "batchName": {
+                        "type": "string"
+                      },
+                      "batchNo": {
+                        "type": "string"
+                      },
+                      "batchUuid": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "payAmount": {
+                        "type": "number"
+                      },
+                      "payMode": {
+                        "type": "string"
+                      },
+                      "receiptNo": {
+                        "type": "string"
+                      },
+                      "registerBy": {
+                        "type": "string"
+                      },
+                      "registerName": {
+                        "type": "string"
+                      },
+                      "registerTime": {
+                        "type": "string"
+                      },
+                      "subjectName": {
+                        "type": "string"
+                      },
+                      "subjectUuid": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "batchUuid",
+                      "batchNo",
+                      "batchName",
+                      "subjectUuid",
+                      "subjectName",
+                      "payAmount",
+                      "payMode",
+                      "receiptNo",
+                      "arriveTime",
+                      "registerBy",
+                      "registerName",
+                      "registerTime",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/salary_payment"
+        ]
+      }
+    },
+    "/api/v1/hrm/registerSalaryPayment": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_payment:register",
+        "operationId": "v1/Hrm/SalaryPaymentRegister",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "arriveTime": {
+                  "type": "string"
+                },
+                "batchUuid": {
+                  "type": "string"
+                },
+                "payAmount": {
+                  "type": "number"
+                },
+                "payMode": {
+                  "type": "string"
+                },
+                "receiptNo": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "batchUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Register",
+        "tags": [
+          "v1/hrm/salary_payment"
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKey": {
+      "description": "Enter Authorization",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0"
+}

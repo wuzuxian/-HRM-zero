@@ -106,6 +106,12 @@ func validateBatchMonth(year, month int64) (time.Time, string, error) {
 
 // findBatchByUuid 按 uuid 取批次行（不存在 → SalaryBatchNotFoundCode）。
 func findBatchByUuid(ctx context.Context, svcCtx *svc.ServiceContext, batchUuid string) (*hrm_salary_batch.HrmSalaryBatch, error) {
+	return FindBatchByUuid(ctx, svcCtx, batchUuid)
+}
+
+// FindBatchByUuid is the exported 按 uuid 取批次行（不存在 → SalaryBatchNotFoundCode）；
+// 跨域消费入口（HRM-38 确认审批 / HRM-39 发薪登记按批次行四标记守卫）。
+func FindBatchByUuid(ctx context.Context, svcCtx *svc.ServiceContext, batchUuid string) (*hrm_salary_batch.HrmSalaryBatch, error) {
 	if batchUuid == "" {
 		return nil, statusInvalid("batch_uuid 不能为空")
 	}

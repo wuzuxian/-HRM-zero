@@ -624,6 +624,24 @@ export const generatedRoutes: GeneratedRoute[] = [
             }
           },
           {
+            name: 'hrm_salary_confirm-list',
+            path: '/hrm/salary/confirm-list',
+            component: 'view.hrm_salary_confirm-list',
+            meta: {
+              title: 'hrm_salary_confirm-list',
+              i18nKey: 'route.hrm_salary_confirm-list'
+            }
+          },
+          {
+            name: 'hrm_salary_payment-list',
+            path: '/hrm/salary/payment-list',
+            component: 'view.hrm_salary_payment-list',
+            meta: {
+              title: 'hrm_salary_payment-list',
+              i18nKey: 'route.hrm_salary_payment-list'
+            }
+          },
+          {
             name: 'hrm_salary_setting',
             path: '/hrm/salary/setting',
             meta: {

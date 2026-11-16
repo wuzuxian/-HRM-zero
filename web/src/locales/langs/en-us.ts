@@ -235,6 +235,8 @@ const local: App.I18n.Schema = {
     hrm_salary_setting_scheme: 'Salary Scheme',
     'hrm_salary_archive-list': 'Employee Salary Archives',
     hrm_salary_batch: 'Salary Batch',
+    'hrm_salary_confirm-list': 'Salary Confirm',
+    'hrm_salary_payment-list': 'Payment Register',
     hrm_salary_tax: 'Tax',
     'hrm_salary_tax_tax-profile': 'Tax Profiles',
     'hrm_salary_tax_special-deduction': 'Special Deductions',
@@ -484,6 +486,9 @@ const local: App.I18n.Schema = {
         edit: 'Edit Salary Batch',
         delete: 'Delete Salary Batch',
         trial: 'Payroll Trial'
+      },
+      salary_payment: {
+        register: 'Register Payment'
       },
       tax_profile: {
         add: 'Add Tax Profile',
@@ -2504,6 +2509,13 @@ const local: App.I18n.Schema = {
         }
       },
       salary: {
+        billStatus: {
+          unsubmitted: 'Unsubmitted',
+          approving: 'Approving',
+          approved: 'Approved',
+          rejected: 'Rejected',
+          revoked: 'Revoked'
+        },
         subject: {
           title: 'Salary Subjects',
           subjectName: 'Subject Name',
@@ -2702,7 +2714,55 @@ const local: App.I18n.Schema = {
             remark: 'Please enter remark'
           }
         },
-        tax: {
+
+        confirm: {
+          title: 'Salary Confirm',
+          billNo: 'Bill No.',
+          batch: 'Salary Batch',
+          batchFilter: 'Select batch',
+          batchPlaceholder: 'Select a trialled, unconfirmed batch',
+          batchRequired: 'Please select a batch',
+          subject: 'Salary Subject',
+          period: 'Period',
+          headcount: 'Headcount',
+          netTotal: 'Net Total',
+          creator: 'Creator',
+          status: 'Status',
+          statusFilter: 'Select status',
+          submit: 'Submit Approval',
+          submitSuccess: 'Salary confirm submitted',
+          approve: 'Approve',
+          approveConfirm: 'Approve this salary confirm? Payment register becomes available',
+          approveSuccess: 'Approved, batch confirmed',
+          reject: 'Reject',
+          rejectConfirm: 'Reject this salary confirm?',
+          rejectSuccess: 'Rejected'
+        },
+        payment: {
+          title: 'Payment Register',
+          batch: 'Salary Batch',
+          batchFilter: 'Select batch',
+          batchPlaceholder: 'Select a confirmed, unpaid batch',
+          batchRequired: 'Please select a batch',
+          subject: 'Salary Subject',
+          payAmount: 'Pay Amount',
+          payAmountPlaceholder: 'Defaults to batch net total',
+          payMode: 'Pay Mode',
+          payModeFilter: 'Select pay mode',
+          payModeEnum: {
+            bank: 'Bank Transfer',
+            cash: 'Cash',
+            other: 'Other'
+          },
+          receiptNo: 'Receipt No.',
+          receiptNoPlaceholder: 'Enter receipt number',
+          arriveTime: 'Arrival Time',
+          arriveTimePlaceholder: 'Select arrival time',
+          register: 'Register Payment',
+          registerSuccess: 'Payment registered, batch marked paid',
+          registerName: 'Registered By',
+          registerTime: 'Register Time'
+        },        tax: {
           profile: {
             title: 'Employee Tax Profiles',
             employeeName: 'Employee',

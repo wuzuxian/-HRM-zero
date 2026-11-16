@@ -4951,6 +4951,105 @@ declare namespace Api {
       items: SalaryBatchItem[];
     };
 
+    // ===== HRM-38 薪资确认审批 (HR209) 与发薪登记 (HR210) =====
+
+    /** HR209 薪资确认审批单 (单号 HR209-{YYYYMMDD}{5位流水}) */
+    type SalaryConfirmBill = {
+      /** record uuid */
+      uuid: string;
+      billNo: string;
+      /** 薪资批次 uuid */
+      batchUuid: string;
+      /** 批次编号快照 SA... */
+      batchNo: string;
+      /** 批次名称快照 */
+      batchName: string;
+      /** 薪酬主体 uuid 快照 */
+      subjectUuid: string;
+      /** 薪酬主体名称快照 */
+      subjectName: string;
+      batchYear: number;
+      batchMonth: number;
+      /** 人数快照 (试算人数) */
+      headcount: number;
+      /** 实发合计快照 (提交时批次 net_total) */
+      netTotal: number;
+      /** 单据状态: unsubmitted/approving/approved/rejected/revoked */
+      status: BillStatus;
+      submitBy: string;
+      submitTime: string;
+      approveBy: string;
+      approveTime: string;
+      opinion: string;
+      creatorUuid: string;
+      /** 创建人姓名 (demo 8.4 列「创建人」) */
+      creatorName: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** salary confirm search params */
+    type SalaryConfirmSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.SalaryConfirmBill, 'batchUuid' | 'status'> & {
+        mine?: number | null;
+      } & Common.CommonSearchParams
+    >;
+
+    /** salary confirm paginated list */
+    type SalaryConfirmList = Common.PaginatingQueryRecord<SalaryConfirmBill>;
+
+    /** submit salary confirm request */
+    type SubmitSalaryConfirmRequest = {
+      batchUuid: string;
+      opinion?: string;
+    };
+
+    /** HR210 发薪登记行 */
+    type SalaryPayment = {
+      /** record uuid */
+      uuid: string;
+      /** 薪资批次 uuid */
+      batchUuid: string;
+      /** 批次编号快照 SA... */
+      batchNo: string;
+      /** 批次名称快照 */
+      batchName: string;
+      /** 薪酬主体 uuid 快照 */
+      subjectUuid: string;
+      /** 薪酬主体名称快照 */
+      subjectName: string;
+      /** 发薪金额 (默认=批次实发合计, 可改) */
+      payAmount: number;
+      /** 发薪方式 bank=银行代发 cash=现金 other=其他 */
+      payMode: 'bank' | 'cash' | 'other' | string;
+      /** 回执编号 */
+      receiptNo: string;
+      /** 到账时间 */
+      arriveTime: string;
+      registerBy: string;
+      registerName: string;
+      registerTime: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** salary payment search params */
+    type SalaryPaymentSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.SalaryPayment, 'batchUuid' | 'payMode'> & Common.CommonSearchParams
+    >;
+
+    /** salary payment paginated list */
+    type SalaryPaymentList = Common.PaginatingQueryRecord<SalaryPayment>;
+
+    /** register salary payment request (payAmount<=0 时默认取批次实发合计) */
+    type RegisterSalaryPaymentRequest = {
+      batchUuid: string;
+      payAmount?: number;
+      payMode?: string;
+      receiptNo?: string;
+      arriveTime?: string;
+    };
+
     /** edit offer request (only in editable 单据状态) */
     type EditOfferRequest = AddOfferRequest & {
       uuid: string;
