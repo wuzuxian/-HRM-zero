@@ -16593,6 +16593,342 @@
         ]
       }
     },
+    "/api/v1/hrm/getPerfResultApprovalList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:perf_result:approvalList",
+        "operationId": "v1/Hrm/PerfResultApprovalList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "periodUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "approveBy": {
+                        "type": "string"
+                      },
+                      "approveTime": {
+                        "type": "string"
+                      },
+                      "avgScore": {
+                        "type": "number"
+                      },
+                      "billNo": {
+                        "type": "string"
+                      },
+                      "companySnapshot": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "opinion": {
+                        "type": "string"
+                      },
+                      "orgSnapshot": {
+                        "type": "string"
+                      },
+                      "participantCount": {
+                        "type": "integer"
+                      },
+                      "periodName": {
+                        "type": "string"
+                      },
+                      "periodNo": {
+                        "type": "string"
+                      },
+                      "periodUuid": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "submitBy": {
+                        "type": "string"
+                      },
+                      "submitTime": {
+                        "type": "string"
+                      },
+                      "totalAmount": {
+                        "type": "number"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "billNo",
+                      "periodUuid",
+                      "periodNo",
+                      "periodName",
+                      "companySnapshot",
+                      "orgSnapshot",
+                      "participantCount",
+                      "avgScore",
+                      "totalAmount",
+                      "status",
+                      "submitBy",
+                      "submitTime",
+                      "approveBy",
+                      "approveTime",
+                      "opinion",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "ApprovalList",
+        "tags": [
+          "v1/hrm/perf_result"
+        ]
+      }
+    },
+    "/api/v1/hrm/getPerfResultList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:perf_result:resultList",
+        "operationId": "v1/Hrm/PerfResultResultList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "periodUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "signed",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "mine",
+            "type": "boolean"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "approvalUuid": {
+                        "type": "string"
+                      },
+                      "assessmentUuid": {
+                        "type": "string"
+                      },
+                      "bonusAmount": {
+                        "type": "number"
+                      },
+                      "coefficient": {
+                        "type": "number"
+                      },
+                      "companyName": {
+                        "type": "string"
+                      },
+                      "companyUuid": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "grade": {
+                        "type": "string"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "orgUuid": {
+                        "type": "string"
+                      },
+                      "perfAmount": {
+                        "type": "number"
+                      },
+                      "periodNo": {
+                        "type": "string"
+                      },
+                      "periodUuid": {
+                        "type": "string"
+                      },
+                      "published": {
+                        "type": "integer"
+                      },
+                      "resultStatus": {
+                        "type": "string"
+                      },
+                      "salarySynced": {
+                        "type": "integer"
+                      },
+                      "score": {
+                        "type": "number"
+                      },
+                      "signBy": {
+                        "type": "string"
+                      },
+                      "signTime": {
+                        "type": "string"
+                      },
+                      "signed": {
+                        "type": "integer"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "approvalUuid",
+                      "assessmentUuid",
+                      "periodUuid",
+                      "periodNo",
+                      "employeeUuid",
+                      "employeeName",
+                      "companyUuid",
+                      "companyName",
+                      "orgUuid",
+                      "orgName",
+                      "score",
+                      "grade",
+                      "coefficient",
+                      "perfAmount",
+                      "bonusAmount",
+                      "resultStatus",
+                      "published",
+                      "signed",
+                      "signTime",
+                      "signBy",
+                      "salarySynced",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "ResultList",
+        "tags": [
+          "v1/hrm/perf_result"
+        ]
+      }
+    },
     "/api/v1/hrm/getPerfSchemeList": {
       "get": {
         "description": "接口权限编码:v1:hrm:perf_scheme:list",
@@ -22633,6 +22969,56 @@
         ]
       }
     },
+    "/api/v1/hrm/signPerfResult": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:perf_result:signResult",
+        "operationId": "v1/Hrm/PerfResultSignResult",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "SignResult",
+        "tags": [
+          "v1/hrm/perf_result"
+        ]
+      }
+    },
     "/api/v1/hrm/signinForParticipant": {
       "post": {
         "consumes": [
@@ -23004,6 +23390,64 @@
         "summary": "SubmitSelfReview",
         "tags": [
           "v1/hrm/perf_assessment"
+        ]
+      }
+    },
+    "/api/v1/hrm/submitPerfResultApproval": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:perf_result:submitApproval",
+        "operationId": "v1/Hrm/PerfResultSubmitApproval",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "opinion": {
+                  "type": "string"
+                },
+                "periodUuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "periodUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "SubmitApproval",
+        "tags": [
+          "v1/hrm/perf_result"
         ]
       }
     },

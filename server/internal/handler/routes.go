@@ -31,6 +31,7 @@ import (
 	v1hrmperf_assessment "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_assessment"
 	v1hrmperf_indicator "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_indicator"
 	v1hrmperf_period "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_period"
+	v1hrmperf_result "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_result"
 	v1hrmperf_scheme "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_scheme"
 	v1hrmperf_template "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_template"
 	v1hrmposition "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/position"
@@ -963,6 +964,37 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodPost,
 						Path:    "/hrm/publishPerfPeriod",
 						Handler: v1hrmperf_period.Publish(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getPerfResultApprovalList",
+						Handler: v1hrmperf_result.ApprovalList(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getPerfResultList",
+						Handler: v1hrmperf_result.ResultList(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/signPerfResult",
+						Handler: v1hrmperf_result.SignResult(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/submitPerfResultApproval",
+						Handler: v1hrmperf_result.SubmitApproval(serverCtx),
 					},
 				}...,
 			),
