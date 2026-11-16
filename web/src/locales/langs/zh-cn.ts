@@ -193,6 +193,7 @@ const local: App.I18n.Schema = {
     'hrm_attendance_apply_card-replacement-list': '补卡管理',
     'hrm_attendance_my_attendance-punch': '考勤打卡',
     'hrm_attendance_data_punch-record': '打卡记录',
+    'hrm_attendance_data_punch-statistics': '考勤统计',
     hrm_attendance_scheduling: '排班管理',
     'hrm_attendance_scheduling_schedule-cycle': '排班周期',
     'hrm_attendance_scheduling_schedule-board': '排班表',
@@ -320,7 +321,9 @@ const local: App.I18n.Schema = {
         delete: '删除打卡记录',
         export: '导出打卡记录',
         import: '导入外部考勤数据',
-        settle: '手动日结'
+        settle: '手动日结',
+        statistics: '查询统计',
+        statisticsDetail: '查看考勤明细'
       },
       overtimerule: {
         add: '新增加班规则',
@@ -1653,6 +1656,35 @@ const local: App.I18n.Schema = {
             location: '请输入地点（外勤时填 GPS 地址）',
             employeeUuid: '请输入员工档案 UUID',
             punchDate: '请选择打卡日期'
+          }
+        },
+        punchStatistics: {
+          title: '考勤统计',
+          dateRange: '统计日期区间',
+          name: '姓名',
+          onlyAbnormal: '仅看异常',
+          onlyAbnormalYes: '仅看异常',
+          employeeName: '员工',
+          orgName: '部门',
+          expectedDays: '应出勤天',
+          attendDays: '出勤天',
+          absentDays: '缺勤天',
+          lateCount: '迟到',
+          earlyCount: '早退',
+          missingCount: '缺卡',
+          abnormalTotal: '异常合计',
+          abnormalSummary: '异常摘要',
+          viewDetail: '查看明细',
+          detailTitle: '考勤明细',
+          cardEmployees: '统计人数',
+          cardAbnormalEmployees: '异常人数',
+          cardLate: '迟到次数',
+          cardEarly: '早退次数',
+          cardMissing: '缺卡次数',
+          cardRecords: '记录条数',
+          form: {
+            name: '请输入姓名',
+            onlyAbnormal: '是否仅看异常'
           }
         },
         overtimeRule: {

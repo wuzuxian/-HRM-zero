@@ -193,6 +193,7 @@ const local: App.I18n.Schema = {
     'hrm_attendance_apply_card-replacement-list': 'Card Replacement',
     'hrm_attendance_my_attendance-punch': 'Attendance Punch',
     'hrm_attendance_data_punch-record': 'Punch Records',
+    'hrm_attendance_data_punch-statistics': 'Attendance Statistics',
     hrm_attendance_scheduling: 'Scheduling',
     'hrm_attendance_scheduling_schedule-cycle': 'Schedule Cycles',
     'hrm_attendance_scheduling_schedule-board': 'Schedule Board',
@@ -320,7 +321,9 @@ const local: App.I18n.Schema = {
         delete: 'Delete Punch Records',
         export: 'Export Punch Records',
         import: 'Import External Punch Data',
-        settle: 'Manual Day Settle'
+        settle: 'Manual Day Settle',
+        statistics: 'Query Statistics',
+        statisticsDetail: 'View Attendance Detail'
       },
       overtimerule: {
         add: 'Add Overtime Rule',
@@ -1657,6 +1660,35 @@ const local: App.I18n.Schema = {
             location: 'Please enter location (GPS address for field punch)',
             employeeUuid: 'Please enter employee UUID',
             punchDate: 'Please select punch date'
+          }
+        },
+        punchStatistics: {
+          title: 'Attendance Statistics',
+          dateRange: 'Statistics Date Range',
+          name: 'Name',
+          onlyAbnormal: 'Abnormal Only',
+          onlyAbnormalYes: 'Abnormal Only',
+          employeeName: 'Employee',
+          orgName: 'Department',
+          expectedDays: 'Expected Days',
+          attendDays: 'Attend Days',
+          absentDays: 'Absent Days',
+          lateCount: 'Late',
+          earlyCount: 'Early Leave',
+          missingCount: 'Missing',
+          abnormalTotal: 'Abnormal Total',
+          abnormalSummary: 'Abnormal Summary',
+          viewDetail: 'Detail',
+          detailTitle: 'Attendance Detail',
+          cardEmployees: 'Employees',
+          cardAbnormalEmployees: 'Abnormal Employees',
+          cardLate: 'Late Count',
+          cardEarly: 'Early Leave Count',
+          cardMissing: 'Missing Count',
+          cardRecords: 'Records',
+          form: {
+            name: 'Please enter name',
+            onlyAbnormal: 'Abnormal only'
           }
         },
         overtimeRule: {

@@ -140,6 +140,15 @@ export const generatedRoutes: GeneratedRoute[] = [
                   title: 'hrm_attendance_data_punch-record',
                   i18nKey: 'route.hrm_attendance_data_punch-record'
                 }
+              },
+              {
+                name: 'hrm_attendance_data_punch-statistics',
+                path: '/hrm/attendance/data/punch-statistics',
+                component: 'view.hrm_attendance_data_punch-statistics',
+                meta: {
+                  title: 'hrm_attendance_data_punch-statistics',
+                  i18nKey: 'route.hrm_attendance_data_punch-statistics'
+                }
               }
             ]
           },

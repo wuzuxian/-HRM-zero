@@ -43,6 +43,7 @@ declare module "@elegant-router/types" {
     "hrm_attendance_data": "/hrm/attendance/data";
     "hrm_attendance_data_leave-balance": "/hrm/attendance/data/leave-balance";
     "hrm_attendance_data_punch-record": "/hrm/attendance/data/punch-record";
+    "hrm_attendance_data_punch-statistics": "/hrm/attendance/data/punch-statistics";
     "hrm_attendance_my": "/hrm/attendance/my";
     "hrm_attendance_my_attendance-punch": "/hrm/attendance/my/attendance-punch";
     "hrm_attendance_scheduling": "/hrm/attendance/scheduling";
@@ -185,6 +186,7 @@ declare module "@elegant-router/types" {
     | "hrm_attendance_apply_overtime-bill-list"
     | "hrm_attendance_data_leave-balance"
     | "hrm_attendance_data_punch-record"
+    | "hrm_attendance_data_punch-statistics"
     | "hrm_attendance_my_attendance-punch"
     | "hrm_attendance_scheduling_schedule-board"
     | "hrm_attendance_scheduling_schedule-cycle"

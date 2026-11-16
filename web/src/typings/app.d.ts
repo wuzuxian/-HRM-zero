@@ -482,6 +482,8 @@ declare namespace App {
             export: string;
             import: string;
             settle: string;
+            statistics: string;
+            statisticsDetail: string;
           };
           overtimerule: {
             add: string;
@@ -1411,6 +1413,35 @@ declare namespace App {
                 location: string;
                 employeeUuid: string;
                 punchDate: string;
+              };
+            };
+            punchStatistics: {
+              title: string;
+              dateRange: string;
+              name: string;
+              onlyAbnormal: string;
+              onlyAbnormalYes: string;
+              employeeName: string;
+              orgName: string;
+              expectedDays: string;
+              attendDays: string;
+              absentDays: string;
+              lateCount: string;
+              earlyCount: string;
+              missingCount: string;
+              abnormalTotal: string;
+              abnormalSummary: string;
+              viewDetail: string;
+              detailTitle: string;
+              cardEmployees: string;
+              cardAbnormalEmployees: string;
+              cardLate: string;
+              cardEarly: string;
+              cardMissing: string;
+              cardRecords: string;
+              form: {
+                name: string;
+                onlyAbnormal: string;
               };
             };
             overtimeRule: {
