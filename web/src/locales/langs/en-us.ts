@@ -217,6 +217,7 @@ const local: App.I18n.Schema = {
     'hrm_performance_assessment-task_self-review-list': 'Self Review',
     'hrm_performance_assessment-task_leader-review-list': 'Leader Review',
     'hrm_performance_assessment-task_result-confirm-task-list': 'Result Confirm',
+    'hrm_performance_assessment-task_workbench': 'Assessment Workbench',
     hrm_training: 'Training',
     hrm_training_my: 'My Training',
     hrm_reward: 'Reward & Discipline',
@@ -232,10 +233,13 @@ const local: App.I18n.Schema = {
     hrm_salary_setting_item: 'Salary Items',
     hrm_salary_setting_scheme: 'Salary Scheme',
     'hrm_salary_archive-list': 'Employee Salary Archives',
+    hrm_salary_batch: 'Salary Batch',
     hrm_salary_tax: 'Tax',
     'hrm_salary_tax_tax-profile': 'Tax Profiles',
     'hrm_salary_tax_special-deduction': 'Special Deductions',
     'hrm_salary_tax_tax-opening': 'Tax Openings',
+    hrm_salary_payslip: 'Payslips',
+    hrm_salary_statistics: 'Salary Statistics',
     hrm_training_plan: 'Training Plan',
     hrm_training_session: 'Training Session',
     'hrm_training_cert-template': 'Certificate Template',
@@ -475,6 +479,14 @@ const local: App.I18n.Schema = {
         add: 'Add Salary Archive',
         edit: 'Edit Salary Archive',
         delete: 'Delete Salary Archive'
+      },
+      salary_batch: {
+        add: 'Add Salary Batch',
+        edit: 'Edit Salary Batch',
+        delete: 'Delete Salary Batch',
+        trial: 'Payroll Trial'
+      salary_payslip: {
+        publish: 'Publish Payslips'
       },
       tax_profile: {
         add: 'Add Tax Profile',
@@ -1242,6 +1254,31 @@ const local: App.I18n.Schema = {
           finalGrade: 'Final Grade',
           finalGradeAuto: 'Leave empty to auto-map from score (A/B/C/D)',
           noItems: 'No template items'
+        },
+        workbench: {
+          cardsTitle: 'All-Period Todos',
+          planConfirm: 'Goal Confirm',
+          selfReview: 'Self Review',
+          leaderReview: 'Leader Review',
+          calibration: 'Calibration',
+          resultConfirm: 'Result Confirm',
+          appeal: 'Appeals',
+          todosTitle: 'Recent Todos',
+          appealsTitle: 'Tasks Appealing',
+          colType: 'Type',
+          colAssessmentNo: 'Assessment No.',
+          colPeriod: 'Period',
+          colEmployee: 'Employee',
+          colNode: 'Current Node',
+          colStatus: 'Task Status',
+          colHandler: 'Handler',
+          colAppealStatus: 'Appeal Status',
+          colUpdateTime: 'Updated At',
+          colOperate: 'Actions',
+          goHandle: 'Go',
+          handlerMe: 'Me',
+          handlerReviewer: 'Reviewer',
+          handlerCalibrator: 'Calibrator'
         },
         resultApprovalStatus: {
           unsubmitted: 'Unsubmitted',
@@ -2575,6 +2612,69 @@ const local: App.I18n.Schema = {
             remark: 'Please enter remark'
           }
         },
+        batch: {
+          title: 'Salary Batch',
+          batchNo: 'Batch No.',
+          batchName: 'Batch Name',
+          subject: 'Salary Subject',
+          year: 'Year',
+          month: 'Month',
+          period: 'Payroll Month',
+          batchType: 'Batch Type',
+          batchTypeEnum: {
+            monthly: 'Monthly'
+          },
+          headcount: 'Headcount',
+          earningTotal: 'Earning Total',
+          deductionTotal: 'Deduction Total',
+          netTotal: 'Net Total',
+          progress: 'Trial/Confirm/Pay/Payslip',
+          progressEnum: {
+            trial: 'Trial',
+            confirm: 'Confirm',
+            pay: 'Pay',
+            payslip: 'Payslip'
+          },
+          trialTime: 'Trial Time',
+          trialStatus: 'Trial Status',
+          viewResult: 'Result',
+          trial: 'Trial',
+          trialDone: 'Trial done, {count} employees',
+          resultTitle: 'Trial Result',
+          noResult: 'No detail rows',
+          itemName: 'Salary Item',
+          itemClass: 'Class',
+          itemClassEnum: {
+            earning: 'Earning',
+            deduction: 'Deduction',
+            cost: 'Cost'
+          },
+          amount: 'Amount',
+          source: 'Source',
+          sourceEnum: {
+            archive: 'Archive',
+            scheme_override: 'Scheme Override',
+            reward: 'Reward Bill',
+            attendance: 'Attendance',
+            perf: 'Performance',
+            tax: 'Tax Engine',
+            si_missing: 'SI Missing',
+            formula: 'Formula',
+            zero: 'Fallback'
+          },
+          sourceDetail: 'Source Detail',
+          addBatch: 'Add Salary Batch',
+          editBatch: 'Edit Salary Batch',
+          remark: 'Remark',
+          form: {
+            batchName: 'Please enter batch name',
+            subject: 'Please select salary subject',
+            yearRequired: 'Year is required',
+            monthRequired: 'Month is required',
+            trialStatus: 'Please select trial status',
+            remark: 'Please enter remark'
+          }
+        },
         tax: {
           profile: {
             title: 'Employee Tax Profiles',
@@ -2668,6 +2768,51 @@ const local: App.I18n.Schema = {
               untilMonth: 'Please select until month (1-12)'
             }
           }
+        },
+        payslip: {
+          pageTitle: 'Payslip Management',
+          title: 'Payslip Title',
+          employeeNo: 'Employee ID',
+          employeeName: 'Employee Name',
+          yearMonth: 'Year-Month',
+          earningTotal: 'Earning',
+          deductionTotal: 'Deduction',
+          netTotal: 'Net Pay',
+          published: 'Published',
+          readStatus: 'Read',
+          readTime: 'Read Time',
+          unread: 'Unread',
+          readLabel: 'Read',
+          detail: 'Detail',
+          itemName: 'Salary Item',
+          itemClass: 'Item Class',
+          amount: 'Amount',
+          sourceDetail: 'Source Note',
+          batch: 'Salary Batch',
+          publish: 'Publish Payslips',
+          publishDone: 'Payslips generated',
+          chooseBatch: 'Choose Batch',
+          chooseBatchPlaceholder: 'Select a confirmed salary batch',
+          chooseBatchFirst: 'Please select a salary batch first'
+        },
+        statistics: {
+          pageTitle: 'Salary Ledger',
+          batch: 'Batch',
+          batchUuidTip: 'Batch no./name',
+          employee: 'Employee',
+          employeeName: 'Name',
+          org: 'Department',
+          yearMonth: 'Year-Month',
+          earningTotal: 'Earning Total',
+          deductionTotal: 'Deduction Total',
+          netTotal: 'Net Total',
+          laborCostTotal: 'Labor Cost',
+          employeeCount: 'Employees',
+          abnormal: 'Abnormal',
+          normal: 'None',
+          onlyAbnormal: 'Only abnormal',
+          paid: 'Paid',
+          payslipped: 'Payslipped'
         }
       },
       training: {

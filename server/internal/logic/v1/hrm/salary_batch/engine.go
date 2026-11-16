@@ -12,6 +12,7 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
+	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/monthreport"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/salary_archive"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/taxcalc"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee"
@@ -61,8 +62,35 @@ type MonthReportRowLike interface {
 	AbsentDays() int64
 }
 
-// monthReportSrc 包级数据源槽位（默认 nil = 月报未接入，走打卡日结兜底）。
+// monthReportSrc 包级数据源槽位（合并后 init() 已注入真实月报数据源，见下方 monthreportAdapter）。
 var monthReportSrc monthReportSource
+
+func init() {
+	// HRM-23 考勤月报已合入：注入真实数据源（锁定月=快照，未锁定月=实时聚合），
+	// IsMonthLocked 错误时降级打卡日结兜底（loadAbsentDays 内处理）。
+	monthReportSrc = monthreportAdapter
+}
+
+// monthreportAdapter 适配 monthreport.GetMonthReportRows 到引擎数据源接口。
+func monthreportAdapter(ctx context.Context, svcCtx *svc.ServiceContext, yearMonth string, orgUuids []string) ([]MonthReportRowLike, bool, error) {
+	rows, locked, err := monthreport.GetMonthReportRows(ctx, svcCtx, yearMonth, orgUuids)
+	if err != nil {
+		return nil, false, err
+	}
+	out := make([]MonthReportRowLike, 0, len(rows))
+	for i := range rows {
+		out = append(out, monthReportRowAdapter{row: &rows[i]})
+	}
+	return out, locked, nil
+}
+
+// monthReportRowAdapter 值类型行适配（指针避免拷贝）。
+type monthReportRowAdapter struct {
+	row *monthreport.MonthReportRow
+}
+
+func (a monthReportRowAdapter) EmployeeUuid() string { return a.row.EmployeeUuid }
+func (a monthReportRowAdapter) AbsentDays() int64    { return a.row.AbsentDays }
 
 // SetMonthReportSource 注入考勤月报数据源（merger 在 monthreport 包合入后于 routes 装配处调用一次；
 // 见 hrm-37-notes 集成说明）。

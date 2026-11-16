@@ -217,6 +217,7 @@ const local: App.I18n.Schema = {
     'hrm_performance_assessment-task_self-review-list': '自评填报',
     'hrm_performance_assessment-task_leader-review-list': '评审填报',
     'hrm_performance_assessment-task_result-confirm-task-list': '结果确认',
+    'hrm_performance_assessment-task_workbench': '考核任务工作台',
     hrm_training: '培训管理',
     hrm_training_my: '我的培训',
     hrm_reward: '奖惩管理',
@@ -232,10 +233,13 @@ const local: App.I18n.Schema = {
     hrm_salary_setting_item: '薪资项目',
     hrm_salary_setting_scheme: '薪酬方案',
     'hrm_salary_archive-list': '员工薪资档案',
+    hrm_salary_batch: '薪资批次',
     hrm_salary_tax: '个税管理',
     'hrm_salary_tax_tax-profile': '员工个税档案',
     'hrm_salary_tax_special-deduction': '专项附加扣除',
     'hrm_salary_tax_tax-opening': '个税累计期初',
+    hrm_salary_payslip: '工资条管理',
+    hrm_salary_statistics: '薪资统计',
     hrm_training_plan: '培训计划',
     hrm_training_session: '培训班次',
     'hrm_training_cert-template': '证书模板',
@@ -475,6 +479,14 @@ const local: App.I18n.Schema = {
         add: '新增薪资档案',
         edit: '编辑薪资档案',
         delete: '删除薪资档案'
+      },
+      salary_batch: {
+        add: '新增薪资批次',
+        edit: '编辑薪资批次',
+        delete: '删除薪资批次',
+        trial: '薪资试算'
+      salary_payslip: {
+        publish: '发布工资条'
       },
       tax_profile: {
         add: '新增个税档案',
@@ -1242,6 +1254,31 @@ const local: App.I18n.Schema = {
           finalGrade: '最终等级',
           finalGradeAuto: '留空则按得分自动映射（A/B/C/D）',
           noItems: '模板无指标配置'
+        },
+        workbench: {
+          cardsTitle: '全周期待办',
+          planConfirm: '目标确认',
+          selfReview: '自评填报',
+          leaderReview: '上级评审',
+          calibration: '校准填报',
+          resultConfirm: '结果确认',
+          appeal: '申诉',
+          todosTitle: '最近待办',
+          appealsTitle: '申诉中的任务',
+          colType: '类型',
+          colAssessmentNo: '考核单号',
+          colPeriod: '批次',
+          colEmployee: '员工',
+          colNode: '当前节点',
+          colStatus: '任务状态',
+          colHandler: '当前处理人',
+          colAppealStatus: '申诉状态',
+          colUpdateTime: '更新时间',
+          colOperate: '操作',
+          goHandle: '去处理',
+          handlerMe: '我',
+          handlerReviewer: '考核人',
+          handlerCalibrator: '校准人'
         },
         resultApprovalStatus: {
           unsubmitted: '未提交',
@@ -2564,6 +2601,69 @@ const local: App.I18n.Schema = {
             remark: '请输入备注'
           }
         },
+        batch: {
+          title: '薪资批次',
+          batchNo: '批次编号',
+          batchName: '批次名称',
+          subject: '薪酬主体',
+          year: '年份',
+          month: '月份',
+          period: '薪资年月',
+          batchType: '批次类型',
+          batchTypeEnum: {
+            monthly: '月度批次'
+          },
+          headcount: '人数',
+          earningTotal: '应发合计',
+          deductionTotal: '应扣合计',
+          netTotal: '实发合计',
+          progress: '试算/确认/发薪/工资条',
+          progressEnum: {
+            trial: '试算',
+            confirm: '确认',
+            pay: '发薪',
+            payslip: '工资条'
+          },
+          trialTime: '试算时间',
+          trialStatus: '试算状态',
+          viewResult: '查看结果',
+          trial: '试算',
+          trialDone: '试算完成，共 {count} 人',
+          resultTitle: '试算结果',
+          noResult: '暂无明细数据',
+          itemName: '薪资项目',
+          itemClass: '分类',
+          itemClassEnum: {
+            earning: '应发',
+            deduction: '应扣',
+            cost: '成本'
+          },
+          amount: '金额',
+          source: '来源',
+          sourceEnum: {
+            archive: '档案',
+            scheme_override: '方案覆盖',
+            reward: '奖惩单',
+            attendance: '考勤',
+            perf: '绩效',
+            tax: '个税引擎',
+            si_missing: '社保未配置',
+            formula: '公式',
+            zero: '兜底'
+          },
+          sourceDetail: '取数说明',
+          addBatch: '新增薪资批次',
+          editBatch: '编辑薪资批次',
+          remark: '备注',
+          form: {
+            batchName: '请输入批次名称',
+            subject: '请选择薪酬主体',
+            yearRequired: '年份不能为空',
+            monthRequired: '月份不能为空',
+            trialStatus: '请选择试算状态',
+            remark: '请输入备注'
+          }
+        },
         tax: {
           profile: {
             title: '员工个税档案',
@@ -2656,6 +2756,51 @@ const local: App.I18n.Schema = {
               untilMonth: '请选择截至月（1-12）'
             }
           }
+        },
+        payslip: {
+          pageTitle: '工资条管理',
+          title: '工资条标题',
+          employeeNo: '工号',
+          employeeName: '员工姓名',
+          yearMonth: '年月',
+          earningTotal: '应发',
+          deductionTotal: '应扣',
+          netTotal: '实发',
+          published: '已发布',
+          readStatus: '已读',
+          readTime: '已读时间',
+          unread: '未读',
+          readLabel: '已读',
+          detail: '明细',
+          itemName: '薪资项目',
+          itemClass: '项目分类',
+          amount: '金额',
+          sourceDetail: '取数说明',
+          batch: '薪资批次',
+          publish: '发布工资条',
+          publishDone: '已生成工资条',
+          chooseBatch: '选择批次',
+          chooseBatchPlaceholder: '请选择薪资批次（须已确认）',
+          chooseBatchFirst: '请先选择薪资批次'
+        },
+        statistics: {
+          pageTitle: '薪资台账',
+          batch: '批次',
+          batchUuidTip: '批次编号/名称',
+          employee: '员工',
+          employeeName: '姓名',
+          org: '部门',
+          yearMonth: '年月',
+          earningTotal: '应发合计',
+          deductionTotal: '应扣合计',
+          netTotal: '实发合计',
+          laborCostTotal: '人工成本',
+          employeeCount: '员工数',
+          abnormal: '异常',
+          normal: '无',
+          onlyAbnormal: '仅看异常',
+          paid: '已发薪',
+          payslipped: '已发条'
         }
       },
       training: {

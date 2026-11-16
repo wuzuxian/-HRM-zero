@@ -76,6 +76,7 @@ declare module "@elegant-router/types" {
     "hrm_performance_assessment-task_plan-list": "/hrm/performance/assessment-task/plan-list";
     "hrm_performance_assessment-task_result-confirm-task-list": "/hrm/performance/assessment-task/result-confirm-task-list";
     "hrm_performance_assessment-task_self-review-list": "/hrm/performance/assessment-task/self-review-list";
+    "hrm_performance_assessment-task_workbench": "/hrm/performance/assessment-task/workbench";
     "hrm_performance_period-list": "/hrm/performance/period-list";
     "hrm_performance_result-confirm-list": "/hrm/performance/result-confirm-list";
     "hrm_performance_result-list": "/hrm/performance/result-list";
@@ -92,10 +93,13 @@ declare module "@elegant-router/types" {
     "hrm_reward_bill": "/hrm/reward/bill";
     "hrm_salary": "/hrm/salary";
     "hrm_salary_archive-list": "/hrm/salary/archive-list";
+    "hrm_salary_batch": "/hrm/salary/batch";
+    "hrm_salary_payslip": "/hrm/salary/payslip";
     "hrm_salary_setting": "/hrm/salary/setting";
     "hrm_salary_setting_item": "/hrm/salary/setting/item";
     "hrm_salary_setting_scheme": "/hrm/salary/setting/scheme";
     "hrm_salary_setting_subject": "/hrm/salary/setting/subject";
+    "hrm_salary_statistics": "/hrm/salary/statistics";
     "hrm_salary_tax": "/hrm/salary/tax";
     "hrm_salary_tax_special-deduction": "/hrm/salary/tax/special-deduction";
     "hrm_salary_tax_tax-opening": "/hrm/salary/tax/tax-opening";
@@ -225,6 +229,7 @@ declare module "@elegant-router/types" {
     | "hrm_performance_assessment-task_plan-list"
     | "hrm_performance_assessment-task_result-confirm-task-list"
     | "hrm_performance_assessment-task_self-review-list"
+    | "hrm_performance_assessment-task_workbench"
     | "hrm_performance_period-list"
     | "hrm_performance_result-confirm-list"
     | "hrm_performance_result-list"
@@ -237,9 +242,12 @@ declare module "@elegant-router/types" {
     | "hrm_recruitment_requirement-list"
     | "hrm_reward_bill"
     | "hrm_salary_archive-list"
+    | "hrm_salary_batch"
+    | "hrm_salary_payslip"
     | "hrm_salary_setting_item"
     | "hrm_salary_setting_scheme"
     | "hrm_salary_setting_subject"
+    | "hrm_salary_statistics"
     | "hrm_salary_tax_special-deduction"
     | "hrm_salary_tax_tax-opening"
     | "hrm_salary_tax_tax-profile"

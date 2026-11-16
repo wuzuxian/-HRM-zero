@@ -2014,3 +2014,108 @@ export function DeleteOffer(req: string[]) {
     }
   });
 }
+
+// ===== HRM-37 薪资批次与试算引擎 =====
+
+/** get 薪资批次分页列表 (demo-inventory 8.4) */
+export function GetSalaryBatchList(params?: Api.Hrm.SalaryBatchSearchParams) {
+  return request<Api.Hrm.SalaryBatchList>({
+    url: '/api/v1/hrm/getSalaryBatchList',
+// ===== HRM-39 工资条与薪资统计台账 =====
+
+/** get salary payslip list (管理端: 筛选 批次/员工姓名/年月/已读状态) */
+export function GetSalaryPayslipList(params?: Api.Hrm.SalaryPayslipSearchParams) {
+  return request<Api.Hrm.SalaryPayslipList>({
+    url: '/api/v1/hrm/getSalaryPayslipList',
+    method: 'get',
+    params
+  });
+}
+
+/** add 新增薪资批次 (主体+年月+批次类型唯一；批次编号 SA 由后端分配) */
+export function AddSalaryBatch(req: Api.Hrm.AddSalaryBatchRequest) {
+  return request<{ uuid: string }>({
+    url: '/api/v1/hrm/addSalaryBatch',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit 编辑薪资批次 (名称/年月/备注；年月变更重置试算态) */
+export function EditSalaryBatch(req: Api.Hrm.EditSalaryBatchRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/editSalaryBatch',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete/batch delete 薪资批次 (连同试算明细) */
+export function DeleteSalaryBatch(req: string[]) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/deleteSalaryBatch',
+    method: 'post',
+    data: {
+      uuids: req
+    }
+  });
+}
+
+/** trial 薪资试算 (按批次员工集逐人试算，幂等重算 version+1；HRM-38/39 消费同一产出) */
+export function TrialSalaryBatch(batchUuid: string) {
+  return request<Api.Hrm.SalaryBatchTrialResponse>({
+    url: '/api/v1/hrm/trialSalaryBatch',
+    method: 'post',
+    data: {
+      batchUuid
+    }
+  });
+}
+
+/** getBatchResult 查看试算结果 (批次行 + 全员明细行) */
+export function GetSalaryBatchResult(batchUuid: string) {
+  return request<Api.Hrm.SalaryBatchResult>({
+    url: '/api/v1/hrm/getSalaryBatchResult',
+    method: 'get',
+    params: {
+      batchUuid
+    }
+  });
+}
+/** get my salary payslip list (员工本人) */
+export function GetMySalaryPayslipList(params?: Api.Hrm.SalaryPayslipMineSearchParams) {
+  return request<Api.Hrm.SalaryPayslipList>({
+    url: '/api/v1/hrm/getMySalaryPayslipList',
+    method: 'get',
+    params
+  });
+}
+
+/** publish salary payslips by batch (批次须已确认) */
+export function PublishSalaryPayslip(req: Api.Hrm.PublishSalaryPayslipRequest) {
+  return request<Api.Hrm.PublishSalaryPayslipResponse>({
+    url: '/api/v1/hrm/publishSalaryPayslip',
+    method: 'post',
+    data: req
+  });
+}
+
+/** mark salary payslip read (员工本人查看记已读, 幂等) */
+export function ReadSalaryPayslip(uuid: string) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/readSalaryPayslip',
+    method: 'post',
+    data: {
+      uuid
+    }
+  });
+}
+
+/** get salary ledger (薪资统计台账: 统计卡 + 批次×员工明细) */
+export function GetSalaryLedger(params?: Api.Hrm.SalaryLedgerSearchParams) {
+  return request<Api.Hrm.SalaryLedgerResponse>({
+    url: '/api/v1/hrm/getSalaryLedger',
+    method: 'get',
+    params
+  });
+}

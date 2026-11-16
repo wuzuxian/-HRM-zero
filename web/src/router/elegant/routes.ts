@@ -445,6 +445,15 @@ export const generatedRoutes: GeneratedRoute[] = [
                   title: 'hrm_performance_assessment-task_self-review-list',
                   i18nKey: 'route.hrm_performance_assessment-task_self-review-list'
                 }
+              },
+              {
+                name: 'hrm_performance_assessment-task_workbench',
+                path: '/hrm/performance/assessment-task/workbench',
+                component: 'view.hrm_performance_assessment-task_workbench',
+                meta: {
+                  title: 'hrm_performance_assessment-task_workbench',
+                  i18nKey: 'route.hrm_performance_assessment-task_workbench'
+                }
               }
             ]
           },
@@ -597,6 +606,21 @@ export const generatedRoutes: GeneratedRoute[] = [
             }
           },
           {
+            name: 'hrm_salary_batch',
+            path: '/hrm/salary/batch',
+            component: 'view.hrm_salary_batch',
+            meta: {
+              title: 'hrm_salary_batch',
+              i18nKey: 'route.hrm_salary_batch'
+            name: 'hrm_salary_payslip',
+            path: '/hrm/salary/payslip',
+            component: 'view.hrm_salary_payslip',
+            meta: {
+              title: 'hrm_salary_payslip',
+              i18nKey: 'route.hrm_salary_payslip'
+            }
+          },
+          {
             name: 'hrm_salary_setting',
             path: '/hrm/salary/setting',
             meta: {
@@ -632,6 +656,15 @@ export const generatedRoutes: GeneratedRoute[] = [
                 }
               }
             ]
+          },
+          {
+            name: 'hrm_salary_statistics',
+            path: '/hrm/salary/statistics',
+            component: 'view.hrm_salary_statistics',
+            meta: {
+              title: 'hrm_salary_statistics',
+              i18nKey: 'route.hrm_salary_statistics'
+            }
           },
           {
             name: 'hrm_salary_tax',

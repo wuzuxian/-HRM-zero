@@ -4833,9 +4833,229 @@ declare namespace Api {
       reporterName: string;
     };
 
+    // ===== HRM-37 薪资批次与试算引擎 =====
+
+    /** hrm salary batch (薪资批次, demo-inventory 8.4 发薪流程) */
+    type SalaryBatch = {
+      /** record uuid */
+      uuid: string;
+      /** 批次编号 SA{批次月份首日yyyyMMdd}{4位流水} */
+      batchNo: string;
+      /** 批次名称 */
+      batchName: string;
+      /** 批次类型 monthly=月度批次 */
+      batchType: string;
+      /** 薪酬主体 uuid */
+      subjectUuid: string;
+      /** 薪酬主体名称快照 */
+      subjectName: string;
+      /** 薪资年份 */
+      batchYear: number;
+      /** 薪资月份 1-12 */
+      batchMonth: number;
+      /** 试算人数 */
+      headcount: number;
+      /** 应发合计 */
+      earningTotal: number;
+      /** 应扣合计 */
+      deductionTotal: number;
+      /** 实发合计 */
+      netTotal: number;
+      /** 试算进度 0=未试算 1=已试算 */
+      trialStatus: SalarySubjectStatus | null;
+      /** 确认进度 (HRM-38 写回) */
+      confirmStatus: SalarySubjectStatus | null;
+      /** 发薪进度 (HRM-39 写回) */
+      payStatus: SalarySubjectStatus | null;
+      /** 工资条进度 (HRM-39 写回) */
+      payslipStatus: SalarySubjectStatus | null;
+      /** 最近试算时间 (''=未试算) */
+      trialTime: string;
+      /** 试算版本号 (重算+1) */
+      version: number;
+      /** 试算告警文本 (换行分隔) */
+      warnings: string;
+      /** remark */
+      remark: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** salary batch search params */
+    type SalaryBatchSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.SalaryBatch, 'batchName' | 'subjectUuid' | 'batchType' | 'trialStatus'> & {
+        year?: number | null;
+        month?: number | null;
+      } & Common.CommonSearchParams
+    >;
+
+    /** salary batch paginated list */
+    type SalaryBatchList = Common.PaginatingQueryRecord<SalaryBatch>;
+
+    /** add salary batch request */
+    type AddSalaryBatchRequest = {
+      batchName: string;
+      batchType?: string;
+      subjectUuid: string;
+      batchYear: number;
+      batchMonth: number;
+      remark?: string;
+    };
+
+    /** edit salary batch request (主体不可换；年月变更重置试算态) */
+    type EditSalaryBatchRequest = {
+      uuid: string;
+      batchName: string;
+      batchType?: string;
+      batchYear: number;
+      batchMonth: number;
+      remark?: string;
+    };
+
+    /** trial response (批次汇总 + 告警文本) */
+    type SalaryBatchTrialResponse = {
+      batchUuid: string;
+      batchNo: string;
+      headcount: number;
+      earningTotal: number;
+      deductionTotal: number;
+      netTotal: number;
+      version: number;
+      warnings: string;
+    };
+
+    /** 试算明细行 (每员工×每项目一行; 应扣类 amount 为正数) */
+    type SalaryBatchItem = {
+      uuid: string;
+      batchUuid: string;
+      employeeUuid: string;
+      employeeNo: string;
+      employeeName: string;
+      orgName: string;
+      itemUuid: string;
+      itemCode: string;
+      itemName: string;
+      itemClass: SalaryItemClass;
+      itemType: SalaryItemType;
+      amount: number;
+      /** 取数来源标记 archive/scheme_override/reward/attendance/perf/tax/si_missing/formula/zero */
+      source: string;
+      /** 取数说明 */
+      sourceDetail: string;
+      calcOrder: number;
+    };
+
+    /** 查看结果 response (批次行 + 全员明细行, 按 工号+计算顺序 排列) */
+    type SalaryBatchResult = {
+      batch: SalaryBatch;
+      items: SalaryBatchItem[];
+    };
+
     /** edit offer request (only in editable 单据状态) */
     type EditOfferRequest = AddOfferRequest & {
       uuid: string;
+    };
+
+    // ===== HRM-39 工资条与薪资统计台账 =====
+
+    /** 工资条明细行（按薪资项目 JSON 快照，HRM-37 试算明细投影） */
+    type SalaryPayslipItem = {
+      itemCode: string;
+      itemName: string;
+      itemClass: SalaryItemClass;
+      amount: number;
+      source: string;
+      sourceDetail: string;
+    };
+
+    /** 工资条（demo-inventory 8.4 /hrm/salary/payslip） */
+    type SalaryPayslip = {
+      uuid: string;
+      batchUuid: string;
+      batchNo: string;
+      batchName: string;
+      /** 年月 YYYY-MM */
+      yearMonth: string;
+      title: string;
+      employeeUuid: string;
+      employeeNo: string;
+      employeeName: string;
+      orgName: string;
+      earningTotal: number;
+      deductionTotal: number;
+      netTotal: number;
+      items: SalaryPayslipItem[];
+      published: number;
+      readStatus: number;
+      readTime: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** 工资条 search params（筛选 批次/员工姓名/年月/已读状态） */
+    type SalaryPayslipSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.SalaryPayslip, 'batchUuid' | 'employeeName' | 'yearMonth' | 'readStatus'> & Common.CommonSearchParams
+    >;
+
+    /** 工资条 paginated list */
+    type SalaryPayslipList = Common.PaginatingQueryRecord<SalaryPayslip>;
+
+    /** 我的工资条 search params */
+    type SalaryPayslipMineSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.SalaryPayslip, 'yearMonth'> & Common.CommonSearchParams
+    >;
+
+    /** 按批次发布工资条 request */
+    type PublishSalaryPayslipRequest = {
+      batchUuid: string;
+    };
+
+    /** 按批次发布工资条 response */
+    type PublishSalaryPayslipResponse = {
+      batchUuid: string;
+      count: number;
+    };
+
+    /** 薪资统计台账行（批次×员工粒度，demo-inventory 8.4 /hrm/salary/statistics） */
+    type SalaryLedgerRow = {
+      batchUuid: string;
+      batchNo: string;
+      batchName: string;
+      yearMonth: string;
+      employeeUuid: string;
+      employeeNo: string;
+      employeeName: string;
+      orgName: string;
+      earningTotal: number;
+      deductionTotal: number;
+      netTotal: number;
+      laborCostTotal: number;
+      /** 异常（试算告警文本透传，''=无异常） */
+      abnormal: string;
+      /** 已发薪（批次 pay_status 只读透传） */
+      paid: number;
+      /** 已发条（批次 payslip_status 只读透传） */
+      payslipped: number;
+    };
+
+    /** 薪资统计台账 search params（筛选 批次/姓名/部门/仅看异常） */
+    type SalaryLedgerSearchParams = {
+      batchUuid?: string | null;
+      employeeName?: string | null;
+      orgName?: string | null;
+      onlyAbnormal?: boolean | null;
+      current?: number | null;
+      size?: number | null;
+    };
+
+    /** 薪资统计台账 response（统计卡 + 明细行） */
+    type SalaryLedgerResponse = {
+      employeeCount: number;
+      earningTotal: number;
+      deductionTotal: number;
+      netTotal: number;
+      laborCostTotal: number;
+      records: SalaryLedgerRow[];
     };
   }
 }

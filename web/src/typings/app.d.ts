@@ -622,6 +622,14 @@ declare namespace App {
             edit: string;
             delete: string;
           };
+          salary_batch: {
+            add: string;
+            edit: string;
+            delete: string;
+            trial: string;
+          salary_payslip: {
+            publish: string;
+          };
           tax_profile: {
             add: string;
             edit: string;
@@ -1136,6 +1144,31 @@ declare namespace App {
               finalGrade: string;
               finalGradeAuto: string;
               noItems: string;
+            };
+            workbench: {
+              cardsTitle: string;
+              planConfirm: string;
+              selfReview: string;
+              leaderReview: string;
+              calibration: string;
+              resultConfirm: string;
+              appeal: string;
+              todosTitle: string;
+              appealsTitle: string;
+              colType: string;
+              colAssessmentNo: string;
+              colPeriod: string;
+              colEmployee: string;
+              colNode: string;
+              colStatus: string;
+              colHandler: string;
+              colAppealStatus: string;
+              colUpdateTime: string;
+              colOperate: string;
+              goHandle: string;
+              handlerMe: string;
+              handlerReviewer: string;
+              handlerCalibrator: string;
             };
             resultApprovalStatus: {
               unsubmitted: string;
@@ -2511,6 +2544,69 @@ declare namespace App {
                 remark: string;
               };
             };
+            batch: {
+              title: string;
+              batchNo: string;
+              batchName: string;
+              subject: string;
+              year: string;
+              month: string;
+              period: string;
+              batchType: string;
+              batchTypeEnum: {
+                monthly: string;
+              };
+              headcount: string;
+              earningTotal: string;
+              deductionTotal: string;
+              netTotal: string;
+              progress: string;
+              progressEnum: {
+                trial: string;
+                confirm: string;
+                pay: string;
+                payslip: string;
+              };
+              trialTime: string;
+              trialStatus: string;
+              viewResult: string;
+              trial: string;
+              trialDone: string;
+              resultTitle: string;
+              noResult: string;
+              itemName: string;
+              itemClass: string;
+              itemClassEnum: {
+                earning: string;
+                deduction: string;
+                cost: string;
+              };
+              amount: string;
+              source: string;
+              sourceEnum: {
+                archive: string;
+                scheme_override: string;
+                reward: string;
+                attendance: string;
+                perf: string;
+                tax: string;
+                si_missing: string;
+                formula: string;
+                zero: string;
+              };
+              sourceDetail: string;
+              addBatch: string;
+              editBatch: string;
+              remark: string;
+              form: {
+                batchName: string;
+                subject: string;
+                yearRequired: string;
+                monthRequired: string;
+                trialStatus: string;
+                remark: string;
+              };
+            };
             tax: {
               profile: {
                 title: string;
@@ -2603,6 +2699,51 @@ declare namespace App {
                   untilMonth: string;
                 };
               };
+            };
+              payslip: {
+              pageTitle: string;
+              title: string;
+              employeeNo: string;
+              employeeName: string;
+              yearMonth: string;
+              earningTotal: string;
+              deductionTotal: string;
+              netTotal: string;
+              published: string;
+              readStatus: string;
+              readTime: string;
+              unread: string;
+              readLabel: string;
+              detail: string;
+              itemName: string;
+              itemClass: string;
+              amount: string;
+              sourceDetail: string;
+              batch: string;
+              publish: string;
+              publishDone: string;
+              chooseBatch: string;
+              chooseBatchPlaceholder: string;
+              chooseBatchFirst: string;
+            };
+            statistics: {
+              pageTitle: string;
+              batch: string;
+              batchUuidTip: string;
+              employee: string;
+              employeeName: string;
+              org: string;
+              yearMonth: string;
+              earningTotal: string;
+              deductionTotal: string;
+              netTotal: string;
+              laborCostTotal: string;
+              employeeCount: string;
+              abnormal: string;
+              normal: string;
+              onlyAbnormal: string;
+              paid: string;
+              payslipped: string;
             };
           };
           training: {

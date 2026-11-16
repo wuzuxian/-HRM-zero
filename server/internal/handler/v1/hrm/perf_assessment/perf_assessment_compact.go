@@ -82,6 +82,24 @@ func Generate(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
+func GetMyWorkbench(svcCtx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.GetMyAssessmentWorkbenchRequest
+		if err := httpx.Parse(r, &req); err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+			return
+		}
+
+		l := perf_assessment.NewGetMyWorkbench(r.Context(), svcCtx, r)
+		resp, err := l.GetMyWorkbench(&req)
+		if err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+		} else {
+			httpx.OkJsonCtx(r.Context(), w, resp)
+		}
+	}
+}
+
 func GetDetail(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.GetDetailRequest

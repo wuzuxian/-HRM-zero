@@ -486,6 +486,60 @@ declare namespace Api {
         adjustedGrade?: string;
       };
 
+      // ---- 考核任务工作台（HRM-44，单聚合端点） ----
+
+      /** 工作台待办我的角色 */
+      type WorkbenchTodoRole = 'owner' | 'reviewer' | 'calibrator';
+
+      /** 工作台待办行（最近待办 / 申诉单列共用） */
+      type WorkbenchTodo = {
+        uuid: string;
+        /** 考核单号 PA-年-流水 */
+        assessmentNo: string;
+        periodUuid: string;
+        /** 批次编号（展示快照） */
+        periodNo: string;
+        /** 批次名称（展示快照） */
+        periodName: string;
+        employeeUuid: string;
+        /** 被考核人姓名（展示快照） */
+        employeeName: string;
+        /** 我的角色 owner=被考核人 reviewer=评审 calibrator=校准/裁决 */
+        myRole: WorkbenchTodoRole;
+        /** 当前节点 */
+        currentNode: AssessmentNode;
+        /** 任务状态 */
+        taskStatus: AssessmentTaskStatus;
+        /** 申诉状态（申诉中任务携带） */
+        appealStatus: '' | AssessmentAppealStatus;
+        updateTime: string;
+      };
+
+      /** 工作台汇总卡（六卡，按当前用户角色口径统计待办任务数） */
+      type WorkbenchCards = {
+        /** 目标确认待办（被考核人，节点1） */
+        planConfirm: number;
+        /** 自评填报待办（被考核人，节点2） */
+        selfReview: number;
+        /** 上级评审待办（考核人，节点3） */
+        leaderReview: number;
+        /** 校准填报待办（校准人，节点4） */
+        calibration: number;
+        /** 结果确认待办（被考核人，节点5） */
+        resultConfirm: number;
+        /** 申诉处理待办（申诉中） */
+        appeal: number;
+      };
+
+      /** 考核任务工作台聚合响应 */
+      type AssessmentWorkbench = {
+        cards: WorkbenchCards;
+        /** 最近待办列表（更新时间倒序，默认前 20） */
+        todos: WorkbenchTodo[];
+        /** 申诉中的任务单列 */
+        appeals: WorkbenchTodo[];
+      };
+
       // ---- 批次结果审批与绩效结果（HRM-45，演示站 9.3 结果） ----
 
       /** HR211 批次结果审批单 */
