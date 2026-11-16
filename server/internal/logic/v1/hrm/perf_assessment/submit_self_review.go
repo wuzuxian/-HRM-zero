@@ -27,7 +27,7 @@ func NewSubmitSelfReview(ctx context.Context, svcCtx *svc.ServiceContext, r *htt
 }
 
 func (l *SubmitSelfReview) SubmitSelfReview(req *types.SubmitSelfReviewRequest) (resp *types.SubmitSelfReviewResponse, err error) {
-	actor, err := resolveActor(l.ctx, l.svcCtx.SqlxConn)
+	actor, err := resolveActor(l.ctx, l.svcCtx)
 	if err != nil {
 		return nil, err
 	}

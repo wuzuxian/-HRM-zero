@@ -27,7 +27,7 @@ func NewSubmitLeaderReview(ctx context.Context, svcCtx *svc.ServiceContext, r *h
 }
 
 func (l *SubmitLeaderReview) SubmitLeaderReview(req *types.SubmitLeaderReviewRequest) (resp *types.SubmitLeaderReviewResponse, err error) {
-	actor, err := resolveActor(l.ctx, l.svcCtx.SqlxConn)
+	actor, err := resolveActor(l.ctx, l.svcCtx)
 	if err != nil {
 		return nil, err
 	}

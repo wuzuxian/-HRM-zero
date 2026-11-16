@@ -28,7 +28,7 @@ func NewHandleAppeal(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Re
 
 // HandleAppeal 申诉裁决（校准人：维持/调整得分→关闭申诉）。
 func (l *HandleAppeal) HandleAppeal(req *types.HandleAppealRequest) (resp *types.HandleAppealResponse, err error) {
-	actor, err := resolveActor(l.ctx, l.svcCtx.SqlxConn)
+	actor, err := resolveActor(l.ctx, l.svcCtx)
 	if err != nil {
 		return nil, err
 	}

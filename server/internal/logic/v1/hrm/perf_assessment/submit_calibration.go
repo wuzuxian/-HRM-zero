@@ -27,7 +27,7 @@ func NewSubmitCalibration(ctx context.Context, svcCtx *svc.ServiceContext, r *ht
 }
 
 func (l *SubmitCalibration) SubmitCalibration(req *types.SubmitCalibrationRequest) (resp *types.SubmitCalibrationResponse, err error) {
-	actor, err := resolveActor(l.ctx, l.svcCtx.SqlxConn)
+	actor, err := resolveActor(l.ctx, l.svcCtx)
 	if err != nil {
 		return nil, err
 	}

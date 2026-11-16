@@ -28,7 +28,7 @@ func NewAppeal(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Request)
 
 // Appeal 发起申诉（仅结果确认阶段、被考核人本人；原因必填）。
 func (l *Appeal) Appeal(req *types.AppealRequest) (resp *types.AppealResponse, err error) {
-	actor, err := resolveActor(l.ctx, l.svcCtx.SqlxConn)
+	actor, err := resolveActor(l.ctx, l.svcCtx)
 	if err != nil {
 		return nil, err
 	}

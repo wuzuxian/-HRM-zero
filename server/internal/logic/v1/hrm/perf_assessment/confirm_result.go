@@ -27,7 +27,7 @@ func NewConfirmResult(ctx context.Context, svcCtx *svc.ServiceContext, r *http.R
 }
 
 func (l *ConfirmResult) ConfirmResult(req *types.ConfirmResultRequest) (resp *types.ConfirmResultResponse, err error) {
-	actor, err := resolveActor(l.ctx, l.svcCtx.SqlxConn)
+	actor, err := resolveActor(l.ctx, l.svcCtx)
 	if err != nil {
 		return nil, err
 	}

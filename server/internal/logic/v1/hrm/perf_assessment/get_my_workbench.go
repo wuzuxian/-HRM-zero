@@ -29,7 +29,7 @@ func NewGetMyWorkbench(ctx context.Context, svcCtx *svc.ServiceContext, r *http.
 // GetMyWorkbench 考核任务工作台（当前登录人视角只读聚合：
 // 全周期待办汇总卡 + 最近待办列表 + 申诉中单列；无状态变更）。
 func (l *GetMyWorkbench) GetMyWorkbench(req *types.GetMyAssessmentWorkbenchRequest) (resp *types.GetMyAssessmentWorkbenchResponse, err error) {
-	actor, err := resolveActor(l.ctx, l.svcCtx.SqlxConn)
+	actor, err := resolveActor(l.ctx, l.svcCtx)
 	if err != nil {
 		return nil, err
 	}

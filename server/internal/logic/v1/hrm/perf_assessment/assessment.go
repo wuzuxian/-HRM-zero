@@ -166,21 +166,30 @@ type actorContext struct {
 }
 
 // resolveActor resolves the JWT user to an actorContext: JWT user uuid →
-// hrm_employee.user_uuid → employee uuid（被考核人身份校验用）+ permission codes
-// (withCodes 注入 — handler 从 authx 提供的按钮码取，测试直接构造)。
-func resolveActor(ctx context.Context, conn sqlx.SqlConn) (*actorContext, error) {
+// hrm_employee.user_uuid → employee uuid（被考核人身份校验用）+ permission codes.
+// Codes 来源：WithCodes 显式注入（测试路径）优先；生产路径 handlers 不注入，
+// 由角色→菜单 permissions 映射自行解析（hrmuser.CodesForRoles，与
+// custom.InitCasbinRule 同链路），否则评审/校准/申诉永远 10643-denied。
+func resolveActor(ctx context.Context, svcCtx *svc.ServiceContext) (*actorContext, error) {
 	user := hrmuser.Current(ctx)
 	actor := &actorContext{Codes: codesFromCtx(ctx)}
 	if user.Uuid == "" {
 		return actor, nil // 无登录态（逻辑测试路径）
 	}
-	rows, err := hrm_employee.NewHrmEmployeeModel(conn).FindByCondition(ctx, nil,
+	rows, err := hrm_employee.NewHrmEmployeeModel(svcCtx.SqlxConn).FindByCondition(ctx, nil,
 		condition.NewChain().Equal(hrm_employee.UserUuid, user.Uuid).Build()...)
 	if err != nil {
 		return nil, err
 	}
 	if len(rows) > 0 {
 		actor.EmployeeUuid = rows[0].Uuid
+	}
+	if len(actor.Codes) == 0 && len(user.RoleUuids) > 0 {
+		codes, err := hrmuser.CodesForRoles(ctx, svcCtx, user.RoleUuids)
+		if err != nil {
+			return nil, err
+		}
+		actor.Codes = codes
 	}
 	return actor, nil
 }

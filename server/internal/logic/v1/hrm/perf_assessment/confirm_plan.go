@@ -27,7 +27,7 @@ func NewConfirmPlan(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Req
 }
 
 func (l *ConfirmPlan) ConfirmPlan(req *types.ConfirmPlanRequest) (resp *types.ConfirmPlanResponse, err error) {
-	actor, err := resolveActor(l.ctx, l.svcCtx.SqlxConn)
+	actor, err := resolveActor(l.ctx, l.svcCtx)
 	if err != nil {
 		return nil, err
 	}
