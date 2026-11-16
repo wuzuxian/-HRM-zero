@@ -9,9 +9,22 @@
             {
               "type": "process",
               "command": "python3",
-              "args": ["${ZCODE_PROJECT_DIR}/.zcode/hooks/no-edit-generated.py"],
-              "timeoutMs": 5000,
-              "statusMessage": "generated-file guard"
+              "enabled": true,
+              "statusMessage": "generated-file guard",
+              "args": [
+                "${ZCODE_PROJECT_DIR}/.zcode/hooks/no-edit-generated.py"
+              ],
+              "timeoutMs": 5000
+            },
+            {
+              "type": "process",
+              "command": "python3",
+              "enabled": true,
+              "statusMessage": "logic structure guard",
+              "args": [
+                "${ZCODE_PROJECT_DIR}/.zcode/hooks/no-break-logic.py"
+              ],
+              "timeoutMs": 5000
             }
           ]
         },
@@ -21,9 +34,22 @@
             {
               "type": "process",
               "command": "python3",
-              "args": ["${ZCODE_PROJECT_DIR}/.zcode/hooks/no-bash-edit-generated.py"],
-              "timeoutMs": 5000,
-              "statusMessage": "bash generated-file guard"
+              "enabled": true,
+              "statusMessage": "bash generated-file guard",
+              "args": [
+                "${ZCODE_PROJECT_DIR}/.zcode/hooks/no-bash-edit-generated.py"
+              ],
+              "timeoutMs": 5000
+            },
+            {
+              "type": "process",
+              "command": "python3",
+              "enabled": true,
+              "statusMessage": "bash logic-file guard",
+              "args": [
+                "${ZCODE_PROJECT_DIR}/.zcode/hooks/no-break-logic-bash.py"
+              ],
+              "timeoutMs": 5000
             }
           ]
         }
@@ -31,4 +57,3 @@
     }
   }
 }
-

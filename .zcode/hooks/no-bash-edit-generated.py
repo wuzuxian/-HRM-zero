@@ -10,6 +10,7 @@ Exit codes: 0 pass, 2 block (deny for PreToolUse).
 """
 import json
 import re
+import shlex
 import sys
 
 # Protected generated-file paths (substring match on the command string).
@@ -37,10 +38,11 @@ MUTATING = [
     r"\bpatch\b",
     r"\bgit\b\s+checkout\s+(-b\s+\S+\s+)?(--theirs|--ours)",
     r"\bgit\b\s+checkout\s+(-b\s+\S+\s+)?\S*--\s+\S*",
-    r"\bcp\b",
+    r"\bgit\b\s+restore\b(?!\s+(?:--staged\b|-S\b))",
+    r"\bdd\b[^|]*\bof=",
+    r"\btruncate\b",
     r"\bmv\b",
     r"\bcat\b[^|>]*>",
-    r"\btruncate\b",
     r"\brm\b",
 ]
 
@@ -55,6 +57,29 @@ BLOCK_MSG = (
 )
 
 
+def cp_dest_protected(cmd: str) -> bool:
+    """`cp` with a protected generated file as DESTINATION is destructive;
+    as SOURCE (backup) it is read-only and must pass."""
+    try:
+        tokens = shlex.split(cmd)
+    except ValueError:
+        return True  # unparseable → be safe
+    i, n = 0, len(tokens)
+    while i < n:
+        if tokens[i] == "cp" or tokens[i].endswith("/cp"):
+            operands, j = [], i + 1
+            while j < n and tokens[j] not in ("|", ";", "&&", "||", "&"):
+                if not tokens[j].startswith("-"):
+                    operands.append(tokens[j])
+                j += 1
+            if operands and any(re.search(p, operands[-1]) for p in PROTECTED_PATTERNS):
+                return True
+            i = j
+        else:
+            i += 1
+    return False
+
+
 def main() -> int:
     try:
         data = json.load(sys.stdin)
@@ -66,13 +91,13 @@ def main() -> int:
     # Skip pure generator invocations — jzero gen may legitimately rewrite
     # protected files; that is the sanctioned path.
     if re.search(r"\bjzero\s+gen\b", cmd) and not re.search(
-        r"(sed|perl|patch|tee|mv|cp|rm)\b", cmd
+        r"\b(sed|perl|patch|tee|mv|cp|rm|truncate|dd)\b", cmd
     ):
         return 0
     protected = any(re.search(p, cmd) for p in PROTECTED_PATTERNS)
     if not protected:
         return 0
-    mutating = any(re.search(m, cmd) for m in MUTATING)
+    mutating = any(re.search(m, cmd) for m in MUTATING) or cp_dest_protected(cmd)
     if mutating:
         print(BLOCK_MSG.format(cmd=cmd[:300]), file=sys.stderr)
         return 2
