@@ -641,13 +641,91 @@ declare namespace Api {
         updateTime: string;
       };
 
-      /** 绩效结果行 search params */
+      /** 绩效结果行 search params（HRM-46 增补 公司/部门快照 + 已同步薪酬筛选） */
       type PerfResultSearchParams = CommonType.RecordNullable<
-        Pick<PerfResult, 'periodUuid' | 'employeeUuid' | 'signed'> & { mine?: boolean } & Common.CommonSearchParams
+        Pick<PerfResult, 'periodUuid' | 'employeeUuid' | 'signed' | 'companyUuid' | 'orgUuid' | 'salarySynced'> & {
+          mine?: boolean;
+        } & Common.CommonSearchParams
       >;
 
       /** 绩效结果 list */
       type PerfResultList = Common.PaginatingQueryRecord<PerfResult>;
+
+      // ---- 绩效驾驶舱（HRM-46，演示站 9.3） ----
+      // 口径（pre-decided，见 hrm-46-notes.md）：进行中批次数=批次 status='1'；
+      // 考核完成率=task_status='1'/总任务；逾期待办=批次 period_end<今天 且任务未完成；
+      // 风险人数=已发布结果 score<低分阈值 去重员工数；平均得分=已发布结果行均值；
+      // 申诉中=task_status='2'。
+
+      /** 驾驶舱请求（公司/部门/批次/低分阈值筛选） */
+      type PerfDashboardSearchParams = {
+        companyUuid?: string;
+        orgUuid?: string;
+        periodUuid?: string;
+        lowScore?: number;
+      };
+
+      /** 驾驶舱指标卡 */
+      type PerfDashboardMetrics = {
+        /** 进行中批次数 */
+        ongoingPeriodCount: number;
+        /** 考核完成率（0-100） */
+        completionRate: number;
+        /** 逾期待办数（任务级） */
+        overdueTaskCount: number;
+        /** 风险人数（score<阈值 去重员工） */
+        riskEmployeeCount: number;
+        /** 平均得分 */
+        avgScore: number;
+        /** 申诉中数 */
+        appealCount: number;
+        /** 生效低分阈值（回显） */
+        lowScore: number;
+      };
+
+      /** 低分明细行（风险预警 Tab1；signed 后端为 int64 0/1） */
+      type PerfDashboardLowScore = Omit<
+        Pick<PerfResult, 'periodUuid' | 'periodNo' | 'employeeUuid' | 'employeeName' | 'companyName' | 'orgName' | 'grade' | 'signed'>,
+        'signed'
+      > & {
+        score: number;
+        coefficient: number;
+        perfAmount: number;
+        signed: number;
+      };
+
+      /** 逾期任务明细行（风险预警 Tab2） */
+      type PerfDashboardOverdueTask = {
+        periodUuid: string;
+        periodNo: string;
+        periodEnd: string;
+        employeeUuid: string;
+        employeeName: string;
+        currentNode: string;
+        taskStatus: string;
+        assessmentNo: string;
+      };
+
+      /** 申诉中名单行（简化"申诉积压"） */
+      type PerfDashboardAppeal = {
+        periodUuid: string;
+        periodNo: string;
+        employeeUuid: string;
+        employeeName: string;
+        assessmentNo: string;
+        currentNode: string;
+      };
+
+      /** 驾驶舱聚合响应（单端点） */
+      type PerfDashboardResponse = {
+        metrics: PerfDashboardMetrics;
+        /** 风险预警 Tab1：低分明细 */
+        lowScores: PerfDashboardLowScore[];
+        /** 风险预警 Tab2：逾期任务明细 */
+        overdueTasks: PerfDashboardOverdueTask[];
+        /** 申诉中名单 */
+        appeals: PerfDashboardAppeal[];
+      };
     }
   }
 }

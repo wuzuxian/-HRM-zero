@@ -1,6 +1,7 @@
 <script setup lang="tsx">
+import { computed, onMounted, ref } from 'vue';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import { GetPerfResultList, SignPerfResult } from '@/service/api';
+import { GetOrgTree, GetPerfResultList, SignPerfResult } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useAuth } from '@/hooks/business/auth';
@@ -33,7 +34,10 @@ const {
     size: 10,
     periodUuid: null,
     employeeUuid: null,
+    companyUuid: null,
+    orgUuid: null,
     signed: null,
+    salarySynced: null,
     mine: false
   },
   columns: () => [
@@ -167,6 +171,40 @@ const {
   ]
 });
 
+// ---- 公司/部门筛选下拉（HRM-46：结果行快照列 company_uuid/org_uuid 直读） ----
+
+const orgTreeData = ref<Api.Hrm.Org[]>([]);
+
+onMounted(async () => {
+  const { error, data } = await GetOrgTree();
+  if (!error && data) {
+    orgTreeData.value = data.records;
+  }
+});
+
+const companyOptions = computed<CommonType.Option<string>[]>(() =>
+  orgTreeData.value
+    .filter(item => item.orgType === '1')
+    .map(item => ({ label: item.orgName, value: item.uuid }))
+);
+
+const orgOptions = computed<CommonType.Option<string>[]>(() => {
+  const out: CommonType.Option<string>[] = [];
+  function walk(node: Api.Hrm.Org) {
+    if (node.orgType === '2') {
+      out.push({ label: node.orgName, value: node.uuid });
+    }
+    (node.children ?? []).forEach(walk);
+  }
+  orgTreeData.value.forEach(walk);
+  return out;
+});
+
+const salarySyncedOptions = computed(() => [
+  { label: $t('page.hrm.performance.result.yes'), value: '1' },
+  { label: $t('page.hrm.performance.result.no'), value: '0' }
+]);
+
 function yesNoTag(v: Api.Hrm.Performance.PerfYesNo) {
   if (v === '1') {
     return (
@@ -199,6 +237,47 @@ async function handleSign(row: Api.Hrm.Performance.PerfResult) {
             <NInput
               v-model:value="searchParams.periodUuid"
               :placeholder="$t('page.hrm.performance.result.periodFilter')"
+              clearable
+            />
+          </NFormItemGi>
+          <NFormItemGi
+            span="24 s:12 m:6"
+            :label="$t('page.hrm.performance.dashboard.company')"
+            path="companyUuid"
+            class="pr-24px"
+          >
+            <NSelect
+              v-model:value="searchParams.companyUuid"
+              :options="companyOptions"
+              :placeholder="$t('page.hrm.performance.dashboard.companyFilter')"
+              clearable
+              filterable
+            />
+          </NFormItemGi>
+          <NFormItemGi
+            span="24 s:12 m:6"
+            :label="$t('page.hrm.performance.dashboard.org')"
+            path="orgUuid"
+            class="pr-24px"
+          >
+            <NSelect
+              v-model:value="searchParams.orgUuid"
+              :options="orgOptions"
+              :placeholder="$t('page.hrm.performance.dashboard.orgFilter')"
+              clearable
+              filterable
+            />
+          </NFormItemGi>
+          <NFormItemGi
+            span="24 s:12 m:6"
+            :label="$t('page.hrm.performance.result.salarySynced')"
+            path="salarySynced"
+            class="pr-24px"
+          >
+            <NSelect
+              v-model:value="searchParams.salarySynced"
+              :options="salarySyncedOptions"
+              :placeholder="$t('page.hrm.performance.result.signedFilter')"
               clearable
             />
           </NFormItemGi>
