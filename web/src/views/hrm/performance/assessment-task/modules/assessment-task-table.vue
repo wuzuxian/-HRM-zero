@@ -1,14 +1,7 @@
 <script setup lang="tsx">
 import { reactive, ref } from 'vue';
 import { NButton, NTag } from 'naive-ui';
-import {
-  ConfirmPerfAssessmentPlan,
-  ConfirmPerfAssessmentResult,
-  GetPerfAssessmentList,
-  SubmitPerfAssessmentCalibration,
-  SubmitPerfAssessmentLeaderReview,
-  SubmitPerfAssessmentSelfReview
-} from '@/service/api';
+import { ConfirmPerfAssessmentPlan, ConfirmPerfAssessmentResult, GetPerfAssessmentList } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useAuth } from '@/hooks/business/auth';
@@ -29,19 +22,15 @@ defineOptions({
 });
 
 /**
- * 考核任务列表（HRM-43 五个填报列表页共用一套组件模式：
- * 考核单号/当前节点/任务状态/自评得分/评审得分/最终得分等级列 + 阶段操作按钮）。
- * stage 决定行操作与默认节点过滤：
- *   plan          — 目标确认页（节点1：确认目标）
- *   self-review   — 自评填报页（节点2：逐项评分）
- *   leader-review — 评审填报页（节点3 评审 + 节点4 校准）
- *   result        — 结果确认页（节点5：确认结果 / 发起申诉入口）
+ * 考核任务列表（HRM-43 五个填报列表页共用一套组件模式： 考核单号/当前节点/任务状态/自评得分/评审得分/最终得分等级列 + 阶段操作按钮）。 stage 决定行操作与默认节点过滤： plan — 目标确认页（节点1：确认目标）
+ * self-review — 自评填报页（节点2：逐项评分） leader-review — 评审填报页（节点3 评审 + 节点4 校准） result — 结果确认页（节点5：确认结果 / 发起申诉入口）
  */
 const props = defineProps<{
   stage: 'plan' | 'self-review' | 'leader-review' | 'result';
 }>();
 
 const appStore = useAppStore();
+const { hasAuth } = useAuth();
 
 const presetNode: Record<string, string> = {
   plan: '1',
@@ -109,9 +98,7 @@ const {
       align: 'center',
       width: 100,
       render: row => (
-        <NTag type={perfAssessmentNodeTag(row.currentNode)}>
-          {$t(perfAssessmentNodeRecord[row.currentNode])}
-        </NTag>
+        <NTag type={perfAssessmentNodeTag(row.currentNode)}>{$t(perfAssessmentNodeRecord[row.currentNode])}</NTag>
       )
     },
     {
@@ -164,7 +151,8 @@ const {
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',
-      width: 200,
+      // 结果确认页最多同排 3 按钮（申诉裁决/确认结果/发起申诉/详情），200px 放不下会被截断
+      width: 300,
       render: row => <div class="flex-center gap-8px">{renderOperates(row)}</div>
     }
   ]
@@ -218,6 +206,14 @@ function renderOperates(row: Api.Hrm.Performance.PerfAssessment) {
       </NButton>,
       <NButton size="small" type="error" ghost onClick={() => openAppealModal(row)}>
         {$t('page.hrm.performance.assessment.appeal')}
+      </NButton>
+    );
+  }
+  // 申诉中（taskStatus '2'）：持校准码者在结果确认页打开裁决弹窗（弹窗自动切 handleMode）
+  if (props.stage === 'result' && row.taskStatus === '2' && hasAuth('hrm:perf_assessment:calibrate')) {
+    buttons.unshift(
+      <NButton size="small" type="warning" ghost onClick={() => openAppealModal(row)}>
+        {$t('page.hrm.performance.assessment.handleAppeal')}
       </NButton>
     );
   }
@@ -322,11 +318,7 @@ function onSubmitted() {
       :row-data="scoringRow"
       @submitted="onSubmitted"
     />
-    <AssessmentAppealModal
-      v-model:visible="appealVisible"
-      :row-data="appealingRow"
-      @submitted="onSubmitted"
-    />
+    <AssessmentAppealModal v-model:visible="appealVisible" :row-data="appealingRow" @submitted="onSubmitted" />
   </NCard>
 </template>
 

@@ -81,7 +81,8 @@ func AppealForTask(ctx context.Context, conn sqlx.SqlConn, assessmentUuid, reaso
 
 // HandleAppealForTask 校准人裁决：'1'=维持原结果（关闭申诉）；'2'=调整得分（回写 final_score/
 // final_grade 后关闭）。仅 calibrate 码持有者；仅待处理申诉可裁决。
-func HandleAppealForTask(ctx context.Context, conn sqlx.SqlConn, appealUuid, decision, comment string,
+// 入参 assessmentUuid 为考核任务 uuid（UI 上下文是任务行）：定位其最新待处理申诉。
+func HandleAppealForTask(ctx context.Context, conn sqlx.SqlConn, assessmentUuid, decision, comment string,
 	adjustedScore float64, adjustedGrade string, actor *actorContext) error {
 	if !hasCode(actor.Codes, PermAssessmentCalibrate) {
 		return ErrOperatorDenied
@@ -93,16 +94,17 @@ func HandleAppealForTask(ctx context.Context, conn sqlx.SqlConn, appealUuid, dec
 	}
 
 	m := hrm_perf_appeal.NewHrmPerfAppealModel(conn)
-	appeal, err := m.FindOneByUuid(ctx, nil, appealUuid)
+	appeals, err := m.FindByCondition(ctx, nil,
+		condition.NewChain().Equal(hrm_perf_appeal.AssessmentUuid, assessmentUuid).
+			Equal(hrm_perf_appeal.Status, AppealPending).
+			OrderByDesc(hrm_perf_appeal.Id).Build()...)
 	if err != nil {
-		if errors.Is(err, hrm_perf_appeal.ErrNotFound) {
-			return ErrAppealNotFound
-		}
 		return err
 	}
-	if appeal.Status != AppealPending {
-		return fmt.Errorf("%w: 申诉已裁决，不可重复处理", ErrAssessmentInvalid)
+	if len(appeals) == 0 {
+		return ErrAppealNotFound
 	}
+	appeal := appeals[0]
 
 	row, err := FindAssessmentByUuid(ctx, conn, appeal.AssessmentUuid)
 	if err != nil {
