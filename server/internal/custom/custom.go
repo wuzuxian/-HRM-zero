@@ -8,6 +8,8 @@ import (
 	"github.com/casbin/casbin/v2"
 
 	"github.com/jzero-io/jzero-admin/server/internal/global"
+	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/monthreport"
+	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/punch"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/resignation"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/transfer"
 	"github.com/jzero-io/jzero-admin/server/internal/model"
@@ -46,6 +48,11 @@ func (c *Custom) Start() {
 	s := scheduler.New()
 	s.Register(transfer.NewEffectiveScanJob(global.ServiceContext.SqlxConn, time.Now))
 	s.Register(resignation.NewResignedScanJob(global.ServiceContext.SqlxConn, time.Now))
+	// HRM-16 考勤日结: 每日全体在册员工当日 SettleDay (幂等)。
+	s.Register(punch.NewDayCloseJob(&global.ServiceContext, time.Now))
+	// HRM-23 月报自动锁定: 锁定日 (hrm.attendanceLockDay, 默认 5) 当天锁定上一自然月。
+	s.Register(monthreport.NewMonthAutoLockJob(&global.ServiceContext,
+		global.ServiceContext.MustGetConfig().Hrm.AttendanceLockDay, time.Now))
 	c.scheduler = s
 	s.Start()
 }
