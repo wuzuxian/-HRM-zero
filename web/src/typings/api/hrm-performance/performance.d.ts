@@ -265,6 +265,12 @@ declare namespace Api {
        */
       type PeriodStatus = '0' | '1' | '2' | '3' | '4' | '5';
 
+      /** 绩效结果状态：1=正常 2=已作废 */
+      type PerfResultStatus = '1' | '2';
+
+      /** 是/否 0|1（绩效结果行布尔列） */
+      type PerfYesNo = '0' | '1';
+
       /** 适用范围多维筛选条件（存后端 scope JSON） */
       type PeriodScope = {
         /** 公司（org_type=1）uuids；空 = 不限 */
@@ -533,6 +539,115 @@ declare namespace Api {
         /** 申诉中的任务单列 */
         appeals: WorkbenchTodo[];
       };
+
+      // ---- 批次结果审批与绩效结果（HRM-45，演示站 9.3 结果） ----
+
+      /** HR211 批次结果审批单 */
+      type PerfResultApproval = {
+        uuid: string;
+        /** 审批单号 HR211-{YYYYMMDD}{5位流水} */
+        billNo: string;
+        /** 绩效批次 uuid */
+        periodUuid: string;
+        /** 批次编号快照 */
+        periodNo: string;
+        /** 批次名称快照 */
+        periodName: string;
+        /** 公司名称快照（JSON 数组字符串） */
+        companySnapshot: string;
+        /** 部门名称快照（JSON 数组字符串） */
+        orgSnapshot: string;
+        /** 人数 */
+        participantCount: number;
+        /** 平均得分 */
+        avgScore: number;
+        /** 绩效金额合计 */
+        totalAmount: number;
+        /** 单据状态（共享单据状态机） */
+        status: Api.Hrm.BillStatus;
+        submitBy: string;
+        submitTime: string;
+        approveBy: string;
+        approveTime: string;
+        opinion: string;
+        createTime: string;
+        updateTime: string;
+      };
+
+      /** 批次结果审批 search params */
+      type PerfResultApprovalSearchParams = CommonType.RecordNullable<
+        Pick<PerfResultApproval, 'periodUuid' | 'status'> & Common.CommonSearchParams
+      >;
+
+      /** 批次结果审批 list */
+      type PerfResultApprovalList = Common.PaginatingQueryRecord<PerfResultApproval>;
+
+      type SubmitPerfResultApprovalRequest = {
+        periodUuid: string;
+        opinion?: string;
+      };
+
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      type SubmitPerfResultApprovalResponse = {};
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      type SignPerfResultResponse = {};
+
+      /** 绩效结果行 */
+      type PerfResult = {
+        uuid: string;
+        /** 审批单 uuid */
+        approvalUuid: string;
+        /** 考核任务 uuid */
+        assessmentUuid: string;
+        /** 绩效批次 uuid */
+        periodUuid: string;
+        /** 批次编号快照 */
+        periodNo: string;
+        /** 员工 uuid */
+        employeeUuid: string;
+        /** 员工姓名快照 */
+        employeeName: string;
+        /** 公司 uuid 快照 */
+        companyUuid: string;
+        /** 公司名称快照 */
+        companyName: string;
+        /** 部门 uuid 快照 */
+        orgUuid: string;
+        /** 部门名称快照 */
+        orgName: string;
+        /** 得分 */
+        score: number;
+        /** 等级（A/B/C/D 或等级制原值） */
+        grade: string;
+        /** 绩效系数 */
+        coefficient: number;
+        /** 绩效金额 */
+        perfAmount: number;
+        /** 奖金金额 */
+        bonusAmount: number;
+        /** 结果状态：1=正常 2=已作废 */
+        resultStatus: PerfResultStatus;
+        /** 已发布：0=否 1=是 */
+        published: PerfYesNo;
+        /** 已签收：0=否 1=是 */
+        signed: PerfYesNo;
+        /** 签收时间 */
+        signTime: string;
+        /** 签收人 */
+        signBy: string;
+        /** 已同步薪酬：0=否 1=是（HRM-49 写入） */
+        salarySynced: PerfYesNo;
+        createTime: string;
+        updateTime: string;
+      };
+
+      /** 绩效结果行 search params */
+      type PerfResultSearchParams = CommonType.RecordNullable<
+        Pick<PerfResult, 'periodUuid' | 'employeeUuid' | 'signed'> & { mine?: boolean } & Common.CommonSearchParams
+      >;
+
+      /** 绩效结果 list */
+      type PerfResultList = Common.PaginatingQueryRecord<PerfResult>;
     }
   }
 }

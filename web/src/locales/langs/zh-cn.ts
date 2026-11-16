@@ -195,6 +195,7 @@ const local: App.I18n.Schema = {
     hrm_attendance_my_dashboard: '个人看板',
     'hrm_attendance_data_punch-record': '打卡记录',
     'hrm_attendance_data_punch-statistics': '考勤统计',
+    'hrm_attendance_data_month-report': '考勤月报',
     hrm_attendance_scheduling: '排班管理',
     'hrm_attendance_scheduling_schedule-cycle': '排班周期',
     'hrm_attendance_scheduling_schedule-board': '排班表',
@@ -209,6 +210,8 @@ const local: App.I18n.Schema = {
     hrm_performance_setting_template: '模板管理',
     hrm_performance_scheme: '绩效方案',
     'hrm_performance_period-list': '考核批次工作台',
+    'hrm_performance_result-confirm-list': '批次结果审批',
+    'hrm_performance_result-list': '绩效结果',
     'hrm_performance_assessment-task': '考核任务',
     'hrm_performance_assessment-task_plan-list': '目标确认',
     'hrm_performance_assessment-task_self-review-list': '自评填报',
@@ -339,6 +342,13 @@ const local: App.I18n.Schema = {
         settle: '手动日结',
         statistics: '查询统计',
         statisticsDetail: '查看考勤明细'
+      },
+      monthreport: {
+        lockRecords: '锁定记录',
+        recalc: '重新计算',
+        lock: '锁定月报',
+        unlock: '解锁月报',
+        export: '导出考勤月报'
       },
       overtimerule: {
         add: '新增加班规则',
@@ -537,6 +547,9 @@ const local: App.I18n.Schema = {
           confirmResult: '确认结果',
           appeal: '发起申诉',
           handleAppeal: '申诉裁决'
+        },
+        result: {
+          sign: '签收结果'
         }
       }
     }
@@ -1255,7 +1268,66 @@ const local: App.I18n.Schema = {
           handlerMe: '我',
           handlerReviewer: '考核人',
           handlerCalibrator: '校准人'
-        }
+        },
+        resultApprovalStatus: {
+          unsubmitted: '未提交',
+          approving: '审批中',
+          approved: '审批通过',
+          rejected: '审批不通过',
+          revoked: '已撤销'
+        },
+        resultConfirm: {
+          title: '批次结果审批',
+          billNo: '审批单号',
+          period: '绩效批次',
+          periodFilter: '请输入批次 uuid',
+          periodPlaceholder: '请选择批次（结果已发布 待审批）',
+          periodRequired: '请选择绩效批次',
+          companies: '公司',
+          orgs: '部门',
+          participantCount: '人数',
+          avgScore: '平均得分',
+          totalAmount: '绩效金额合计',
+          status: '单据状态',
+          statusFilter: '请选择单据状态',
+          submit: '提交结果审批',
+          submitSuccess: '结果审批已提交，等待审批',
+          approve: '审批通过',
+          approveConfirm: '审批通过后将生成绩效结果并发布批次，确认通过？',
+          approveSuccess: '审批通过，绩效结果已生成',
+          reject: '审批驳回',
+          rejectConfirm: '确认驳回该批次结果审批？',
+          rejectSuccess: '已驳回'
+        },
+        result: {
+          title: '绩效结果',
+          period: '批次',
+          periodFilter: '请输入批次 uuid',
+          employee: '员工',
+          company: '公司',
+          org: '部门',
+          score: '得分',
+          grade: '等级',
+          coefficient: '系数',
+          perfAmount: '绩效金额',
+          bonusAmount: '奖金金额',
+          resultStatus: '结果状态',
+          published: '已发布',
+          signed: '已签收',
+          signedFilter: '请选择签收状态',
+          salarySynced: '已同步薪酬',
+          signTime: '签收时间',
+          mine: '仅本人',
+          sign: '签收',
+          signConfirm: '确认签收本人绩效结果？',
+          signSuccess: '签收成功',
+          yes: '是',
+          no: '否'
+        },
+        resultStatus: {
+          normal: '正常',
+          voided: '已作废'
+        },
       },
       org: {
         title: '组织管理',
@@ -1969,6 +2041,60 @@ const local: App.I18n.Schema = {
           form: {
             name: '请输入姓名',
             onlyAbnormal: '是否仅看异常'
+          }
+        },
+        monthReport: {
+          title: '考勤月报',
+          yearMonth: '月份',
+          org: '部门（含下级）',
+          attGroup: '考勤组',
+          name: '姓名',
+          onlyAbnormal: '只看异常',
+          onlyAbnormalYes: '只看异常',
+          onlyChanged: '只看锁定后变更',
+          onlyChangedYes: '只看锁定后变更',
+          orgName: '部门',
+          attGroupName: '考勤组',
+          employeeName: '姓名',
+          expectedDays: '应出勤',
+          attendDays: '实出勤',
+          lateCount: '迟到',
+          earlyCount: '早退',
+          missingCount: '缺卡',
+          absentDays: '旷工',
+          workdayOtH: '工作日加班(h)',
+          restdayOtH: '休息日加班(h)',
+          holidayOtH: '节假日加班(h)',
+          compAccrueH: '调休入账(h)',
+          lockStatus: '锁定状态',
+          lockedTag: '已锁定',
+          unlockedTag: '未锁定',
+          changed: '锁定后变更',
+          dayDetail: '日明细',
+          detailTitle: '考勤日明细',
+          detailDate: '日期',
+          lockRecords: '锁定记录',
+          lockRecordTime: '操作时间',
+          lockRecordAction: '动作',
+          lockRecordOperator: '操作人',
+          lockRecordRemark: '备注',
+          lock: '锁定月报',
+          unlock: '解锁',
+          recalc: '重新计算',
+          export: '导出',
+          lockSuccess: '月报已锁定（快照已固化）',
+          unlockSuccess: '月报已解锁（恢复实时聚合）',
+          recalcSuccess: '重新计算完成',
+          recalcChanged: '重算完成：{n} 行与锁定快照不一致，已标记锁定后变更',
+          lockConfirm: '确认锁定该月考勤月报？锁定后月报按快照展示，如需调整请解锁。',
+          unlockConfirm: '确认解锁该月考勤月报？解锁后恢复实时聚合。',
+          form: {
+            yearMonth: '请选择月份',
+            org: '请选择部门（含下级）',
+            attGroup: '请选择考勤组',
+            name: '请输入姓名',
+            onlyAbnormal: '是否只看异常',
+            onlyChanged: '是否只看锁定后变更'
           }
         },
         overtimeRule: {

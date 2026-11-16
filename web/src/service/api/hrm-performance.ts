@@ -190,3 +190,41 @@ export function AdvancePerfPeriod(uuid: string) {
     data: { uuid }
   });
 }
+
+// ---- 批次结果审批与绩效结果（HRM-45，演示站 9.3 结果） ----
+
+/** get perf result approval list（HR211 批次结果审批单列表） */
+export function GetPerfResultApprovalList(params?: Api.Hrm.Performance.PerfResultApprovalSearchParams) {
+  return request<Api.Hrm.Performance.PerfResultApprovalList>({
+    url: '/api/v1/hrm/getPerfResultApprovalList',
+    method: 'get',
+    params
+  });
+}
+
+/** submit perf result approval（HR211 提交；批次须 结果已发布；一批次一张单） */
+export function SubmitPerfResultApproval(req: Api.Hrm.Performance.SubmitPerfResultApprovalRequest) {
+  return request<Api.Hrm.Performance.SubmitPerfResultApprovalResponse>({
+    url: '/api/v1/hrm/submitPerfResultApproval',
+    method: 'post',
+    data: req
+  });
+}
+
+/** get perf result list（绩效结果；mine=仅本人） */
+export function GetPerfResultList(params?: Api.Hrm.Performance.PerfResultSearchParams) {
+  return request<Api.Hrm.Performance.PerfResultList>({
+    url: '/api/v1/hrm/getPerfResultList',
+    method: 'get',
+    params
+  });
+}
+
+/** sign perf result（员工本人签收；幂等） */
+export function SignPerfResult(uuid: string) {
+  return request<Api.Hrm.Performance.SignPerfResultResponse>({
+    url: '/api/v1/hrm/signPerfResult',
+    method: 'post',
+    data: { uuid }
+  });
+}

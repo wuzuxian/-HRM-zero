@@ -24,6 +24,7 @@ import (
 	v1hrmleave "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/leave"
 	v1hrmleavebalance "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/leavebalance"
 	v1hrmleavetype "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/leavetype"
+	v1hrmmonthreport "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/monthreport"
 	v1hrmoffer "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/offer"
 	v1hrmorg "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/org"
 	v1hrmovertimebill "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/overtimebill"
@@ -31,6 +32,7 @@ import (
 	v1hrmperf_assessment "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_assessment"
 	v1hrmperf_indicator "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_indicator"
 	v1hrmperf_period "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_period"
+	v1hrmperf_result "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_result"
 	v1hrmperf_scheme "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_scheme"
 	v1hrmperf_template "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_template"
 	v1hrmposition "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/position"
@@ -675,6 +677,41 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				[]rest.Route{
 					{
 						Method:  http.MethodPost,
+						Path:    "/hrm/exportAttendanceMonthReport",
+						Handler: v1hrmmonthreport.Export(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getAttendanceMonthLockRecords",
+						Handler: v1hrmmonthreport.LockRecords(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getAttendanceMonthReport",
+						Handler: v1hrmmonthreport.List(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getAttendanceMonthReportDetail",
+						Handler: v1hrmmonthreport.Detail(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/lockAttendanceMonthReport",
+						Handler: v1hrmmonthreport.Lock(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/recalcAttendanceMonthReport",
+						Handler: v1hrmmonthreport.Recalc(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/unlockAttendanceMonthReport",
+						Handler: v1hrmmonthreport.Unlock(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
 						Path:    "/hrm/addOffer",
 						Handler: v1hrmoffer.Add(serverCtx),
 					},
@@ -968,6 +1005,37 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodPost,
 						Path:    "/hrm/publishPerfPeriod",
 						Handler: v1hrmperf_period.Publish(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getPerfResultApprovalList",
+						Handler: v1hrmperf_result.ApprovalList(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getPerfResultList",
+						Handler: v1hrmperf_result.ResultList(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/signPerfResult",
+						Handler: v1hrmperf_result.SignResult(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/submitPerfResultApproval",
+						Handler: v1hrmperf_result.SubmitApproval(serverCtx),
 					},
 				}...,
 			),

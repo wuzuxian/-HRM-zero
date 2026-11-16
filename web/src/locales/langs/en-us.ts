@@ -195,6 +195,7 @@ const local: App.I18n.Schema = {
     hrm_attendance_my_dashboard: 'My Dashboard',
     'hrm_attendance_data_punch-record': 'Punch Records',
     'hrm_attendance_data_punch-statistics': 'Attendance Statistics',
+    'hrm_attendance_data_month-report': 'Attendance Month Report',
     hrm_attendance_scheduling: 'Scheduling',
     'hrm_attendance_scheduling_schedule-cycle': 'Schedule Cycles',
     'hrm_attendance_scheduling_schedule-board': 'Schedule Board',
@@ -209,6 +210,8 @@ const local: App.I18n.Schema = {
     hrm_performance_setting_template: 'Template Management',
     hrm_performance_scheme: 'Scheme',
     'hrm_performance_period-list': 'Assessment Period Workbench',
+    'hrm_performance_result-confirm-list': 'Batch Result Approval',
+    'hrm_performance_result-list': 'Performance Results',
     'hrm_performance_assessment-task': 'Assessment Tasks',
     'hrm_performance_assessment-task_plan-list': 'Plan Confirm',
     'hrm_performance_assessment-task_self-review-list': 'Self Review',
@@ -339,6 +342,13 @@ const local: App.I18n.Schema = {
         settle: 'Manual Day Settle',
         statistics: 'Query Statistics',
         statisticsDetail: 'View Attendance Detail'
+      },
+      monthreport: {
+        lockRecords: 'Lock Records',
+        recalc: 'Recalculate',
+        lock: 'Lock Month Report',
+        unlock: 'Unlock Month Report',
+        export: 'Export Month Report'
       },
       overtimerule: {
         add: 'Add Overtime Rule',
@@ -537,6 +547,9 @@ const local: App.I18n.Schema = {
           confirmResult: 'Confirm Result',
           appeal: 'Appeal',
           handleAppeal: 'Handle Appeal'
+        },
+        result: {
+          sign: 'Sign Result'
         }
       }
     }
@@ -1254,7 +1267,65 @@ const local: App.I18n.Schema = {
           goHandle: 'Go',
           handlerMe: 'Me',
           handlerReviewer: 'Reviewer',
-          handlerCalibrator: 'Calibrator'
+          handlerCalibrator: 'Calibrator',
+        resultApprovalStatus: {
+          unsubmitted: 'Unsubmitted',
+          approving: 'Approving',
+          approved: 'Approved',
+          rejected: 'Rejected',
+          revoked: 'Revoked'
+        },
+        resultConfirm: {
+          title: 'Batch Result Approval',
+          billNo: 'Bill No.',
+          period: 'Period',
+          periodFilter: 'Enter period uuid',
+          periodPlaceholder: 'Select a period (result published, pending approval)',
+          periodRequired: 'Please select a period',
+          companies: 'Companies',
+          orgs: 'Departments',
+          participantCount: 'Participants',
+          avgScore: 'Avg. Score',
+          totalAmount: 'Total Amount',
+          status: 'Bill Status',
+          statusFilter: 'Select bill status',
+          submit: 'Submit Approval',
+          submitSuccess: 'Result approval submitted',
+          approve: 'Approve',
+          approveConfirm: 'Approving will generate perf results and publish the batch. Confirm?',
+          approveSuccess: 'Approved, perf results generated',
+          reject: 'Reject',
+          rejectConfirm: 'Reject this batch result approval?',
+          rejectSuccess: 'Rejected'
+        },
+        result: {
+          title: 'Performance Results',
+          period: 'Period',
+          periodFilter: 'Enter period uuid',
+          employee: 'Employee',
+          company: 'Company',
+          org: 'Department',
+          score: 'Score',
+          grade: 'Grade',
+          coefficient: 'Coefficient',
+          perfAmount: 'Perf Amount',
+          bonusAmount: 'Bonus Amount',
+          resultStatus: 'Result Status',
+          published: 'Published',
+          signed: 'Signed',
+          signedFilter: 'Select sign status',
+          salarySynced: 'Salary Synced',
+          signTime: 'Sign Time',
+          mine: 'Mine only',
+          sign: 'Sign',
+          signConfirm: 'Sign your own performance result?',
+          signSuccess: 'Signed',
+          yes: 'Yes',
+          no: 'No'
+        },
+        resultStatus: {
+          normal: 'Normal',
+          voided: 'Voided'
         }
       },
       org: {
@@ -1976,6 +2047,60 @@ const local: App.I18n.Schema = {
           form: {
             name: 'Please enter name',
             onlyAbnormal: 'Abnormal only'
+          }
+        },
+        monthReport: {
+          title: 'Attendance Month Report',
+          yearMonth: 'Month',
+          org: 'Department (incl. sub)',
+          attGroup: 'Attendance Group',
+          name: 'Name',
+          onlyAbnormal: 'Abnormal only',
+          onlyAbnormalYes: 'Abnormal only',
+          onlyChanged: 'Changed after lock',
+          onlyChangedYes: 'Changed after lock',
+          orgName: 'Department',
+          attGroupName: 'Attendance Group',
+          employeeName: 'Name',
+          expectedDays: 'Expected Days',
+          attendDays: 'Attend Days',
+          lateCount: 'Late',
+          earlyCount: 'Early Leave',
+          missingCount: 'Missing',
+          absentDays: 'Absent',
+          workdayOtH: 'Workday OT(h)',
+          restdayOtH: 'Restday OT(h)',
+          holidayOtH: 'Holiday OT(h)',
+          compAccrueH: 'Comp Accrual(h)',
+          lockStatus: 'Lock Status',
+          lockedTag: 'Locked',
+          unlockedTag: 'Unlocked',
+          changed: 'Changed after lock',
+          dayDetail: 'Day Detail',
+          detailTitle: 'Attendance Day Detail',
+          detailDate: 'Date',
+          lockRecords: 'Lock Records',
+          lockRecordTime: 'Time',
+          lockRecordAction: 'Action',
+          lockRecordOperator: 'Operator',
+          lockRecordRemark: 'Remark',
+          lock: 'Lock Month Report',
+          unlock: 'Unlock',
+          recalc: 'Recalculate',
+          export: 'Export',
+          lockSuccess: 'Month report locked (snapshot fixed)',
+          unlockSuccess: 'Month report unlocked (back to realtime)',
+          recalcSuccess: 'Recalculation finished',
+          recalcChanged: 'Recalculated: {n} rows differ from locked snapshot, marked as changed',
+          lockConfirm: 'Lock this month report? It will show the snapshot until unlocked.',
+          unlockConfirm: 'Unlock this month report? It will go back to realtime aggregation.',
+          form: {
+            yearMonth: 'Please select month',
+            org: 'Please select department',
+            attGroup: 'Please select attendance group',
+            name: 'Please enter name',
+            onlyAbnormal: 'Abnormal only',
+            onlyChanged: 'Changed after lock'
           }
         },
         overtimeRule: {

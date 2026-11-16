@@ -1,0 +1,23 @@
+CREATE TABLE `hrm_perf_result_approval` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(36) NOT NULL UNIQUE,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `bill_no` varchar(32) NOT NULL COMMENT '审批单号 HR211-{YYYYMMDD}{5位流水}（复用 hrm_bill_sequence，bill_type_code=211）',
+  `period_uuid` varchar(36) NOT NULL COMMENT '绩效批次 uuid（hrm_perf_period；一批次一张审批单）',
+  `period_no` varchar(32) NOT NULL DEFAULT '' COMMENT '批次编号快照 PERF-年-流水',
+  `period_name` varchar(64) NOT NULL DEFAULT '' COMMENT '批次名称快照',
+  `company_snapshot` text NOT NULL COMMENT '公司名称快照 JSON 数组（参与人去重）',
+  `org_snapshot` text NOT NULL COMMENT '部门名称快照 JSON 数组（参与人去重）',
+  `participant_count` int NOT NULL DEFAULT 0 COMMENT '人数（结果行数）',
+  `avg_score` decimal(8,2) NOT NULL DEFAULT 0 COMMENT '平均得分（final_score 均值）',
+  `total_amount` decimal(12,2) NOT NULL DEFAULT 0 COMMENT '绩效金额合计（结果行 perf_amount 求和）',
+  `status` varchar(16) NOT NULL DEFAULT 'unsubmitted' COMMENT '单据状态：unsubmitted/approving/approved/rejected/revoked（单据状态机）',
+  `submit_by` varchar(64) NOT NULL DEFAULT '' COMMENT '提交人',
+  `submit_time` varchar(20) NOT NULL DEFAULT '' COMMENT '提交时间',
+  `approve_by` varchar(64) NOT NULL DEFAULT '' COMMENT '审批通过人',
+  `approve_time` varchar(20) NOT NULL DEFAULT '' COMMENT '审批通过时间',
+  `opinion` varchar(255) NOT NULL DEFAULT '' COMMENT '审批意见',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_hrm_perf_result_approval_period` (`period_uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci

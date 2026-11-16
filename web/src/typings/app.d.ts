@@ -488,6 +488,13 @@ declare namespace App {
             statistics: string;
             statisticsDetail: string;
           };
+          monthreport: {
+            lockRecords: string;
+            recalc: string;
+            lock: string;
+            unlock: string;
+            export: string;
+          };
           overtimerule: {
             add: string;
             edit: string;
@@ -685,6 +692,9 @@ declare namespace App {
               confirmResult: string;
               appeal: string;
               handleAppeal: string;
+            };
+            result: {
+              sign: string;
             };
           };
         };
@@ -1151,6 +1161,66 @@ declare namespace App {
               handlerMe: string;
               handlerReviewer: string;
               handlerCalibrator: string;
+            };
+            resultApprovalStatus: {
+              unsubmitted: string;
+              approving: string;
+              approved: string;
+              rejected: string;
+              revoked: string;
+            };
+            resultConfirm: {
+              title: string;
+              billNo: string;
+              period: string;
+              periodFilter: string;
+              periodPlaceholder: string;
+              periodRequired: string;
+              companies: string;
+              orgs: string;
+              participantCount: string;
+              avgScore: string;
+              totalAmount: string;
+              status: string;
+              statusFilter: string;
+              submit: string;
+              submitSuccess: string;
+              approve: string;
+              approveConfirm: string;
+              approveSuccess: string;
+              reject: string;
+              rejectConfirm: string;
+              rejectSuccess: string;
+            };
+            result: {
+              title: string;
+              period: string;
+              periodFilter: string;
+              employee: string;
+              company: string;
+              org: string;
+              score: string;
+              grade: string;
+              coefficient: string;
+              perfAmount: string;
+              bonusAmount: string;
+              resultStatus: string;
+              published: string;
+              signed: string;
+              signedFilter: string;
+              salarySynced: string;
+              signTime: string;
+              mine: string;
+              sign: string;
+              signConfirm: string;
+              signSuccess: string;
+              yes: string;
+              no: string;
+            };
+            resultStatus: {
+              normal: string;
+              voided: string;
+            };
             };
           };
           org: {
@@ -1669,6 +1739,60 @@ declare namespace App {
               form: {
                 name: string;
                 onlyAbnormal: string;
+              };
+            };
+            monthReport: {
+              title: string;
+              yearMonth: string;
+              org: string;
+              attGroup: string;
+              name: string;
+              onlyAbnormal: string;
+              onlyAbnormalYes: string;
+              onlyChanged: string;
+              onlyChangedYes: string;
+              orgName: string;
+              attGroupName: string;
+              employeeName: string;
+              expectedDays: string;
+              attendDays: string;
+              lateCount: string;
+              earlyCount: string;
+              missingCount: string;
+              absentDays: string;
+              workdayOtH: string;
+              restdayOtH: string;
+              holidayOtH: string;
+              compAccrueH: string;
+              lockStatus: string;
+              lockedTag: string;
+              unlockedTag: string;
+              changed: string;
+              dayDetail: string;
+              detailTitle: string;
+              detailDate: string;
+              lockRecords: string;
+              lockRecordTime: string;
+              lockRecordAction: string;
+              lockRecordOperator: string;
+              lockRecordRemark: string;
+              lock: string;
+              unlock: string;
+              recalc: string;
+              export: string;
+              lockSuccess: string;
+              unlockSuccess: string;
+              recalcSuccess: string;
+              recalcChanged: string;
+              lockConfirm: string;
+              unlockConfirm: string;
+              form: {
+                yearMonth: string;
+                org: string;
+                attGroup: string;
+                name: string;
+                onlyAbnormal: string;
+                onlyChanged: string;
               };
             };
             overtimeRule: {

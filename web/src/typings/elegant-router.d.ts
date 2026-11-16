@@ -42,6 +42,7 @@ declare module "@elegant-router/types" {
     "hrm_attendance_apply_overtime-bill-list": "/hrm/attendance/apply/overtime-bill-list";
     "hrm_attendance_data": "/hrm/attendance/data";
     "hrm_attendance_data_leave-balance": "/hrm/attendance/data/leave-balance";
+    "hrm_attendance_data_month-report": "/hrm/attendance/data/month-report";
     "hrm_attendance_data_punch-record": "/hrm/attendance/data/punch-record";
     "hrm_attendance_data_punch-statistics": "/hrm/attendance/data/punch-statistics";
     "hrm_attendance_my": "/hrm/attendance/my";
@@ -77,6 +78,8 @@ declare module "@elegant-router/types" {
     "hrm_performance_assessment-task_self-review-list": "/hrm/performance/assessment-task/self-review-list";
     "hrm_performance_assessment-task_workbench": "/hrm/performance/assessment-task/workbench";
     "hrm_performance_period-list": "/hrm/performance/period-list";
+    "hrm_performance_result-confirm-list": "/hrm/performance/result-confirm-list";
+    "hrm_performance_result-list": "/hrm/performance/result-list";
     "hrm_performance_scheme": "/hrm/performance/scheme";
     "hrm_performance_setting": "/hrm/performance/setting";
     "hrm_performance_setting_indicator": "/hrm/performance/setting/indicator";
@@ -197,6 +200,7 @@ declare module "@elegant-router/types" {
     | "hrm_attendance_apply_leave-cancel-list"
     | "hrm_attendance_apply_overtime-bill-list"
     | "hrm_attendance_data_leave-balance"
+    | "hrm_attendance_data_month-report"
     | "hrm_attendance_data_punch-record"
     | "hrm_attendance_data_punch-statistics"
     | "hrm_attendance_my_attendance-punch"
@@ -224,6 +228,8 @@ declare module "@elegant-router/types" {
     | "hrm_performance_assessment-task_self-review-list"
     | "hrm_performance_assessment-task_workbench"
     | "hrm_performance_period-list"
+    | "hrm_performance_result-confirm-list"
+    | "hrm_performance_result-list"
     | "hrm_performance_scheme"
     | "hrm_performance_setting_indicator"
     | "hrm_performance_setting_template"

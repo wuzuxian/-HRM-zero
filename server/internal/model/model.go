@@ -10,6 +10,8 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_approval_record"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_attendance_config"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_attendance_group"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_attendance_month_lock"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_attendance_month_report"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_bill_sequence"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_card_replacement_bill"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee"
@@ -35,6 +37,8 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_indicator"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_period"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_period_participant"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_result"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_result_approval"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_scheme"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_template"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_template_item"
@@ -75,6 +79,8 @@ type Model struct {
 	HrmApprovalRecord             hrm_approval_record.HrmApprovalRecordModel
 	HrmAttendanceConfig           hrm_attendance_config.HrmAttendanceConfigModel
 	HrmAttendanceGroup            hrm_attendance_group.HrmAttendanceGroupModel
+	HrmAttendanceMonthLock        hrm_attendance_month_lock.HrmAttendanceMonthLockModel
+	HrmAttendanceMonthReport      hrm_attendance_month_report.HrmAttendanceMonthReportModel
 	HrmBillSequence               hrm_bill_sequence.HrmBillSequenceModel
 	HrmCardReplacementBill        hrm_card_replacement_bill.HrmCardReplacementBillModel
 	HrmEmployee                   hrm_employee.HrmEmployeeModel
@@ -100,6 +106,8 @@ type Model struct {
 	HrmPerfIndicator              hrm_perf_indicator.HrmPerfIndicatorModel
 	HrmPerfPeriod                 hrm_perf_period.HrmPerfPeriodModel
 	HrmPerfPeriodParticipant      hrm_perf_period_participant.HrmPerfPeriodParticipantModel
+	HrmPerfResult                 hrm_perf_result.HrmPerfResultModel
+	HrmPerfResultApproval         hrm_perf_result_approval.HrmPerfResultApprovalModel
 	HrmPerfScheme                 hrm_perf_scheme.HrmPerfSchemeModel
 	HrmPerfTemplate               hrm_perf_template.HrmPerfTemplateModel
 	HrmPerfTemplateItem           hrm_perf_template_item.HrmPerfTemplateItemModel
@@ -141,6 +149,8 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmApprovalRecord:             hrm_approval_record.NewHrmApprovalRecordModel(conn, op...),
 		HrmAttendanceConfig:           hrm_attendance_config.NewHrmAttendanceConfigModel(conn, op...),
 		HrmAttendanceGroup:            hrm_attendance_group.NewHrmAttendanceGroupModel(conn, op...),
+		HrmAttendanceMonthLock:        hrm_attendance_month_lock.NewHrmAttendanceMonthLockModel(conn, op...),
+		HrmAttendanceMonthReport:      hrm_attendance_month_report.NewHrmAttendanceMonthReportModel(conn, op...),
 		HrmBillSequence:               hrm_bill_sequence.NewHrmBillSequenceModel(conn, op...),
 		HrmCardReplacementBill:        hrm_card_replacement_bill.NewHrmCardReplacementBillModel(conn, op...),
 		HrmEmployee:                   hrm_employee.NewHrmEmployeeModel(conn, op...),
@@ -166,6 +176,8 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmPerfIndicator:              hrm_perf_indicator.NewHrmPerfIndicatorModel(conn, op...),
 		HrmPerfPeriod:                 hrm_perf_period.NewHrmPerfPeriodModel(conn, op...),
 		HrmPerfPeriodParticipant:      hrm_perf_period_participant.NewHrmPerfPeriodParticipantModel(conn, op...),
+		HrmPerfResult:                 hrm_perf_result.NewHrmPerfResultModel(conn, op...),
+		HrmPerfResultApproval:         hrm_perf_result_approval.NewHrmPerfResultApprovalModel(conn, op...),
 		HrmPerfScheme:                 hrm_perf_scheme.NewHrmPerfSchemeModel(conn, op...),
 		HrmPerfTemplate:               hrm_perf_template.NewHrmPerfTemplateModel(conn, op...),
 		HrmPerfTemplateItem:           hrm_perf_template_item.NewHrmPerfTemplateItemModel(conn, op...),
