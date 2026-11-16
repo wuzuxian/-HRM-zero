@@ -209,6 +209,8 @@ const local: App.I18n.Schema = {
     hrm_performance_setting_template: 'Template Management',
     hrm_performance_scheme: 'Scheme',
     'hrm_performance_period-list': 'Assessment Period Workbench',
+    'hrm_performance_result-confirm-list': 'Batch Result Approval',
+    'hrm_performance_result-list': 'Performance Results',
     'hrm_performance_assessment-task': 'Assessment Tasks',
     'hrm_performance_assessment-task_plan-list': 'Plan Confirm',
     'hrm_performance_assessment-task_self-review-list': 'Self Review',
@@ -536,6 +538,9 @@ const local: App.I18n.Schema = {
           confirmResult: 'Confirm Result',
           appeal: 'Appeal',
           handleAppeal: 'Handle Appeal'
+        },
+        result: {
+          sign: 'Sign Result'
         }
       }
     }
@@ -1229,6 +1234,65 @@ const local: App.I18n.Schema = {
           finalGrade: 'Final Grade',
           finalGradeAuto: 'Leave empty to auto-map from score (A/B/C/D)',
           noItems: 'No template items'
+        },
+        resultApprovalStatus: {
+          unsubmitted: 'Unsubmitted',
+          approving: 'Approving',
+          approved: 'Approved',
+          rejected: 'Rejected',
+          revoked: 'Revoked'
+        },
+        resultConfirm: {
+          title: 'Batch Result Approval',
+          billNo: 'Bill No.',
+          period: 'Period',
+          periodFilter: 'Enter period uuid',
+          periodPlaceholder: 'Select a period (result published, pending approval)',
+          periodRequired: 'Please select a period',
+          companies: 'Companies',
+          orgs: 'Departments',
+          participantCount: 'Participants',
+          avgScore: 'Avg. Score',
+          totalAmount: 'Total Amount',
+          status: 'Bill Status',
+          statusFilter: 'Select bill status',
+          submit: 'Submit Approval',
+          submitSuccess: 'Result approval submitted',
+          approve: 'Approve',
+          approveConfirm: 'Approving will generate perf results and publish the batch. Confirm?',
+          approveSuccess: 'Approved, perf results generated',
+          reject: 'Reject',
+          rejectConfirm: 'Reject this batch result approval?',
+          rejectSuccess: 'Rejected'
+        },
+        result: {
+          title: 'Performance Results',
+          period: 'Period',
+          periodFilter: 'Enter period uuid',
+          employee: 'Employee',
+          company: 'Company',
+          org: 'Department',
+          score: 'Score',
+          grade: 'Grade',
+          coefficient: 'Coefficient',
+          perfAmount: 'Perf Amount',
+          bonusAmount: 'Bonus Amount',
+          resultStatus: 'Result Status',
+          published: 'Published',
+          signed: 'Signed',
+          signedFilter: 'Select sign status',
+          salarySynced: 'Salary Synced',
+          signTime: 'Sign Time',
+          mine: 'Mine only',
+          sign: 'Sign',
+          signConfirm: 'Sign your own performance result?',
+          signSuccess: 'Signed',
+          yes: 'Yes',
+          no: 'No'
+        },
+        resultStatus: {
+          normal: 'Normal',
+          voided: 'Voided'
         }
       },
       org: {

@@ -209,6 +209,8 @@ const local: App.I18n.Schema = {
     hrm_performance_setting_template: '模板管理',
     hrm_performance_scheme: '绩效方案',
     'hrm_performance_period-list': '考核批次工作台',
+    'hrm_performance_result-confirm-list': '批次结果审批',
+    'hrm_performance_result-list': '绩效结果',
     'hrm_performance_assessment-task': '考核任务',
     'hrm_performance_assessment-task_plan-list': '目标确认',
     'hrm_performance_assessment-task_self-review-list': '自评填报',
@@ -536,6 +538,9 @@ const local: App.I18n.Schema = {
           confirmResult: '确认结果',
           appeal: '发起申诉',
           handleAppeal: '申诉裁决'
+        },
+        result: {
+          sign: '签收结果'
         }
       }
     }
@@ -1229,7 +1234,66 @@ const local: App.I18n.Schema = {
           finalGrade: '最终等级',
           finalGradeAuto: '留空则按得分自动映射（A/B/C/D）',
           noItems: '模板无指标配置'
-        }
+        },
+        resultApprovalStatus: {
+          unsubmitted: '未提交',
+          approving: '审批中',
+          approved: '审批通过',
+          rejected: '审批不通过',
+          revoked: '已撤销'
+        },
+        resultConfirm: {
+          title: '批次结果审批',
+          billNo: '审批单号',
+          period: '绩效批次',
+          periodFilter: '请输入批次 uuid',
+          periodPlaceholder: '请选择批次（结果已发布 待审批）',
+          periodRequired: '请选择绩效批次',
+          companies: '公司',
+          orgs: '部门',
+          participantCount: '人数',
+          avgScore: '平均得分',
+          totalAmount: '绩效金额合计',
+          status: '单据状态',
+          statusFilter: '请选择单据状态',
+          submit: '提交结果审批',
+          submitSuccess: '结果审批已提交，等待审批',
+          approve: '审批通过',
+          approveConfirm: '审批通过后将生成绩效结果并发布批次，确认通过？',
+          approveSuccess: '审批通过，绩效结果已生成',
+          reject: '审批驳回',
+          rejectConfirm: '确认驳回该批次结果审批？',
+          rejectSuccess: '已驳回'
+        },
+        result: {
+          title: '绩效结果',
+          period: '批次',
+          periodFilter: '请输入批次 uuid',
+          employee: '员工',
+          company: '公司',
+          org: '部门',
+          score: '得分',
+          grade: '等级',
+          coefficient: '系数',
+          perfAmount: '绩效金额',
+          bonusAmount: '奖金金额',
+          resultStatus: '结果状态',
+          published: '已发布',
+          signed: '已签收',
+          signedFilter: '请选择签收状态',
+          salarySynced: '已同步薪酬',
+          signTime: '签收时间',
+          mine: '仅本人',
+          sign: '签收',
+          signConfirm: '确认签收本人绩效结果？',
+          signSuccess: '签收成功',
+          yes: '是',
+          no: '否'
+        },
+        resultStatus: {
+          normal: '正常',
+          voided: '已作废'
+        },
       },
       org: {
         title: '组织管理',

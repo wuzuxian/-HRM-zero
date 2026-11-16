@@ -182,3 +182,46 @@ export function perfAssessmentAppealStatusTag(status: Api.Hrm.Performance.Assess
       return 'default';
   }
 }
+
+// ---- 批次结果审批与绩效结果（HRM-45）领域枚举：单据状态（共享单据状态机）/
+// 结果状态 / 是否 ----
+
+export const perfResultApprovalStatusRecord: Record<Api.Hrm.BillStatus, App.I18n.I18nKey> = {
+  unsubmitted: 'page.hrm.performance.resultApprovalStatus.unsubmitted',
+  approving: 'page.hrm.performance.resultApprovalStatus.approving',
+  approved: 'page.hrm.performance.resultApprovalStatus.approved',
+  rejected: 'page.hrm.performance.resultApprovalStatus.rejected',
+  revoked: 'page.hrm.performance.resultApprovalStatus.revoked'
+};
+
+export const perfResultApprovalStatusOptions = transformRecordToOption(perfResultApprovalStatusRecord);
+
+export function perfResultApprovalStatusTag(status: Api.Hrm.BillStatus | null): NaiveUI.ThemeColor | null {
+  if (status === null) return null;
+  switch (status) {
+    case 'unsubmitted':
+      return 'default';
+    case 'approving':
+      return 'warning';
+    case 'approved':
+      return 'success';
+    case 'rejected':
+      return 'error';
+    case 'revoked':
+      return 'default';
+    default:
+      return null;
+  }
+}
+
+export const perfResultStatusRecord: Record<Api.Hrm.Performance.PerfResultStatus, App.I18n.I18nKey> = {
+  '1': 'page.hrm.performance.resultStatus.normal',
+  '2': 'page.hrm.performance.resultStatus.voided'
+};
+
+export const perfResultStatusOptions = transformRecordToOption(perfResultStatusRecord);
+
+export function perfResultStatusTag(status: Api.Hrm.Performance.PerfResultStatus | null): NaiveUI.ThemeColor | null {
+  if (status === null) return null;
+  return status === '1' ? 'success' : 'error';
+}

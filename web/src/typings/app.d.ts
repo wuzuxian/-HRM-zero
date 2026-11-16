@@ -686,6 +686,9 @@ declare namespace App {
               appeal: string;
               handleAppeal: string;
             };
+            result: {
+              sign: string;
+            };
           };
         };
       };
@@ -1126,6 +1129,65 @@ declare namespace App {
               finalGrade: string;
               finalGradeAuto: string;
               noItems: string;
+            };
+            resultApprovalStatus: {
+              unsubmitted: string;
+              approving: string;
+              approved: string;
+              rejected: string;
+              revoked: string;
+            };
+            resultConfirm: {
+              title: string;
+              billNo: string;
+              period: string;
+              periodFilter: string;
+              periodPlaceholder: string;
+              periodRequired: string;
+              companies: string;
+              orgs: string;
+              participantCount: string;
+              avgScore: string;
+              totalAmount: string;
+              status: string;
+              statusFilter: string;
+              submit: string;
+              submitSuccess: string;
+              approve: string;
+              approveConfirm: string;
+              approveSuccess: string;
+              reject: string;
+              rejectConfirm: string;
+              rejectSuccess: string;
+            };
+            result: {
+              title: string;
+              period: string;
+              periodFilter: string;
+              employee: string;
+              company: string;
+              org: string;
+              score: string;
+              grade: string;
+              coefficient: string;
+              perfAmount: string;
+              bonusAmount: string;
+              resultStatus: string;
+              published: string;
+              signed: string;
+              signedFilter: string;
+              salarySynced: string;
+              signTime: string;
+              mine: string;
+              sign: string;
+              signConfirm: string;
+              signSuccess: string;
+              yes: string;
+              no: string;
+            };
+            resultStatus: {
+              normal: string;
+              voided: string;
             };
           };
           org: {

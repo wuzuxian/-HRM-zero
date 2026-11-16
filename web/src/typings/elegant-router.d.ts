@@ -76,6 +76,8 @@ declare module "@elegant-router/types" {
     "hrm_performance_assessment-task_result-confirm-task-list": "/hrm/performance/assessment-task/result-confirm-task-list";
     "hrm_performance_assessment-task_self-review-list": "/hrm/performance/assessment-task/self-review-list";
     "hrm_performance_period-list": "/hrm/performance/period-list";
+    "hrm_performance_result-confirm-list": "/hrm/performance/result-confirm-list";
+    "hrm_performance_result-list": "/hrm/performance/result-list";
     "hrm_performance_scheme": "/hrm/performance/scheme";
     "hrm_performance_setting": "/hrm/performance/setting";
     "hrm_performance_setting_indicator": "/hrm/performance/setting/indicator";
@@ -222,6 +224,8 @@ declare module "@elegant-router/types" {
     | "hrm_performance_assessment-task_result-confirm-task-list"
     | "hrm_performance_assessment-task_self-review-list"
     | "hrm_performance_period-list"
+    | "hrm_performance_result-confirm-list"
+    | "hrm_performance_result-list"
     | "hrm_performance_scheme"
     | "hrm_performance_setting_indicator"
     | "hrm_performance_setting_template"

@@ -449,6 +449,24 @@ export const generatedRoutes: GeneratedRoute[] = [
             }
           },
           {
+            name: 'hrm_performance_result-confirm-list',
+            path: '/hrm/performance/result-confirm-list',
+            component: 'view.hrm_performance_result-confirm-list',
+            meta: {
+              title: 'hrm_performance_result-confirm-list',
+              i18nKey: 'route.hrm_performance_result-confirm-list'
+            }
+          },
+          {
+            name: 'hrm_performance_result-list',
+            path: '/hrm/performance/result-list',
+            component: 'view.hrm_performance_result-list',
+            meta: {
+              title: 'hrm_performance_result-list',
+              i18nKey: 'route.hrm_performance_result-list'
+            }
+          },
+          {
             name: 'hrm_performance_scheme',
             path: '/hrm/performance/scheme',
             component: 'view.hrm_performance_scheme',
