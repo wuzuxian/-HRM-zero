@@ -112,8 +112,8 @@ const (
 	// CandidateImportInvalidCode 导入候选人文件非法
 	CandidateImportInvalidCode = 10443
 
-	// HRM 薪酬设置：薪酬主体与薪资项目（HRM-33）业务错误码。1044x 段
-	// （10440-10443 已被候选人占用，本段自 10444 起）。
+	// HRM 薪酬设置：薪酬主体与薪资项目（HRM-33）业务错误码。
+	// （10440-10443 已被候选人占用；薪资项目参数/预置守卫已重编号至 10590-10591。）
 	// SalarySubjectNotFoundCode 薪酬主体不存在
 	SalarySubjectNotFoundCode = 10444
 	// SalarySubjectInvalidCode 薪酬主体参数非法（名称/关联公司/启停状态等）
@@ -127,9 +127,11 @@ const (
 	// SalaryItemCodeDuplicateCode 薪资项目编码已存在
 	SalaryItemCodeDuplicateCode = 10449
 	// SalaryItemInvalidCode 薪资项目参数非法（名称/编码/项目类型/项目分类/取值方式/状态等）
-	SalaryItemInvalidCode = 10450
+	// （code-review F3 重编号：原 10450/10451 与证书模板 10450-10451 撞号，
+	// 10452-10458 已被证书发放占用 → 取空闲 1059x 段）。
+	SalaryItemInvalidCode = 10590
 	// SalaryItemPresetGuardCode 预置薪资项目不可删除（可停用）
-	SalaryItemPresetGuardCode = 10451
+	SalaryItemPresetGuardCode = 10591
 
 	// HRM 假勤设置：加班规则（HRM-13）业务错误码。10462-10464 段
 	// （1044x 已被候选人/薪酬占用，10450-10458 证书模板/发放，10460-10461 员工账号同步）。
@@ -140,7 +142,8 @@ const (
 	// OvertimeRuleDayTypeInvalidCode 加班当天类型非法（须为 工作日/休息日/法定节假日）
 	OvertimeRuleDayTypeInvalidCode = 10464
 
-	// HRM 排班管理：排班周期（HRM-14）业务错误码。1048x 段（1047x 已被入职单占用）。
+	// HRM 排班管理：排班周期（HRM-14）业务错误码。10480-10483 段（1047x 已被入职单占用；
+	// 劳动合同/证照已重编号至 10485-10489，本段独占 1048x 前段）。
 	// ScheduleCycleNotFoundCode 排班周期不存在
 	ScheduleCycleNotFoundCode = 10480
 	// ScheduleCycleInvalidCode 排班周期参数非法（名称/班次序列/考勤组绑定/状态等）
@@ -160,20 +163,21 @@ const (
 	// RegularizationNotEditableCode 单据当前状态不允许修改/删除（仅 未提交/审批不通过/已撤销 可改）
 	RegularizationNotEditableCode = 10468
 
-	// HRM 劳动合同与证照（HRM-05）业务错误码。1048x 段
-	// （1047x 员工入职，10500 绩效方案；1032x-1047x 已占用，见各 errcode 文件声明）。
+	// HRM 劳动合同与证照（HRM-05）业务错误码。10485-10489 段
+	// （code-review F3 重编号：原 10480-10484 与排班周期 10480-10483 撞号，
+	// 10485+ 空闲且紧邻原段，保持语义连续；1049x 离职单）。
 	// ContractNotFoundCode 劳动合同不存在
-	ContractNotFoundCode = 10480
+	ContractNotFoundCode = 10485
 	// ContractInvalidCode 劳动合同参数非法（员工档案必填/日期格式/到期日早于生效日/状态非法等）
-	ContractInvalidCode = 10481
+	ContractInvalidCode = 10486
 	// ContractNotRenewableCode 合同当前状态不允许续签（仅 有效/已到期 可续签，已解除不可续签）
-	ContractNotRenewableCode = 10482
+	ContractNotRenewableCode = 10487
 	// EmployeeCertificateNotFoundCode 员工证照不存在
-	EmployeeCertificateNotFoundCode = 10483
+	EmployeeCertificateNotFoundCode = 10488
 	// EmployeeCertificateInvalidCode 员工证照参数非法（员工档案/证书类型/证号必填等）
-	EmployeeCertificateInvalidCode = 10484
+	EmployeeCertificateInvalidCode = 10489
 	// HRM 员工离职单（HRM-10，HR204）业务错误码。1049x 段
-	// （1048x 排班周期，1047x 入职单，10465-10468 转正单）。
+	// （1048x 排班周期 + 劳动合同/证照（10485-10489），1047x 入职单，10465-10468 转正单）。
 	// ResignationNotFoundCode 离职单不存在
 	ResignationNotFoundCode = 10490
 	// ResignationInvalidCode 离职单参数非法（离职类型/离职日期格式等）
