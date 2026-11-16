@@ -1127,6 +1127,31 @@ declare namespace App {
               finalGradeAuto: string;
               noItems: string;
             };
+            workbench: {
+              cardsTitle: string;
+              planConfirm: string;
+              selfReview: string;
+              leaderReview: string;
+              calibration: string;
+              resultConfirm: string;
+              appeal: string;
+              todosTitle: string;
+              appealsTitle: string;
+              colType: string;
+              colAssessmentNo: string;
+              colPeriod: string;
+              colEmployee: string;
+              colNode: string;
+              colStatus: string;
+              colHandler: string;
+              colAppealStatus: string;
+              colUpdateTime: string;
+              colOperate: string;
+              goHandle: string;
+              handlerMe: string;
+              handlerReviewer: string;
+              handlerCalibrator: string;
+            };
           };
           org: {
             title: string;

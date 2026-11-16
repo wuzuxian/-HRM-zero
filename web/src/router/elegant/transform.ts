@@ -221,6 +221,7 @@ const routeMap: RouteMap = {
   "hrm_performance_assessment-task_plan-list": "/hrm/performance/assessment-task/plan-list",
   "hrm_performance_assessment-task_result-confirm-task-list": "/hrm/performance/assessment-task/result-confirm-task-list",
   "hrm_performance_assessment-task_self-review-list": "/hrm/performance/assessment-task/self-review-list",
+  "hrm_performance_assessment-task_workbench": "/hrm/performance/assessment-task/workbench",
   "hrm_performance_period-list": "/hrm/performance/period-list",
   "hrm_performance_scheme": "/hrm/performance/scheme",
   "hrm_performance_setting": "/hrm/performance/setting",

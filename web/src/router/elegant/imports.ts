@@ -51,6 +51,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   "hrm_performance_assessment-task_plan-list": () => import("@/views/hrm/performance/assessment-task/plan-list/index.vue"),
   "hrm_performance_assessment-task_result-confirm-task-list": () => import("@/views/hrm/performance/assessment-task/result-confirm-task-list/index.vue"),
   "hrm_performance_assessment-task_self-review-list": () => import("@/views/hrm/performance/assessment-task/self-review-list/index.vue"),
+  "hrm_performance_assessment-task_workbench": () => import("@/views/hrm/performance/assessment-task/workbench/index.vue"),
   "hrm_performance_period-list": () => import("@/views/hrm/performance/period-list/index.vue"),
   hrm_performance_scheme: () => import("@/views/hrm/performance/scheme/index.vue"),
   hrm_performance_setting_indicator: () => import("@/views/hrm/performance/setting/indicator/index.vue"),

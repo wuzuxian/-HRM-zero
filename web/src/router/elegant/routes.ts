@@ -436,6 +436,15 @@ export const generatedRoutes: GeneratedRoute[] = [
                   title: 'hrm_performance_assessment-task_self-review-list',
                   i18nKey: 'route.hrm_performance_assessment-task_self-review-list'
                 }
+              },
+              {
+                name: 'hrm_performance_assessment-task_workbench',
+                path: '/hrm/performance/assessment-task/workbench',
+                component: 'view.hrm_performance_assessment-task_workbench',
+                meta: {
+                  title: 'hrm_performance_assessment-task_workbench',
+                  i18nKey: 'route.hrm_performance_assessment-task_workbench'
+                }
               }
             ]
           },
