@@ -628,6 +628,9 @@ declare namespace App {
             delete: string;
             trial: string;
           };
+          salary_payment: {
+            register: string;
+          };
           salary_payslip: {
             publish: string;
           };
@@ -2637,6 +2640,62 @@ declare namespace App {
                 trialStatus: string;
                 remark: string;
               };
+            };
+
+            billStatus: {
+              unsubmitted: string;
+              approving: string;
+              approved: string;
+              rejected: string;
+              revoked: string;
+            };
+            confirm: {
+              title: string;
+              billNo: string;
+              batch: string;
+              batchFilter: string;
+              batchPlaceholder: string;
+              batchRequired: string;
+              subject: string;
+              period: string;
+              headcount: string;
+              netTotal: string;
+              creator: string;
+              status: string;
+              statusFilter: string;
+              submit: string;
+              submitSuccess: string;
+              approve: string;
+              approveConfirm: string;
+              approveSuccess: string;
+              reject: string;
+              rejectConfirm: string;
+              rejectSuccess: string;
+            };
+            payment: {
+              title: string;
+              batch: string;
+              batchFilter: string;
+              batchPlaceholder: string;
+              batchRequired: string;
+              subject: string;
+              payAmount: string;
+              payAmountPlaceholder: string;
+              payMode: string;
+              payModeFilter: string;
+              payModeEnum: {
+                bank: string;
+                cash: string;
+                other: string;
+              };
+              receiptNo: string;
+              receiptNoPlaceholder: string;
+              arriveTime: string;
+              arriveTimePlaceholder: string;
+              register: string;
+              registerSuccess: string;
+              registerName: string;
+              registerTime: string;
             };
             tax: {
               profile: {
