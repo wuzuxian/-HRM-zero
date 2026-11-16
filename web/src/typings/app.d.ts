@@ -552,6 +552,11 @@ declare namespace App {
             delete: string;
             updatestatus: string;
           };
+          offer: {
+            add: string;
+            edit: string;
+            delete: string;
+          };
           bill: {
             submit: string;
             approve: string;
@@ -2059,6 +2064,51 @@ declare namespace App {
               owner: string;
               status: string;
               remark: string;
+            };
+          };
+          offer: {
+            title: string;
+            billNo: string;
+            billStatus: {
+              title: string;
+            };
+            candidate: string;
+            candidateName: string;
+            position: string;
+            postName: string;
+            orgName: string;
+            planEntryDate: string;
+            probationMonths: string;
+            rankLevel: {
+              title: string;
+              junior: string;
+              intermediate: string;
+              senior: string;
+              expert: string;
+            };
+            reporterName: string;
+            creatorName: string;
+            createTime: string;
+            submit: string;
+            approve: string;
+            reject: string;
+            revoke: string;
+            records: string;
+            noRecords: string;
+            confirmSubmit: string;
+            confirmApprove: string;
+            confirmReject: string;
+            confirmRevoke: string;
+            addOffer: string;
+            editOffer: string;
+            form: {
+              billNo: string;
+              status: string;
+              candidate: string;
+              position: string;
+              planEntryDate: string;
+              rankLevel: string;
+              reporter: string;
             };
           };
           candidate: {

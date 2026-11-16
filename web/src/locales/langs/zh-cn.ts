@@ -217,6 +217,7 @@ const local: App.I18n.Schema = {
     'hrm_recruitment_requirement-list': '招聘需求',
     'hrm_recruitment_candidate-list': '候选人中心',
     'hrm_recruitment_position-list': '招聘职位',
+    'hrm_recruitment_offer-list': '录用审批',
     hrm_salary: '薪酬管理',
     hrm_salary_setting: '薪酬设置',
     hrm_salary_setting_subject: '薪酬主体',
@@ -396,6 +397,11 @@ const local: App.I18n.Schema = {
         edit: '编辑职位',
         delete: '删除职位',
         updatestatus: '职位状态流转'
+      },
+      offer: {
+        add: '新增录用审批',
+        edit: '编辑录用审批',
+        delete: '删除录用审批'
       },
       bill: {
         submit: '提交单据',
@@ -872,6 +878,51 @@ const local: App.I18n.Schema = {
           owner: '请输入招聘负责人',
           status: '请选择职位状态',
           remark: '请输入备注'
+        }
+      },
+      offer: {
+        title: '录用审批',
+        billNo: '单据编号',
+        billStatus: {
+          title: '单据状态'
+        },
+        candidate: '候选人',
+        candidateName: '候选人',
+        position: '职位',
+        postName: '职位',
+        orgName: '部门',
+        planEntryDate: '计划入职日期',
+        probationMonths: '试用期(月)',
+        rankLevel: {
+          title: '职级',
+          junior: '初级',
+          intermediate: '中级',
+          senior: '高级',
+          expert: '专家'
+        },
+        reporterName: '汇报人',
+        creatorName: '申请人',
+        createTime: '创建时间',
+        submit: '提交',
+        approve: '审批通过',
+        reject: '审批驳回',
+        revoke: '撤销',
+        records: '审批记录',
+        noRecords: '暂无审批记录',
+        confirmSubmit: '确认提交该录用审批单？',
+        confirmApprove: '确认审批通过？通过后职位已录用+1、候选人转为录用通过并生成入职单。',
+        confirmReject: '确认审批不通过？',
+        confirmRevoke: '确认撤销该单据？',
+        addOffer: '新增录用审批',
+        editOffer: '编辑录用审批',
+        form: {
+          billNo: '请输入单据编号',
+          status: '请选择单据状态',
+          candidate: '请选择已发Offer的候选人',
+          position: '请选择招聘中的职位',
+          planEntryDate: '请选择计划入职日期',
+          rankLevel: '请选择职级',
+          reporter: '请输入汇报人'
         }
       },
       candidate: {
