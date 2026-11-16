@@ -95,6 +95,9 @@ declare module "@elegant-router/types" {
     "hrm_training_my": "/hrm/training/my";
     "hrm_training_plan": "/hrm/training/plan";
     "hrm_training_session": "/hrm/training/session";
+    "hrm_training_signin": "/hrm/training/signin";
+    "hrm_training_signin_manage": "/hrm/training/signin/manage";
+    "hrm_training_signin_scan": "/hrm/training/signin/scan";
     "iframe-page": "/iframe-page/:url";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
     "manage": "/manage";
@@ -224,6 +227,8 @@ declare module "@elegant-router/types" {
     | "hrm_training_my"
     | "hrm_training_plan"
     | "hrm_training_session"
+    | "hrm_training_signin_manage"
+    | "hrm_training_signin_scan"
     | "manage_menu"
     | "manage_role"
     | "manage_user-detail"

@@ -775,6 +775,78 @@ declare namespace Api {
       userUuids: string[];
     };
 
+    // ---- HRM 培训签到 (HRM-29: 动态码 / 补签 / 明细) ----
+
+    /** 签到方式 1=扫码自签 2=管理员补签 (null=未签) */
+    type SigninMethod = '1' | '2';
+
+    /** 签到明细行 (名册=应到名单, 一行一位学员; 未签行 签到时间/方式 为空) */
+    type SigninDetail = {
+      /** participant row uuid (补签请求定位) */
+      uuid: string;
+      sessionUuid: string;
+      userUuid: string;
+      /** 学员账号 */
+      username: string;
+      /** 姓名 */
+      nickName: string;
+      /** 工号 (关联员工档案, 可空) */
+      employeeNo: string;
+      /** 部门 (关联员工档案 org, 可空) */
+      orgName: string;
+      /** 签到时间 (空=未签) */
+      signInTime: string;
+      /** 签到方式 (空=未签) */
+      signInMethod: SigninMethod | null;
+      /** 操作人 uuid (自签=本人, 补签=管理员) */
+      signInBy: string;
+      /** 操作人姓名 (展示) */
+      signInByName: string;
+      /** 补签原因 */
+      signInReason: string;
+    };
+
+    /** 签到明细 list */
+    type SigninDetailList = {
+      records: SigninDetail[];
+    };
+
+    /** 签到统计 (应到=名册数 / 已签 / 未到) */
+    type SigninStats = {
+      expected: number;
+      signed: number;
+      absent: number;
+    };
+
+    /** 课堂动态码刷新响应 (新 token + 签到路径, 前端拼 origin 渲染二维码) */
+    type RefreshSigninTokenResponse = {
+      token: string;
+      /** YYYY-MM-DD HH:mm:ss */
+      expireTime: string;
+      /** /hrm/training/signin/scan?token=... */
+      signinUrl: string;
+    };
+
+    /** 管理员补签请求 */
+    type SigninForParticipantRequest = {
+      /** participant row uuid */
+      uuid: string;
+      reason: string;
+    };
+
+    /** 导出签到明细响应 (base64 xlsx) */
+    type ExportSigninDetailResponse = {
+      fileName: string;
+      content: string;
+    };
+
+    /** 学员扫码签到响应 */
+    type DoSigninResponse = {
+      sessionUuid: string;
+      sessionName: string;
+      signInTime: string;
+    };
+
     // ---- HRM 员工档案 (HRM-03) ----
 
     /** 性别 1=男 2=女 */
@@ -2466,490 +2538,6 @@ declare namespace Api {
     type DownloadMyCertificateFileResponse = {
       fileName: string;
       content: string;
-    };
-
-    // ---- HRM 培训计划单 (HRM-28, HR216) ----
-
-    /**
-     * training plan type (培训计划 计划类型)
-     *
-     * - "special": 专项
-     * - "new_hire": 新员工培养
-     * - "safety": 安全培训
-     * - "skill": 技能提升
-     */
-    type TrainingPlanType = 'special' | 'new_hire' | 'safety' | 'skill';
-
-    /** hrm training plan (培训计划单 HR216, 单据审批底座 + 发布状态) */
-    type TrainingPlan = {
-      /** record uuid */
-      uuid: string;
-      /** record creator */
-      createBy: string;
-      /** record updater */
-      updateBy: string;
-      /** 单据编号 HR216-... */
-      billNo: string;
-      /** 单据状态 */
-      status: BillStatus | null;
-      /** 计划名称 */
-      planName: string;
-      /** 主题 */
-      theme: string;
-      /** 年度 */
-      planYear: string;
-      /** 计划类型 */
-      planType: TrainingPlanType | null;
-      /** 开始日期 YYYY-MM-DD */
-      startDate: string;
-      /** 结束日期 YYYY-MM-DD */
-      endDate: string;
-      /** 发布状态 0=草稿 1=已发布（审批通过即发布） */
-      published: number;
-      /** 申请人 uuid */
-      creatorUuid: string;
-      /** 申请人姓名 */
-      creatorName: string;
-      createTime: string;
-      updateTime: string;
-    };
-
-    /** training plan search params (published 过滤为 '0'/'1' 字符串) */
-    type TrainingPlanSearchParams = CommonType.RecordNullable<
-      Pick<TrainingPlan, 'planName' | 'planType' | 'status'> & Common.CommonSearchParams
-    > & {
-      /** 发布状态 '0'=草稿 '1'=已发布 */
-      published?: string | null;
-    };
-
-    /** training plan paginated list */
-    type TrainingPlanList = Common.PaginatingQueryRecord<TrainingPlan>;
-
-    /** add training plan request */
-    type AddTrainingPlanRequest = {
-      planName: string;
-      theme: string;
-      planYear: string;
-      planType: TrainingPlanType | null;
-      startDate: string;
-      endDate: string;
-    };
-
-    /** edit training plan request */
-    type EditTrainingPlanRequest = AddTrainingPlanRequest & {
-      uuid: string;
-    };
-
-    // ---- HRM 培训班次 (HRM-28, 管理端 CRUD) ----
-
-    /** hrm training session (培训班次, admin view of hrm_training_session) */
-    type TrainingSession = {
-      /** record uuid */
-      uuid: string;
-      /** record creator */
-      createBy: string;
-      /** record updater */
-      updateBy: string;
-      /** 班次编号 PX-年-流水（自动生成） */
-      sessionNo: string;
-      /** 班次名称 */
-      sessionName: string;
-      /** 关联培训计划 uuid */
-      planUuid: string;
-      /** 关联培训计划名称（展示快照） */
-      planName: string;
-      /** 讲师 */
-      lecturer: string;
-      /** 地点 */
-      location: string;
-      /** 学时 */
-      hours: number;
-      /** 开始时间 */
-      startTime: string;
-      /** 结束时间 */
-      endTime: string;
-      /** 状态 */
-      status: TrainingSessionStatus | null;
-      remark: string;
-      createTime: string;
-      updateTime: string;
-    };
-
-    /** training session search params */
-    type TrainingSessionSearchParams = CommonType.RecordNullable<
-      Pick<TrainingSession, 'sessionName' | 'planUuid' | 'status'> & Common.CommonSearchParams
-    >;
-
-    /** training session paginated list */
-    type TrainingSessionList = Common.PaginatingQueryRecord<TrainingSession>;
-
-    /** add training session request (PX 编号后端自动生成) */
-    type AddTrainingSessionRequest = {
-      sessionName: string;
-      planUuid: string;
-      lecturer: string;
-      location: string;
-      hours: number;
-      startTime: string;
-      endTime: string;
-      remark: string;
-    };
-
-    /** edit training session request */
-    type EditTrainingSessionRequest = AddTrainingSessionRequest & {
-      uuid: string;
-    };
-
-    /** session participant row (班次学员) */
-    type SessionParticipant = {
-      /** participant row uuid */
-      uuid: string;
-      /** 学员（manage_user.uuid） */
-      userUuid: string;
-      /** 学员账号 */
-      username: string;
-      /** 学员姓名 */
-      nickName: string;
-    };
-
-    /** session participant list response */
-    type SessionParticipantList = {
-      records: SessionParticipant[];
-    };
-
-    /** set session participants request (选人, 全量覆盖) */
-    type SetSessionParticipantsRequest = {
-      sessionUuid: string;
-      userUuids: string[];
-    };
-
-    // ---- HRM 员工档案 (HRM-03) ----
-
-    /** 性别 1=男 2=女 */
-    type Gender = '1' | '2';
-
-    /** 婚姻状况 1=未婚 2=已婚 3=离异 4=丧偶 */
-    type MaritalStatus = '1' | '2' | '3' | '4';
-
-    /** 人员状态 1=正式 2=试用期 3=实习生 4=临时工 5=离职 6=退休 (5/6 = 不在册口径) */
-    type PersonStatus = '1' | '2' | '3' | '4' | '5' | '6';
-
-    /** 用户状态 1=已生成系统账号 0=未生成 (由 user_uuid 派生) */
-    type UserStatus = '0' | '1';
-
-    /** 教育经历从表行 */
-    type EmployeeEducation = {
-      uuid?: string;
-      school: string;
-      major: string;
-      education: string;
-      startDate: string;
-      endDate: string;
-      remark: string;
-    };
-
-    /** 工作经历从表行 */
-    type EmployeeWork = {
-      uuid?: string;
-      company: string;
-      position: string;
-      startDate: string;
-      endDate: string;
-      remark: string;
-    };
-
-    /** 家属从表行 */
-    type EmployeeFamily = {
-      uuid?: string;
-      name: string;
-      relation: string;
-      phone: string;
-      workUnit: string;
-      remark: string;
-    };
-
-    /** 员工档案主表行 (列表不带从表, 详情带) */
-    type Employee = {
-      /** record uuid */
-      uuid: string;
-      /** record creator */
-      createBy: string;
-      /** record create time */
-      createTime: string;
-      /** record updater */
-      updateBy: string;
-      /** record update time */
-      updateTime: string;
-      /** employeeNo */
-      employeeNo: string;
-      name: string;
-      gender: Gender | '';
-      birthday: string;
-      nation: string;
-      politicalStatus: string;
-      maritalStatus: MaritalStatus | '';
-      nativePlace: string;
-      bloodType: string;
-      idCard: string;
-      height: string;
-      weight: string;
-      householdAddress: string;
-      address: string;
-      emergencyContact: string;
-      emergencyPhone: string;
-      phone: string;
-      email: string;
-      avatar: string;
-      bankName: string;
-      bankAccount: string;
-      companyUuid: string;
-      orgUuid: string;
-      position: string;
-      post: string;
-      personStatus: PersonStatus;
-      hireDate: string;
-      formalDate: string;
-      /** 用户状态: 是否已生成系统账号 (1=已生成 0=未生成) */
-      userStatus: UserStatus;
-      remark: string;
-      educations?: EmployeeEducation[];
-      works?: EmployeeWork[];
-      families?: EmployeeFamily[];
-    };
-
-    /** 员工档案 search params */
-    type EmployeeSearchParams = CommonType.RecordNullable<
-      Pick<Employee, 'employeeNo' | 'name' | 'orgUuid' | 'personStatus'> & Common.CommonSearchParams
-    >;
-
-    /** 员工档案 paginated list */
-    type EmployeeList = Common.PaginatingQueryRecord<Employee>;
-
-    /** add employee request; employeeNo 为空时后端按 最大工号+1 自动生成 */
-    type AddEmployeeRequest = {
-      employeeNo?: string;
-      name: string;
-      gender?: Gender | '';
-      birthday?: string;
-      nation?: string;
-      politicalStatus?: string;
-      maritalStatus?: MaritalStatus | '';
-      nativePlace?: string;
-      bloodType?: string;
-      idCard?: string;
-      height?: string;
-      weight?: string;
-      householdAddress?: string;
-      address?: string;
-      emergencyContact?: string;
-      emergencyPhone?: string;
-      phone?: string;
-      email?: string;
-      avatar?: string;
-      bankName?: string;
-      bankAccount?: string;
-      companyUuid?: string;
-      orgUuid?: string;
-      position?: string;
-      post?: string;
-      personStatus?: PersonStatus;
-      hireDate?: string;
-      formalDate?: string;
-      remark?: string;
-      educations?: EmployeeEducation[];
-      works?: EmployeeWork[];
-      families?: EmployeeFamily[];
-    };
-
-    /** edit employee request (从表全删全插) */
-    type EditEmployeeRequest = AddEmployeeRequest & {
-      uuid: string;
-    };
-
-    /** employee detail response */
-    type EmployeeDetailResponse = {
-      employee: Employee;
-    };
-
-    /** import employees request (base64 xlsx, mirrors org import) */
-    type ImportEmployeeRequest = {
-      fileName: string;
-      content: string;
-    };
-
-    type ImportEmployeeResponse = {
-      successCount: number;
-    };
-
-    /** export employees response (base64 xlsx, mirrors org export) */
-    type ExportEmployeeResponse = {
-      fileName: string;
-      content: string;
-    };
-
-    /** 生成系统账号请求 (HRM-04): 单个/批量; 已生成过账号的员工自动跳过 */
-    type GenerateUserRequest = {
-      uuids: string[];
-    };
-
-    type GenerateUserResponse = {
-      /** 本次实际新生成的账号数 */
-      generated: number;
-      /** 已有账号而跳过的员工数 */
-      skipped: number;
-    };
-    /**
-     * attendance group 班制 (groupType)
-     *
-     * - "1": 固定班制
-     * - "2": 排班制
-     * - "3": 自由工时
-     */
-    type AttendanceGroupType = '1' | '2' | '3';
-
-    /** hrm attendance group (考勤组, HRM-12) */
-    type AttendanceGroup = {
-      /** record uuid */
-      uuid: string;
-      /** record creator */
-      createBy: string;
-      /** record updater */
-      updateBy: string;
-      /** group name */
-      groupName: string;
-      /** group type: 固定班制/排班制/自由工时 */
-      groupType: AttendanceGroupType | '';
-      /** work days 1-7 (周一至周日) */
-      workDays: number[];
-      /** start time HH:mm (固定班制) */
-      startTime: string;
-      /** end time HH:mm (固定班制) */
-      endTime: string;
-      /** flexible minutes, 0 = not flexible */
-      flexibleMinutes: number;
-      /** 排班制未排班兜底班次 uuid (预留 HRM-13) */
-      unassignedShiftUuid: string;
-      /** 考勤组默认班次集合 (预留 HRM-13) */
-      defaultShiftUuids: string[];
-      /** 适用范围-部门 (含下级) */
-      orgUuids: string[];
-      /** 适用范围-指定人员 */
-      memberUuids: string[];
-      /** 负责人 */
-      managers: string[];
-      /** status: enabled/disabled */
-      status: AttendanceStatus | null;
-      /** remark */
-      remark: string;
-      createTime: string;
-      updateTime: string;
-    };
-
-    /** attendance group search params */
-    type AttendanceGroupSearchParams = CommonType.RecordNullable<
-      Pick<Api.Hrm.AttendanceGroup, 'groupName' | 'groupType' | 'status'> & Common.CommonSearchParams
-    >;
-
-    /** attendance group paginated list */
-    type AttendanceGroupList = Common.PaginatingQueryRecord<AttendanceGroup>;
-
-    /** add attendance group request */
-    type AddAttendanceGroupRequest = {
-      groupName: string;
-      groupType: AttendanceGroupType | '';
-      workDays?: number[];
-      startTime?: string;
-      endTime?: string;
-      flexibleMinutes?: number;
-      unassignedShiftUuid?: string;
-      defaultShiftUuids?: string[];
-      orgUuids?: string[];
-      memberUuids?: string[];
-      managers?: string[];
-      status?: AttendanceStatus;
-      remark?: string;
-    };
-
-    /** edit attendance group request */
-    type EditAttendanceGroupRequest = AddAttendanceGroupRequest & {
-      uuid: string;
-      status: AttendanceStatus;
-    };
-
-    /** effective group member (生效人数) */
-    type EffectiveGroupMember = {
-      uuid: string;
-      employeeNo: string;
-      name: string;
-      orgName: string;
-    };
-
-    /** attendance group members response */
-    type AttendanceGroupMembersResponse = {
-      total: number;
-      members: EffectiveGroupMember[];
-    };
-
-    /** effective attendance rule query response (三级回退: 考勤组 > 本部门 > 最近上级组织) */
-    type EffectiveAttendanceRuleResponse = {
-      found: boolean;
-      /** rule source: "group"=考勤组 "org"=组织默认规则 */
-      source: string;
-      sourceUuid: string;
-      sourceName: string;
-      groupType: AttendanceGroupType | '';
-      startTime: string;
-      endTime: string;
-      workDays: number[];
-      flexibleMinutes: number;
-    };
-
-    /** shift usage response (班次引用查询, 支撑班次页 引用考勤组 列) */
-    type AttendanceGroupShiftUsageResponse = {
-      count: number;
-      groups: {
-        uuid: string;
-        groupName: string;
-        status: AttendanceStatus | null;
-      }[];
-    };
-
-    /** hrm attendance config (组织默认考勤规则, 每组织一条; HRM-12) */
-    type AttendanceConfig = {
-      /** record uuid */
-      uuid: string;
-      /** record creator */
-      createBy: string;
-      /** record updater */
-      updateBy: string;
-      /** org uuid */
-      orgUuid: string;
-      /** org name (derived) */
-      orgName: string;
-      startTime: string;
-      endTime: string;
-      /** work days 1-7 */
-      workDays: number[];
-      remark: string;
-      createTime: string;
-      updateTime: string;
-    };
-
-    /** attendance config search params */
-    type AttendanceConfigSearchParams = CommonType.RecordNullable<
-      Pick<Api.Hrm.AttendanceConfig, 'orgName'> & Common.CommonSearchParams
-    >;
-
-    /** attendance config paginated list */
-    type AttendanceConfigList = Common.PaginatingQueryRecord<AttendanceConfig>;
-
-    /** save attendance config request (upsert: 快速开始/新增/编辑共用) */
-    type SaveAttendanceConfigRequest = {
-      orgUuid: string;
-      startTime?: string;
-      endTime?: string;
-      workDays?: number[];
-      remark?: string;
     };
 
     // ---- HRM 证书模板与证书发放 (HRM-30) ----

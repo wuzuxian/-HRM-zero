@@ -229,6 +229,9 @@ const local: App.I18n.Schema = {
     hrm_training_session: '培训班次',
     'hrm_training_cert-template': '证书模板',
     'hrm_training_cert-issue': '证书发放',
+    hrm_training_signin: '培训签到',
+    hrm_training_signin_manage: '培训签到',
+    'hrm_training_signin_scan': '扫码签到',
     hrm_employee: '人事档案',
     'hrm_employee_employee-archive-list': '员工档案',
     'hrm_employee_employee-contract-expiring': '劳动合同到期预警',
@@ -421,6 +424,11 @@ const local: App.I18n.Schema = {
           issue: '发放证书',
           revoke: '撤销证书',
           uploadFile: '上传证书扫描件'
+        },
+        signin: {
+          refreshToken: '刷新动态码',
+          signFor: '管理员补签',
+          export: '导出签到明细'
         }
       },
       salary_subject: {
@@ -2447,6 +2455,49 @@ const local: App.I18n.Schema = {
             certNo: '请输入外部证书号（唯一）',
             status: '请选择状态',
             source: '请选择来源'
+          }
+        },
+        signin: {
+          title: '培训签到',
+          selectSession: '选择班次',
+          sessionPlaceholder: '请选择已发布/进行中班次',
+          refreshData: '刷新',
+          expected: '应到',
+          signed: '已签',
+          absent: '未到',
+          qrTitle: '课堂动态码',
+          qrExpireTip: '动态码 {expire} 失效，超时请刷新',
+          qrTip: '学员使用系统内账号扫码进入签到页（登录态 + 动态码双验）；刷新后旧码立即失效，请投屏展示最新二维码。',
+          refreshToken: '刷新二维码',
+          refreshTokenConfirm: '确认刷新课堂动态码？旧码立即失效（学员需重新扫码）。',
+          tokenRefreshed: '动态码已刷新',
+          detailTitle: '签到明细',
+          nickName: '姓名',
+          username: '账号',
+          employeeNo: '工号',
+          orgName: '部门',
+          signInTime: '签到时间',
+          signInMethod: '方式',
+          signInByName: '操作人',
+          signInReason: '原因',
+          methodAbsent: '未到',
+          methodSelf: '扫码签到',
+          methodFor: '管理员补签',
+          signFor: '补签',
+          signForTitle: '管理员补签',
+          signForReasonLabel: '补签原因',
+          signForReasonPlaceholder: '请输入补签原因（选填）',
+          signForConfirm: '确认补签',
+          signForConfirmTip: '确认为该学员补签？将记录 方式=管理员补签、操作人=当前账号 及原因。',
+          signForSuccess: '补签成功',
+          signForFirstAbsent: '补签首位未到',
+          signForFirstAbsentTip: '为「{name}」补签？',
+          export: '导出签到明细',
+          scan: {
+            title: '课堂签到',
+            noToken: '签到码缺失，请重新扫码',
+            successTitle: '签到成功',
+            errorTitle: '签到失败'
           }
         }
       }

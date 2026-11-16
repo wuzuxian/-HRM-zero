@@ -229,6 +229,9 @@ const local: App.I18n.Schema = {
     hrm_training_session: 'Training Session',
     'hrm_training_cert-template': 'Certificate Template',
     'hrm_training_cert-issue': 'Certificate Issue',
+    hrm_training_signin: 'Training Sign-in',
+    hrm_training_signin_manage: 'Training Sign-in',
+    'hrm_training_signin_scan': 'Scan Sign-in',
     hrm_employee: 'HR Archive',
     'hrm_employee_employee-archive-list': 'Employee Archive',
     'hrm_employee_employee-contract-expiring': 'Contract Expiring Alert',
@@ -421,6 +424,11 @@ const local: App.I18n.Schema = {
           issue: 'Issue Certificate',
           revoke: 'Revoke Certificate',
           uploadFile: 'Upload Scan File'
+        },
+        signin: {
+          refreshToken: 'Refresh QR Code',
+          signFor: 'Admin Sign-in',
+          export: 'Export Details'
         }
       },
       salary_subject: {
@@ -2459,6 +2467,49 @@ const local: App.I18n.Schema = {
             certNo: 'Please enter external cert no (unique)',
             status: 'Please select status',
             source: 'Please select source'
+          }
+        },
+        signin: {
+          title: 'Training Sign-in',
+          selectSession: 'Session',
+          sessionPlaceholder: 'Select a published/ongoing session',
+          refreshData: 'Refresh',
+          expected: 'Expected',
+          signed: 'Signed',
+          absent: 'Absent',
+          qrTitle: 'Classroom Dynamic QR',
+          qrExpireTip: 'Expires at {expire}; refresh when timed out',
+          qrTip: 'Students scan to open the sign-in page inside the system (JWT login + dynamic token double check); refreshing invalidates the old code immediately — project the latest QR on screen.',
+          refreshToken: 'Refresh QR Code',
+          refreshTokenConfirm: 'Refresh the dynamic QR? The old code is invalidated immediately (students must re-scan).',
+          tokenRefreshed: 'QR code refreshed',
+          detailTitle: 'Sign-in Details',
+          nickName: 'Name',
+          username: 'Account',
+          employeeNo: 'Employee No.',
+          orgName: 'Department',
+          signInTime: 'Sign-in Time',
+          signInMethod: 'Method',
+          signInByName: 'Operator',
+          signInReason: 'Reason',
+          methodAbsent: 'Absent',
+          methodSelf: 'QR Scan',
+          methodFor: 'Admin Sign-in',
+          signFor: 'Sign in for',
+          signForTitle: 'Admin Sign-in',
+          signForReasonLabel: 'Reason',
+          signForReasonPlaceholder: 'Enter the reason (optional)',
+          signForConfirm: 'Confirm',
+          signForConfirmTip: 'Confirm sign-in for this student? Records method=admin, operator=current account and reason.',
+          signForSuccess: 'Signed in',
+          signForFirstAbsent: 'Sign in first absent',
+          signForFirstAbsentTip: 'Sign in for "{name}"?',
+          export: 'Export Details',
+          scan: {
+            title: 'Classroom Sign-in',
+            noToken: 'Sign-in token missing, please re-scan',
+            successTitle: 'Signed in successfully',
+            errorTitle: 'Sign-in failed'
           }
         }
       }
