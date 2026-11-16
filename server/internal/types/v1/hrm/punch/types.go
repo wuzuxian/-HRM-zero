@@ -57,6 +57,22 @@ type ExportResponse struct {
 	Content  string `json:"content"`
 }
 
+type HrmPunchPersonStats struct {
+	EmployeeUuid    string  `json:"employeeUuid"`
+	EmployeeNo      string  `json:"employeeNo"`
+	EmployeeName    string  `json:"employeeName"`
+	OrgName         string  `json:"orgName"`
+	ExpectedDays    int64   `json:"expectedDays"`
+	AttendDays      int64   `json:"attendDays"`
+	AbsentDays      int64   `json:"absentDays"`
+	LateCount       int64   `json:"lateCount"`
+	EarlyCount      int64   `json:"earlyCount"`
+	MissingCount    int64   `json:"missingCount"`
+	AbnormalTotal   int64   `json:"abnormalTotal"`
+	AbnormalSummary string  `json:"abnormalSummary"`
+	TotalWorkHours  float64 `json:"totalWorkHours"`
+}
+
 type HrmPunchRecord struct {
 	Uuid               string  `json:"uuid"`
 	PunchDate          string  `json:"punchDate"`
@@ -83,6 +99,15 @@ type HrmPunchRecord struct {
 	SettleTime         string  `json:"settleTime"`
 	CreateTime         string  `json:"createTime"`
 	UpdateTime         string  `json:"updateTime"`
+}
+
+type HrmPunchStatsCard struct {
+	StatEmployees     int64 `json:"statEmployees"`
+	AbnormalEmployees int64 `json:"abnormalEmployees"`
+	LateCount         int64 `json:"lateCount"`
+	EarlyCount        int64 `json:"earlyCount"`
+	MissingCount      int64 `json:"missingCount"`
+	RecordCount       int64 `json:"recordCount"`
 }
 
 type HrmSettleResult struct {
@@ -161,4 +186,28 @@ type SettleRequest struct {
 
 type SettleResponse struct {
 	Records []HrmSettleResult `json:"records"`
+}
+
+type StatisticsDetailRequest struct {
+	EmployeeUuid string `form:"employeeUuid"`
+	StartDate    string `form:"startDate,optional"`
+	EndDate      string `form:"endDate,optional"`
+}
+
+type StatisticsDetailResponse struct {
+	Records []HrmPunchRecord `json:"records"`
+}
+
+type StatisticsRequest struct {
+	PageRequest
+	StartDate    string `form:"startDate,optional"`
+	EndDate      string `form:"endDate,optional"`
+	Name         string `form:"name,optional"`
+	OnlyAbnormal string `form:"onlyAbnormal,optional"`
+}
+
+type StatisticsResponse struct {
+	PageResponse
+	Cards   HrmPunchStatsCard     `json:"cards"`
+	Records []HrmPunchPersonStats `json:"records"`
 }

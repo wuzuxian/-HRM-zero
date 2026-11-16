@@ -30,6 +30,8 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_overtime_bill"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_overtime_rule"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_indicator"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_period"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_period_participant"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_scheme"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_template"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_template_item"
@@ -90,6 +92,8 @@ type Model struct {
 	HrmOvertimeBill               hrm_overtime_bill.HrmOvertimeBillModel
 	HrmOvertimeRule               hrm_overtime_rule.HrmOvertimeRuleModel
 	HrmPerfIndicator              hrm_perf_indicator.HrmPerfIndicatorModel
+	HrmPerfPeriod                 hrm_perf_period.HrmPerfPeriodModel
+	HrmPerfPeriodParticipant      hrm_perf_period_participant.HrmPerfPeriodParticipantModel
 	HrmPerfScheme                 hrm_perf_scheme.HrmPerfSchemeModel
 	HrmPerfTemplate               hrm_perf_template.HrmPerfTemplateModel
 	HrmPerfTemplateItem           hrm_perf_template_item.HrmPerfTemplateItemModel
@@ -151,6 +155,8 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmOvertimeBill:               hrm_overtime_bill.NewHrmOvertimeBillModel(conn, op...),
 		HrmOvertimeRule:               hrm_overtime_rule.NewHrmOvertimeRuleModel(conn, op...),
 		HrmPerfIndicator:              hrm_perf_indicator.NewHrmPerfIndicatorModel(conn, op...),
+		HrmPerfPeriod:                 hrm_perf_period.NewHrmPerfPeriodModel(conn, op...),
+		HrmPerfPeriodParticipant:      hrm_perf_period_participant.NewHrmPerfPeriodParticipantModel(conn, op...),
 		HrmPerfScheme:                 hrm_perf_scheme.NewHrmPerfSchemeModel(conn, op...),
 		HrmPerfTemplate:               hrm_perf_template.NewHrmPerfTemplateModel(conn, op...),
 		HrmPerfTemplateItem:           hrm_perf_template_item.NewHrmPerfTemplateItemModel(conn, op...),

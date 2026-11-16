@@ -144,6 +144,75 @@ type ImportResponse {
 	SuccessCount int64 `json:"successCount"`
 }
 
+// StatisticsRequest 考勤统计（HRM-22 考勤统计页）：统计卡 + 按人明细，
+// 从 hrm_punch_record settle_* 快照列按日期区间聚合。
+// 应出勤天 = 区间内工作日数（按员工生效规则 WorkDays 口径，1=周一..7=周日）；
+// 异常 = settle_status ∈ {late, early, missing}（rest/no_rule 不算异常）。
+type StatisticsRequest {
+	PageRequest
+	StartDate    string `form:"startDate,optional"`
+	EndDate      string `form:"endDate,optional"`
+	Name         string `form:"name,optional"`
+	OnlyAbnormal string `form:"onlyAbnormal,optional"`
+}
+
+// HrmPunchStatsCard 统计卡聚合（区间内全体员工）。
+type HrmPunchStatsCard {
+	// StatEmployees 统计人数（区间内有记录/日结行的员工数）
+	StatEmployees int64 `json:"statEmployees"`
+	// AbnormalEmployees 异常人数（任一日 settle_status 异常的员工数）
+	AbnormalEmployees int64 `json:"abnormalEmployees"`
+	// LateCount 迟到次数（settle_status=late 的天数）
+	LateCount int64 `json:"lateCount"`
+	// EarlyCount 早退次数
+	EarlyCount int64 `json:"earlyCount"`
+	// MissingCount 缺卡次数
+	MissingCount int64 `json:"missingCount"`
+	// RecordCount 记录条数（区间内 hrm_punch_record 行数）
+	RecordCount int64 `json:"recordCount"`
+}
+
+// HrmPunchPersonStats 按人明细行。
+type HrmPunchPersonStats {
+	EmployeeUuid string `json:"employeeUuid"`
+	EmployeeNo   string `json:"employeeNo"`
+	EmployeeName string `json:"employeeName"`
+	OrgName      string `json:"orgName"`
+	// ExpectedDays 应出勤天 = 区间内工作日数（按生效规则 WorkDays）
+	ExpectedDays int64 `json:"expectedDays"`
+	// AttendDays 出勤天 = 非 missing/非缺勤的判定日数（normal/late/early/field 视为出勤）
+	AttendDays int64 `json:"attendDays"`
+	// AbsentDays 缺勤天 = settle_status=missing 且无打卡的天数
+	AbsentDays   int64 `json:"absentDays"`
+	LateCount    int64 `json:"lateCount"`
+	EarlyCount   int64 `json:"earlyCount"`
+	MissingCount int64 `json:"missingCount"`
+	// AbnormalTotal 异常合计 = late+early+missing
+	AbnormalTotal int64 `json:"abnormalTotal"`
+	// AbnormalSummary 异常摘要（如「迟到3次,缺卡1次」；无异常为空）
+	AbnormalSummary string `json:"abnormalSummary"`
+	// TotalWorkHours 区间总工时（小时）
+	TotalWorkHours float64 `json:"totalWorkHours"`
+}
+
+type StatisticsResponse {
+	PageResponse
+	// Cards 统计卡（对区间内全体员工聚合，与分页无关）
+	Cards   HrmPunchStatsCard     `json:"cards"`
+	Records []HrmPunchPersonStats `json:"records"`
+}
+
+// StatisticsDetailRequest 行操作「查看明细」：某员工在日期区间内的逐日 settle 详情（复用打卡记录数据）。
+type StatisticsDetailRequest {
+	EmployeeUuid string `form:"employeeUuid"`
+	StartDate    string `form:"startDate,optional"`
+	EndDate      string `form:"endDate,optional"`
+}
+
+type StatisticsDetailResponse {
+	Records []HrmPunchRecord `json:"records"`
+}
+
 // SettleRequest 手动日结（4.4 工具栏）：指定员工+日期逐日结算；日期区间批量时 employeeUuids 可省略为全体员工。
 type SettleRequest {
 	EmployeeUuids []string `json:"employeeUuids,optional"`
@@ -199,5 +268,11 @@ service server {
 
 	@handler Settle
 	post /hrm/settlePunchDay (SettleRequest) returns (SettleResponse)
+
+	@handler Statistics
+	get /hrm/getPunchStatistics (StatisticsRequest) returns (StatisticsResponse)
+
+	@handler StatisticsDetail
+	get /hrm/getPunchStatisticsDetail (StatisticsDetailRequest) returns (StatisticsDetailResponse)
 }
 

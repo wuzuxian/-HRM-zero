@@ -4208,6 +4208,76 @@ declare namespace Api {
       records: PunchSettleItem[];
     };
 
+    /** punch statistics card (HRM-22 考勤统计统计卡, settle_* 区间聚合) */
+    type PunchStatsCard = {
+      /** 统计人数（区间内有日结行的员工数） */
+      statEmployees: number;
+      /** 异常人数（任一日 late/early/missing 的员工数） */
+      abnormalEmployees: number;
+      /** 迟到次数 */
+      lateCount: number;
+      /** 早退次数 */
+      earlyCount: number;
+      /** 缺卡次数 */
+      missingCount: number;
+      /** 记录条数 */
+      recordCount: number;
+    };
+
+    /** punch statistics per-person row (HRM-22 按人明细) */
+    type PunchPersonStats = {
+      employeeUuid: string;
+      employeeNo: string;
+      employeeName: string;
+      orgName: string;
+      /** 应出勤天 = 区间内工作日数（按生效规则 WorkDays） */
+      expectedDays: number;
+      /** 出勤天 = normal/late/early 天数 */
+      attendDays: number;
+      /** 缺勤天 = missing 且上下班卡均无打卡的天数 */
+      absentDays: number;
+      lateCount: number;
+      earlyCount: number;
+      missingCount: number;
+      /** 异常合计 = late + early + missing */
+      abnormalTotal: number;
+      /** 异常摘要（如「迟到3次,缺卡1次」） */
+      abnormalSummary: string;
+      /** 区间总工时（小时） */
+      totalWorkHours: number;
+    };
+
+    /** punch statistics request (日期区间/姓名/仅看异常) */
+    type PunchStatsSearchParams = CommonType.RecordNullable<
+      Pick<Common.CommonSearchParams, 'current' | 'size'> & {
+        startDate?: string;
+        endDate?: string;
+        name?: string;
+        onlyAbnormal?: string;
+      }
+    >;
+
+    /** punch statistics response (统计卡与分页无关, 按人明细分页) */
+    type PunchStatsResponse = {
+      current: number;
+      size: number;
+      total: number;
+      cards: PunchStatsCard;
+      records: PunchPersonStats[];
+    };
+
+    /** punch statistics detail request (查看明细弹窗) */
+    type PunchStatsDetailRequest = {
+      employeeUuid: string;
+      startDate?: string;
+      endDate?: string;
+    };
+
+    /** punch statistics detail response (复用打卡记录行) */
+    type PunchStatsDetailResponse = {
+      records: Punch[];
+    };
+
     /** hrm schedule board (排班表, HRM-15): 单格 = 员工+日期+班次(空=休) */
     type ScheduleCell = {
       /** 员工 uuid */

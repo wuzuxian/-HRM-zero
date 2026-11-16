@@ -1677,6 +1677,24 @@ export function SettlePunchDay(req: Api.Hrm.PunchSettleRequest) {
   });
 }
 
+/** get punch statistics (考勤统计: 统计卡 + 按人明细, settle_* 区间聚合) */
+export function GetPunchStatistics(params?: Api.Hrm.PunchStatsSearchParams) {
+  return request<Api.Hrm.PunchStatsResponse>({
+    url: '/api/v1/hrm/getPunchStatistics',
+    method: 'get',
+    params
+  });
+}
+
+/** get punch statistics detail (查看明细弹窗: 某员工区间逐日 settle 详情) */
+export function GetPunchStatisticsDetail(params: Api.Hrm.PunchStatsDetailRequest) {
+  return request<Api.Hrm.PunchStatsDetailResponse>({
+    url: '/api/v1/hrm/getPunchStatisticsDetail',
+    method: 'get',
+    params
+  });
+}
+
 /** get schedule board matrix (排班表矩阵: 员工×当月每日班次, 按考勤组维护) */
 export function GetScheduleMatrix(params: Api.Hrm.ScheduleMatrixRequest) {
   return request<Api.Hrm.ScheduleMatrixResponse>({

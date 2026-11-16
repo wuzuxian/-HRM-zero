@@ -194,6 +194,7 @@ const local: App.I18n.Schema = {
     'hrm_attendance_my_attendance-punch': 'Attendance Punch',
     hrm_attendance_my_dashboard: 'My Dashboard',
     'hrm_attendance_data_punch-record': 'Punch Records',
+    'hrm_attendance_data_punch-statistics': 'Attendance Statistics',
     hrm_attendance_scheduling: 'Scheduling',
     'hrm_attendance_scheduling_schedule-cycle': 'Schedule Cycles',
     'hrm_attendance_scheduling_schedule-board': 'Schedule Board',
@@ -207,6 +208,7 @@ const local: App.I18n.Schema = {
     hrm_performance_setting_indicator: 'Indicator Library',
     hrm_performance_setting_template: 'Template Management',
     hrm_performance_scheme: 'Scheme',
+    'hrm_performance_period-list': 'Assessment Period Workbench',
     hrm_training: 'Training',
     hrm_training_my: 'My Training',
     hrm_reward: 'Reward & Discipline',
@@ -327,7 +329,9 @@ const local: App.I18n.Schema = {
         delete: 'Delete Punch Records',
         export: 'Export Punch Records',
         import: 'Import External Punch Data',
-        settle: 'Manual Day Settle'
+        settle: 'Manual Day Settle',
+        statistics: 'Query Statistics',
+        statisticsDetail: 'View Attendance Detail'
       },
       overtimerule: {
         add: 'Add Overtime Rule',
@@ -505,6 +509,12 @@ const local: App.I18n.Schema = {
           add: 'Add Scheme',
           edit: 'Edit Scheme',
           delete: 'Delete Scheme'
+        },
+        period: {
+          add: 'Add Period',
+          edit: 'Edit Period',
+          delete: 'Delete Period',
+          publish: 'Publish Period'
         }
       }
     }
@@ -1028,6 +1038,59 @@ const local: App.I18n.Schema = {
           },
           addScheme: 'Add Scheme',
           editScheme: 'Edit Scheme'
+        },
+        periodType: {
+          month: 'Monthly',
+          quarter: 'Quarterly'
+        },
+        periodStatus: {
+          draft: 'Draft',
+          ongoing: 'Ongoing',
+          confirming: 'Pending Confirmation',
+          calibrating: 'Pending Calibration',
+          resultPublished: 'Result Published',
+          published: 'Published'
+        },
+        period: {
+          title: 'Assessment Period Workbench',
+          periodNo: 'Period No.',
+          name: 'Period Name',
+          periodType: 'Period Type',
+          schemeName: 'Scheme',
+          periodRange: 'Period Start/End',
+          periodStart: 'Period Start',
+          periodEnd: 'Period End',
+          resultPublishDate: 'Result Publish Date',
+          participantCount: 'Participants',
+          status: 'Status',
+          remark: 'Remark',
+          scopeDivider: 'Scope (multi-dim filters, empty = unrestricted)',
+          companyUuids: 'Company',
+          orgUuids: 'Department (incl. descendants)',
+          positions: 'Position',
+          posts: 'Post',
+          personStatuses: 'Person Status',
+          form: {
+            name: 'Please enter period name',
+            periodType: 'Please select period type',
+            schemeUuid: 'Please select a scheme',
+            periodStart: 'Please select period start',
+            periodEnd: 'Please select period end',
+            resultPublishDate: 'Please select result publish date',
+            remark: 'Please enter remark',
+            companyUuids: 'Select companies (empty = unrestricted)',
+            orgUuids: 'Select departments incl. descendants (empty = unrestricted)',
+            positions: 'Type a position and press Enter (empty = unrestricted)',
+            posts: 'Type a post and press Enter (empty = unrestricted)',
+            personStatuses: 'Select person statuses (empty = unrestricted)'
+          },
+          addPeriod: 'Add Period',
+          editPeriod: 'Edit Period',
+          publish: 'Publish',
+          publishConfirm: 'Publishing moves the period to Ongoing and locks participants. Confirm?',
+          publishSuccess: 'Period published (ongoing)',
+          advance: 'Advance Stage',
+          more: 'More'
         }
       },
       org: {
@@ -1720,6 +1783,35 @@ const local: App.I18n.Schema = {
             location: 'Please enter location (GPS address for field punch)',
             employeeUuid: 'Please enter employee UUID',
             punchDate: 'Please select punch date'
+          }
+        },
+        punchStatistics: {
+          title: 'Attendance Statistics',
+          dateRange: 'Statistics Date Range',
+          name: 'Name',
+          onlyAbnormal: 'Abnormal Only',
+          onlyAbnormalYes: 'Abnormal Only',
+          employeeName: 'Employee',
+          orgName: 'Department',
+          expectedDays: 'Expected Days',
+          attendDays: 'Attend Days',
+          absentDays: 'Absent Days',
+          lateCount: 'Late',
+          earlyCount: 'Early Leave',
+          missingCount: 'Missing',
+          abnormalTotal: 'Abnormal Total',
+          abnormalSummary: 'Abnormal Summary',
+          viewDetail: 'Detail',
+          detailTitle: 'Attendance Detail',
+          cardEmployees: 'Employees',
+          cardAbnormalEmployees: 'Abnormal Employees',
+          cardLate: 'Late Count',
+          cardEarly: 'Early Leave Count',
+          cardMissing: 'Missing Count',
+          cardRecords: 'Records',
+          form: {
+            name: 'Please enter name',
+            onlyAbnormal: 'Abnormal only'
           }
         },
         overtimeRule: {

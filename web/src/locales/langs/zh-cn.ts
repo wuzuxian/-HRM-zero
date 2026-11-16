@@ -194,6 +194,7 @@ const local: App.I18n.Schema = {
     'hrm_attendance_my_attendance-punch': '考勤打卡',
     hrm_attendance_my_dashboard: '个人看板',
     'hrm_attendance_data_punch-record': '打卡记录',
+    'hrm_attendance_data_punch-statistics': '考勤统计',
     hrm_attendance_scheduling: '排班管理',
     'hrm_attendance_scheduling_schedule-cycle': '排班周期',
     'hrm_attendance_scheduling_schedule-board': '排班表',
@@ -207,6 +208,7 @@ const local: App.I18n.Schema = {
     hrm_performance_setting_indicator: '指标库',
     hrm_performance_setting_template: '模板管理',
     hrm_performance_scheme: '绩效方案',
+    'hrm_performance_period-list': '考核批次工作台',
     hrm_training: '培训管理',
     hrm_training_my: '我的培训',
     hrm_reward: '奖惩管理',
@@ -327,7 +329,9 @@ const local: App.I18n.Schema = {
         delete: '删除打卡记录',
         export: '导出打卡记录',
         import: '导入外部考勤数据',
-        settle: '手动日结'
+        settle: '手动日结',
+        statistics: '查询统计',
+        statisticsDetail: '查看考勤明细'
       },
       overtimerule: {
         add: '新增加班规则',
@@ -505,6 +509,12 @@ const local: App.I18n.Schema = {
           add: '新增方案',
           edit: '编辑方案',
           delete: '删除方案'
+        },
+        period: {
+          add: '新增批次',
+          edit: '编辑批次',
+          delete: '删除批次',
+          publish: '发布批次'
         }
       }
     }
@@ -1028,6 +1038,59 @@ const local: App.I18n.Schema = {
           },
           addScheme: '新增方案',
           editScheme: '编辑方案'
+        },
+        periodType: {
+          month: '月度',
+          quarter: '季度'
+        },
+        periodStatus: {
+          draft: '草稿',
+          ongoing: '进行中',
+          confirming: '待确认',
+          calibrating: '待校准',
+          resultPublished: '结果已发布',
+          published: '已发布'
+        },
+        period: {
+          title: '考核批次工作台',
+          periodNo: '批次编码',
+          name: '批次名称',
+          periodType: '批次类型',
+          schemeName: '绩效方案',
+          periodRange: '周期开始/结束',
+          periodStart: '周期开始',
+          periodEnd: '周期结束',
+          resultPublishDate: '结果发布日期',
+          participantCount: '参与人数',
+          status: '状态',
+          remark: '备注',
+          scopeDivider: '适用范围（多维筛选，留空不限）',
+          companyUuids: '公司',
+          orgUuids: '部门（含下级）',
+          positions: '职位',
+          posts: '职务',
+          personStatuses: '人员状态',
+          form: {
+            name: '请输入批次名称',
+            periodType: '请选择批次类型',
+            schemeUuid: '请选择绩效方案',
+            periodStart: '请选择周期开始',
+            periodEnd: '请选择周期结束',
+            resultPublishDate: '请选择结果发布日期',
+            remark: '请输入备注',
+            companyUuids: '请选择公司（留空不限）',
+            orgUuids: '请选择部门（含下级，留空不限）',
+            positions: '请输入职位（回车添加，留空不限）',
+            posts: '请输入职务（回车添加，留空不限）',
+            personStatuses: '请选择人员状态（留空不限）'
+          },
+          addPeriod: '新增批次',
+          editPeriod: '编辑批次',
+          publish: '发布',
+          publishConfirm: '发布后批次进入进行中，且不可再编辑参与人，确认发布？',
+          publishSuccess: '批次已发布，进入进行中',
+          advance: '推进阶段',
+          more: '更多'
         }
       },
       org: {
@@ -1713,6 +1776,35 @@ const local: App.I18n.Schema = {
             location: '请输入地点（外勤时填 GPS 地址）',
             employeeUuid: '请输入员工档案 UUID',
             punchDate: '请选择打卡日期'
+          }
+        },
+        punchStatistics: {
+          title: '考勤统计',
+          dateRange: '统计日期区间',
+          name: '姓名',
+          onlyAbnormal: '仅看异常',
+          onlyAbnormalYes: '仅看异常',
+          employeeName: '员工',
+          orgName: '部门',
+          expectedDays: '应出勤天',
+          attendDays: '出勤天',
+          absentDays: '缺勤天',
+          lateCount: '迟到',
+          earlyCount: '早退',
+          missingCount: '缺卡',
+          abnormalTotal: '异常合计',
+          abnormalSummary: '异常摘要',
+          viewDetail: '查看明细',
+          detailTitle: '考勤明细',
+          cardEmployees: '统计人数',
+          cardAbnormalEmployees: '异常人数',
+          cardLate: '迟到次数',
+          cardEarly: '早退次数',
+          cardMissing: '缺卡次数',
+          cardRecords: '记录条数',
+          form: {
+            name: '请输入姓名',
+            onlyAbnormal: '是否仅看异常'
           }
         },
         overtimeRule: {

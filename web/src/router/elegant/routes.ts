@@ -140,6 +140,15 @@ export const generatedRoutes: GeneratedRoute[] = [
                   title: 'hrm_attendance_data_punch-record',
                   i18nKey: 'route.hrm_attendance_data_punch-record'
                 }
+              },
+              {
+                name: 'hrm_attendance_data_punch-statistics',
+                path: '/hrm/attendance/data/punch-statistics',
+                component: 'view.hrm_attendance_data_punch-statistics',
+                meta: {
+                  title: 'hrm_attendance_data_punch-statistics',
+                  i18nKey: 'route.hrm_attendance_data_punch-statistics'
+                }
               }
             ]
           },
@@ -384,6 +393,15 @@ export const generatedRoutes: GeneratedRoute[] = [
           i18nKey: 'route.hrm_performance'
         },
         children: [
+          {
+            name: 'hrm_performance_period-list',
+            path: '/hrm/performance/period-list',
+            component: 'view.hrm_performance_period-list',
+            meta: {
+              title: 'hrm_performance_period-list',
+              i18nKey: 'route.hrm_performance_period-list'
+            }
+          },
           {
             name: 'hrm_performance_scheme',
             path: '/hrm/performance/scheme',

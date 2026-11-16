@@ -134,3 +134,59 @@ export function DeletePerfSchemes(uuids: string[]) {
     data: { uuids }
   });
 }
+
+// ---- 绩效批次（HRM-42，演示站 9.2 考核批次工作台） ----
+
+/** get perf period list（工作台列表：状态列 + 参与人数/绩效方案名称快照） */
+export function GetPerfPeriodList(params?: Api.Hrm.Performance.PerfPeriodSearchParams) {
+  return request<Api.Hrm.Performance.PerfPeriodList>({
+    url: '/api/v1/hrm/getPerfPeriodList',
+    method: 'get',
+    params
+  });
+}
+
+/** add perf period（PERF 编号自动生成；按适用范围圈定初始参与人） */
+export function AddPerfPeriod(req: Api.Hrm.Performance.AddPerfPeriodRequest) {
+  return request<Api.Hrm.Performance.AddPerfPeriodResponse>({
+    url: '/api/v1/hrm/addPerfPeriod',
+    method: 'post',
+    data: req
+  });
+}
+
+/** edit perf period（仅草稿期） */
+export function EditPerfPeriod(req: Api.Hrm.Performance.EditPerfPeriodRequest) {
+  return request<Api.Hrm.Performance.EditPerfPeriodResponse>({
+    url: '/api/v1/hrm/editPerfPeriod',
+    method: 'post',
+    data: req
+  });
+}
+
+/** delete perf periods（仅草稿期） */
+export function DeletePerfPeriods(uuids: string[]) {
+  return request<Api.Hrm.Performance.DeletePerfPeriodResponse>({
+    url: '/api/v1/hrm/deletePerfPeriod',
+    method: 'post',
+    data: { uuids }
+  });
+}
+
+/** publish perf period（草稿→进行中；发布前须已圈定参与人） */
+export function PublishPerfPeriod(uuid: string) {
+  return request<Api.Hrm.Performance.PublishPerfPeriodResponse>({
+    url: '/api/v1/hrm/publishPerfPeriod',
+    method: 'post',
+    data: { uuid }
+  });
+}
+
+/** advance perf period lifecycle（进行中→待确认→待校准→结果已发布→已发布，forward-only） */
+export function AdvancePerfPeriod(uuid: string) {
+  return request<Api.Hrm.Performance.AdvancePerfPeriodResponse>({
+    url: '/api/v1/hrm/advancePerfPeriod',
+    method: 'post',
+    data: { uuid }
+  });
+}

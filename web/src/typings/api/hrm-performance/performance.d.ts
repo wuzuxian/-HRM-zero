@@ -242,6 +242,106 @@ declare namespace Api {
       type EditSchemeResponse = {};
       // eslint-disable-next-line @typescript-eslint/no-empty-object-type
       type DeleteSchemeResponse = {};
+
+      // ---- 绩效批次（HRM-42，演示站 9.2 考核批次工作台） ----
+
+      /**
+       * 批次类型
+       *
+       * - "month": 月度
+       * - "quarter": 季度
+       */
+      type PeriodType = 'month' | 'quarter';
+
+      /**
+       * 批次生命周期（GLOSSARY「绩效批次」，forward-only）
+       *
+       * - "0": 草稿
+       * - "1": 进行中
+       * - "2": 待确认
+       * - "3": 待校准
+       * - "4": 结果已发布
+       * - "5": 已发布
+       */
+      type PeriodStatus = '0' | '1' | '2' | '3' | '4' | '5';
+
+      /** 适用范围多维筛选条件（存后端 scope JSON） */
+      type PeriodScope = {
+        /** 公司（org_type=1）uuids；空 = 不限 */
+        companyUuids: string[];
+        /** 部门 uuids（含全部下级组织）；空 = 不限 */
+        orgUuids: string[];
+        /** 职位；空 = 不限 */
+        positions: string[];
+        /** 职务；空 = 不限 */
+        posts: string[];
+        /** 人员状态（'1'-'6'）；空 = 不限 */
+        personStatuses: string[];
+      };
+
+      /** 绩效批次 */
+      type PerfPeriod = {
+        uuid: string;
+        /** 批次编号 PERF-年-流水 */
+        periodNo: string;
+        /** 批次名称 */
+        name: string;
+        /** 批次类型 */
+        periodType: PeriodType;
+        /** 绩效方案 uuid */
+        schemeUuid: string;
+        /** 绩效方案名称（展示快照） */
+        schemeName: string;
+        /** 适用范围 JSON 字符串（PeriodScope 序列化） */
+        scope: string;
+        /** 周期开始 YYYY-MM-DD */
+        periodStart: string;
+        /** 周期结束 YYYY-MM-DD */
+        periodEnd: string;
+        /** 结果发布日期 YYYY-MM-DD */
+        resultPublishDate: string;
+        /** 参与人数（快照） */
+        participantCount: number;
+        /** 生命周期 */
+        status: PeriodStatus;
+        remark: string;
+        createTime: string;
+        updateTime: string;
+      };
+
+      /** 绩效批次 search params */
+      type PerfPeriodSearchParams = CommonType.RecordNullable<
+        Pick<PerfPeriod, 'name' | 'status'> & Common.CommonSearchParams
+      >;
+
+      /** 绩效批次 list */
+      type PerfPeriodList = Common.PaginatingQueryRecord<PerfPeriod>;
+
+      type AddPerfPeriodRequest = {
+        name: string;
+        periodType: PeriodType;
+        schemeUuid: string;
+        scope: string;
+        periodStart: string;
+        periodEnd: string;
+        resultPublishDate: string;
+        remark: string;
+      };
+
+      type EditPerfPeriodRequest = AddPerfPeriodRequest & {
+        uuid: string | undefined;
+      };
+
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      type AddPerfPeriodResponse = {};
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      type EditPerfPeriodResponse = {};
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      type DeletePerfPeriodResponse = {};
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      type PublishPerfPeriodResponse = {};
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      type AdvancePerfPeriodResponse = {};
     }
   }
 }

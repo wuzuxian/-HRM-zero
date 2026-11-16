@@ -72,3 +72,44 @@ export const perfSchemePayLinkModeRecord: Record<Api.Hrm.Performance.SchemePayLi
 };
 
 export const perfSchemePayLinkModeOptions = transformRecordToOption(perfSchemePayLinkModeRecord);
+
+// ---- 绩效批次（HRM-42）领域枚举：批次类型 / 生命周期 ----
+// 生命周期 forward-only（GLOSSARY「绩效批次」）：草稿→进行中→待确认→待校准→结果已发布→已发布。
+
+export const perfPeriodTypeRecord: Record<Api.Hrm.Performance.PeriodType, App.I18n.I18nKey> = {
+  month: 'page.hrm.performance.periodType.month',
+  quarter: 'page.hrm.performance.periodType.quarter'
+};
+
+export const perfPeriodTypeOptions = transformRecordToOption(perfPeriodTypeRecord);
+
+export const perfPeriodStatusRecord: Record<Api.Hrm.Performance.PeriodStatus, App.I18n.I18nKey> = {
+  '0': 'page.hrm.performance.periodStatus.draft',
+  '1': 'page.hrm.performance.periodStatus.ongoing',
+  '2': 'page.hrm.performance.periodStatus.confirming',
+  '3': 'page.hrm.performance.periodStatus.calibrating',
+  '4': 'page.hrm.performance.periodStatus.resultPublished',
+  '5': 'page.hrm.performance.periodStatus.published'
+};
+
+export const perfPeriodStatusOptions = transformRecordToOption(perfPeriodStatusRecord);
+
+export function perfPeriodStatusTag(status: Api.Hrm.Performance.PeriodStatus | null): NaiveUI.ThemeColor | null {
+  if (status === null) return null;
+  switch (status) {
+    case '0':
+      return 'default';
+    case '1':
+      return 'info';
+    case '2':
+      return 'warning';
+    case '3':
+      return 'warning';
+    case '4':
+      return 'primary';
+    case '5':
+      return 'success';
+    default:
+      return null;
+  }
+}
