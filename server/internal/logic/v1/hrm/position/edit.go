@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/jzero-io/jzero/core/status"
 	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
@@ -11,7 +12,6 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/errcodes"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_recruitment_position"
 	"github.com/jzero-io/jzero-admin/server/internal/svc"
-	"github.com/jzero-io/jzero/core/status"
 	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/position"
 )
 
