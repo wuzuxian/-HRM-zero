@@ -4,3 +4,4 @@ export * from './manage';
 export * from './hrm';
 export * from './version';
 export * from './hrm-performance';
+export * from './hrm-performance-assessment';

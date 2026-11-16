@@ -70,6 +70,11 @@ declare module "@elegant-router/types" {
     "hrm_org_org-chart": "/hrm/org/org-chart";
     "hrm_org_orginfo": "/hrm/org/orginfo";
     "hrm_performance": "/hrm/performance";
+    "hrm_performance_assessment-task": "/hrm/performance/assessment-task";
+    "hrm_performance_assessment-task_leader-review-list": "/hrm/performance/assessment-task/leader-review-list";
+    "hrm_performance_assessment-task_plan-list": "/hrm/performance/assessment-task/plan-list";
+    "hrm_performance_assessment-task_result-confirm-task-list": "/hrm/performance/assessment-task/result-confirm-task-list";
+    "hrm_performance_assessment-task_self-review-list": "/hrm/performance/assessment-task/self-review-list";
     "hrm_performance_period-list": "/hrm/performance/period-list";
     "hrm_performance_scheme": "/hrm/performance/scheme";
     "hrm_performance_setting": "/hrm/performance/setting";
@@ -212,6 +217,10 @@ declare module "@elegant-router/types" {
     | "hrm_employee_employee-contract-renewable"
     | "hrm_org_org-chart"
     | "hrm_org_orginfo"
+    | "hrm_performance_assessment-task_leader-review-list"
+    | "hrm_performance_assessment-task_plan-list"
+    | "hrm_performance_assessment-task_result-confirm-task-list"
+    | "hrm_performance_assessment-task_self-review-list"
     | "hrm_performance_period-list"
     | "hrm_performance_scheme"
     | "hrm_performance_setting_indicator"
