@@ -209,7 +209,7 @@ const local: App.I18n.Schema = {
     hrm_performance_setting_indicator: '指标库',
     hrm_performance_setting_template: '模板管理',
     hrm_performance_scheme: '绩效方案',
-    'hrm_performance_period-list': '考核批次工作台',
+    'hrm_performance_period-list': '绩效批次工作台',
     'hrm_performance_result-confirm-list': '批次结果审批',
     'hrm_performance_result-list': '绩效结果',
     hrm_performance_dashboard: '绩效驾驶舱',
@@ -1150,7 +1150,7 @@ const local: App.I18n.Schema = {
           published: '已发布'
         },
         period: {
-          title: '考核批次工作台',
+          title: '绩效批次工作台',
           periodNo: '批次编码',
           name: '批次名称',
           periodType: '批次类型',
@@ -1213,7 +1213,7 @@ const local: App.I18n.Schema = {
           'leader-reviewTitle': '评审填报',
           resultTitle: '结果确认',
           assessmentNo: '考核单号',
-          periodName: '考核批次',
+          periodName: '绩效批次',
           periodUuid: '批次 uuid',
           periodFilter: '请输入批次 uuid',
           employeeName: '被考核人',

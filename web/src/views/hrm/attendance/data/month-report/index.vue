@@ -21,6 +21,17 @@ defineOptions({
 
 const appStore = useAppStore();
 
+// useTable apiFn 包装：同步 locked/lockHint 到页面状态
+// （函数声明提升，规避 const 初始化顺序问题）
+async function fetchList(params?: any) {
+  const result = await GetAttendanceMonthReport(params);
+  if (!result.error && result.data) {
+    locked.value = result.data.locked;
+    lockHint.value = result.data.lockHint;
+  }
+  return result;
+}
+
 const {
   columns,
   columnChecks,
@@ -32,7 +43,7 @@ const {
   searchParams,
   resetSearchParams
 } = useTable({
-  apiFn: GetAttendanceMonthReport,
+  apiFn: fetchList,
   showTotal: true,
   apiParams: {
     current: 1,
@@ -210,16 +221,6 @@ function renderLockStatus(row: Api.Hrm.MonthReportRow) {
   );
 }
 
-// useTable apiFn 包装：同步 locked/lockHint 到页面状态
-const fetchList = async (params?: any) => {
-  const result = await GetAttendanceMonthReport(params);
-  if (!result.error && result.data) {
-    locked.value = result.data.locked;
-    lockHint.value = result.data.lockHint;
-  }
-  return result;
-};
-void fetchList;
 
 // 当月 yyyy-MM（搜索缺省）
 const currentMonth = computed(() => {
@@ -269,11 +270,13 @@ async function handleUnlock() {
 
 async function handleRecalc() {
   recalcLoading.value = true;
-  const { data, error } = await RecalcAttendanceMonthReport(activeYearMonth());
+  const { data: recalcResult, error } = await RecalcAttendanceMonthReport(activeYearMonth());
   recalcLoading.value = false;
   if (error) return;
-  if (data?.locked && data.changedCount > 0) {
-    window.$message?.warning($t('page.hrm.attendance.monthReport.recalcChanged').replace('{n}', `${data.changedCount}`));
+  if (recalcResult?.locked && recalcResult.changedCount > 0) {
+    window.$message?.warning(
+      $t('page.hrm.attendance.monthReport.recalcChanged').replace('{n}', `${recalcResult.changedCount}`)
+    );
   } else {
     window.$message?.success($t('page.hrm.attendance.monthReport.recalcSuccess'));
   }

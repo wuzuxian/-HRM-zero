@@ -209,7 +209,7 @@ const local: App.I18n.Schema = {
     hrm_performance_setting_indicator: 'Indicator Library',
     hrm_performance_setting_template: 'Template Management',
     hrm_performance_scheme: 'Scheme',
-    'hrm_performance_period-list': 'Assessment Period Workbench',
+    'hrm_performance_period-list': 'Performance Period Workbench',
     'hrm_performance_result-confirm-list': 'Batch Result Approval',
     'hrm_performance_result-list': 'Performance Results',
     hrm_performance_dashboard: 'Perf Dashboard',
@@ -1150,7 +1150,7 @@ const local: App.I18n.Schema = {
           published: 'Published'
         },
         period: {
-          title: 'Assessment Period Workbench',
+          title: 'Performance Period Workbench',
           periodNo: 'Period No.',
           name: 'Period Name',
           periodType: 'Period Type',
