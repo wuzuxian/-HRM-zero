@@ -278,6 +278,15 @@ export function GetApprovalRecordList(params: { billType: string; billUuid: stri
   });
 }
 
+/** export one bill type's caller-visible list as a base64-encoded xlsx file (共享单据导出) */
+export function ExportBillList(params: { billType: string; mine?: number }) {
+  return request<Api.Hrm.ExportBillListResponse>({
+    url: '/api/v1/hrm/exportBillList',
+    method: 'get',
+    params
+  });
+}
+
 /** get my training certificate (我的培训证书) paginated list, scoped to current login user */
 export function GetMyTrainingCertificateList(params?: Api.Hrm.MyTrainingCertificateSearchParams) {
   return request<Api.Hrm.MyTrainingCertificateList>({

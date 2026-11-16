@@ -33,6 +33,7 @@ var RoutesCodesMap = map[string]string{
 	"GET:/api/v1/hrm/getEffectiveAttendanceRule":        "v1:hrm:attendancegroup:effectiveRule",
 	"POST:/api/v1/hrm/toggleAttendanceGroupStatus":      "v1:hrm:attendancegroup:toggleStatus",
 	"POST:/api/v1/hrm/approveBill":                      "v1:hrm:bill:approve",
+	"GET:/api/v1/hrm/exportBillList":                    "v1:hrm:bill:exportBillList",
 	"GET:/api/v1/hrm/getApprovalRecordList":             "v1:hrm:bill:getApprovalRecordList",
 	"POST:/api/v1/hrm/rejectBill":                       "v1:hrm:bill:reject",
 	"POST:/api/v1/hrm/revokeBill":                       "v1:hrm:bill:revoke",

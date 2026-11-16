@@ -40,6 +40,20 @@ type GetApprovalRecordListResponse {
 	Records []*ApprovalRecord `json:"records"`
 }
 
+// 共享单据导出（spec 用户故事 23: 每类人事单据支持导出）。billType = 3 位类型码
+// （201 入职 / 203 调动 / 202 转正 / 204 离职 …），导出口径与各单据列表逻辑一致
+// （默认「我的单据」，管理员级角色可看全部）。按钮码 v1:hrm:bill:export 种子在
+// 人事管理目录菜单 permissions。
+type ExportBillListRequest {
+	BillType string `form:"billType"` // 单据类型码（如 201）
+	Mine     int64  `form:"mine,optional"` // 1=强制只看我的单据
+}
+
+type ExportBillListResponse {
+	FileName string `json:"fileName"` // xlsx 文件名
+	Content  string `json:"content"` // xlsx 内容（base64）
+}
+
 @server (
 	prefix:          /api/v1
 	group:           v1/hrm/bill
@@ -62,5 +76,8 @@ service server {
 
 	@handler GetApprovalRecordList
 	get /hrm/getApprovalRecordList (GetApprovalRecordListRequest) returns (GetApprovalRecordListResponse)
+
+	@handler ExportBillList
+	get /hrm/exportBillList (ExportBillListRequest) returns (ExportBillListResponse)
 }
 

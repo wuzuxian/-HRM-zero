@@ -2247,6 +2247,7 @@ const local: App.I18n.Schema = {
         }
       },
       employeeRelation: {
+        exportBills: '导出单据',
         billStatus: {
           title: '单据状态',
           unsubmitted: '未提交',

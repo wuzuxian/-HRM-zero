@@ -129,6 +129,12 @@ declare namespace Api {
       content: string;
     };
 
+    /** export bill list response: xlsx content encoded as base64 (共享单据导出) */
+    type ExportBillListResponse = {
+      fileName: string;
+      content: string;
+    };
+
     /**
      * org chart node (组织架构图节点)
      *

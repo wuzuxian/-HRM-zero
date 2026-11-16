@@ -28,6 +28,16 @@ type BillActionRequest struct {
 type BillActionResponse struct {
 }
 
+type ExportBillListRequest struct {
+	BillType string `form:"billType"`      // 单据类型码（如 201）
+	Mine     int64  `form:"mine,optional"` // 1=强制只看我的单据
+}
+
+type ExportBillListResponse struct {
+	FileName string `json:"fileName"` // xlsx 文件名
+	Content  string `json:"content"`  // xlsx 内容（base64）
+}
+
 type GetApprovalRecordListRequest struct {
 	BillType string `form:"billType"` // 单据类型码（如 201）
 	BillUuid string `form:"billUuid"` // 单据 uuid

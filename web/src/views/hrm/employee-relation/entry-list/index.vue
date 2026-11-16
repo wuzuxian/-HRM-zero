@@ -15,10 +15,25 @@ import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { hrmBillStatusRecord } from '@/constants/business';
 import { useTable } from '@/hooks/common/table';
+import { useAuth } from '@/hooks/business/auth';
+import { useBillExport } from '@/hooks/common/bill-export';
 import EntryOperateModal from './modules/entry-operate-modal.vue';
 import EntrySearch from './modules/entry-search.vue';
 
 const appStore = useAppStore();
+
+const { hasAuth } = useAuth();
+const { exportBills } = useBillExport('201');
+const exportLoading = ref(false);
+
+async function handleExportBills() {
+  exportLoading.value = true;
+  try {
+    await exportBills();
+  } finally {
+    exportLoading.value = false;
+  }
+}
 
 type LoadingStatus = Record<string, boolean>;
 const deleteLoadingStatus = reactive<LoadingStatus>({});
@@ -377,6 +392,16 @@ function recordActionLabel(action: string) {
       class="sm:flex-1-hidden card-wrapper"
     >
       <template #header-extra>
+        <NButton
+          v-if="hasAuth('hrm:bill:exportBillList')"
+          :loading="exportLoading"
+          size="small"
+          ghost
+          type="primary"
+          @click="handleExportBills"
+        >
+          {{ $t('page.hrm.employeeRelation.exportBills') }}
+        </NButton>
         <TableHeaderOperation
           v-model:columns="columnChecks"
           :disabled-delete="!hasCheckedRows"

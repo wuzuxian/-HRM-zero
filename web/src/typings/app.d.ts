@@ -1937,6 +1937,7 @@ declare namespace App {
             };
           };
           employeeRelation: {
+            exportBills: string;
             billStatus: {
               title: string;
               unsubmitted: string;

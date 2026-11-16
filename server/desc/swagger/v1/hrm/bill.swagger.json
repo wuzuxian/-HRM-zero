@@ -67,6 +67,61 @@
         ]
       }
     },
+    "/api/v1/hrm/exportBillList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:bill:exportBillList",
+        "operationId": "v1/Hrm/BillExportBillList",
+        "parameters": [
+          {
+            "description": "单据类型码（如 201）",
+            "in": "query",
+            "name": "billType",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "description": "1=强制只看我的单据",
+            "in": "query",
+            "name": "mine",
+            "type": "integer"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "content": {
+                  "description": "xlsx 内容（base64）",
+                  "type": "string"
+                },
+                "fileName": {
+                  "description": "xlsx 文件名",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "ExportBillList",
+        "tags": [
+          "v1/hrm/bill"
+        ]
+      }
+    },
     "/api/v1/hrm/getApprovalRecordList": {
       "get": {
         "description": "接口权限编码:v1:hrm:bill:getApprovalRecordList",

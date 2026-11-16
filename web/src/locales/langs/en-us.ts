@@ -2256,6 +2256,7 @@ const local: App.I18n.Schema = {
         }
       },
       employeeRelation: {
+        exportBills: 'Export Bills',
         billStatus: {
           title: 'Bill Status',
           unsubmitted: 'Unsubmitted',

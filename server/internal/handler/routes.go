@@ -223,6 +223,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					},
 					{
 						Method:  http.MethodGet,
+						Path:    "/hrm/exportBillList",
+						Handler: v1hrmbill.ExportBillList(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
 						Path:    "/hrm/getApprovalRecordList",
 						Handler: v1hrmbill.GetApprovalRecordList(serverCtx),
 					},
