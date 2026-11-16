@@ -615,6 +615,12 @@ declare namespace App {
             edit: string;
             delete: string;
           };
+          salary_batch: {
+            add: string;
+            edit: string;
+            delete: string;
+            trial: string;
+          };
           tax_profile: {
             add: string;
             edit: string;
@@ -2385,6 +2391,69 @@ declare namespace App {
                 scheme: string;
                 effectiveDateRequired: string;
                 status: string;
+                remark: string;
+              };
+            };
+            batch: {
+              title: string;
+              batchNo: string;
+              batchName: string;
+              subject: string;
+              year: string;
+              month: string;
+              period: string;
+              batchType: string;
+              batchTypeEnum: {
+                monthly: string;
+              };
+              headcount: string;
+              earningTotal: string;
+              deductionTotal: string;
+              netTotal: string;
+              progress: string;
+              progressEnum: {
+                trial: string;
+                confirm: string;
+                pay: string;
+                payslip: string;
+              };
+              trialTime: string;
+              trialStatus: string;
+              viewResult: string;
+              trial: string;
+              trialDone: string;
+              resultTitle: string;
+              noResult: string;
+              itemName: string;
+              itemClass: string;
+              itemClassEnum: {
+                earning: string;
+                deduction: string;
+                cost: string;
+              };
+              amount: string;
+              source: string;
+              sourceEnum: {
+                archive: string;
+                scheme_override: string;
+                reward: string;
+                attendance: string;
+                perf: string;
+                tax: string;
+                si_missing: string;
+                formula: string;
+                zero: string;
+              };
+              sourceDetail: string;
+              addBatch: string;
+              editBatch: string;
+              remark: string;
+              form: {
+                batchName: string;
+                subject: string;
+                yearRequired: string;
+                monthRequired: string;
+                trialStatus: string;
                 remark: string;
               };
             };

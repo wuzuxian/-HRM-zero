@@ -229,6 +229,7 @@ const local: App.I18n.Schema = {
     hrm_salary_setting_item: 'Salary Items',
     hrm_salary_setting_scheme: 'Salary Scheme',
     'hrm_salary_archive-list': 'Employee Salary Archives',
+    hrm_salary_batch: 'Salary Batch',
     hrm_salary_tax: 'Tax',
     'hrm_salary_tax_tax-profile': 'Tax Profiles',
     'hrm_salary_tax_special-deduction': 'Special Deductions',
@@ -465,6 +466,12 @@ const local: App.I18n.Schema = {
         add: 'Add Salary Archive',
         edit: 'Edit Salary Archive',
         delete: 'Delete Salary Archive'
+      },
+      salary_batch: {
+        add: 'Add Salary Batch',
+        edit: 'Edit Salary Batch',
+        delete: 'Delete Salary Batch',
+        trial: 'Payroll Trial'
       },
       tax_profile: {
         add: 'Add Tax Profile',
@@ -2446,6 +2453,69 @@ const local: App.I18n.Schema = {
             scheme: 'Please select salary scheme (optional)',
             effectiveDateRequired: 'Effective date is required',
             status: 'Please select status',
+            remark: 'Please enter remark'
+          }
+        },
+        batch: {
+          title: 'Salary Batch',
+          batchNo: 'Batch No.',
+          batchName: 'Batch Name',
+          subject: 'Salary Subject',
+          year: 'Year',
+          month: 'Month',
+          period: 'Payroll Month',
+          batchType: 'Batch Type',
+          batchTypeEnum: {
+            monthly: 'Monthly'
+          },
+          headcount: 'Headcount',
+          earningTotal: 'Earning Total',
+          deductionTotal: 'Deduction Total',
+          netTotal: 'Net Total',
+          progress: 'Trial/Confirm/Pay/Payslip',
+          progressEnum: {
+            trial: 'Trial',
+            confirm: 'Confirm',
+            pay: 'Pay',
+            payslip: 'Payslip'
+          },
+          trialTime: 'Trial Time',
+          trialStatus: 'Trial Status',
+          viewResult: 'Result',
+          trial: 'Trial',
+          trialDone: 'Trial done, {count} employees',
+          resultTitle: 'Trial Result',
+          noResult: 'No detail rows',
+          itemName: 'Salary Item',
+          itemClass: 'Class',
+          itemClassEnum: {
+            earning: 'Earning',
+            deduction: 'Deduction',
+            cost: 'Cost'
+          },
+          amount: 'Amount',
+          source: 'Source',
+          sourceEnum: {
+            archive: 'Archive',
+            scheme_override: 'Scheme Override',
+            reward: 'Reward Bill',
+            attendance: 'Attendance',
+            perf: 'Performance',
+            tax: 'Tax Engine',
+            si_missing: 'SI Missing',
+            formula: 'Formula',
+            zero: 'Fallback'
+          },
+          sourceDetail: 'Source Detail',
+          addBatch: 'Add Salary Batch',
+          editBatch: 'Edit Salary Batch',
+          remark: 'Remark',
+          form: {
+            batchName: 'Please enter batch name',
+            subject: 'Please select salary subject',
+            yearRequired: 'Year is required',
+            monthRequired: 'Month is required',
+            trialStatus: 'Please select trial status',
             remark: 'Please enter remark'
           }
         },

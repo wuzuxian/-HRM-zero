@@ -4719,6 +4719,124 @@ declare namespace Api {
       reporterName: string;
     };
 
+    // ===== HRM-37 薪资批次与试算引擎 =====
+
+    /** hrm salary batch (薪资批次, demo-inventory 8.4 发薪流程) */
+    type SalaryBatch = {
+      /** record uuid */
+      uuid: string;
+      /** 批次编号 SA{批次月份首日yyyyMMdd}{4位流水} */
+      batchNo: string;
+      /** 批次名称 */
+      batchName: string;
+      /** 批次类型 monthly=月度批次 */
+      batchType: string;
+      /** 薪酬主体 uuid */
+      subjectUuid: string;
+      /** 薪酬主体名称快照 */
+      subjectName: string;
+      /** 薪资年份 */
+      batchYear: number;
+      /** 薪资月份 1-12 */
+      batchMonth: number;
+      /** 试算人数 */
+      headcount: number;
+      /** 应发合计 */
+      earningTotal: number;
+      /** 应扣合计 */
+      deductionTotal: number;
+      /** 实发合计 */
+      netTotal: number;
+      /** 试算进度 0=未试算 1=已试算 */
+      trialStatus: SalarySubjectStatus | null;
+      /** 确认进度 (HRM-38 写回) */
+      confirmStatus: SalarySubjectStatus | null;
+      /** 发薪进度 (HRM-39 写回) */
+      payStatus: SalarySubjectStatus | null;
+      /** 工资条进度 (HRM-39 写回) */
+      payslipStatus: SalarySubjectStatus | null;
+      /** 最近试算时间 (''=未试算) */
+      trialTime: string;
+      /** 试算版本号 (重算+1) */
+      version: number;
+      /** 试算告警文本 (换行分隔) */
+      warnings: string;
+      /** remark */
+      remark: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** salary batch search params */
+    type SalaryBatchSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.SalaryBatch, 'batchName' | 'subjectUuid' | 'batchType' | 'trialStatus'> & {
+        year?: number | null;
+        month?: number | null;
+      } & Common.CommonSearchParams
+    >;
+
+    /** salary batch paginated list */
+    type SalaryBatchList = Common.PaginatingQueryRecord<SalaryBatch>;
+
+    /** add salary batch request */
+    type AddSalaryBatchRequest = {
+      batchName: string;
+      batchType?: string;
+      subjectUuid: string;
+      batchYear: number;
+      batchMonth: number;
+      remark?: string;
+    };
+
+    /** edit salary batch request (主体不可换；年月变更重置试算态) */
+    type EditSalaryBatchRequest = {
+      uuid: string;
+      batchName: string;
+      batchType?: string;
+      batchYear: number;
+      batchMonth: number;
+      remark?: string;
+    };
+
+    /** trial response (批次汇总 + 告警文本) */
+    type SalaryBatchTrialResponse = {
+      batchUuid: string;
+      batchNo: string;
+      headcount: number;
+      earningTotal: number;
+      deductionTotal: number;
+      netTotal: number;
+      version: number;
+      warnings: string;
+    };
+
+    /** 试算明细行 (每员工×每项目一行; 应扣类 amount 为正数) */
+    type SalaryBatchItem = {
+      uuid: string;
+      batchUuid: string;
+      employeeUuid: string;
+      employeeNo: string;
+      employeeName: string;
+      orgName: string;
+      itemUuid: string;
+      itemCode: string;
+      itemName: string;
+      itemClass: SalaryItemClass;
+      itemType: SalaryItemType;
+      amount: number;
+      /** 取数来源标记 archive/scheme_override/reward/attendance/perf/tax/si_missing/formula/zero */
+      source: string;
+      /** 取数说明 */
+      sourceDetail: string;
+      calcOrder: number;
+    };
+
+    /** 查看结果 response (批次行 + 全员明细行, 按 工号+计算顺序 排列) */
+    type SalaryBatchResult = {
+      batch: SalaryBatch;
+      items: SalaryBatchItem[];
+    };
+
     /** edit offer request (only in editable 单据状态) */
     type EditOfferRequest = AddOfferRequest & {
       uuid: string;

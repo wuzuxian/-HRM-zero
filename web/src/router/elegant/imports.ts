@@ -61,6 +61,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   "hrm_recruitment_requirement-list": () => import("@/views/hrm/recruitment/requirement-list/index.vue"),
   hrm_reward_bill: () => import("@/views/hrm/reward/bill/index.vue"),
   "hrm_salary_archive-list": () => import("@/views/hrm/salary/archive-list/index.vue"),
+  hrm_salary_batch: () => import("@/views/hrm/salary/batch/index.vue"),
   hrm_salary_setting_item: () => import("@/views/hrm/salary/setting/item/index.vue"),
   hrm_salary_setting_scheme: () => import("@/views/hrm/salary/setting/scheme/index.vue"),
   hrm_salary_setting_subject: () => import("@/views/hrm/salary/setting/subject/index.vue"),
