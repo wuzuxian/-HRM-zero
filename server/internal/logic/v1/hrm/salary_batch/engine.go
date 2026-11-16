@@ -18,6 +18,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_assessment"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_period"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_result"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_perf_scheme"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_punch_record"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_reward_bill"
@@ -108,7 +109,9 @@ func SetMonthReportSource(src monthReportSource) {
 //   - fixed/manual 项：OverrideAmount>0 用覆盖值，否则 BASIC_SALARY/POST_SALARY←档案 fixed_salary、
 //     *ALLOWANCE←档案 fixed_allowance，其他兜底 0；
 //   - data/system 项按 item_code 取数：REWARD_BONUS/REWARD_PENALTY←奖惩单、
-//     ABSENCE_DEDUCTION←考勤月报（未接入→打卡日结缺卡天兜底）、MERIT_SALARY←绩效联薪、
+//     ABSENCE_DEDUCTION←考勤月报（未接入→打卡日结缺卡天兜底）、MERIT_SALARY←绩效联薪
+//     （HRM-47：优先已发布结果行 perf_amount 直读；系数制未回填行重算时同事务回填
+//     perf_amount=系数×绩效工资基数+salary_synced=1；无结果行→考核任务兜底+告警）、
 //     SI/HF←社保配置（未建，兜底 0 + 告警）、TAX←个税累计预扣引擎；
 //   - formula 项：预置简单求值器（仅 NET_SALARY=应发合计−应扣合计 与
 //     LABOR_COST=应发合计+公司社保+公司公积金；不支持任意表达式，见 notes）。
@@ -162,6 +165,7 @@ func RunPayrollTrial(ctx context.Context, svcCtx *svc.ServiceContext, batchUuid 
 	}
 
 	warnings := newWarningCollector()
+	syncResults := make(map[string]perfSyncRow)
 
 	// ---- 2. 逐人试算 ----
 	type personResult struct {
@@ -189,6 +193,7 @@ func RunPayrollTrial(ctx context.Context, svcCtx *svc.ServiceContext, batchUuid 
 			perf:        perf,
 			tax:         taxData,
 			warnings:    warnings,
+			syncResults: syncResults,
 		})
 		if perr != nil {
 			return nil, perr
@@ -265,6 +270,21 @@ func RunPayrollTrial(ctx context.Context, svcCtx *svc.ServiceContext, batchUuid 
 				return err
 			}
 		}
+		// HRM-47 联薪回填：系数制结果行 perf_amount=系数×绩效工资基数 + salary_synced=1，
+		// 与重算同事务（重算失败回滚则回填一并回滚，保证明细与结果行一致）。幂等：
+		// 仅本轮命中 perf_amount=0 且 salary_synced=0 的已发布行才进入 syncResults，
+		// 已回填行（salary_synced=1）重算只读。
+		resultModel := hrm_perf_result.NewHrmPerfResultModel(sqlx.NewSqlConnFromSession(session))
+		for resultUuid, row := range syncResults {
+			if err := resultModel.UpdateFieldsByCondition(ctx, session, map[string]any{
+				"perf_amount":   row.amount,
+				"salary_synced": 1,
+			}, condition.NewChain().Equal(hrm_perf_result.Uuid, resultUuid).Build()...); err != nil {
+				return err
+			}
+			logx.WithContext(ctx).Infof("perf salary link result=%s employee=%s perf_amount=%.2f",
+				resultUuid, row.employeeNo, row.amount)
+		}
 		return nil
 	})
 	if txErr != nil {
@@ -294,6 +314,15 @@ type trialInputs struct {
 	perf        map[string]perfResult
 	tax         map[string]*taxMonthData
 	warnings    *warningCollector
+	// syncResults HRM-47 联薪回填槽：本轮试算中系数制结果行(perf_amount 待回填、
+	// salary_synced=0) → 系数×基数 金额。事务内随重算一并 UPDATE（幂等键=result_uuid）。
+	syncResults map[string]perfSyncRow
+}
+
+// perfSyncRow 一条待回填的绩效结果行联薪数据。
+type perfSyncRow struct {
+	amount     float64
+	employeeNo string
 }
 
 // trialPerson 单人试算：按 calc_order ASC 消费项目清单，产出明细行。
@@ -429,16 +458,40 @@ func resolveSystemItem(emp *hrm_employee.HrmEmployee, it *archiveTypes.HrmEffect
 	return 0, SourceZero, "未知取数项编码兜底 0"
 }
 
-// resolveMeritSalary 绩效联薪（hrm-43 契约）：
-//   - pay_link_mode=amount：绩效金额 = final_score 直取；
-//   - pay_link_mode=coefficient（及未知模式兜底）：绩效金额 = 系数(A1.2/B1.0/C0.8/D0.6) × 绩效基数；
-//     基数 = 本行 OverrideAmount>0 用覆盖金额，否则=档案固定薪资（HRM-43 notes 同款口径）。
-//   - 批次月份无已完成考核任务：兜底 0 + 告警。
+// resolveMeritSalary 绩效联薪取数（HRM-47 改造；hrm-43/45 契约）：
+//   - 优先结果行口径（published=1 已发布行，loadPerfResults 装配）：perf_amount 直读——
+//     金额制=score；系数制=HRM-49 联薪回填后的 系数×绩效工资基数。回填基数口径沿用
+//     引擎既有口径：方案覆盖金额（OverrideAmount>0）优先，否则=档案 fixed_salary 全额
+//     （HRM-37 notes「绩效基数=档案固定薪资」同款）；幂等：salary_synced=1 只读不回填。
+//   - 无结果行但有已完成考核任务（兜底口径，同 HRM-37 现状）：amount → final_score 直取；
+//     coefficient（及未知模式兜底）→ 系数(A1.2/B1.0/C0.8/D0.6)×基数，并告警结果未发布。
+//   - 都没有：0 + 告警。
 func resolveMeritSalary(emp *hrm_employee.HrmEmployee, it *archiveTypes.HrmEffectiveItem, in trialInputs, meritBase float64) (float64, string, string) {
 	pr, ok := in.perf[emp.Uuid]
 	if !ok {
 		in.warnings.addDedup("员工 " + emp.EmployeeNo + "：批次月份无已确认的绩效考核结果，绩效工资按 0 兜底")
 		return 0, SourcePerf, "无绩效结果兜底 0"
+	}
+	// 结果行口径（HRM-47）：已发布结果行直读——
+	//   perf_amount>0（金额制 score 或已回填）→ 直读不回填（勿重算勿叠加）；
+	//   perf_amount=0 且未同步（系数制待回填）→ 本次重算联薪回填 系数×基数（结果行 coefficient 勿重算）。
+	if pr.resultUuid != "" {
+		if pr.perfAmount > 0 || pr.resultSynced {
+			return pr.perfAmount, SourcePerf,
+				fmt.Sprintf("绩效结果行直取 %.2f（%s）", pr.perfAmount, pr.assessmentNo)
+		}
+		// 系数制未回填（perf_amount=0）→ 联薪回填
+		base := it.OverrideAmount
+		if base <= 0 {
+			base = meritBase
+		}
+		amount := round2(pr.coefficient * base)
+		in.syncResults[pr.resultUuid] = perfSyncRow{amount: amount, employeeNo: emp.EmployeeNo}
+		return amount, SourcePerf,
+			fmt.Sprintf("绩效联薪回填 系数 %.1f × 绩效基数 %.2f（%s）", pr.coefficient, base, pr.assessmentNo)
+	}
+	if pr.resultMissing {
+		in.warnings.addDedup("员工 " + emp.EmployeeNo + "：批次月份绩效考核结果未发布（HR211 审批通过后生效），绩效工资按考核任务兜底取数")
 	}
 	switch pr.payLinkMode {
 	case "amount":
@@ -552,11 +605,26 @@ type perfResult struct {
 	finalGrade   string
 	payLinkMode  string
 	meritBase    float64
+	// HRM-47 联薪：已发布结果行来源（resultUuid 非空 = 走结果行口径）。
+	// 结果行 published=1 时 salary_synced 回填在引擎重算路径中完成（回填系数制 perf_amount），
+	// 金额制结果行 perfAmount 已有值、只读不回填。
+	resultUuid    string
+	perfAmount    float64 // 结果行 perf_amount（金额制=score；系数制=联薪回填后的 系数×基数）
+	coefficient   float64 // 结果行 coefficient（结果行口径用，勿重算 GradeCoefficient）
+	resultSynced  bool    // 结果行 salary_synced=1（已联薪过，重算只读）
+	resultMissing bool    // 有已完成考核任务但无已发布结果行（未发布 → 告警提示走考核兜底）
 }
 
-// loadPerfResults 绩效结果（HRM-43/46 契约）：final_score/final_grade 在 assessment 行上直读。
-// 批次月份 = 绩效批次 period 覆盖该月（period_start ≤ 月末 AND period_end ≥ 月初）且任务已完成
-//（task_status='1'）。同人多任务取 final_score 最大的一条。
+// loadPerfResults 绩效联薪取数（HRM-47 改造；hrm-43/45/46 契约）：
+//
+// 优先级（批次月 = 绩效批次 period 覆盖该月：period_start ≤ 月末 AND period_end ≥ 月初）：
+//  1. 已发布结果行（hrm_perf_result.published=1 AND result_status='1'，
+//     UNIQUE(period,employee)）——MERIT_SALARY 直读 perf_amount（HRM-49 联薪回填后的
+//     系数×基数 或 金额制 score），勿重算；同人多批次行取 perf_amount 最大；
+//     系数制行 salary_synced=0 时由本引擎在重算路径回填 perf_amount+salary_synced=1。
+//  2. 无结果行但存在已完成考核任务（task_status='1'，HRM-37 既有兜底口径）——
+//     金额制 final_score 直取 / 系数制 系数×绩效基数，并告警「结果未发布」。
+//  3. 都没有 → 0 + 告警（绩效缺失）。
 func loadPerfResults(ctx context.Context, svcCtx *svc.ServiceContext, yearMonth string) (map[string]perfResult, error) {
 	periods, err := svcCtx.Model.HrmPerfPeriod.FindByCondition(ctx, nil, condition.NewChain().Build()...)
 	if err != nil {
@@ -579,6 +647,38 @@ func loadPerfResults(ctx context.Context, svcCtx *svc.ServiceContext, yearMonth 
 	for _, p := range matched {
 		periodUuids = append(periodUuids, p.Uuid)
 	}
+
+	out := make(map[string]perfResult)
+	hadResult := make(map[string]bool)
+
+	// ---- 优先级 1：已发布结果行（published=1 + result_status='1'）----
+	results, err := svcCtx.Model.HrmPerfResult.FindByCondition(ctx, nil,
+		condition.NewChain().
+			In(hrm_perf_result.PeriodUuid, periodUuids).
+			Equal(hrm_perf_result.Published, 1).
+			Equal(hrm_perf_result.ResultStatus, "1").
+			Build()...)
+	if err != nil {
+		return nil, err
+	}
+	for _, r := range results {
+		hadResult[r.EmployeeUuid] = true
+		pr := perfResult{
+			assessmentNo: r.PeriodNo,
+			finalScore:   r.Score,
+			finalGrade:   r.Grade,
+			payLinkMode:  "", // 结果行口径不需要 pay_link_mode：perf_amount 已是终值
+			resultUuid:   r.Uuid,
+			perfAmount:   r.PerfAmount,
+			coefficient:  r.Coefficient,
+			resultSynced: r.SalarySynced == 1,
+		}
+		if old, ok := out[r.EmployeeUuid]; !ok || r.PerfAmount > old.perfAmount {
+			out[r.EmployeeUuid] = pr
+		}
+	}
+
+	// ---- 优先级 2：无结果行 → 已完成考核任务兜底（HRM-37 既有口径 + 未发布告警）----
 	assessments, err := svcCtx.Model.HrmPerfAssessment.FindByCondition(ctx, nil,
 		condition.NewChain().
 			In(hrm_perf_assessment.PeriodUuid, periodUuids).
@@ -586,6 +686,9 @@ func loadPerfResults(ctx context.Context, svcCtx *svc.ServiceContext, yearMonth 
 			Build()...)
 	if err != nil {
 		return nil, err
+	}
+	if len(assessments) == 0 {
+		return out, nil
 	}
 	schemes, err := svcCtx.Model.HrmPerfScheme.FindByCondition(ctx, nil,
 		condition.NewChain().In(hrm_perf_scheme.Uuid, dedupOf(schemeUuids)).Build()...)
@@ -600,14 +703,16 @@ func loadPerfResults(ctx context.Context, svcCtx *svc.ServiceContext, yearMonth 
 	for _, p := range matched {
 		periodScheme[p.Uuid] = p.SchemeUuid
 	}
-
-	out := make(map[string]perfResult, len(assessments))
 	for _, a := range assessments {
+		if hadResult[a.EmployeeUuid] {
+			continue
+		}
 		pr := perfResult{
 			assessmentNo: a.AssessmentNo,
 			finalScore:   a.FinalScore,
 			finalGrade:   a.FinalGrade,
 			payLinkMode:  modeByScheme[periodScheme[a.PeriodUuid]],
+			resultMissing: true, // 有已完成任务但结果未发布 → 告警
 		}
 		if old, ok := out[a.EmployeeUuid]; !ok || a.FinalScore > old.finalScore {
 			out[a.EmployeeUuid] = pr
