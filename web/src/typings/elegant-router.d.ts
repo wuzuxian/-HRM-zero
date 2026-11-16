@@ -94,6 +94,8 @@ declare module "@elegant-router/types" {
     "hrm_salary": "/hrm/salary";
     "hrm_salary_archive-list": "/hrm/salary/archive-list";
     "hrm_salary_batch": "/hrm/salary/batch";
+    "hrm_salary_confirm-list": "/hrm/salary/confirm-list";
+    "hrm_salary_payment-list": "/hrm/salary/payment-list";
     "hrm_salary_setting": "/hrm/salary/setting";
     "hrm_salary_setting_item": "/hrm/salary/setting/item";
     "hrm_salary_setting_scheme": "/hrm/salary/setting/scheme";
@@ -241,6 +243,8 @@ declare module "@elegant-router/types" {
     | "hrm_reward_bill"
     | "hrm_salary_archive-list"
     | "hrm_salary_batch"
+    | "hrm_salary_confirm-list"
+    | "hrm_salary_payment-list"
     | "hrm_salary_setting_item"
     | "hrm_salary_setting_scheme"
     | "hrm_salary_setting_subject"
