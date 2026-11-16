@@ -7,7 +7,7 @@
 -- API codes: v1:hrm:punch:{statistics,statisticsDetail}
 --   （/api/v1/hrm/{getPunchStatistics,getPunchStatisticsDetail}，group v1/hrm/punch ——
 --   端点复用 punch.api group，route2code 自动生成 v1:hrm:punch:statistics{,detail}）。
--- 错误码 1063x 段（server/internal/errcodes/hrm_punch_statistics.go）。
+-- 错误码 1063x 段（server/internal/errcodes/hrm_punch_statistics.go，10630-10631 已被 HRM-17 看板占用，本票取 10632）。
 -- 菜单 uuid 段 30xx（grep 全部 migration: 0xxx 基础/03xx 假勤设置/07xx 考勤组/09xx-29xx 各域；
 -- 本票取 30xx: 3001 考勤统计 page / 3011-3012 buttons；role_menu aaa20000 30xx）。
 
