@@ -5854,6 +5854,67 @@
         ]
       }
     },
+    "/api/v1/hrm/doSignin": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:signin:doSignin",
+        "operationId": "v1/Hrm/SigninDoSignin",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "token": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "token"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "sessionName": {
+                  "type": "string"
+                },
+                "sessionUuid": {
+                  "type": "string"
+                },
+                "signInTime": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "DoSignin",
+        "tags": [
+          "v1/hrm/signin"
+        ]
+      }
+    },
     "/api/v1/hrm/downloadCertificateFile": {
       "get": {
         "description": "接口权限编码:v1:hrm:certificate:downloadFile",
@@ -9196,6 +9257,65 @@
         "summary": "Export",
         "tags": [
           "v1/hrm/scheduleboard"
+        ]
+      }
+    },
+    "/api/v1/hrm/exportSigninDetail": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:signin:exportSigninDetail",
+        "operationId": "v1/Hrm/SigninExportSigninDetail",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "sessionUuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sessionUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "content": {
+                  "description": "base64 xlsx",
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "ExportSigninDetail",
+        "tags": [
+          "v1/hrm/signin"
         ]
       }
     },
@@ -17903,6 +18023,161 @@
         ]
       }
     },
+    "/api/v1/hrm/getSigninDetailList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:signin:getSigninDetailList",
+        "operationId": "v1/Hrm/SigninGetSigninDetailList",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "sessionUuid",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "employeeNo": {
+                        "description": "工号（关联员工档案，可为空）",
+                        "type": "string"
+                      },
+                      "nickName": {
+                        "description": "姓名",
+                        "type": "string"
+                      },
+                      "orgName": {
+                        "description": "部门（关联员工档案 org，可为空）",
+                        "type": "string"
+                      },
+                      "sessionUuid": {
+                        "type": "string"
+                      },
+                      "signInBy": {
+                        "description": "操作人（自签=本人，补签=管理员）",
+                        "type": "string"
+                      },
+                      "signInByName": {
+                        "description": "操作人姓名（展示）",
+                        "type": "string"
+                      },
+                      "signInMethod": {
+                        "description": "1=扫码自签 2=管理员补签（空=未签）",
+                        "type": "string"
+                      },
+                      "signInReason": {
+                        "description": "补签原因",
+                        "type": "string"
+                      },
+                      "signInTime": {
+                        "description": "签到时间（空=未签）",
+                        "type": "string"
+                      },
+                      "userUuid": {
+                        "type": "string"
+                      },
+                      "username": {
+                        "description": "学员账号",
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "description": "participant row uuid",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "sessionUuid",
+                      "userUuid",
+                      "username",
+                      "nickName",
+                      "employeeNo",
+                      "orgName",
+                      "signInTime",
+                      "signInMethod",
+                      "signInBy",
+                      "signInByName",
+                      "signInReason"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "GetSigninDetailList",
+        "tags": [
+          "v1/hrm/signin"
+        ]
+      }
+    },
+    "/api/v1/hrm/getSigninStats": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:signin:getSigninStats",
+        "operationId": "v1/Hrm/SigninGetSigninStats",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "sessionUuid",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "absent": {
+                  "type": "integer"
+                },
+                "expected": {
+                  "type": "integer"
+                },
+                "signed": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "GetSigninStats",
+        "tags": [
+          "v1/hrm/signin"
+        ]
+      }
+    },
     "/api/v1/hrm/getTaxOpeningList": {
       "get": {
         "description": "接口权限编码:v1:hrm:tax_opening:list",
@@ -19834,6 +20109,70 @@
         ]
       }
     },
+    "/api/v1/hrm/refreshSigninToken": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:signin:refreshSigninToken",
+        "operationId": "v1/Hrm/SigninRefreshSigninToken",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "sessionUuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sessionUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "expireTime": {
+                  "description": "YYYY-MM-DD HH:mm:ss",
+                  "type": "string"
+                },
+                "signinUrl": {
+                  "description": "学员扫码进入的签到页路径（前端拼域名渲染二维码）",
+                  "type": "string"
+                },
+                "token": {
+                  "description": "新动态码 token（旧 token 立即失效）",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "RefreshSigninToken",
+        "tags": [
+          "v1/hrm/signin"
+        ]
+      }
+    },
     "/api/v1/hrm/rejectBill": {
       "post": {
         "consumes": [
@@ -20426,6 +20765,60 @@
         "summary": "Settle",
         "tags": [
           "v1/hrm/punch"
+        ]
+      }
+    },
+    "/api/v1/hrm/signinForParticipant": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:signin:signinForParticipant",
+        "operationId": "v1/Hrm/SigninSigninForParticipant",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "reason": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "description": "participant row uuid",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "SigninForParticipant",
+        "tags": [
+          "v1/hrm/signin"
         ]
       }
     },

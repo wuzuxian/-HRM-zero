@@ -1,0 +1,129 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/signin"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 培训签到（HRM-29，demo-inventory 6 培训签到）：
+//   - 选择已发布/进行中班次 → 应到（participant 名册）/已签/未到统计；
+//   - 课堂动态码：refreshSigninToken 签发短时效 token（轮换），前端渲染二维码；
+//     扫码端点 /hrm/doSignin 为 jwt+token 双验（仓库约定所有 /api/v1 走 JWT，
+//     学员端是已登录的 manage_user，扫码 = 学员端页面带 token 调用，不做免登录白名单）；
+//   - 签到数据落 hrm_training_session_participant（名册=应到名单，签到列即明细）；
+//   - 补签：未到名单 + 确认弹窗（记录 方式/操作人/原因）；明细含 姓名/工号/部门/签到时间/方式/操作人/原因。
+// 签到方式 1=扫码自签 2=管理员补签（空=未签）。
+type SigninDetail {
+	Uuid         string `json:"uuid"` // participant row uuid
+	SessionUuid  string `json:"sessionUuid"`
+	UserUuid     string `json:"userUuid"`
+	Username     string `json:"username"` // 学员账号
+	NickName     string `json:"nickName"` // 姓名
+	EmployeeNo   string `json:"employeeNo"` // 工号（关联员工档案，可为空）
+	OrgName      string `json:"orgName"` // 部门（关联员工档案 org，可为空）
+	SignInTime   string `json:"signInTime"` // 签到时间（空=未签）
+	SignInMethod string `json:"signInMethod"` // 1=扫码自签 2=管理员补签（空=未签）
+	SignInBy     string `json:"signInBy"` // 操作人（自签=本人，补签=管理员）
+	SignInByName string `json:"signInByName"` // 操作人姓名（展示）
+	SignInReason string `json:"signInReason"` // 补签原因
+}
+
+type GetSigninDetailListRequest {
+	SessionUuid string `form:"sessionUuid"`
+}
+
+type GetSigninDetailListResponse {
+	Records []SigninDetail `json:"records"`
+}
+
+type SigninStats {
+	Expected int64 `json:"expected"` // 应到（participant 名册数）
+	Signed   int64 `json:"signed"` // 已签
+	Absent   int64 `json:"absent"` // 未到
+}
+
+type GetSigninStatsRequest {
+	SessionUuid string `form:"sessionUuid"`
+}
+
+type GetSigninStatsResponse {
+	Expected int64 `json:"expected"`
+	Signed   int64 `json:"signed"`
+	Absent   int64 `json:"absent"`
+}
+
+// RefreshSigninTokenRequest 课堂动态码刷新：返回新 token + 签到 URL（前端渲染二维码）。
+type RefreshSigninTokenRequest {
+	SessionUuid string `json:"sessionUuid"`
+}
+
+type RefreshSigninTokenResponse {
+	Token      string `json:"token"` // 新动态码 token（旧 token 立即失效）
+	ExpireTime string `json:"expireTime"` // YYYY-MM-DD HH:mm:ss
+	SigninUrl  string `json:"signinUrl"` // 学员扫码进入的签到页路径（前端拼域名渲染二维码）
+}
+
+// DoSigninRequest 学员扫码签到（jwt+token 双验）：token 有效即本人自签。
+type DoSigninRequest {
+	Token string `json:"token"`
+}
+
+type DoSigninResponse {
+	SessionUuid string `json:"sessionUuid"`
+	SessionName string `json:"sessionName"`
+	SignInTime  string `json:"signInTime"`
+}
+
+// SigninForParticipantRequest 管理员补签（未到名单行 + 确认弹窗：原因）。
+type SigninForParticipantRequest {
+	Uuid   string `json:"uuid"` // participant row uuid
+	Reason string `json:"reason,optional"`
+}
+
+type SigninForParticipantResponse {}
+
+// ExportSigninDetailRequest 导出签到明细 xlsx（base64，同列表口径）。
+type ExportSigninDetailRequest {
+	SessionUuid string `json:"sessionUuid"`
+}
+
+type ExportSigninDetailResponse {
+	FileName string `json:"fileName"`
+	Content  string `json:"content"` // base64 xlsx
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/signin
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler GetSigninDetailList
+	get /hrm/getSigninDetailList (GetSigninDetailListRequest) returns (GetSigninDetailListResponse)
+
+	@handler GetSigninStats
+	get /hrm/getSigninStats (GetSigninStatsRequest) returns (GetSigninStatsResponse)
+
+	// 课堂动态码：短时效轮换（每班次单活跃 token，刷新即失效旧码）
+	@handler RefreshSigninToken
+	post /hrm/refreshSigninToken (RefreshSigninTokenRequest) returns (RefreshSigninTokenResponse)
+
+	// 学员扫码签到（jwt+token 双验；幂等：已签返回原签到时间）
+	@handler DoSignin
+	post /hrm/doSignin (DoSigninRequest) returns (DoSigninResponse)
+
+	// 管理员补签（方式=2，操作人=当前管理员，记录原因）
+	@handler SigninForParticipant
+	post /hrm/signinForParticipant (SigninForParticipantRequest) returns (SigninForParticipantResponse)
+
+	// 导出签到明细 xlsx（base64）
+	@handler ExportSigninDetail
+	post /hrm/exportSigninDetail (ExportSigninDetailRequest) returns (ExportSigninDetailResponse)
+}
+
