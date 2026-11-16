@@ -149,6 +149,7 @@ var RoutesCodesMap = map[string]string{
 	"POST:/api/v1/hrm/editPerfPeriod":                   "v1:hrm:perf_period:edit",
 	"GET:/api/v1/hrm/getPerfPeriodList":                 "v1:hrm:perf_period:list",
 	"POST:/api/v1/hrm/publishPerfPeriod":                "v1:hrm:perf_period:publish",
+	"GET:/api/v1/hrm/getPerfDashboard":                  "v1:hrm:perf_result:dashboard",
 	"GET:/api/v1/hrm/getPerfResultApprovalList":         "v1:hrm:perf_result:approvalList",
 	"GET:/api/v1/hrm/getPerfResultList":                 "v1:hrm:perf_result:resultList",
 	"POST:/api/v1/hrm/signPerfResult":                   "v1:hrm:perf_result:signResult",

@@ -710,6 +710,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Path:    "/hrm/unlockAttendanceMonthReport",
 						Handler: v1hrmmonthreport.Unlock(serverCtx),
 					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
 					{
 						Method:  http.MethodPost,
 						Path:    "/hrm/addOffer",
@@ -1036,6 +1047,21 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodPost,
 						Path:    "/hrm/submitPerfResultApproval",
 						Handler: v1hrmperf_result.SubmitApproval(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getPerfDashboard",
+						Handler: v1hrmperf_result.Dashboard(serverCtx),
 					},
 				}...,
 			),
