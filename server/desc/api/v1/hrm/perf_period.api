@@ -1,0 +1,141 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/perf_period"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// 绩效批次（HRM-42，演示站 9.2 批次与任务流，GLOSSARY「绩效批次」）：
+// 一次考核的执行实例（PERF- 编号），按方案圈定适用人群（公司/部门/职位/职务/人员状态
+// 多维筛选条件存 JSON），生命周期 草稿→进行中→待确认→待校准→结果已发布→已发布。
+// HRM-43 考核任务链按批次参与人生成任务（GetPeriodParticipants 契约）。
+type HrmPerfPeriod {
+	Uuid string `json:"uuid"`
+	// 批次编号 PERF-年-流水
+	PeriodNo string `json:"periodNo"`
+	// 批次名称
+	Name string `json:"name"`
+	// 批次类型：month=月度 quarter=季度
+	PeriodType string `json:"periodType"`
+	// 绩效方案 uuid（hrm_perf_scheme）
+	SchemeUuid string `json:"schemeUuid"`
+	// 绩效方案名称（展示快照）
+	SchemeName string `json:"schemeName"`
+	// 适用范围多维筛选条件 JSON：companyUuids/orgUuids(含下级)/positions/posts/personStatuses
+	Scope string `json:"scope"`
+	// 周期开始 YYYY-MM-DD
+	PeriodStart string `json:"periodStart"`
+	// 周期结束 YYYY-MM-DD
+	PeriodEnd string `json:"periodEnd"`
+	// 结果发布日期 YYYY-MM-DD
+	ResultPublishDate string `json:"resultPublishDate"`
+	// 参与人数（快照）
+	ParticipantCount int64 `json:"participantCount"`
+	// 生命周期：0=草稿 1=进行中 2=待确认 3=待校准 4=结果已发布 5=已发布
+	Status     string `json:"status"`
+	Remark     string `json:"remark"`
+	CreateTime string `json:"createTime"`
+	UpdateTime string `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	Name   string `form:"name,optional"`
+	Status string `form:"status,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmPerfPeriod `json:"records"`
+}
+
+type AddRequest {
+	Name string `json:"name"`
+	// 批次类型：month=月度 quarter=季度
+	PeriodType string `json:"periodType"`
+	// 绩效方案 uuid（须为已存在的 hrm_perf_scheme）
+	SchemeUuid string `json:"schemeUuid"`
+	// 适用范围多维筛选条件 JSON
+	Scope string `json:"scope"`
+	// 周期开始 YYYY-MM-DD
+	PeriodStart string `json:"periodStart"`
+	// 周期结束 YYYY-MM-DD
+	PeriodEnd string `json:"periodEnd"`
+	// 结果发布日期 YYYY-MM-DD（可选）
+	ResultPublishDate string `json:"resultPublishDate,optional"`
+	Remark            string `json:"remark,optional"`
+}
+
+type AddResponse {}
+
+type EditRequest {
+	Uuid string `json:"uuid"`
+	Name string `json:"name"`
+	// 批次类型：month=月度 quarter=季度
+	PeriodType string `json:"periodType"`
+	// 绩效方案 uuid（须为已存在的 hrm_perf_scheme）
+	SchemeUuid string `json:"schemeUuid"`
+	// 适用范围多维筛选条件 JSON
+	Scope string `json:"scope"`
+	// 周期开始 YYYY-MM-DD
+	PeriodStart string `json:"periodStart"`
+	// 周期结束 YYYY-MM-DD
+	PeriodEnd string `json:"periodEnd"`
+	// 结果发布日期 YYYY-MM-DD（可选）
+	ResultPublishDate string `json:"resultPublishDate,optional"`
+	Remark            string `json:"remark,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+type PublishRequest {
+	Uuid string `json:"uuid"`
+}
+
+type PublishResponse {}
+
+type AdvanceRequest {
+	Uuid string `json:"uuid"`
+}
+
+type AdvanceResponse {}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/perf_period
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getPerfPeriodList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addPerfPeriod (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editPerfPeriod (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deletePerfPeriod (DeleteRequest) returns (DeleteResponse)
+
+	// 发布（草稿→进行中；发布前须有参与人，守卫失败报 10637）
+	@handler Publish
+	post /hrm/publishPerfPeriod (PublishRequest) returns (PublishResponse)
+
+	// 生命周期推进（进行中→待确认→待校准→结果已发布→已发布，forward-only）
+	@handler Advance
+	post /hrm/advancePerfPeriod (AdvanceRequest) returns (AdvanceResponse)
+}
+

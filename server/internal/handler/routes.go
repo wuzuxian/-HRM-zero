@@ -28,6 +28,7 @@ import (
 	v1hrmovertimebill "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/overtimebill"
 	v1hrmovertimerule "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/overtimerule"
 	v1hrmperf_indicator "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_indicator"
+	v1hrmperf_period "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_period"
 	v1hrmperf_scheme "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_scheme"
 	v1hrmperf_template "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/perf_template"
 	v1hrmposition "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/position"
@@ -826,6 +827,47 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodGet,
 						Path:    "/hrm/getPerfIndicatorList",
 						Handler: v1hrmperf_indicator.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/addPerfPeriod",
+						Handler: v1hrmperf_period.Add(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/advancePerfPeriod",
+						Handler: v1hrmperf_period.Advance(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/deletePerfPeriod",
+						Handler: v1hrmperf_period.Delete(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/editPerfPeriod",
+						Handler: v1hrmperf_period.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getPerfPeriodList",
+						Handler: v1hrmperf_period.List(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/publishPerfPeriod",
+						Handler: v1hrmperf_period.Publish(serverCtx),
 					},
 				}...,
 			),
