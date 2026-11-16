@@ -9476,6 +9476,76 @@
         ]
       }
     },
+    "/api/v1/hrm/exportAttendanceMonthReport": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:monthreport:export",
+        "operationId": "v1/Hrm/MonthreportExport",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "attGroupName": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "onlyAbnormal": {
+                  "type": "string"
+                },
+                "onlyChanged": {
+                  "type": "string"
+                },
+                "orgUuid": {
+                  "type": "string"
+                },
+                "yearMonth": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Export",
+        "tags": [
+          "v1/hrm/monthreport"
+        ]
+      }
+    },
     "/api/v1/hrm/exportEmployee": {
       "get": {
         "description": "接口权限编码:v1:hrm:employee:export",
@@ -10951,6 +11021,358 @@
         "summary": "ShiftUsage",
         "tags": [
           "v1/hrm/attendancegroup"
+        ]
+      }
+    },
+    "/api/v1/hrm/getAttendanceMonthLockRecords": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:monthreport:lockRecords",
+        "operationId": "v1/Hrm/MonthreportLockRecords",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "yearMonth",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "action": {
+                        "type": "string"
+                      },
+                      "actionName": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "operatorName": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "yearMonth": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "yearMonth",
+                      "action",
+                      "actionName",
+                      "operatorName",
+                      "remark",
+                      "createTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "LockRecords",
+        "tags": [
+          "v1/hrm/monthreport"
+        ]
+      }
+    },
+    "/api/v1/hrm/getAttendanceMonthReport": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:monthreport:list",
+        "operationId": "v1/Hrm/MonthreportList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "yearMonth",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "orgUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "attGroupName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "onlyAbnormal",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "onlyChanged",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "lockHint": {
+                  "type": "string"
+                },
+                "locked": {
+                  "type": "boolean"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "abnormalTotal": {
+                        "type": "integer"
+                      },
+                      "absentDays": {
+                        "type": "integer"
+                      },
+                      "attGroupName": {
+                        "type": "string"
+                      },
+                      "attendDays": {
+                        "type": "integer"
+                      },
+                      "changed": {
+                        "type": "boolean"
+                      },
+                      "compAccrueH": {
+                        "type": "number"
+                      },
+                      "earlyCount": {
+                        "type": "integer"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "expectedDays": {
+                        "type": "integer"
+                      },
+                      "holidayOtH": {
+                        "type": "number"
+                      },
+                      "lateCount": {
+                        "type": "integer"
+                      },
+                      "missingCount": {
+                        "type": "integer"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "orgUuid": {
+                        "type": "string"
+                      },
+                      "restdayOtH": {
+                        "type": "number"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "workdayOtH": {
+                        "type": "number"
+                      },
+                      "yearMonth": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "yearMonth",
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "orgUuid",
+                      "orgName",
+                      "attGroupName",
+                      "expectedDays",
+                      "attendDays",
+                      "lateCount",
+                      "earlyCount",
+                      "missingCount",
+                      "absentDays",
+                      "workdayOtH",
+                      "restdayOtH",
+                      "holidayOtH",
+                      "compAccrueH",
+                      "abnormalTotal",
+                      "changed"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/monthreport"
+        ]
+      }
+    },
+    "/api/v1/hrm/getAttendanceMonthReportDetail": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:monthreport:detail",
+        "operationId": "v1/Hrm/MonthreportDetail",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "employeeUuid",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "yearMonth",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "clockInTime": {
+                        "type": "string"
+                      },
+                      "clockOutTime": {
+                        "type": "string"
+                      },
+                      "punchDate": {
+                        "type": "string"
+                      },
+                      "settleEarlyMinutes": {
+                        "type": "integer"
+                      },
+                      "settleLateMinutes": {
+                        "type": "integer"
+                      },
+                      "settleStatus": {
+                        "type": "string"
+                      },
+                      "settleWorkHours": {
+                        "type": "number"
+                      },
+                      "weekday": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "punchDate",
+                      "weekday",
+                      "settleStatus",
+                      "clockInTime",
+                      "clockOutTime",
+                      "settleLateMinutes",
+                      "settleEarlyMinutes",
+                      "settleWorkHours"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Detail",
+        "tags": [
+          "v1/hrm/monthreport"
         ]
       }
     },
@@ -21161,6 +21583,59 @@
         ]
       }
     },
+    "/api/v1/hrm/lockAttendanceMonthReport": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:monthreport:lock",
+        "operationId": "v1/Hrm/MonthreportLock",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "remark": {
+                  "type": "string"
+                },
+                "yearMonth": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "yearMonth"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Lock",
+        "tags": [
+          "v1/hrm/monthreport"
+        ]
+      }
+    },
     "/api/v1/hrm/maintainTaxSpecialDeduction": {
       "post": {
         "consumes": [
@@ -21591,6 +22066,64 @@
         "summary": "Punch",
         "tags": [
           "v1/hrm/punch"
+        ]
+      }
+    },
+    "/api/v1/hrm/recalcAttendanceMonthReport": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:monthreport:recalc",
+        "operationId": "v1/Hrm/MonthreportRecalc",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "yearMonth": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "yearMonth"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "changedCount": {
+                  "type": "integer"
+                },
+                "locked": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Recalc",
+        "tags": [
+          "v1/hrm/monthreport"
         ]
       }
     },
@@ -22841,6 +23374,59 @@
         "summary": "ToggleStatus",
         "tags": [
           "v1/hrm/schedulecycle"
+        ]
+      }
+    },
+    "/api/v1/hrm/unlockAttendanceMonthReport": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:monthreport:unlock",
+        "operationId": "v1/Hrm/MonthreportUnlock",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "remark": {
+                  "type": "string"
+                },
+                "yearMonth": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "yearMonth"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Unlock",
+        "tags": [
+          "v1/hrm/monthreport"
         ]
       }
     },

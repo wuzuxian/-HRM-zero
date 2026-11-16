@@ -24,6 +24,7 @@ import (
 	v1hrmleave "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/leave"
 	v1hrmleavebalance "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/leavebalance"
 	v1hrmleavetype "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/leavetype"
+	v1hrmmonthreport "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/monthreport"
 	v1hrmorg "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/org"
 	v1hrmovertimebill "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/overtimebill"
 	v1hrmovertimerule "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/overtimerule"
@@ -660,6 +661,52 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodGet,
 						Path:    "/hrm/getLeaveTypeList",
 						Handler: v1hrmleavetype.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/exportAttendanceMonthReport",
+						Handler: v1hrmmonthreport.Export(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getAttendanceMonthLockRecords",
+						Handler: v1hrmmonthreport.LockRecords(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getAttendanceMonthReport",
+						Handler: v1hrmmonthreport.List(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getAttendanceMonthReportDetail",
+						Handler: v1hrmmonthreport.Detail(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/lockAttendanceMonthReport",
+						Handler: v1hrmmonthreport.Lock(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/recalcAttendanceMonthReport",
+						Handler: v1hrmmonthreport.Recalc(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/unlockAttendanceMonthReport",
+						Handler: v1hrmmonthreport.Unlock(serverCtx),
 					},
 				}...,
 			),
