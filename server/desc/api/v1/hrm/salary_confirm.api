@@ -1,0 +1,99 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/salary_confirm"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// HR209 薪资确认审批 (demo-inventory 8.4 发薪流程):
+// 对已试算且未确认的批次发起单步审批单, 提交时快照
+// 批次编号/名称/主体/年月/人数/实发合计；审批通过事务内批次 confirm_status='1' +
+// confirm 时间（幂等 applied）。发薪登记（HRM-39 契约入口）以 confirm_status='1'
+// 为前置门槛。
+type HrmSalaryConfirmBill {
+	Uuid string `json:"uuid"`
+	// 审批单号 HR209-{YYYYMMDD}{5位流水}
+	BillNo string `json:"billNo"`
+	// 薪资批次 uuid
+	BatchUuid string `json:"batchUuid"`
+	// 批次编号快照 SA...
+	BatchNo string `json:"batchNo"`
+	// 批次名称快照
+	BatchName string `json:"batchName"`
+	// 薪酬主体 uuid 快照
+	SubjectUuid string `json:"subjectUuid"`
+	// 薪酬主体名称快照
+	SubjectName string `json:"subjectName"`
+	// 薪资年份快照
+	BatchYear int64 `json:"batchYear"`
+	// 薪资月份快照 1-12
+	BatchMonth int64 `json:"batchMonth"`
+	// 人数快照（试算人数）
+	Headcount int64 `json:"headcount"`
+	// 实发合计快照（提交时批次 net_total）
+	NetTotal float64 `json:"netTotal"`
+	// 单据状态：unsubmitted/approving/approved/rejected/revoked
+	Status      string `json:"status"`
+	SubmitBy    string `json:"submitBy"`
+	SubmitTime  string `json:"submitTime"`
+	ApproveBy   string `json:"approveBy"`
+	ApproveTime string `json:"approveTime"`
+	// 审批意见（最近一次）
+	Opinion     string `json:"opinion"`
+	CreatorUuid string `json:"creatorUuid"`
+	// 创建人姓名（快照，demo 8.4 列「创建人」）
+	CreatorName string `json:"creatorName"`
+	CreateTime  string `json:"createTime"`
+	UpdateTime  string `json:"updateTime"`
+}
+
+type ListRequest {
+	PageRequest
+	// 按批次筛选
+	BatchUuid string `form:"batchUuid,optional"`
+	// 按单据状态筛选
+	Status string `form:"status,optional"`
+	// 1=强制只看本人创建的审批单（默认超级管理员看全部、其他人只看自己的）
+	Mine int64 `form:"mine,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmSalaryConfirmBill `json:"records"`
+}
+
+// SubmitRequest 提交薪资确认审批：批次须 已试算（trial_status='1'）且未确认
+// （confirm_status='0'）；一批次一张审批单，重复提交（未提交/审批不通过/已撤销）
+// 重新聚合快照后重新提交。
+type SubmitRequest {
+	BatchUuid string `json:"batchUuid"`
+	// 提交意见（可选）
+	Opinion string `json:"opinion,optional"`
+}
+
+type SubmitResponse {
+	// 审批单 uuid
+	Uuid string `json:"uuid"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/salary_confirm
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	// 薪资确认审批列表（demo-inventory 8.4 /hrm/salary/confirm-list）
+	@handler List
+	get /hrm/getSalaryConfirmList (ListRequest) returns (ListResponse)
+
+	// 提交薪资确认审批（HR209；批次须 已试算未确认；一批次一张单，重复提交重新聚合）
+	@handler Submit
+	post /hrm/submitSalaryConfirm (SubmitRequest) returns (SubmitResponse)
+}
+

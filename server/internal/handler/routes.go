@@ -43,7 +43,9 @@ import (
 	v1hrmreward "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/reward"
 	v1hrmsalary_archive "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_archive"
 	v1hrmsalary_batch "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_batch"
+	v1hrmsalary_confirm "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_confirm"
 	v1hrmsalary_item "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_item"
+	v1hrmsalary_payment "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_payment"
 	v1hrmsalary_scheme "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_scheme"
 	v1hrmsalary_subject "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/salary_subject"
 	v1hrmscheduleboard "github.com/jzero-io/jzero-admin/server/internal/handler/v1/hrm/scheduleboard"
@@ -711,6 +713,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Path:    "/hrm/unlockAttendanceMonthReport",
 						Handler: v1hrmmonthreport.Unlock(serverCtx),
 					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
 					{
 						Method:  http.MethodPost,
 						Path:    "/hrm/addOffer",
@@ -1420,6 +1433,27 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				[]rest.Middleware{serverCtx.Authx},
 				[]rest.Route{
 					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getSalaryConfirmList",
+						Handler: v1hrmsalary_confirm.List(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/submitSalaryConfirm",
+						Handler: v1hrmsalary_confirm.Submit(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
 						Method:  http.MethodPost,
 						Path:    "/hrm/addSalaryItem",
 						Handler: v1hrmsalary_item.Add(serverCtx),
@@ -1443,6 +1477,27 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodGet,
 						Path:    "/hrm/getSalaryItemList",
 						Handler: v1hrmsalary_item.List(serverCtx),
+					},
+				}...,
+			),
+			rest.WithJwt(serverCtx.MustGetConfig().Jwt.AccessSecret),
+			rest.WithPrefix("/api/v1"),
+		)
+	}
+	{
+		server.AddRoutes(
+			rest.WithMiddlewares(
+				[]rest.Middleware{serverCtx.Authx},
+				[]rest.Route{
+					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getSalaryPaymentList",
+						Handler: v1hrmsalary_payment.List(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/registerSalaryPayment",
+						Handler: v1hrmsalary_payment.Register(serverCtx),
 					},
 				}...,
 			),

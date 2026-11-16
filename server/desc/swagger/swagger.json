@@ -20135,6 +20135,174 @@
         ]
       }
     },
+    "/api/v1/hrm/getSalaryConfirmList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:salary_confirm:list",
+        "operationId": "v1/Hrm/SalaryConfirmList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "batchUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "status",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "mine",
+            "type": "integer"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "approveBy": {
+                        "type": "string"
+                      },
+                      "approveTime": {
+                        "type": "string"
+                      },
+                      "batchMonth": {
+                        "type": "integer"
+                      },
+                      "batchName": {
+                        "type": "string"
+                      },
+                      "batchNo": {
+                        "type": "string"
+                      },
+                      "batchUuid": {
+                        "type": "string"
+                      },
+                      "batchYear": {
+                        "type": "integer"
+                      },
+                      "billNo": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "creatorName": {
+                        "type": "string"
+                      },
+                      "creatorUuid": {
+                        "type": "string"
+                      },
+                      "headcount": {
+                        "type": "integer"
+                      },
+                      "netTotal": {
+                        "type": "number"
+                      },
+                      "opinion": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "subjectName": {
+                        "type": "string"
+                      },
+                      "subjectUuid": {
+                        "type": "string"
+                      },
+                      "submitBy": {
+                        "type": "string"
+                      },
+                      "submitTime": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "billNo",
+                      "batchUuid",
+                      "batchNo",
+                      "batchName",
+                      "subjectUuid",
+                      "subjectName",
+                      "batchYear",
+                      "batchMonth",
+                      "headcount",
+                      "netTotal",
+                      "status",
+                      "submitBy",
+                      "submitTime",
+                      "approveBy",
+                      "approveTime",
+                      "opinion",
+                      "creatorUuid",
+                      "creatorName",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/salary_confirm"
+        ]
+      }
+    },
     "/api/v1/hrm/getSalaryItemList": {
       "get": {
         "description": "接口权限编码:v1:hrm:salary_item:list",
@@ -20272,6 +20440,144 @@
         "summary": "List",
         "tags": [
           "v1/hrm/salary_item"
+        ]
+      }
+    },
+    "/api/v1/hrm/getSalaryPaymentList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:salary_payment:list",
+        "operationId": "v1/Hrm/SalaryPaymentList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "batchUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "payMode",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "arriveTime": {
+                        "type": "string"
+                      },
+                      "batchName": {
+                        "type": "string"
+                      },
+                      "batchNo": {
+                        "type": "string"
+                      },
+                      "batchUuid": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "payAmount": {
+                        "type": "number"
+                      },
+                      "payMode": {
+                        "type": "string"
+                      },
+                      "receiptNo": {
+                        "type": "string"
+                      },
+                      "registerBy": {
+                        "type": "string"
+                      },
+                      "registerName": {
+                        "type": "string"
+                      },
+                      "registerTime": {
+                        "type": "string"
+                      },
+                      "subjectName": {
+                        "type": "string"
+                      },
+                      "subjectUuid": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "batchUuid",
+                      "batchNo",
+                      "batchName",
+                      "subjectUuid",
+                      "subjectName",
+                      "payAmount",
+                      "payMode",
+                      "receiptNo",
+                      "arriveTime",
+                      "registerBy",
+                      "registerName",
+                      "registerTime",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/salary_payment"
         ]
       }
     },
@@ -23679,6 +23985,73 @@
         ]
       }
     },
+    "/api/v1/hrm/registerSalaryPayment": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_payment:register",
+        "operationId": "v1/Hrm/SalaryPaymentRegister",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "arriveTime": {
+                  "type": "string"
+                },
+                "batchUuid": {
+                  "type": "string"
+                },
+                "payAmount": {
+                  "type": "number"
+                },
+                "payMode": {
+                  "type": "string"
+                },
+                "receiptNo": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "batchUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Register",
+        "tags": [
+          "v1/hrm/salary_payment"
+        ]
+      }
+    },
     "/api/v1/hrm/rejectBill": {
       "post": {
         "consumes": [
@@ -24753,6 +25126,64 @@
         "summary": "SubmitApproval",
         "tags": [
           "v1/hrm/perf_result"
+        ]
+      }
+    },
+    "/api/v1/hrm/submitSalaryConfirm": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_confirm:submit",
+        "operationId": "v1/Hrm/SalaryConfirmSubmit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "batchUuid": {
+                  "type": "string"
+                },
+                "opinion": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "batchUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Submit",
+        "tags": [
+          "v1/hrm/salary_confirm"
         ]
       }
     },
