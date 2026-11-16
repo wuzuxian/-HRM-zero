@@ -1695,6 +1695,69 @@ export function GetPunchStatisticsDetail(params: Api.Hrm.PunchStatsDetailRequest
   });
 }
 
+/** get attendance month report list (HRM-23 考勤月报: 锁定月快照/未锁定月实时聚合) */
+export function GetAttendanceMonthReport(params?: Api.Hrm.MonthReportSearchParams) {
+  return request<Api.Hrm.MonthReportListResponse>({
+    url: '/api/v1/hrm/getAttendanceMonthReport',
+    method: 'get',
+    params
+  });
+}
+
+/** get attendance month report day detail (行操作「日明细」) */
+export function GetAttendanceMonthReportDetail(params: Api.Hrm.MonthReportDetailRequest) {
+  return request<Api.Hrm.MonthReportDetailResponse>({
+    url: '/api/v1/hrm/getAttendanceMonthReportDetail',
+    method: 'get',
+    params
+  });
+}
+
+/** lock attendance month report (锁定月报: 实时聚合写入快照) */
+export function LockAttendanceMonthReport(req: Api.Hrm.MonthReportLockRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/lockAttendanceMonthReport',
+    method: 'post',
+    data: req
+  });
+}
+
+/** unlock attendance month report (解锁: 删除快照恢复实时聚合) */
+export function UnlockAttendanceMonthReport(req: Api.Hrm.MonthReportLockRequest) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/unlockAttendanceMonthReport',
+    method: 'post',
+    data: req
+  });
+}
+
+/** recalc attendance month report (重新计算: 未锁定月缓存刷新/锁定月 diff 标记) */
+export function RecalcAttendanceMonthReport(yearMonth: string) {
+  return request<Api.Hrm.MonthReportRecalcResponse>({
+    url: '/api/v1/hrm/recalcAttendanceMonthReport',
+    method: 'post',
+    data: { yearMonth }
+  });
+}
+
+/** get attendance month lock records (锁定记录: 谁何时锁/解锁/重算流水) */
+export function GetAttendanceMonthLockRecords(params?: { yearMonth?: string }) {
+  return request<{ records: Api.Hrm.MonthReportLockRecord[] }>({
+    url: '/api/v1/hrm/getAttendanceMonthLockRecords',
+    method: 'get',
+    params
+  });
+}
+
+/** export attendance month report xlsx (base64) */
+export function ExportAttendanceMonthReport(req: Api.Hrm.MonthReportExportRequest) {
+  return request<{ fileName: string; content: string }>({
+    url: '/api/v1/hrm/exportAttendanceMonthReport',
+    method: 'post',
+    data: req
+  });
+}
+
 /** get schedule board matrix (排班表矩阵: 员工×当月每日班次, 按考勤组维护) */
 export function GetScheduleMatrix(params: Api.Hrm.ScheduleMatrixRequest) {
   return request<Api.Hrm.ScheduleMatrixResponse>({
