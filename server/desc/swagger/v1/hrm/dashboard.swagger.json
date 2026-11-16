@@ -1,0 +1,251 @@
+{
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/hrm/getMyDashboard": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:dashboard:getMyDashboard",
+        "operationId": "v1/Hrm/DashboardGetMyDashboard",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "month",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "employeeUuid",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "calendar": {
+                  "items": {
+                    "properties": {
+                      "clockInTime": {
+                        "type": "string"
+                      },
+                      "clockOutTime": {
+                        "type": "string"
+                      },
+                      "date": {
+                        "type": "string"
+                      },
+                      "earlyMinutes": {
+                        "type": "integer"
+                      },
+                      "lateMinutes": {
+                        "type": "integer"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "weekday": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "date",
+                      "weekday",
+                      "status",
+                      "clockInTime",
+                      "clockOutTime",
+                      "lateMinutes",
+                      "earlyMinutes"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "employeeName": {
+                  "type": "string"
+                },
+                "employeeNo": {
+                  "type": "string"
+                },
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "lock": {
+                  "properties": {
+                    "hintText": {
+                      "type": "string"
+                    },
+                    "lockDay": {
+                      "type": "integer"
+                    },
+                    "lockMonth": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "lockDay",
+                    "lockMonth",
+                    "hintText"
+                  ],
+                  "type": "object"
+                },
+                "registered": {
+                  "type": "boolean"
+                },
+                "stats": {
+                  "properties": {
+                    "absentTimes": {
+                      "type": "integer"
+                    },
+                    "annualLeaveAvailable": {
+                      "type": "number"
+                    },
+                    "annualLeaveYear": {
+                      "type": "integer"
+                    },
+                    "attendedDays": {
+                      "type": "integer"
+                    },
+                    "earlyTimes": {
+                      "type": "integer"
+                    },
+                    "expectedDays": {
+                      "type": "integer"
+                    },
+                    "lateTimes": {
+                      "type": "integer"
+                    },
+                    "missingTimes": {
+                      "type": "integer"
+                    },
+                    "overtimeHours": {
+                      "type": "number"
+                    },
+                    "overtimeTimes": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "expectedDays",
+                    "attendedDays",
+                    "lateTimes",
+                    "earlyTimes",
+                    "missingTimes",
+                    "absentTimes",
+                    "overtimeTimes",
+                    "overtimeHours",
+                    "annualLeaveAvailable",
+                    "annualLeaveYear"
+                  ],
+                  "type": "object"
+                },
+                "today": {
+                  "properties": {
+                    "clockInStatus": {
+                      "type": "string"
+                    },
+                    "clockInTime": {
+                      "type": "string"
+                    },
+                    "clockOutStatus": {
+                      "type": "string"
+                    },
+                    "clockOutTime": {
+                      "type": "string"
+                    },
+                    "earlyMinutes": {
+                      "type": "integer"
+                    },
+                    "groupName": {
+                      "type": "string"
+                    },
+                    "isRestDay": {
+                      "type": "boolean"
+                    },
+                    "lateMinutes": {
+                      "type": "integer"
+                    },
+                    "noRule": {
+                      "type": "boolean"
+                    },
+                    "ruleSource": {
+                      "type": "string"
+                    },
+                    "scheduledEnd": {
+                      "type": "string"
+                    },
+                    "scheduledStart": {
+                      "type": "string"
+                    },
+                    "settleStatus": {
+                      "type": "string"
+                    },
+                    "workHours": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "groupName",
+                    "ruleSource",
+                    "isRestDay",
+                    "noRule",
+                    "clockInTime",
+                    "clockInStatus",
+                    "clockOutTime",
+                    "clockOutStatus",
+                    "settleStatus",
+                    "lateMinutes",
+                    "earlyMinutes",
+                    "workHours",
+                    "scheduledStart",
+                    "scheduledEnd"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "GetMyDashboard",
+        "tags": [
+          "v1/hrm/dashboard"
+        ]
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKey": {
+      "description": "Enter Authorization",
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0"
+}

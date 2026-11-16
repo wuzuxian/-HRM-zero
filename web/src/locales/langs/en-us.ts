@@ -192,6 +192,7 @@ const local: App.I18n.Schema = {
     'hrm_attendance_apply_overtime-bill-list': 'Overtime Requests',
     'hrm_attendance_apply_card-replacement-list': 'Card Replacement',
     'hrm_attendance_my_attendance-punch': 'Attendance Punch',
+    hrm_attendance_my_dashboard: 'My Dashboard',
     'hrm_attendance_data_punch-record': 'Punch Records',
     'hrm_attendance_data_punch-statistics': 'Attendance Statistics',
     hrm_attendance_scheduling: 'Scheduling',
@@ -282,6 +283,9 @@ const local: App.I18n.Schema = {
       leavebalance: {
         init: 'Initialize This Year',
         adjust: 'Adjust Balance'
+      },
+      dashboard: {
+        view: 'Refresh Dashboard'
       },
       leave: {
         add: 'Add Leave Bill',
@@ -1585,7 +1589,8 @@ const local: App.I18n.Schema = {
           records: 'Approval Records',
           noRecords: 'No approval records',
           confirmSubmit: 'Submit this card replacement bill?',
-          confirmApprove: 'Approve? The replacement time will be written into the day\'s punch record and the day settle will be recalculated.',
+          confirmApprove:
+            "Approve? The replacement time will be written into the day's punch record and the day settle will be recalculated.",
           confirmReject: 'Reject this bill?',
           confirmRevoke: 'Revoke this bill?',
           form: {
@@ -1599,6 +1604,56 @@ const local: App.I18n.Schema = {
             punchTime: 'Please select replacement time',
             punchTimeRequired: 'Please select the replacement time',
             reason: 'Please enter reason (optional)'
+          }
+        },
+        myDashboard: {
+          title: 'My Dashboard',
+          lockHint: 'Attendance Lock Day Notice',
+          registeredGuide:
+            'This account is not linked to an employee record yet. Please contact HR or manage employees to create one.',
+          registeredGuideBtn: 'Go to Employees',
+          quickActions: 'Quick Actions',
+          goPunch: 'Punch Now',
+          todayRest: 'Rest Day',
+          todayWork: 'Work Day',
+          noRuleHint:
+            'No attendance rule configured (neither attendance group nor org default rule matched); attendance status undetermined',
+          clockInStatus: 'Clock In',
+          clockOutStatus: 'Clock Out',
+          settleStatus: "Today's Attendance",
+          lateMinutes: 'Late {n} min',
+          earlyMinutes: 'Early leave {n} min',
+          workHours: 'Work Hours',
+          scheduledTime: 'Scheduled Time',
+          monthStats: 'Monthly Stats',
+          expectedDays: 'Expected Days',
+          attendedDays: 'Attended Days',
+          lateTimes: 'Late',
+          earlyTimes: 'Early Leave',
+          missingTimes: 'Missing Punch',
+          absentTimes: 'Absent',
+          overtimeTimes: 'Overtime',
+          overtimeHours: 'Overtime Hours',
+          annualLeaveAvailable: 'Annual Leave Available',
+          daysUnit: 'days',
+          hoursUnit: 'h',
+          timesUnit: 'times',
+          calendar: 'Attendance Calendar',
+          calendarStatus: {
+            rest: 'Rest',
+            normal: 'Normal',
+            late: 'Late',
+            early: 'Early Leave',
+            missing: 'Missing Punch',
+            noRule: 'Undetermined',
+            future: 'Upcoming',
+            none: 'No Record'
+          },
+          quick: {
+            leave: 'Leave',
+            cardReplacement: 'Card Replacement',
+            overtime: 'Overtime',
+            leaveCancel: 'Leave Cancel'
           }
         },
         attendancePunch: {

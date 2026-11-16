@@ -1789,13 +1789,21 @@ export function DeletePosition(req: string[]) {
   });
 }
 
-
 /** update recruitment position status (open→full/closed；closed 终态；已满由 IncreaseHiredCount 联动) */
 export function UpdatePositionStatus(req: Api.Hrm.UpdatePositionStatusRequest) {
   return request<Api.Common.Empty>({
     url: '/api/v1/hrm/updatePositionStatus',
     method: 'post',
     data: req
+  });
+}
+
+/** get my attendance dashboard (HRM-17 个人看板: 今日卡片+本月统计+锁定日提示+考勤日历 单端点聚合) */
+export function GetMyDashboard(params?: Api.Hrm.MyDashboardSearchParams) {
+  return request<Api.Hrm.MyDashboard>({
+    url: '/api/v1/hrm/getMyDashboard',
+    method: 'get',
+    params
   });
 }
 

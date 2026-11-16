@@ -168,6 +168,15 @@ export const generatedRoutes: GeneratedRoute[] = [
                   title: 'hrm_attendance_my_attendance-punch',
                   i18nKey: 'route.hrm_attendance_my_attendance-punch'
                 }
+              },
+              {
+                name: 'hrm_attendance_my_dashboard',
+                path: '/hrm/attendance/my/dashboard',
+                component: 'view.hrm_attendance_my_dashboard',
+                meta: {
+                  title: 'hrm_attendance_my_dashboard',
+                  i18nKey: 'route.hrm_attendance_my_dashboard'
+                }
               }
             ]
           },

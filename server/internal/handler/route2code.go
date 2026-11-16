@@ -64,6 +64,7 @@ var RoutesCodesMap = map[string]string{
 	"POST:/api/v1/hrm/editEmployeeContract":             "v1:hrm:contract:edit",
 	"GET:/api/v1/hrm/getEmployeeContractList":           "v1:hrm:contract:list",
 	"POST:/api/v1/hrm/renewEmployeeContract":            "v1:hrm:contract:renew",
+	"GET:/api/v1/hrm/getMyDashboard":                    "v1:hrm:dashboard:getMyDashboard",
 	"POST:/api/v1/hrm/addEmployeeCertificate":           "v1:hrm:empcert:add",
 	"POST:/api/v1/hrm/deleteEmployeeCertificate":        "v1:hrm:empcert:delete",
 	"POST:/api/v1/hrm/editEmployeeCertificate":          "v1:hrm:empcert:edit",

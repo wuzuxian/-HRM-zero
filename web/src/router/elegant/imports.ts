@@ -29,6 +29,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   "hrm_attendance_data_punch-record": () => import("@/views/hrm/attendance/data/punch-record/index.vue"),
   "hrm_attendance_data_punch-statistics": () => import("@/views/hrm/attendance/data/punch-statistics/index.vue"),
   "hrm_attendance_my_attendance-punch": () => import("@/views/hrm/attendance/my/attendance-punch/index.vue"),
+  hrm_attendance_my_dashboard: () => import("@/views/hrm/attendance/my/dashboard/index.vue"),
   "hrm_attendance_scheduling_schedule-board": () => import("@/views/hrm/attendance/scheduling/schedule-board/index.vue"),
   "hrm_attendance_scheduling_schedule-cycle": () => import("@/views/hrm/attendance/scheduling/schedule-cycle/index.vue"),
   "hrm_attendance_setting_attendance-config": () => import("@/views/hrm/attendance/setting/attendance-config/index.vue"),

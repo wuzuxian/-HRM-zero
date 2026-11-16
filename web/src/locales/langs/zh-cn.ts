@@ -192,6 +192,7 @@ const local: App.I18n.Schema = {
     'hrm_attendance_apply_overtime-bill-list': '加班申请',
     'hrm_attendance_apply_card-replacement-list': '补卡管理',
     'hrm_attendance_my_attendance-punch': '考勤打卡',
+    hrm_attendance_my_dashboard: '个人看板',
     'hrm_attendance_data_punch-record': '打卡记录',
     'hrm_attendance_data_punch-statistics': '考勤统计',
     hrm_attendance_scheduling: '排班管理',
@@ -282,6 +283,9 @@ const local: App.I18n.Schema = {
       leavebalance: {
         init: '初始化本年度额度',
         adjust: '调整余额'
+      },
+      dashboard: {
+        view: '刷新看板'
       },
       leave: {
         add: '新增请假单',
@@ -1596,6 +1600,54 @@ const local: App.I18n.Schema = {
             punchTime: '请选择补卡时间',
             punchTimeRequired: '请选择补卡时间',
             reason: '请输入补卡原因（选填）'
+          }
+        },
+        myDashboard: {
+          title: '个人看板',
+          lockHint: '考勤锁定日提示',
+          registeredGuide: '当前登录账号尚未关联员工档案，请联系人事建档或前往员工管理维护。',
+          registeredGuideBtn: '去员工管理',
+          quickActions: '快捷操作',
+          goPunch: '去打卡',
+          todayRest: '今天休息',
+          todayWork: '今天上班',
+          noRuleHint: '未配置考勤规则（考勤组/组织默认规则均未命中），考勤状态未判定',
+          clockInStatus: '上班打卡',
+          clockOutStatus: '下班打卡',
+          settleStatus: '今日考勤状态',
+          lateMinutes: '迟到 {n} 分钟',
+          earlyMinutes: '早退 {n} 分钟',
+          workHours: '工时',
+          scheduledTime: '考勤时间',
+          monthStats: '本月统计',
+          expectedDays: '应出勤',
+          attendedDays: '已出勤',
+          lateTimes: '迟到',
+          earlyTimes: '早退',
+          missingTimes: '缺卡',
+          absentTimes: '缺勤',
+          overtimeTimes: '加班',
+          overtimeHours: '加班时长',
+          annualLeaveAvailable: '年假可用',
+          daysUnit: '天',
+          hoursUnit: '小时',
+          timesUnit: '次',
+          calendar: '考勤日历',
+          calendarStatus: {
+            rest: '休息',
+            normal: '正常',
+            late: '迟到',
+            early: '早退',
+            missing: '缺卡',
+            noRule: '未判定',
+            future: '未来',
+            none: '无记录'
+          },
+          quick: {
+            leave: '请假',
+            cardReplacement: '补卡',
+            overtime: '加班',
+            leaveCancel: '销假'
           }
         },
         attendancePunch: {
