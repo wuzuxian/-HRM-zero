@@ -2895,6 +2895,82 @@
         ]
       }
     },
+    "/api/v1/hrm/addSalaryBatch": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_batch:add",
+        "operationId": "v1/Hrm/SalaryBatchAdd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "batchMonth": {
+                  "type": "integer"
+                },
+                "batchName": {
+                  "type": "string"
+                },
+                "batchType": {
+                  "default": "monthly",
+                  "example": "monthly",
+                  "type": "string"
+                },
+                "batchYear": {
+                  "type": "integer"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "subjectUuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "batchName",
+                "batchType",
+                "subjectUuid",
+                "batchYear",
+                "batchMonth"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Add",
+        "tags": [
+          "v1/hrm/salary_batch"
+        ]
+      }
+    },
     "/api/v1/hrm/addSalaryItem": {
       "post": {
         "consumes": [
@@ -5731,6 +5807,59 @@
         "summary": "Delete",
         "tags": [
           "v1/hrm/salary_archive"
+        ]
+      }
+    },
+    "/api/v1/hrm/deleteSalaryBatch": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_batch:delete",
+        "operationId": "v1/Hrm/SalaryBatchDelete",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "uuids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "uuids"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Delete",
+        "tags": [
+          "v1/hrm/salary_batch"
         ]
       }
     },
@@ -8840,6 +8969,77 @@
         "summary": "Edit",
         "tags": [
           "v1/hrm/salary_archive"
+        ]
+      }
+    },
+    "/api/v1/hrm/editSalaryBatch": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_batch:edit",
+        "operationId": "v1/Hrm/SalaryBatchEdit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "batchMonth": {
+                  "type": "integer"
+                },
+                "batchName": {
+                  "type": "string"
+                },
+                "batchType": {
+                  "default": "monthly",
+                  "example": "monthly",
+                  "type": "string"
+                },
+                "batchYear": {
+                  "type": "integer"
+                },
+                "remark": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uuid",
+                "batchName",
+                "batchType",
+                "batchYear",
+                "batchMonth"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Edit",
+        "tags": [
+          "v1/hrm/salary_batch"
         ]
       }
     },
@@ -19363,6 +19563,400 @@
         ]
       }
     },
+    "/api/v1/hrm/getSalaryBatchList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:salary_batch:list",
+        "operationId": "v1/Hrm/SalaryBatchList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "batchName",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "subjectUuid",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "batchType",
+            "type": "string"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "year",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "month",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "trialStatus",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "batchMonth": {
+                        "type": "integer"
+                      },
+                      "batchName": {
+                        "type": "string"
+                      },
+                      "batchNo": {
+                        "type": "string"
+                      },
+                      "batchType": {
+                        "type": "string"
+                      },
+                      "batchYear": {
+                        "type": "integer"
+                      },
+                      "confirmStatus": {
+                        "type": "string"
+                      },
+                      "createTime": {
+                        "type": "string"
+                      },
+                      "deductionTotal": {
+                        "type": "number"
+                      },
+                      "earningTotal": {
+                        "type": "number"
+                      },
+                      "headcount": {
+                        "type": "integer"
+                      },
+                      "netTotal": {
+                        "type": "number"
+                      },
+                      "payStatus": {
+                        "type": "string"
+                      },
+                      "payslipStatus": {
+                        "type": "string"
+                      },
+                      "remark": {
+                        "type": "string"
+                      },
+                      "subjectName": {
+                        "type": "string"
+                      },
+                      "subjectUuid": {
+                        "type": "string"
+                      },
+                      "trialStatus": {
+                        "type": "string"
+                      },
+                      "trialTime": {
+                        "type": "string"
+                      },
+                      "updateTime": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "version": {
+                        "type": "integer"
+                      },
+                      "warnings": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "batchNo",
+                      "batchName",
+                      "batchType",
+                      "subjectUuid",
+                      "subjectName",
+                      "batchYear",
+                      "batchMonth",
+                      "headcount",
+                      "earningTotal",
+                      "deductionTotal",
+                      "netTotal",
+                      "trialStatus",
+                      "confirmStatus",
+                      "payStatus",
+                      "payslipStatus",
+                      "trialTime",
+                      "version",
+                      "warnings",
+                      "remark",
+                      "createTime",
+                      "updateTime"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "List",
+        "tags": [
+          "v1/hrm/salary_batch"
+        ]
+      }
+    },
+    "/api/v1/hrm/getSalaryBatchResult": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:salary_batch:getBatchResult",
+        "operationId": "v1/Hrm/SalaryBatchGetBatchResult",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "batchUuid",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "batch": {
+                  "properties": {
+                    "batchMonth": {
+                      "type": "integer"
+                    },
+                    "batchName": {
+                      "type": "string"
+                    },
+                    "batchNo": {
+                      "type": "string"
+                    },
+                    "batchType": {
+                      "type": "string"
+                    },
+                    "batchYear": {
+                      "type": "integer"
+                    },
+                    "confirmStatus": {
+                      "type": "string"
+                    },
+                    "createTime": {
+                      "type": "string"
+                    },
+                    "deductionTotal": {
+                      "type": "number"
+                    },
+                    "earningTotal": {
+                      "type": "number"
+                    },
+                    "headcount": {
+                      "type": "integer"
+                    },
+                    "netTotal": {
+                      "type": "number"
+                    },
+                    "payStatus": {
+                      "type": "string"
+                    },
+                    "payslipStatus": {
+                      "type": "string"
+                    },
+                    "remark": {
+                      "type": "string"
+                    },
+                    "subjectName": {
+                      "type": "string"
+                    },
+                    "subjectUuid": {
+                      "type": "string"
+                    },
+                    "trialStatus": {
+                      "type": "string"
+                    },
+                    "trialTime": {
+                      "type": "string"
+                    },
+                    "updateTime": {
+                      "type": "string"
+                    },
+                    "uuid": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "integer"
+                    },
+                    "warnings": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "uuid",
+                    "batchNo",
+                    "batchName",
+                    "batchType",
+                    "subjectUuid",
+                    "subjectName",
+                    "batchYear",
+                    "batchMonth",
+                    "headcount",
+                    "earningTotal",
+                    "deductionTotal",
+                    "netTotal",
+                    "trialStatus",
+                    "confirmStatus",
+                    "payStatus",
+                    "payslipStatus",
+                    "trialTime",
+                    "version",
+                    "warnings",
+                    "remark",
+                    "createTime",
+                    "updateTime"
+                  ],
+                  "type": "object"
+                },
+                "items": {
+                  "items": {
+                    "properties": {
+                      "amount": {
+                        "type": "number"
+                      },
+                      "batchUuid": {
+                        "type": "string"
+                      },
+                      "calcOrder": {
+                        "type": "integer"
+                      },
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "type": "string"
+                      },
+                      "employeeUuid": {
+                        "type": "string"
+                      },
+                      "itemClass": {
+                        "type": "string"
+                      },
+                      "itemCode": {
+                        "type": "string"
+                      },
+                      "itemName": {
+                        "type": "string"
+                      },
+                      "itemType": {
+                        "type": "string"
+                      },
+                      "itemUuid": {
+                        "type": "string"
+                      },
+                      "orgName": {
+                        "type": "string"
+                      },
+                      "source": {
+                        "type": "string"
+                      },
+                      "sourceDetail": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "batchUuid",
+                      "employeeUuid",
+                      "employeeNo",
+                      "employeeName",
+                      "orgName",
+                      "itemUuid",
+                      "itemCode",
+                      "itemName",
+                      "itemClass",
+                      "itemType",
+                      "amount",
+                      "source",
+                      "sourceDetail",
+                      "calcOrder"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "GetBatchResult",
+        "tags": [
+          "v1/hrm/salary_batch"
+        ]
+      }
+    },
     "/api/v1/hrm/getSalaryItemList": {
       "get": {
         "description": "接口权限编码:v1:hrm:salary_item:list",
@@ -24198,6 +24792,82 @@
         "summary": "ToggleStatus",
         "tags": [
           "v1/hrm/schedulecycle"
+        ]
+      }
+    },
+    "/api/v1/hrm/trialSalaryBatch": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:salary_batch:trial",
+        "operationId": "v1/Hrm/SalaryBatchTrial",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "batchUuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "batchUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "batchNo": {
+                  "type": "string"
+                },
+                "batchUuid": {
+                  "type": "string"
+                },
+                "deductionTotal": {
+                  "type": "number"
+                },
+                "earningTotal": {
+                  "type": "number"
+                },
+                "headcount": {
+                  "type": "integer"
+                },
+                "netTotal": {
+                  "type": "number"
+                },
+                "version": {
+                  "type": "integer"
+                },
+                "warnings": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "Trial",
+        "tags": [
+          "v1/hrm/salary_batch"
         ]
       }
     },

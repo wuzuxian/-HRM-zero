@@ -43,12 +43,12 @@ var importHeader = []string{
 
 // deductTypeByName 扣除项中文名 → 编码（与 validate.go 的 7 类一一对应）。
 var deductTypeByName = map[string]string{
-	"子女教育":         DeductTypeChildrenEdu,
-	"继续教育":         DeductTypeContinuingEdu,
-	"大病医疗":         DeductTypeCriticalIllness,
-	"住房贷款利息": DeductTypeHouseLoan,
-	"住房租金":         DeductTypeHouseRent,
-	"赡养老人":         DeductTypeSupportElderly,
+	"子女教育":      DeductTypeChildrenEdu,
+	"继续教育":      DeductTypeContinuingEdu,
+	"大病医疗":      DeductTypeCriticalIllness,
+	"住房贷款利息":    DeductTypeHouseLoan,
+	"住房租金":      DeductTypeHouseRent,
+	"赡养老人":      DeductTypeSupportElderly,
 	"3岁以下婴幼儿照护": DeductTypeInfantCare,
 }
 

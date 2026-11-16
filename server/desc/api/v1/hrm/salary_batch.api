@@ -1,0 +1,158 @@
+syntax = "v1"
+
+info (
+	go_package: "v1/hrm/salary_batch"
+)
+
+import (
+	"../../common/request.api"
+	"../../common/response.api"
+)
+
+// HrmSalaryBatch 薪资批次（demo-inventory 8.4 发薪流程）: 薪酬主体 × 年月 × 批次类型唯一，
+// 试算引擎按批次员工集逐人产出明细行（hrm_salary_batch_item），批次行汇总人数/应发/应扣/实发
+// 与四个进度标记（试算/确认/发薪/工资条——确认审批 HRM-38、发薪登记与工资条 HRM-39 写回）。
+type HrmSalaryBatch {
+	Uuid           string  `json:"uuid"`
+	BatchNo        string  `json:"batchNo"`
+	BatchName      string  `json:"batchName"`
+	BatchType      string  `json:"batchType"`
+	SubjectUuid    string  `json:"subjectUuid"`
+	SubjectName    string  `json:"subjectName"`
+	BatchYear      int64   `json:"batchYear"`
+	BatchMonth     int64   `json:"batchMonth"`
+	Headcount      int64   `json:"headcount"`
+	EarningTotal   float64 `json:"earningTotal"`
+	DeductionTotal float64 `json:"deductionTotal"`
+	NetTotal       float64 `json:"netTotal"`
+	TrialStatus    string  `json:"trialStatus"`
+	ConfirmStatus  string  `json:"confirmStatus"`
+	PayStatus      string  `json:"payStatus"`
+	PayslipStatus  string  `json:"payslipStatus"`
+	TrialTime      string  `json:"trialTime"`
+	Version        int64   `json:"version"`
+	Warnings       string  `json:"warnings"`
+	Remark         string  `json:"remark"`
+	CreateTime     string  `json:"createTime"`
+	UpdateTime     string  `json:"updateTime"`
+}
+
+// HrmSalaryBatchItem 试算明细行（每员工 × 每薪资项目一行；amount 应扣类为正数）。
+type HrmSalaryBatchItem {
+	Uuid         string  `json:"uuid"`
+	BatchUuid    string  `json:"batchUuid"`
+	EmployeeUuid string  `json:"employeeUuid"`
+	EmployeeNo   string  `json:"employeeNo"`
+	EmployeeName string  `json:"employeeName"`
+	OrgName      string  `json:"orgName"`
+	ItemUuid     string  `json:"itemUuid"`
+	ItemCode     string  `json:"itemCode"`
+	ItemName     string  `json:"itemName"`
+	ItemClass    string  `json:"itemClass"`
+	ItemType     string  `json:"itemType"`
+	Amount       float64 `json:"amount"`
+	Source       string  `json:"source"`
+	SourceDetail string  `json:"sourceDetail"`
+	CalcOrder    int64   `json:"calcOrder"`
+}
+
+type ListRequest {
+	PageRequest
+	BatchName   string `form:"batchName,optional"`
+	SubjectUuid string `form:"subjectUuid,optional"`
+	BatchType   string `form:"batchType,optional"`
+	Year        int64  `form:"year,optional"`
+	Month       int64  `form:"month,optional"`
+	TrialStatus string `form:"trialStatus,optional"`
+}
+
+type ListResponse {
+	PageResponse
+	Records []HrmSalaryBatch `json:"records"`
+}
+
+type AddRequest {
+	BatchName   string `json:"batchName"`
+	BatchType   string `json:"batchType,default=monthly"`
+	SubjectUuid string `json:"subjectUuid"`
+	BatchYear   int64  `json:"batchYear"`
+	BatchMonth  int64  `json:"batchMonth"`
+	Remark      string `json:"remark,optional"`
+}
+
+type AddResponse {
+	Uuid string `json:"uuid"`
+}
+
+type EditRequest {
+	Uuid       string `json:"uuid"`
+	BatchName  string `json:"batchName"`
+	BatchType  string `json:"batchType,default=monthly"`
+	BatchYear  int64  `json:"batchYear"`
+	BatchMonth int64  `json:"batchMonth"`
+	Remark     string `json:"remark,optional"`
+}
+
+type EditResponse {}
+
+type DeleteRequest {
+	Uuids []string `json:"uuids"`
+}
+
+type DeleteResponse {}
+
+// TrialRequest 薪资试算：按批次（主体+年月）圈定员工集（该主体下有有效薪资档案的在职员工）
+// 逐人试算，覆盖旧明细（version+1，幂等重算）。
+type TrialRequest {
+	BatchUuid string `json:"batchUuid"`
+}
+
+// TrialResponse 试算产出摘要（批次行汇总 + 告警文本）。
+type TrialResponse {
+	BatchUuid      string  `json:"batchUuid"`
+	BatchNo        string  `json:"batchNo"`
+	Headcount      int64   `json:"headcount"`
+	EarningTotal   float64 `json:"earningTotal"`
+	DeductionTotal float64 `json:"deductionTotal"`
+	NetTotal       float64 `json:"netTotal"`
+	Version        int64   `json:"version"`
+	Warnings       string  `json:"warnings"`
+}
+
+// GetBatchResultRequest 查看结果：批次全员明细行（按员工分组展示）。
+type GetBatchResultRequest {
+	BatchUuid string `form:"batchUuid"`
+}
+
+type GetBatchResultResponse {
+	Batch HrmSalaryBatch       `json:"batch"`
+	Items []HrmSalaryBatchItem `json:"items"`
+}
+
+@server (
+	prefix:          /api/v1
+	group:           v1/hrm/salary_batch
+	compact_handler: true
+	jwt:             Jwt
+	middleware:      Authx
+)
+service server {
+	@handler List
+	get /hrm/getSalaryBatchList (ListRequest) returns (ListResponse)
+
+	@handler Add
+	post /hrm/addSalaryBatch (AddRequest) returns (AddResponse)
+
+	@handler Edit
+	post /hrm/editSalaryBatch (EditRequest) returns (EditResponse)
+
+	@handler Delete
+	post /hrm/deleteSalaryBatch (DeleteRequest) returns (DeleteResponse)
+
+	@handler Trial
+	post /hrm/trialSalaryBatch (TrialRequest) returns (TrialResponse)
+
+	@handler GetBatchResult
+	get /hrm/getSalaryBatchResult (GetBatchResultRequest) returns (GetBatchResultResponse)
+}
+

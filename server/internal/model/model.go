@@ -50,6 +50,8 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_resignation_bill"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_reward_bill"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_archive"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_batch"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_batch_item"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_item"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_scheme"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_scheme_item"
@@ -119,6 +121,8 @@ type Model struct {
 	HrmResignationBill            hrm_resignation_bill.HrmResignationBillModel
 	HrmRewardBill                 hrm_reward_bill.HrmRewardBillModel
 	HrmSalaryArchive              hrm_salary_archive.HrmSalaryArchiveModel
+	HrmSalaryBatch                hrm_salary_batch.HrmSalaryBatchModel
+	HrmSalaryBatchItem            hrm_salary_batch_item.HrmSalaryBatchItemModel
 	HrmSalaryItem                 hrm_salary_item.HrmSalaryItemModel
 	HrmSalaryScheme               hrm_salary_scheme.HrmSalarySchemeModel
 	HrmSalarySchemeItem           hrm_salary_scheme_item.HrmSalarySchemeItemModel
@@ -189,6 +193,8 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmResignationBill:            hrm_resignation_bill.NewHrmResignationBillModel(conn, op...),
 		HrmRewardBill:                 hrm_reward_bill.NewHrmRewardBillModel(conn, op...),
 		HrmSalaryArchive:              hrm_salary_archive.NewHrmSalaryArchiveModel(conn, op...),
+		HrmSalaryBatch:                hrm_salary_batch.NewHrmSalaryBatchModel(conn, op...),
+		HrmSalaryBatchItem:            hrm_salary_batch_item.NewHrmSalaryBatchItemModel(conn, op...),
 		HrmSalaryItem:                 hrm_salary_item.NewHrmSalaryItemModel(conn, op...),
 		HrmSalaryScheme:               hrm_salary_scheme.NewHrmSalarySchemeModel(conn, op...),
 		HrmSalarySchemeItem:           hrm_salary_scheme_item.NewHrmSalarySchemeItemModel(conn, op...),
