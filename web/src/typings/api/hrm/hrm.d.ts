@@ -5054,5 +5054,101 @@ declare namespace Api {
     type EditOfferRequest = AddOfferRequest & {
       uuid: string;
     };
+
+    // ===== HRM-39 工资条与薪资统计台账 =====
+
+    /** 工资条明细行（按薪资项目 JSON 快照，HRM-37 试算明细投影） */
+    type SalaryPayslipItem = {
+      itemCode: string;
+      itemName: string;
+      itemClass: SalaryItemClass;
+      amount: number;
+      source: string;
+      sourceDetail: string;
+    };
+
+    /** 工资条（demo-inventory 8.4 /hrm/salary/payslip） */
+    type SalaryPayslip = {
+      uuid: string;
+      batchUuid: string;
+      batchNo: string;
+      batchName: string;
+      /** 年月 YYYY-MM */
+      yearMonth: string;
+      title: string;
+      employeeUuid: string;
+      employeeNo: string;
+      employeeName: string;
+      orgName: string;
+      earningTotal: number;
+      deductionTotal: number;
+      netTotal: number;
+      items: SalaryPayslipItem[];
+      published: number;
+      readStatus: number;
+      readTime: string;
+      createTime: string;
+      updateTime: string;
+    };
+
+    /** 工资条 search params（筛选 批次/员工姓名/年月/已读状态） */
+    type SalaryPayslipSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.SalaryPayslip, 'batchUuid' | 'employeeName' | 'yearMonth' | 'readStatus'> & Common.CommonSearchParams
+    >;
+
+    /** 工资条 paginated list */
+    type SalaryPayslipList = Common.PaginatingQueryRecord<SalaryPayslip>;
+
+    /** 我的工资条 search params */
+    type SalaryPayslipMineSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.SalaryPayslip, 'yearMonth'> & Common.CommonSearchParams
+    >;
+
+    /** 按批次发布工资条 request */
+    type PublishSalaryPayslipRequest = {
+      batchUuid: string;
+    };
+
+    /** 按批次发布工资条 response */
+    type PublishSalaryPayslipResponse = {
+      batchUuid: string;
+      count: number;
+    };
+
+    /** 薪资统计台账行（批次×员工粒度，demo-inventory 8.4 /hrm/salary/statistics） */
+    type SalaryLedgerRow = {
+      batchUuid: string;
+      batchNo: string;
+      batchName: string;
+      yearMonth: string;
+      employeeUuid: string;
+      employeeNo: string;
+      employeeName: string;
+      orgName: string;
+      earningTotal: number;
+      deductionTotal: number;
+      netTotal: number;
+      laborCostTotal: number;
+      /** 异常（试算告警文本透传，''=无异常） */
+      abnormal: string;
+      /** 已发薪（批次 pay_status 只读透传） */
+      paid: number;
+      /** 已发条（批次 payslip_status 只读透传） */
+      payslipped: number;
+    };
+
+    /** 薪资统计台账 search params（筛选 批次/姓名/部门/仅看异常） */
+    type SalaryLedgerSearchParams = CommonType.RecordNullable<
+      Pick<Api.Hrm.SalaryLedgerRow, 'batchUuid' | 'employeeName' | 'orgName'> & { onlyAbnormal?: boolean } & Common.CommonSearchParams
+    >;
+
+    /** 薪资统计台账 response（统计卡 + 明细行；分页字段 = PageResponse） */
+    type SalaryLedgerResponse = Common.PaginatingQueryRecord<SalaryLedgerRow> & {
+      employeeCount: number;
+      earningTotal: number;
+      deductionTotal: number;
+      netTotal: number;
+      laborCostTotal: number;
+    };
   }
 }

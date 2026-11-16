@@ -235,12 +235,12 @@ const local: App.I18n.Schema = {
     hrm_salary_setting_scheme: '薪酬方案',
     'hrm_salary_archive-list': '员工薪资档案',
     hrm_salary_batch: '薪资批次',
-    'hrm_salary_confirm-list': '薪资确认审批',
-    'hrm_salary_payment-list': '发薪登记',
     hrm_salary_tax: '个税管理',
     'hrm_salary_tax_tax-profile': '员工个税档案',
     'hrm_salary_tax_special-deduction': '专项附加扣除',
     'hrm_salary_tax_tax-opening': '个税累计期初',
+    hrm_salary_payslip: '工资条管理',
+    hrm_salary_statistics: '薪资统计',
     hrm_training_plan: '培训计划',
     hrm_training_session: '培训班次',
     'hrm_training_cert-template': '证书模板',
@@ -487,8 +487,8 @@ const local: App.I18n.Schema = {
         delete: '删除薪资批次',
         trial: '薪资试算'
       },
-      salary_payment: {
-        register: '发薪登记'
+      salary_payslip: {
+        publish: '发布工资条'
       },
       tax_profile: {
         add: '新增个税档案',
@@ -2498,13 +2498,6 @@ const local: App.I18n.Schema = {
         }
       },
       salary: {
-        billStatus: {
-          unsubmitted: '未提交',
-          approving: '审批中',
-          approved: '审批通过',
-          rejected: '审批不通过',
-          revoked: '已撤销'
-        },
         subject: {
           title: '薪酬主体',
           subjectName: '主体名称',
@@ -2703,55 +2696,7 @@ const local: App.I18n.Schema = {
             remark: '请输入备注'
           }
         },
-
-        confirm: {
-          title: '薪资确认审批',
-          billNo: '审批单号',
-          batch: '薪资批次',
-          batchFilter: '请选择批次',
-          batchPlaceholder: '请选择已试算且未确认的批次',
-          batchRequired: '请选择批次',
-          subject: '薪酬主体',
-          period: '薪资年月',
-          headcount: '人数',
-          netTotal: '实发合计',
-          creator: '创建人',
-          status: '单据状态',
-          statusFilter: '请选择单据状态',
-          submit: '发起审批',
-          submitSuccess: '薪资确认审批已提交',
-          approve: '审批通过',
-          approveConfirm: '确认通过该薪资确认审批？通过后批次允许发薪登记',
-          approveSuccess: '审批通过，批次已确认',
-          reject: '审批驳回',
-          rejectConfirm: '确认驳回该薪资确认审批？',
-          rejectSuccess: '已驳回'
-        },
-        payment: {
-          title: '发薪登记',
-          batch: '薪资批次',
-          batchFilter: '请选择批次',
-          batchPlaceholder: '请选择已确认且未发薪的批次',
-          batchRequired: '请选择批次',
-          subject: '薪酬主体',
-          payAmount: '发薪金额',
-          payAmountPlaceholder: '默认为批次实发合计',
-          payMode: '发薪方式',
-          payModeFilter: '请选择发薪方式',
-          payModeEnum: {
-            bank: '银行代发',
-            cash: '现金',
-            other: '其他'
-          },
-          receiptNo: '回执编号',
-          receiptNoPlaceholder: '请输入回执编号',
-          arriveTime: '到账时间',
-          arriveTimePlaceholder: '请选择到账时间',
-          register: '发薪登记',
-          registerSuccess: '发薪登记完成，批次已标记已发薪',
-          registerName: '登记人',
-          registerTime: '登记时间'
-        },        tax: {
+        tax: {
           profile: {
             title: '员工个税档案',
             employeeName: '员工',
@@ -2843,6 +2788,51 @@ const local: App.I18n.Schema = {
               untilMonth: '请选择截至月（1-12）'
             }
           }
+        },
+        payslip: {
+          pageTitle: '工资条管理',
+          title: '工资条标题',
+          employeeNo: '工号',
+          employeeName: '员工姓名',
+          yearMonth: '年月',
+          earningTotal: '应发',
+          deductionTotal: '应扣',
+          netTotal: '实发',
+          published: '已发布',
+          readStatus: '已读',
+          readTime: '已读时间',
+          unread: '未读',
+          readLabel: '已读',
+          detail: '明细',
+          itemName: '薪资项目',
+          itemClass: '项目分类',
+          amount: '金额',
+          sourceDetail: '取数说明',
+          batch: '薪资批次',
+          publish: '发布工资条',
+          publishDone: '已生成工资条',
+          chooseBatch: '选择批次',
+          chooseBatchPlaceholder: '请选择薪资批次（须已确认）',
+          chooseBatchFirst: '请先选择薪资批次'
+        },
+        statistics: {
+          pageTitle: '薪资台账',
+          batch: '批次',
+          batchUuidTip: '批次编号/名称',
+          employee: '员工',
+          employeeName: '姓名',
+          org: '部门',
+          yearMonth: '年月',
+          earningTotal: '应发合计',
+          deductionTotal: '应扣合计',
+          netTotal: '实发合计',
+          laborCostTotal: '人工成本',
+          employeeCount: '员工数',
+          abnormal: '异常',
+          normal: '无',
+          onlyAbnormal: '仅看异常',
+          paid: '已发薪',
+          payslipped: '已发条'
         }
       },
       training: {

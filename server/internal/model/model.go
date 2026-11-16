@@ -55,6 +55,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_confirm_bill"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_item"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_payment"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_payslip"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_scheme"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_scheme_item"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_salary_subject"
@@ -128,6 +129,7 @@ type Model struct {
 	HrmSalaryConfirmBill          hrm_salary_confirm_bill.HrmSalaryConfirmBillModel
 	HrmSalaryItem                 hrm_salary_item.HrmSalaryItemModel
 	HrmSalaryPayment              hrm_salary_payment.HrmSalaryPaymentModel
+	HrmSalaryPayslip              hrm_salary_payslip.HrmSalaryPayslipModel
 	HrmSalaryScheme               hrm_salary_scheme.HrmSalarySchemeModel
 	HrmSalarySchemeItem           hrm_salary_scheme_item.HrmSalarySchemeItemModel
 	HrmSalarySubject              hrm_salary_subject.HrmSalarySubjectModel
@@ -202,6 +204,7 @@ func NewModel(conn sqlx.SqlConn, op ...opts.Opt[modelx.ModelOpts]) Model {
 		HrmSalaryConfirmBill:          hrm_salary_confirm_bill.NewHrmSalaryConfirmBillModel(conn, op...),
 		HrmSalaryItem:                 hrm_salary_item.NewHrmSalaryItemModel(conn, op...),
 		HrmSalaryPayment:              hrm_salary_payment.NewHrmSalaryPaymentModel(conn, op...),
+		HrmSalaryPayslip:              hrm_salary_payslip.NewHrmSalaryPayslipModel(conn, op...),
 		HrmSalaryScheme:               hrm_salary_scheme.NewHrmSalarySchemeModel(conn, op...),
 		HrmSalarySchemeItem:           hrm_salary_scheme_item.NewHrmSalarySchemeItemModel(conn, op...),
 		HrmSalarySubject:              hrm_salary_subject.NewHrmSalarySubjectModel(conn, op...),

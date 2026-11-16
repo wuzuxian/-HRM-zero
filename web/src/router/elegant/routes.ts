@@ -624,21 +624,12 @@ export const generatedRoutes: GeneratedRoute[] = [
             }
           },
           {
-            name: 'hrm_salary_confirm-list',
-            path: '/hrm/salary/confirm-list',
-            component: 'view.hrm_salary_confirm-list',
+            name: 'hrm_salary_payslip',
+            path: '/hrm/salary/payslip',
+            component: 'view.hrm_salary_payslip',
             meta: {
-              title: 'hrm_salary_confirm-list',
-              i18nKey: 'route.hrm_salary_confirm-list'
-            }
-          },
-          {
-            name: 'hrm_salary_payment-list',
-            path: '/hrm/salary/payment-list',
-            component: 'view.hrm_salary_payment-list',
-            meta: {
-              title: 'hrm_salary_payment-list',
-              i18nKey: 'route.hrm_salary_payment-list'
+              title: 'hrm_salary_payslip',
+              i18nKey: 'route.hrm_salary_payslip'
             }
           },
           {
@@ -677,6 +668,15 @@ export const generatedRoutes: GeneratedRoute[] = [
                 }
               }
             ]
+          },
+          {
+            name: 'hrm_salary_statistics',
+            path: '/hrm/salary/statistics',
+            component: 'view.hrm_salary_statistics',
+            meta: {
+              title: 'hrm_salary_statistics',
+              i18nKey: 'route.hrm_salary_statistics'
+            }
           },
           {
             name: 'hrm_salary_tax',

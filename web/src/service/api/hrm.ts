@@ -2076,41 +2076,51 @@ export function GetSalaryBatchResult(batchUuid: string) {
     }
   });
 }
+// ===== HRM-39 工资条与薪资统计台账 =====
 
-// ===== HRM-38 薪资确认审批与发薪登记 =====
-
-/** get 薪资确认审批单分页列表 (HR209, demo-inventory 8.4 /hrm/salary/confirm-list) */
-export function GetSalaryConfirmList(params?: Api.Hrm.SalaryConfirmSearchParams) {
-  return request<Api.Hrm.SalaryConfirmList>({
-    url: '/api/v1/hrm/getSalaryConfirmList',
+/** get salary payslip list (管理端: 筛选 批次/员工姓名/年月/已读状态) */
+export function GetSalaryPayslipList(params?: Api.Hrm.SalaryPayslipSearchParams) {
+  return request<Api.Hrm.SalaryPayslipList>({
+    url: '/api/v1/hrm/getSalaryPayslipList',
     method: 'get',
     params
   });
 }
 
-/** submit 提交薪资确认审批 (批次须已试算未确认；一批次一张单，重复提交重新聚合) */
-export function SubmitSalaryConfirm(req: Api.Hrm.SubmitSalaryConfirmRequest) {
-  return request<{ uuid: string }>({
-    url: '/api/v1/hrm/submitSalaryConfirm',
-    method: 'post',
-    data: req
-  });
-}
-
-/** get 发薪登记分页列表 (HR210, demo-inventory 8.4 /hrm/salary/payment-list) */
-export function GetSalaryPaymentList(params?: Api.Hrm.SalaryPaymentSearchParams) {
-  return request<Api.Hrm.SalaryPaymentList>({
-    url: '/api/v1/hrm/getSalaryPaymentList',
+/** get salary ledger (薪资统计台账: 统计卡 + 批次×员工明细) */
+export function GetSalaryLedger(params?: Api.Hrm.SalaryLedgerSearchParams) {
+  return request<Api.Hrm.SalaryLedgerResponse>({
+    url: '/api/v1/hrm/getSalaryLedger',
     method: 'get',
     params
   });
 }
 
-/** register 发薪登记 (批次须已确认未发薪；事务内批次 pay_status='1') */
-export function RegisterSalaryPayment(req: Api.Hrm.RegisterSalaryPaymentRequest) {
-  return request<{ uuid: string }>({
-    url: '/api/v1/hrm/registerSalaryPayment',
+/** get my salary payslip list (员工本人) */
+export function GetMySalaryPayslipList(params?: Api.Hrm.SalaryPayslipMineSearchParams) {
+  return request<Api.Hrm.SalaryPayslipList>({
+    url: '/api/v1/hrm/getMySalaryPayslipList',
+    method: 'get',
+    params
+  });
+}
+
+/** publish salary payslips by batch (批次须已确认) */
+export function PublishSalaryPayslip(req: Api.Hrm.PublishSalaryPayslipRequest) {
+  return request<Api.Hrm.PublishSalaryPayslipResponse>({
+    url: '/api/v1/hrm/publishSalaryPayslip',
     method: 'post',
     data: req
+  });
+}
+
+/** mark salary payslip read (员工本人查看记已读, 幂等) */
+export function ReadSalaryPayslip(uuid: string) {
+  return request<Api.Common.Empty>({
+    url: '/api/v1/hrm/readSalaryPayslip',
+    method: 'post',
+    data: {
+      uuid
+    }
   });
 }
