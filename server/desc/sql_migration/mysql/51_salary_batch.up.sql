@@ -61,12 +61,12 @@ CREATE TABLE `hrm_salary_batch_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 薪资批次 page（挂在 13xx 薪酬管理目录下，order 7：主体=1 项目=2 方案=3 个税=3/4/5 档案=6）
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000003701','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000001301','2','薪资批次',0,'',7,'hrm_salary_batch','/hrm/salary/batch','view.hrm_salary_batch','mdi:cash-multiple','1','route.hrm_salary_batch',0,'',0,0,'[]','[{"code":"v1:hrm:salary_batch:list","desc":"薪资批次列表"},{"code":"v1:hrm:salary_batch:getBatchResult","desc":"查看试算结果"}]',0,'');
 
 -- 薪资批次 buttons
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000003711','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000003701','3','新增薪资批次',0,'',0,'','','','','1','button.hrm.salary_batch.add',0,'',0,0,'[]','[{"code":"v1:hrm:salary_batch:add","desc":"新增薪资批次"}]',0,'v1:hrm:salary_batch:add'),
     ('aaa10000-1111-4000-8000-000000003712','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000003701','3','编辑薪资批次',0,'',1,'','','','','1','button.hrm.salary_batch.edit',0,'',0,0,'[]','[{"code":"v1:hrm:salary_batch:edit","desc":"编辑薪资批次"}]',0,'v1:hrm:salary_batch:edit'),

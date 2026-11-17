@@ -35,12 +35,12 @@ CREATE TABLE `hrm_salary_scheme_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 薪酬方案 page（挂在 13xx 薪酬管理目录下，order 3：主体=1 薪资项目=2）
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000002702','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000001301','2','薪酬方案',0,'',3,'hrm_salary_setting_scheme','/hrm/salary/setting/scheme','view.hrm_salary_setting_scheme','mdi:file-cog-outline','1','route.hrm_salary_setting_scheme',0,'',0,0,'[]','[{"code":"v1:hrm:salary_scheme:list","desc":"薪酬方案列表"},{"code":"v1:hrm:salary_scheme:getSchemeDetail","desc":"薪酬方案详情"},{"code":"v1:hrm:salary_scheme:getSchemeItems","desc":"方案项目清单"}]',0,'');
 
 -- 薪酬方案 buttons
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000002711','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000002702','3','新增薪酬方案',0,'',0,'','','','','1','button.hrm.salary_scheme.add',0,'',0,0,'[]','[{"code":"v1:hrm:salary_scheme:add","desc":"新增薪酬方案"}]',0,'v1:hrm:salary_scheme:add'),
     ('aaa10000-1111-4000-8000-000000002712','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000002702','3','编辑薪酬方案',0,'',1,'','','','','1','button.hrm.salary_scheme.edit',0,'',0,0,'[]','[{"code":"v1:hrm:salary_scheme:edit","desc":"编辑薪酬方案"}]',0,'v1:hrm:salary_scheme:edit'),
