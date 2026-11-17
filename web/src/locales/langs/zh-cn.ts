@@ -1463,6 +1463,11 @@ const local: App.I18n.Schema = {
           created: '已生成',
           none: '未生成'
         },
+        loginNameLabel: '登录账号',
+        loginNameNone: '未生成',
+        accountCreatedTitle: '员工与账号已创建',
+        accountCreatedTip: '登录账号: {username}  初始密码: {password}  (请提醒员工首次登录后修改密码)',
+        addEmployeeNoAccount: '员工已创建 (离职状态不生成登录账号)',
         birthday: '生日',
         nation: '民族',
         politicalStatus: '政治面貌',

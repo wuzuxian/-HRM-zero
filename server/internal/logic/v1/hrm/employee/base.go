@@ -14,6 +14,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_education"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_family"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_work"
+	"github.com/jzero-io/jzero-admin/server/internal/model/manage_user"
 	"github.com/jzero-io/jzero-admin/server/internal/svc"
 	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/employee"
 )
@@ -64,7 +65,8 @@ func validPersonStatus(v string) bool {
 }
 
 // employeeToType converts a model row into the API record (UserStatus 由
-// user_uuid 派生: 是否已生成系统账号).
+// user_uuid 派生: 是否已生成系统账号). loginName 单独通过 fillLoginNames 回填
+// (需要 join manage_user, 列表/详情调用方按需调用).
 func employeeToType(row *hrm_employee.HrmEmployee) types.HrmEmployee {
 	out := types.HrmEmployee{
 		Uuid:             row.Uuid,
@@ -97,6 +99,7 @@ func employeeToType(row *hrm_employee.HrmEmployee) types.HrmEmployee {
 		HireDate:         row.HireDate,
 		FormalDate:       row.FormalDate,
 		UserStatus:       userStatusNone,
+		UserUuid:         row.UserUuid,
 		Remark:           row.Remark,
 		CreateTime:       row.CreateTime.Format("2006-01-02 15:04:05"),
 		UpdateTime:       row.UpdateTime.Format("2006-01-02 15:04:05"),
@@ -105,6 +108,56 @@ func employeeToType(row *hrm_employee.HrmEmployee) types.HrmEmployee {
 		out.UserStatus = userStatusCreated
 	}
 	return out
+}
+
+// fillLoginNames 批量回填 records 的 LoginName (账号侧 manage_user.username;
+// 工号变更不重命名账号, 二者可能不一致, 列表「登录账号」列展示该值).
+// 未关联账号的记录保持空串。查询失败不阻断列表 (登录账号是展示字段)。
+func fillLoginNames(ctx context.Context, svcCtx *svc.ServiceContext, records []types.HrmEmployee) {
+	userUuids := make([]any, 0, len(records))
+	seen := make(map[string]struct{}, len(records))
+	for _, rec := range records {
+		if rec.UserUuid == "" {
+			continue
+		}
+		if _, ok := seen[rec.UserUuid]; ok {
+			continue
+		}
+		seen[rec.UserUuid] = struct{}{}
+		userUuids = append(userUuids, rec.UserUuid)
+	}
+	if len(userUuids) == 0 {
+		return
+	}
+	users, err := svcCtx.Model.ManageUser.FindByCondition(ctx, nil, condition.Condition{
+		Field:    manage_user.Uuid,
+		Operator: condition.In,
+		Value:    userUuids,
+	})
+	if err != nil {
+		return
+	}
+	nameByUuid := make(map[string]string, len(users))
+	for _, u := range users {
+		nameByUuid[u.Uuid] = u.Username
+	}
+	for i := range records {
+		if records[i].UserUuid != "" {
+			records[i].LoginName = nameByUuid[records[i].UserUuid]
+		}
+	}
+}
+
+// fillLoginName 单条详情回填 LoginName。
+func fillLoginName(ctx context.Context, svcCtx *svc.ServiceContext, record *types.HrmEmployee) {
+	if record == nil || record.UserUuid == "" {
+		return
+	}
+	user, err := svcCtx.Model.ManageUser.FindOneByUuid(ctx, nil, record.UserUuid)
+	if err != nil {
+		return
+	}
+	record.LoginName = user.Username
 }
 
 // generateEmployeeNo resolves the 工号 for a new employee inside a transaction:

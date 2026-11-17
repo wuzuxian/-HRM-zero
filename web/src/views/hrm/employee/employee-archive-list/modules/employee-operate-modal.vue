@@ -127,14 +127,34 @@ async function handleSubmit() {
   await validate();
   confirmStartLoading();
 
-  const request =
-    props.operateType === 'add'
-      ? AddEmployee({ ...model })
-      : EditEmployee({ ...model, uuid: props.rowData?.uuid ?? '' });
+  if (props.operateType === 'add') {
+    const { error, data: added } = await AddEmployee({ ...model });
+    if (error) {
+      confirmEndLoading();
+      return;
+    }
+    closeModel();
+    emit('submitted');
+    // 建档即开号 (spec #50): 成功提示明示登录凭据; 离职补录 (userCreated=false) 不产账号
+    if (added?.userCreated && added.username) {
+      window.$dialog?.success({
+        title: $t('page.hrm.employee.accountCreatedTitle'),
+        content: $t('page.hrm.employee.accountCreatedTip', {
+          username: added.username,
+          password: added.initialPassword ?? ''
+        }),
+        positiveText: $t('common.confirm')
+      });
+    } else {
+      window.$message?.success($t('page.hrm.employee.addEmployeeNoAccount'));
+    }
+    confirmEndLoading();
+    return;
+  }
 
-  const { error } = await request;
+  const { error } = await EditEmployee({ ...model, uuid: props.rowData?.uuid ?? '' });
   if (!error) {
-    window.$message?.success(props.operateType === 'add' ? $t('common.addSuccess') : $t('common.updateSuccess'));
+    window.$message?.success($t('common.updateSuccess'));
     closeModel();
     emit('submitted');
   }

@@ -323,9 +323,9 @@ export function GetEmployeeDetail(uuid: string) {
   });
 }
 
-/** add 员工档案; employeeNo 为空时后端按 最大工号+1 (8位补零) 自动生成 */
+/** add 员工档案; employeeNo 为空时后端按 最大工号+1 (8位补零) 自动生成; 建档即开号, 响应回带凭据 */
 export function AddEmployee(req: Api.Hrm.AddEmployeeRequest) {
-  return request<Api.Common.Empty>({
+  return request<Api.Hrm.AddEmployeeResponse>({
     url: '/api/v1/hrm/addEmployee',
     method: 'post',
     data: req

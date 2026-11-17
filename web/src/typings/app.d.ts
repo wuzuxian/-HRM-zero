@@ -3096,6 +3096,11 @@ declare namespace App {
               created: string;
               none: string;
             };
+            loginNameLabel: string;
+            loginNameNone: string;
+            accountCreatedTitle: string;
+            accountCreatedTip: string;
+            addEmployeeNoAccount: string;
             birthday: string;
             nation: string;
             politicalStatus: string;

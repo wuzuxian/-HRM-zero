@@ -45,6 +45,9 @@ type AddRequest struct {
 }
 
 type AddResponse struct {
+	UserCreated     bool   `json:"userCreated"`
+	Username        string `json:"username,optional"`
+	InitialPassword string `json:"initialPassword,optional"`
 }
 
 type DeleteRequest struct {
@@ -146,6 +149,8 @@ type HrmEmployee struct {
 	HireDate         string                 `json:"hireDate"`
 	FormalDate       string                 `json:"formalDate"`
 	UserStatus       string                 `json:"userStatus"`
+	UserUuid         string                 `json:"userUuid"`
+	LoginName        string                 `json:"loginName"`
 	Remark           string                 `json:"remark"`
 	CreateTime       string                 `json:"createTime"`
 	UpdateTime       string                 `json:"updateTime"`
