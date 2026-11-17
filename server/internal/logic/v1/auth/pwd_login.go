@@ -22,6 +22,10 @@ func CreateToken(secret string, claims jwt.MapClaims) (string, error) {
 	return token.SignedString([]byte(secret))
 }
 
+// userStatusDisabled manage_user.status 真值 '2'=禁用 (ADR 0007: '1' 启用 / '2' 禁用)。
+// HRM-53 账号状态真实开关: 登录是状态的消费方, 禁用账号即使密码正确也拒绝。
+const userStatusDisabled = "2"
+
 type PwdLogin struct {
 	logx.Logger
 	ctx    context.Context
@@ -49,6 +53,11 @@ func (l *PwdLogin) PwdLogin(req *types.PwdLoginRequest) (resp *types.LoginRespon
 	}
 	if req.Password != user.Password {
 		return nil, errors.New("用户名或密码错误")
+	}
+	// HRM-53 (ADR 0007 生命周期一致性): 密码校验通过后再看状态, 禁用账号明确拒绝,
+	// 文案与"用户名或密码错误"区分开 — 已存在的禁用账号从此真的登不进去 (预期行为变更)。
+	if user.Status == userStatusDisabled {
+		return nil, errors.New("账号已禁用, 无法登录")
 	}
 	userRoles, err := l.svcCtx.Model.ManageUserRole.FindByCondition(l.ctx, nil, condition.NewChain().
 		Equal(manage_user_role.UserUuid, user.Uuid).
