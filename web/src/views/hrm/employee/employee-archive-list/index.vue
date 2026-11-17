@@ -376,7 +376,7 @@ async function handleExport() {
             {{ $t('page.hrm.employee.exportEmployee') }}
           </NButton>
           <NButton
-            v-if="hasAuth('hrm:employee:generateuser')"
+            v-if="hasAuth('hrm:employee:generateUser')"
             size="small"
             ghost
             type="warning"
