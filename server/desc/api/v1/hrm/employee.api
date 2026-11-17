@@ -221,6 +221,56 @@ type GenerateUserResponse {
 	Skipped int64 `json:"skipped"`
 }
 
+// LinkUserRequest 关联已有系统账号 (HRM-51): 把账号 uuid 写入档案 user_uuid 指针。
+// 一对一在应用层校验: 账号已被其他档案持有 → 占用错误并报出占用者;
+// 员工已关联其他账号 → 已关联错误; 账号不存在 → 不存在错误。
+type LinkUserRequest {
+	EmployeeUuid string `json:"employeeUuid"`
+	UserUuid     string `json:"userUuid"`
+}
+
+type LinkUserResponse {}
+
+// UnlinkUserRequest 解除关联 (HRM-51): 只清档案 user_uuid 指针, 账号与角色绑定保留。
+type UnlinkUserRequest {
+	EmployeeUuid string `json:"employeeUuid"`
+}
+
+type UnlinkUserResponse {}
+
+// LinkableUserListRequest 候选账号分页 (HRM-51): 关键字模糊匹配用户名/昵称, 只返回未被任何档案关联的账号。
+type LinkableUserListRequest {
+	PageRequest
+	Keyword string `form:"keyword,optional"`
+}
+
+// LinkableUser 候选账号行 (uuid+用户名+昵称)
+type LinkableUser {
+	Uuid     string `json:"uuid"`
+	Username string `json:"username"`
+	Nickname string `json:"nickname"`
+}
+
+type LinkableUserListResponse {
+	PageResponse
+	Records []LinkableUser `json:"records"`
+}
+
+// CreateAndLinkUserRequest 新建账号并关联 (HRM-51): 员工侧一次建号+关联;
+// 用户名空取工号, 密码空取配置 (兜底 123456); 工号/用户名撞已有账号报错。
+type CreateAndLinkUserRequest {
+	EmployeeUuid string `json:"employeeUuid"`
+	Username     string `json:"username,optional"`
+	Password     string `json:"password,optional"`
+}
+
+// CreateAndLinkUserResponse 新建账号并关联: 回带账号 uuid 与登录凭据供前端明示
+type CreateAndLinkUserResponse {
+	UserUuid        string `json:"userUuid"`
+	Username        string `json:"username"`
+	InitialPassword string `json:"initialPassword"`
+}
+
 @server (
 	prefix:          /api/v1
 	group:           v1/hrm/employee
@@ -252,5 +302,17 @@ service server {
 
 	@handler GenerateUser
 	post /hrm/generateUser (GenerateUserRequest) returns (GenerateUserResponse)
+
+	@handler LinkUser
+	post /hrm/linkEmployeeUser (LinkUserRequest) returns (LinkUserResponse)
+
+	@handler UnlinkUser
+	post /hrm/unlinkEmployeeUser (UnlinkUserRequest) returns (UnlinkUserResponse)
+
+	@handler LinkableUserList
+	get /hrm/getLinkableUserList (LinkableUserListRequest) returns (LinkableUserListResponse)
+
+	@handler CreateAndLinkUser
+	post /hrm/createAndLinkUser (CreateAndLinkUserRequest) returns (CreateAndLinkUserResponse)
 }
 

@@ -70,13 +70,13 @@ CREATE TABLE `hrm_salary_payment` (
 
 -- 薪酬管理目录（13xx）下两个新页（demo-inventory 8.4 路径：
 -- /hrm/salary/confirm-list order 8、/hrm/salary/payment-list order 9）
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000004101','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000001301','2','薪资确认审批',0,'',8,'hrm_salary_confirm-list','/hrm/salary/confirm-list','view.hrm_salary_confirm-list','mdi:clipboard-check','1','route.hrm_salary_confirm-list',0,'',0,0,'[]','[{"code":"v1:hrm:salary_confirm:list","desc":"薪资确认审批列表"},{"code":"v1:hrm:salary_confirm:submit","desc":"提交薪资确认审批"},{"code":"v1:hrm:bill:getApprovalRecordList","desc":"审批记录"}]',0,''),
     ('aaa10000-1111-4000-8000-000000004102','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000001301','2','发薪登记',0,'',9,'hrm_salary_payment-list','/hrm/salary/payment-list','view.hrm_salary_payment-list','mdi:cash-check','1','route.hrm_salary_payment-list',0,'',0,0,'[]','[{"code":"v1:hrm:salary_payment:list","desc":"发薪登记列表"},{"code":"v1:hrm:salary_payment:register","desc":"发薪登记"}]',0,'');
 
 -- 确认审批 buttons（共享审批底座 v1:hrm:bill:* + 本域提交码）
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000004111','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000004101','3','提交单据',0,'',0,'','','','','1','button.hrm.bill.submit',0,'',0,0,'[]','[{"code":"v1:hrm:bill:submit","desc":"提交单据"}]',0,'v1:hrm:bill:submit'),
     ('aaa10000-1111-4000-8000-000000004112','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000004101','3','审批通过',0,'',1,'','','','','1','button.hrm.bill.approve',0,'',0,0,'[]','[{"code":"v1:hrm:bill:approve","desc":"审批通过"}]',0,'v1:hrm:bill:approve'),

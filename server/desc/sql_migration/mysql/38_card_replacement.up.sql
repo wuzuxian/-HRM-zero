@@ -39,12 +39,12 @@ CREATE TABLE `hrm_card_replacement_bill` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 补卡管理 page (假勤管理 dir aaa...000101 下, order 10; 已用: 设置 1-5/周期 6/余额 6/打卡 7/请假 7/记录 8/排班表 9)
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000002401','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000000101','2','补卡管理',0,'',10,'hrm_attendance_apply_card-replacement-list','/hrm/attendance/apply/card-replacement-list','view.hrm_attendance_apply_card-replacement-list','mdi:card-account-details-clock-outline','1','route.hrm_attendance_apply_card-replacement-list',0,'',0,0,'[]','[{"code":"v1:hrm:cardreplacement:list","desc":"补卡单列表"},{"code":"v1:hrm:bill:getApprovalRecordList","desc":"审批记录"}]',0,'');
 
 -- 补卡管理 buttons（页面操作 + 共享单据底座按钮码 v1:hrm:bill:*）
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000002411','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000002401','3','新增补卡单',0,'',0,'','','','','1','button.hrm.cardreplacement.add',0,'',0,0,'[]','[{"code":"v1:hrm:cardreplacement:add","desc":"新增补卡单"}]',0,'v1:hrm:cardreplacement:add'),
     ('aaa10000-1111-4000-8000-000000002412','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000002401','3','编辑补卡单',0,'',1,'','','','','1','button.hrm.cardreplacement.edit',0,'',0,0,'[]','[{"code":"v1:hrm:cardreplacement:edit","desc":"编辑补卡单"}]',0,'v1:hrm:cardreplacement:edit'),

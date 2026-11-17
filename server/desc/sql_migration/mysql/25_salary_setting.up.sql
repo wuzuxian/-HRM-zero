@@ -62,29 +62,29 @@ VALUES
     ('aaa10000-1111-4000-8000-000000001316','2026-11-15 00:00:00','2026-11-15 00:00:00','LABOR_COST','人工成本','formula','cost','formula',160,16,'应发合计+公司社保+公司公积金',1,'1','');
 
 -- HRM 菜单目录: 薪酬管理（人力资源 dir aaa...000001 下，order 9，招聘管理=8）
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000001301','2026-11-15 00:00:00','2026-11-15 00:00:00','1','aaa10000-1111-4000-8000-000000000001','1','薪酬管理',0,'',9,'hrm_salary','/hrm/salary','layout.base','mdi:cash-multiple','1','route.hrm_salary',0,'',0,0,'[]','[]',0,'');
 
 -- 薪酬主体 page
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000001302','2026-11-15 00:00:00','2026-11-15 00:00:00','1','aaa10000-1111-4000-8000-000000001301','2','薪酬主体',0,'',1,'hrm_salary_setting_subject','/hrm/salary/setting/subject','view.hrm_salary_setting_subject','mdi:domain','1','route.hrm_salary_setting_subject',0,'',0,0,'[]','[{"code":"v1:hrm:salary_subject:list","desc":"薪酬主体列表"}]',0,'');
 
 -- 薪酬主体 buttons
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000001311','2026-11-15 00:00:00','2026-11-15 00:00:00','1','aaa10000-1111-4000-8000-000000001302','3','新增薪酬主体',0,'',0,'','','','','1','button.hrm.salary_subject.add',0,'',0,0,'[]','[{"code":"v1:hrm:salary_subject:add","desc":"新增薪酬主体"}]',0,'v1:hrm:salary_subject:add'),
     ('aaa10000-1111-4000-8000-000000001312','2026-11-15 00:00:00','2026-11-15 00:00:00','1','aaa10000-1111-4000-8000-000000001302','3','编辑薪酬主体',0,'',1,'','','','','1','button.hrm.salary_subject.edit',0,'',0,0,'[]','[{"code":"v1:hrm:salary_subject:edit","desc":"编辑薪酬主体"}]',0,'v1:hrm:salary_subject:edit'),
     ('aaa10000-1111-4000-8000-000000001313','2026-11-15 00:00:00','2026-11-15 00:00:00','1','aaa10000-1111-4000-8000-000000001302','3','删除薪酬主体',0,'',2,'','','','','1','button.hrm.salary_subject.delete',0,'',0,0,'[]','[{"code":"v1:hrm:salary_subject:delete","desc":"删除薪酬主体"}]',0,'v1:hrm:salary_subject:delete');
 
 -- 薪资项目 page
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000001303','2026-11-15 00:00:00','2026-11-15 00:00:00','1','aaa10000-1111-4000-8000-000000001301','2','薪资项目',0,'',2,'hrm_salary_setting_item','/hrm/salary/setting/item','view.hrm_salary_setting_item','mdi:format-list-numbered','1','route.hrm_salary_setting_item',0,'',0,0,'[]','[{"code":"v1:hrm:salary_item:list","desc":"薪资项目列表"},{"code":"v1:hrm:salary_item:getAll","desc":"全量薪资项目"}]',0,'');
 
 -- 薪资项目 buttons
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000001321','2026-11-15 00:00:00','2026-11-15 00:00:00','1','aaa10000-1111-4000-8000-000000001303','3','新增薪资项目',0,'',0,'','','','','1','button.hrm.salary_item.add',0,'',0,0,'[]','[{"code":"v1:hrm:salary_item:add","desc":"新增薪资项目"}]',0,'v1:hrm:salary_item:add'),
     ('aaa10000-1111-4000-8000-000000001322','2026-11-15 00:00:00','2026-11-15 00:00:00','1','aaa10000-1111-4000-8000-000000001303','3','编辑薪资项目',0,'',1,'','','','','1','button.hrm.salary_item.edit',0,'',0,0,'[]','[{"code":"v1:hrm:salary_item:edit","desc":"编辑薪资项目"}]',0,'v1:hrm:salary_item:edit'),

@@ -69,6 +69,23 @@ type DeleteRequest {
 
 type DeleteResponse {}
 
+// LinkedEmployee 关联员工简要信息 (工号+姓名), 供用户管理列表只读「关联员工」列回填。
+// 账号↔档案的唯一写入入口在员工侧 (ADR 0007), 用户管理侧只读。
+type LinkedEmployee {
+	UserUuid     string `json:"userUuid"`
+	EmployeeNo   string `json:"employeeNo"`
+	EmployeeName string `json:"employeeName"`
+}
+
+// LinkedEmployeesRequest 批量按账号 uuid 查关联员工 (HRM-51); uuids 逗号分隔
+type LinkedEmployeesRequest {
+	Uuids string `form:"uuids,optional"`
+}
+
+type LinkedEmployeesResponse {
+	Records []LinkedEmployee `json:"records"`
+}
+
 @server (
 	prefix:          /api/v1
 	group:           v1/manage/user
@@ -88,5 +105,8 @@ service server {
 
 	@handler Delete
 	post /manage/deleteUser (DeleteRequest) returns (DeleteResponse)
+
+	@handler LinkedEmployees
+	get /manage/getLinkedEmployees (LinkedEmployeesRequest) returns (LinkedEmployeesResponse)
 }
 

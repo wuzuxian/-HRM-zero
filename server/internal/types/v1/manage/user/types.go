@@ -44,6 +44,20 @@ type EditRequest struct {
 type EditResponse struct {
 }
 
+type LinkedEmployee struct {
+	UserUuid     string `json:"userUuid"`
+	EmployeeNo   string `json:"employeeNo"`
+	EmployeeName string `json:"employeeName"`
+}
+
+type LinkedEmployeesRequest struct {
+	Uuids string `form:"uuids,optional"`
+}
+
+type LinkedEmployeesResponse struct {
+	Records []LinkedEmployee `json:"records"`
+}
+
 type ListRequest struct {
 	PageRequest
 	Username   string `form:"username,optional"`

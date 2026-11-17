@@ -52,12 +52,12 @@ CREATE TABLE `hrm_overtime_bill` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 加班申请 page (假勤管理 dir aaa...000101 下, order 10; 请假销假 7/打卡记录 8/排班表 9 已占用)
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000002601','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000000101','2','加班申请',0,'',10,'hrm_attendance_apply_overtime-bill-list','/hrm/attendance/apply/overtime-bill-list','view.hrm_attendance_apply_overtime-bill-list','mdi:clock-plus-outline','1','route.hrm_attendance_apply_overtime-bill-list',0,'',0,0,'[]','[{"code":"v1:hrm:overtimebill:list","desc":"加班申请列表"},{"code":"v1:hrm:bill:getApprovalRecordList","desc":"审批记录"}]',0,'');
 
 -- 加班申请 buttons（页面操作 + 共享单据底座按钮码 v1:hrm:bill:* + 核定）
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000002611','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000002601','3','新增加班单',0,'',0,'','','','','1','button.hrm.overtimebill.add',0,'',0,0,'[]','[{"code":"v1:hrm:overtimebill:add","desc":"新增加班单"}]',0,'v1:hrm:overtimebill:add'),
     ('aaa10000-1111-4000-8000-000000002612','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000002601','3','编辑加班单',0,'',1,'','','','','1','button.hrm.overtimebill.edit',0,'',0,0,'[]','[{"code":"v1:hrm:overtimebill:edit","desc":"编辑加班单"}]',0,'v1:hrm:overtimebill:edit'),

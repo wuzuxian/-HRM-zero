@@ -28,6 +28,24 @@ func Add(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
+func CreateAndLinkUser(svcCtx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.CreateAndLinkUserRequest
+		if err := httpx.Parse(r, &req); err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+			return
+		}
+
+		l := employee.NewCreateAndLinkUser(r.Context(), svcCtx, r)
+		resp, err := l.CreateAndLinkUser(&req)
+		if err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+		} else {
+			httpx.OkJsonCtx(r.Context(), w, resp)
+		}
+	}
+}
+
 func Delete(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.DeleteRequest
@@ -130,6 +148,24 @@ func List(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
+func LinkableUserList(svcCtx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.LinkableUserListRequest
+		if err := httpx.Parse(r, &req); err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+			return
+		}
+
+		l := employee.NewLinkableUserList(r.Context(), svcCtx, r)
+		resp, err := l.LinkableUserList(&req)
+		if err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+		} else {
+			httpx.OkJsonCtx(r.Context(), w, resp)
+		}
+	}
+}
+
 func Import(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.ImportRequest
@@ -140,6 +176,42 @@ func Import(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := employee.NewImport(r.Context(), svcCtx, r)
 		resp, err := l.Import(&req)
+		if err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+		} else {
+			httpx.OkJsonCtx(r.Context(), w, resp)
+		}
+	}
+}
+
+func LinkUser(svcCtx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.LinkUserRequest
+		if err := httpx.Parse(r, &req); err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+			return
+		}
+
+		l := employee.NewLinkUser(r.Context(), svcCtx, r)
+		resp, err := l.LinkUser(&req)
+		if err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+		} else {
+			httpx.OkJsonCtx(r.Context(), w, resp)
+		}
+	}
+}
+
+func UnlinkUser(svcCtx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.UnlinkUserRequest
+		if err := httpx.Parse(r, &req); err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+			return
+		}
+
+		l := employee.NewUnlinkUser(r.Context(), svcCtx, r)
+		resp, err := l.UnlinkUser(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

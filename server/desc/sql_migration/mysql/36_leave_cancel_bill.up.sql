@@ -43,12 +43,12 @@ CREATE TABLE `hrm_leave_bill` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 请假销假 page (假勤管理 dir aaa...000101 下, order 7)
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000002301','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000000101','2','请假销假',0,'',7,'hrm_attendance_apply_leave-cancel-list','/hrm/attendance/apply/leave-cancel-list','view.hrm_attendance_apply_leave-cancel-list','mdi:calendar-arrow-right','1','route.hrm_attendance_apply_leave-cancel-list',0,'',0,0,'[]','[{"code":"v1:hrm:leave:list","desc":"请假销假列表"},{"code":"v1:hrm:bill:getApprovalRecordList","desc":"审批记录"}]',0,'');
 
 -- 请假销假 buttons（页面操作 + 共享单据底座按钮码 v1:hrm:bill:* + 销假）
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000002311','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000002301','3','新增请假单',0,'',0,'','','','','1','button.hrm.leave.add',0,'',0,0,'[]','[{"code":"v1:hrm:leave:add","desc":"新增请假单"}]',0,'v1:hrm:leave:add'),
     ('aaa10000-1111-4000-8000-000000002312','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000002301','3','编辑请假单',0,'',1,'','','','','1','button.hrm.leave.edit',0,'',0,0,'[]','[{"code":"v1:hrm:leave:edit","desc":"编辑请假单"}]',0,'v1:hrm:leave:edit'),

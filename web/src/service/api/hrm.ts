@@ -378,6 +378,42 @@ export function GenerateEmployeeUser(req: Api.Hrm.GenerateUserRequest) {
   });
 }
 
+/** 关联已有系统账号 (HRM-51): 把账号 uuid 写入档案指针; 账号被占用/员工已关联/账号不存在均报错 */
+export function LinkEmployeeUser(req: Api.Hrm.LinkUserRequest) {
+  return request<Api.Hrm.LinkUserResponse>({
+    url: '/api/v1/hrm/linkEmployeeUser',
+    method: 'post',
+    data: req
+  });
+}
+
+/** 解除关联 (HRM-51): 只清档案指针, 账号与角色绑定保留 */
+export function UnlinkEmployeeUser(req: Api.Hrm.UnlinkUserRequest) {
+  return request<Api.Hrm.UnlinkUserResponse>({
+    url: '/api/v1/hrm/unlinkEmployeeUser',
+    method: 'post',
+    data: req
+  });
+}
+
+/** 候选账号分页 (HRM-51): 只返回未被任何档案关联的账号 */
+export function GetLinkableUserList(params?: { current: number; size: number; keyword?: string | null }) {
+  return request<Api.Hrm.LinkableUserListResponse>({
+    url: '/api/v1/hrm/getLinkableUserList',
+    method: 'get',
+    params
+  });
+}
+
+/** 新建账号并关联 (HRM-51): 用户名空取工号, 密码空取配置; 回带凭据 */
+export function CreateAndLinkEmployeeUser(req: Api.Hrm.CreateAndLinkUserRequest) {
+  return request<Api.Hrm.CreateAndLinkUserResponse>({
+    url: '/api/v1/hrm/createAndLinkUser',
+    method: 'post',
+    data: req
+  });
+}
+
 /** get 培训计划单 paginated list */
 export function GetTrainingPlanList(params?: Api.Hrm.TrainingPlanSearchParams) {
   return request<Api.Hrm.TrainingPlanList>({

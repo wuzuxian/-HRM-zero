@@ -35,12 +35,12 @@ CREATE INDEX idx_hrm_resignation_bill_status ON `hrm_resignation_bill` (status, 
 CREATE INDEX idx_hrm_resignation_bill_employee ON `hrm_resignation_bill` (employee_uuid);
 
 -- 员工离职 page（人事管理 dir 下，uuid 段 17xx：迁移 16 调动 60x、迁移 29 转正 63x/64x/65x、迁移 27 入职 14xx，本票取 66x/67x/68x）
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000000661','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000000601','2','员工离职',0,'',3,'hrm_employee-relation_resignation-list','/hrm/employee-relation/resignation-list','view.hrm_employee-relation_resignation-list','mdi:account-arrow-right','1','route.hrm_employee-relation_resignation-list',0,'',0,0,'[]','[{"code":"v1:hrm:resignation:list","desc":"员工离职列表"},{"code":"v1:hrm:bill:getApprovalRecordList","desc":"审批记录"}]',0,'');
 
 -- 员工离职 buttons（页面操作 + 共享单据底座按钮码 v1:hrm:bill:*）
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000000671','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000000661','3','新增离职单',0,'',0,'','','','','1','button.hrm.resignation.add',0,'',0,0,'[]','[{"code":"v1:hrm:resignation:add","desc":"新增离职单"}]',0,'v1:hrm:resignation:add'),
     ('aaa10000-1111-4000-8000-000000000672','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000000661','3','编辑离职单',0,'',1,'','','','','1','button.hrm.resignation.edit',0,'',0,0,'[]','[{"code":"v1:hrm:resignation:edit","desc":"编辑离职单"}]',0,'v1:hrm:resignation:edit'),

@@ -825,6 +825,7 @@ declare namespace App {
             userEmail: string;
             userStatus: string;
             userRole: string;
+            linkedEmployee: string;
             password: string;
             form: {
               username: string;
@@ -3131,6 +3132,22 @@ declare namespace App {
             generateUserSelectTip: string;
             generateUserSuccess: string;
             generateUserAllSkipped: string;
+            systemAccountTab: string;
+            systemAccountLinked: string;
+            systemAccountUnlinked: string;
+            systemAccountSearchPlaceholder: string;
+            systemAccountLinkButton: string;
+            systemAccountUnlinkButton: string;
+            systemAccountUnlinkConfirm: string;
+            systemAccountCreateTitle: string;
+            systemAccountCreateUsername: string;
+            systemAccountCreatePassword: string;
+            systemAccountCreateButton: string;
+            systemAccountLinkSuccess: string;
+            systemAccountUnlinkSuccess: string;
+            systemAccountCreatedTip: string;
+            systemAccountSelectFirst: string;
+            systemAccountAddModeTip: string;
             importSuccess: string;
             chooseFileTip: string;
             importModalTitle: string;
