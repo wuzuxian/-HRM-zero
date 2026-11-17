@@ -201,10 +201,12 @@ func TestProvisionAccountResignedSkipped(t *testing.T) {
 func TestProvisionAccountUsernameConflictRollback(t *testing.T) {
 	svcCtx, _ := newProvisionCtx(t, config.HrmConf{DefaultRoleCode: "R_EMPLOYEE"})
 
-	addEmployee(t, svcCtx, &types.AddRequest{Name: "丙", EmployeeNo: "10000012", PersonStatus: "1"})
+	// HRM-50 建档即开号: 在职新增立即产号, 冲突账号必须先种 (否则工号已被新增占用)。
+	// 目标档案用离职补录造 (不产号), 种冲突账号后经编辑翻回在职 (编辑不产号)。
+	addEmployee(t, svcCtx, &types.AddRequest{Name: "丙", EmployeeNo: "10000012", PersonStatus: PersonStatusResigned})
 	target := mustList(t, svcCtx, types.ListRequest{}).Records[0]
 
-	// 用另一名员工开号拿到同工号? 不行——直接插入冲突账号 (模拟历史脏数据)
+	// 直接插入冲突账号 (模拟历史脏数据)
 	if err := svcCtx.Model.ManageUser.InsertV2(context.Background(), nil, &manage_user.ManageUser{
 		Uuid:     uuidNew(),
 		Username: "10000012",
@@ -213,6 +215,14 @@ func TestProvisionAccountUsernameConflictRollback(t *testing.T) {
 		Status:   "1",
 	}); err != nil {
 		t.Fatalf("seed conflicting account: %v", err)
+	}
+	if _, err := NewEdit(context.Background(), svcCtx, nil).Edit(&types.EditRequest{
+		Uuid:         target.Uuid,
+		EmployeeNo:   target.EmployeeNo,
+		Name:         target.Name,
+		PersonStatus: PersonStatusRegular,
+	}); err != nil {
+		t.Fatalf("flip to on-duty: %v", err)
 	}
 
 	_, err := ProvisionAccount(context.Background(), svcCtx, nil, target.Uuid)
@@ -289,10 +299,10 @@ func TestMigration63DefaultRoleSelfServiceOnly(t *testing.T) {
 func TestMigration63BackfillsExistingZeroRoleAccounts(t *testing.T) {
 	svcCtx, _ := newProvisionCtx(t, config.HrmConf{})
 
-	// 造两个已开号员工 (接缝) + 一个未开号员工
+	// 造两个已开号员工 (接缝) + 一个未开号员工 (离职补录: 建档即开号下唯一的自然无号态)
 	addEmployee(t, svcCtx, &types.AddRequest{Name: "补挂甲", EmployeeNo: "10000101", PersonStatus: "1"})
 	addEmployee(t, svcCtx, &types.AddRequest{Name: "补挂乙", EmployeeNo: "10000102", PersonStatus: "1"})
-	addEmployee(t, svcCtx, &types.AddRequest{Name: "未开号丙", EmployeeNo: "10000103", PersonStatus: "1"})
+	addEmployee(t, svcCtx, &types.AddRequest{Name: "未开号丙", EmployeeNo: "10000103", PersonStatus: PersonStatusResigned})
 	recs := mustList(t, svcCtx, types.ListRequest{})
 	if len(recs.Records) != 3 {
 		t.Fatalf("records = %d, want 3", len(recs.Records))

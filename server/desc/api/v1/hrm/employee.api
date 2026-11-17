@@ -72,7 +72,11 @@ type HrmEmployee {
 	HireDate         string `json:"hireDate"`
 	FormalDate       string `json:"formalDate"`
 	// UserStatus 用户状态: 是否已生成系统账号 (1=已生成 0=未生成, 由 user_uuid 派生)
-	UserStatus string                 `json:"userStatus"`
+	UserStatus string `json:"userStatus"`
+	// UserUuid 关联系统账号 uuid (空串=未关联, ADR-0007 档案单向持有账号)
+	UserUuid string `json:"userUuid"`
+	// LoginName 登录用户名 (账号侧 manage_user.username, 仅开号时取工号, 此后与工号解耦)
+	LoginName  string                 `json:"loginName"`
 	Remark     string                 `json:"remark"`
 	CreateTime string                 `json:"createTime"`
 	UpdateTime string                 `json:"updateTime"`
@@ -138,7 +142,13 @@ type AddRequest {
 	Families         []HrmEmployeeFamily    `json:"families,optional"`
 }
 
-type AddResponse {}
+// AddResponse 新增员工: 建档即开号 (ADR-0007), 回带凭据供前端明示.
+// UserCreated=false 表示离职补录 (person_status='5') 跳过开号, 凭据为空.
+type AddResponse {
+	UserCreated     bool   `json:"userCreated"`
+	Username        string `json:"username,optional"`
+	InitialPassword string `json:"initialPassword,optional"`
+}
 
 type EditRequest {
 	Uuid             string                 `json:"uuid"`

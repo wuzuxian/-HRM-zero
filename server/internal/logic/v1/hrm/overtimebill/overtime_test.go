@@ -9,6 +9,7 @@ import (
 	emptypes "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/employee"
 
 	coresvc "github.com/jzero-io/jzero-admin/core-engine/svc"
+	"github.com/jzero-io/jzero-admin/server/internal/config"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/bill"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/leavebalance"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/overtimerule"
@@ -40,6 +41,7 @@ func newSvcCtx(t *testing.T, env *svctest.Env) *svc.ServiceContext {
 	t.Helper()
 	return &svc.ServiceContext{
 		ServiceContext: &coresvc.ServiceContext{SqlxConn: env.SqlConn},
+		ConfigCenter:   config.NewStaticConfigCenter(config.Config{Hrm: config.HrmConf{InitialUserPassword: "test-pwd-123"}}),
 		Model:          env.Model,
 	}
 }

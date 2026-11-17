@@ -171,6 +171,13 @@ const {
         ) : null
     },
     {
+      key: 'loginName',
+      title: $t('page.hrm.employee.loginNameLabel'),
+      align: 'center',
+      width: 110,
+      render: row => (row.loginName ? row.loginName : $t('page.hrm.employee.loginNameNone'))
+    },
+    {
       key: 'createTime',
       title: $t('page.hrm.employee.createTime'),
       align: 'center',
@@ -394,7 +401,7 @@ async function handleExport() {
         :data="data"
         size="small"
         :flex-height="!appStore.isMobile"
-        :scroll-x="1800"
+        :scroll-x="1900"
         :loading="loading"
         remote
         :row-key="row => row.uuid"

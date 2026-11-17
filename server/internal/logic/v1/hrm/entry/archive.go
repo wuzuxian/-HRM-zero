@@ -16,6 +16,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_entry_bill_education"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_entry_bill_family"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_entry_bill_work"
+	"github.com/jzero-io/jzero-admin/server/internal/svc"
 )
 
 // createEmployeeArchive 自动建档 (demo-inventory 3.1): inside the caller's
@@ -27,7 +28,7 @@ import (
 //   - 三子表 (工作经历/教育经历/家庭成员) 从入职单快照落 hrm_employee_* 档案表;
 //
 // returns the new archive uuid for the employee_uuid 回写 (idempotency marker).
-func createEmployeeArchive(ctx context.Context, session sqlx.Session, row *hrm_entry_bill.HrmEntryBill) (string, error) {
+func createEmployeeArchive(ctx context.Context, svcCtx *svc.ServiceContext, session sqlx.Session, row *hrm_entry_bill.HrmEntryBill) (string, error) {
 	conn := sqlx.NewSqlConnFromSession(session)
 
 	// 工号自动生成 (复用 HRM-03 seam): read existing numbers through the tx so
@@ -80,6 +81,12 @@ func createEmployeeArchive(ctx context.Context, session sqlx.Session, row *hrm_e
 		Remark:           row.Remark,
 	}
 	if err := hrm_employee.NewHrmEmployeeModel(conn).InsertV2(ctx, session, emp); err != nil {
+		return "", err
+	}
+
+	// 建档即开号 (HRM-50, ADR 0007): 审批事务内接唯一开号接缝, 账号与档案同事务
+	// 生成, 开号失败随审批整体回滚; 离职状态接缝内跳过 (入职单不会产生, 兜底)。
+	if _, err := employee.ProvisionAccount(ctx, svcCtx, session, employeeUuid); err != nil {
 		return "", err
 	}
 

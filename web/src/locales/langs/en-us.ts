@@ -1463,6 +1463,12 @@ const local: App.I18n.Schema = {
           created: 'Created',
           none: 'Not Created'
         },
+        loginNameLabel: 'Login Account',
+        loginNameNone: 'Not created',
+        accountCreatedTitle: 'Employee and Account Created',
+        accountCreatedTip:
+          'Login account: {username}  Initial password: {password}  (Remind the employee to change it after first login)',
+        addEmployeeNoAccount: 'Employee created (resigned status: no login account generated)',
         birthday: 'Birthday',
         nation: 'Nation',
         politicalStatus: 'Political Status',

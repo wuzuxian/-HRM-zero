@@ -1019,6 +1019,17 @@
           "200": {
             "description": "",
             "schema": {
+              "properties": {
+                "initialPassword": {
+                  "type": "string"
+                },
+                "userCreated": {
+                  "type": "boolean"
+                },
+                "username": {
+                  "type": "string"
+                }
+              },
               "type": "object"
             }
           }
@@ -13273,6 +13284,9 @@
                     "idCard": {
                       "type": "string"
                     },
+                    "loginName": {
+                      "type": "string"
+                    },
                     "maritalStatus": {
                       "type": "string"
                     },
@@ -13310,6 +13324,9 @@
                       "type": "string"
                     },
                     "userStatus": {
+                      "type": "string"
+                    },
+                    "userUuid": {
                       "type": "string"
                     },
                     "uuid": {
@@ -13382,6 +13399,8 @@
                     "hireDate",
                     "formalDate",
                     "userStatus",
+                    "userUuid",
+                    "loginName",
                     "remark",
                     "createTime",
                     "updateTime"
@@ -13587,6 +13606,9 @@
                       "idCard": {
                         "type": "string"
                       },
+                      "loginName": {
+                        "type": "string"
+                      },
                       "maritalStatus": {
                         "type": "string"
                       },
@@ -13624,6 +13646,9 @@
                         "type": "string"
                       },
                       "userStatus": {
+                        "type": "string"
+                      },
+                      "userUuid": {
                         "type": "string"
                       },
                       "uuid": {
@@ -13696,6 +13721,8 @@
                       "hireDate",
                       "formalDate",
                       "userStatus",
+                      "userUuid",
+                      "loginName",
                       "remark",
                       "createTime",
                       "updateTime"

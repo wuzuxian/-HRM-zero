@@ -9,14 +9,15 @@ import (
 	emptypes "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/employee"
 
 	coresvc "github.com/jzero-io/jzero-admin/core-engine/svc"
+	"github.com/jzero-io/jzero-admin/server/internal/config"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/bill"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/leavebalance"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/org"
 	"github.com/jzero-io/jzero-admin/server/internal/svc"
 	"github.com/jzero-io/jzero-admin/server/internal/svctest"
+	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/leave"
 	lbtypes "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/leavebalance"
 	orgtypes "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/org"
-	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/leave"
 	"github.com/jzero-io/jzero/core/status"
 )
 
@@ -37,6 +38,7 @@ func newSvcCtx(t *testing.T, env *svctest.Env) *svc.ServiceContext {
 	t.Helper()
 	return &svc.ServiceContext{
 		ServiceContext: &coresvc.ServiceContext{SqlxConn: env.SqlConn},
+		ConfigCenter:   config.NewStaticConfigCenter(config.Config{Hrm: config.HrmConf{InitialUserPassword: "test-pwd-123"}}),
 		Model:          env.Model,
 	}
 }
@@ -65,15 +67,15 @@ func TestCalcLeaveDaysExpectations(t *testing.T) {
 		start, end string
 		want       float64
 	}{
-		{"2026-03-02 09:00:00", "2026-03-02 11:00:00", 0.5},  // 2h
-		{"2026-03-02 09:00:00", "2026-03-02 13:00:00", 0.5},  // 4h
-		{"2026-03-02 09:00:00", "2026-03-02 14:00:00", 1},    // 5h → 0.625 → 1
-		{"2026-03-02 09:00:00", "2026-03-02 17:00:00", 1},    // 8h
-		{"2026-03-02 09:00:00", "2026-03-02 21:00:00", 1.5},  // 12h
-		{"2026-03-02 09:00:00", "2026-03-03 09:00:00", 3},    // 24h
-		{"2026-03-02 09:00:00", "2026-03-04 09:00:00", 6},    // 48h
-		{"2026-03-02 09:00:00", "2026-03-03 13:00:00", 3.5},  // 28h → 3.5
-		{"2026-03-02 09:00:00", "2026-03-03 15:00:00", 4},    // 30h → 3.75 → 4
+		{"2026-03-02 09:00:00", "2026-03-02 11:00:00", 0.5}, // 2h
+		{"2026-03-02 09:00:00", "2026-03-02 13:00:00", 0.5}, // 4h
+		{"2026-03-02 09:00:00", "2026-03-02 14:00:00", 1},   // 5h → 0.625 → 1
+		{"2026-03-02 09:00:00", "2026-03-02 17:00:00", 1},   // 8h
+		{"2026-03-02 09:00:00", "2026-03-02 21:00:00", 1.5}, // 12h
+		{"2026-03-02 09:00:00", "2026-03-03 09:00:00", 3},   // 24h
+		{"2026-03-02 09:00:00", "2026-03-04 09:00:00", 6},   // 48h
+		{"2026-03-02 09:00:00", "2026-03-03 13:00:00", 3.5}, // 28h → 3.5
+		{"2026-03-02 09:00:00", "2026-03-03 15:00:00", 4},   // 30h → 3.75 → 4
 	}
 	for _, c := range cases {
 		got, err := CalcLeaveDays(c.start, c.end)
@@ -120,7 +122,6 @@ func addOrg(t *testing.T, svcCtx *svc.ServiceContext, ctx context.Context, name 
 	t.Fatalf("org %s not found", name)
 	return ""
 }
-
 
 // listLeaves calls the public List seam with default pagination filled in.
 func listLeaves(t *testing.T, svcCtx *svc.ServiceContext, ctx context.Context, req *types.ListRequest) *types.ListResponse {

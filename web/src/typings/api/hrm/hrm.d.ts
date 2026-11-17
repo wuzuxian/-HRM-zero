@@ -943,6 +943,10 @@ declare namespace Api {
       formalDate: string;
       /** 用户状态: 是否已生成系统账号 (1=已生成 0=未生成) */
       userStatus: UserStatus;
+      /** 关联系统账号 uuid (空串=未关联) */
+      userUuid: string;
+      /** 登录用户名 (账号侧用户名, 仅开号时取工号, 此后与工号解耦) */
+      loginName: string;
       remark: string;
       educations?: EmployeeEducation[];
       works?: EmployeeWork[];
@@ -1011,6 +1015,13 @@ declare namespace Api {
 
     type ImportEmployeeResponse = {
       successCount: number;
+    };
+
+    /** add employee response: 建档即开号, 回带凭据供前端明示; userCreated=false 表示离职补录跳过开号 */
+    type AddEmployeeResponse = {
+      userCreated: boolean;
+      username?: string;
+      initialPassword?: string;
     };
 
     /** export employees response (base64 xlsx, mirrors org export) */

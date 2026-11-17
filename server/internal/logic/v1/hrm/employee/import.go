@@ -47,6 +47,8 @@ var importHeader = []string{
 // Import 导入员工 (spec user story 13): reads the shared xlsx template (one row
 // per employee, first column must be 姓名); blank 工号 rows get auto-generated
 // numbers, 所属部门/所属单位 resolved by name against hrm_org.
+// HRM-50 建档即开号 (ADR 0007) 且语义收紧: 从"逐行尽力而为"改为"任一行失败
+// (含开号失败, 如工号撞已有账号用户名) 整表回滚" — 导入包含冲突行时整张表都不落库。
 func (l *Import) Import(req *types.ImportRequest) (resp *types.ImportResponse, err error) {
 	raw, err := base64.StdEncoding.DecodeString(req.Content)
 	if err != nil {
@@ -151,7 +153,13 @@ func (l *Import) Import(req *types.ImportRequest) (resp *types.ImportResponse, e
 				return err
 			}
 			addReq.EmployeeNo = employeeNo
-			if err = insertEmployee(ctx, session, l.svcCtx, addReq); err != nil {
+			empUuid, insErr := insertEmployee(ctx, session, l.svcCtx, addReq)
+			if insErr != nil {
+				return insErr
+			}
+			// 建档即开号 (HRM-50, ADR 0007): 每行档案落库后同一事务内接唯一接缝;
+			// 任一行开号失败 (如工号撞已有账号用户名) 整表回滚; 离职行接缝内跳过
+			if _, err = provisionAccount(ctx, l.svcCtx, session, empUuid); err != nil {
 				return err
 			}
 			successCount++
