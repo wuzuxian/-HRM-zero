@@ -1,7 +1,7 @@
 <script setup lang="tsx">
-import { reactive } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import { DeleteUser, GetUserList } from '@/service/api';
+import { DeleteUser, GetLinkedEmployees, GetUserList } from '@/service/api';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { enableStatusRecord, userGenderRecord } from '@/constants/business';
@@ -98,6 +98,15 @@ const {
       minWidth: 200
     },
     {
+      // 只读「关联员工」列 (HRM-51): 工号 + 姓名; 未关联账号显示 '-'
+      // (关联唯一入口在员工侧, 用户管理侧不做写入, ADR 0007)
+      key: 'linkedEmployee',
+      title: $t('page.manage.user.linkedEmployee'),
+      align: 'center',
+      width: 120,
+      render: row => linkedEmployeeText.value.get(row.uuid) || '-'
+    },
+    {
       key: 'status',
       title: $t('page.manage.user.userStatus'),
       align: 'center',
@@ -154,6 +163,30 @@ const {
   onDeleted
   // closeDrawer
 } = useTableOperate(data, getData);
+
+// ---- 关联员工列 (HRM-51): 按当前页账号 uuid 批量反查工号+姓名 ----
+const linkedEmployeeText = ref<Map<string, string>>(new Map());
+
+async function loadLinkedEmployees() {
+  const uuids = (data.value ?? []).map(row => row.uuid).filter(Boolean);
+  if (uuids.length === 0) {
+    linkedEmployeeText.value = new Map();
+    return;
+  }
+  const { error, data: resp } = await GetLinkedEmployees(uuids);
+  if (error || !resp) {
+    return;
+  }
+  const next = new Map<string, string>();
+  for (const item of resp.records ?? []) {
+    next.set(item.userUuid, `${item.employeeNo} ${item.employeeName}`);
+  }
+  linkedEmployeeText.value = next;
+}
+
+watch(data, () => {
+  loadLinkedEmployees();
+});
 
 async function handleBatchDelete() {
   // request

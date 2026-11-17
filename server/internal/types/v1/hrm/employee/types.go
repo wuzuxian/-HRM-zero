@@ -50,6 +50,18 @@ type AddResponse struct {
 	InitialPassword string `json:"initialPassword,optional"`
 }
 
+type CreateAndLinkUserRequest struct {
+	EmployeeUuid string `json:"employeeUuid"`
+	Username     string `json:"username,optional"`
+	Password     string `json:"password,optional"`
+}
+
+type CreateAndLinkUserResponse struct {
+	UserUuid        string `json:"userUuid"`
+	Username        string `json:"username"`
+	InitialPassword string `json:"initialPassword"`
+}
+
 type DeleteRequest struct {
 	Uuids []string `json:"uuids"`
 }
@@ -196,6 +208,30 @@ type ImportResponse struct {
 	SuccessCount int64 `json:"successCount"`
 }
 
+type LinkUserRequest struct {
+	EmployeeUuid string `json:"employeeUuid"`
+	UserUuid     string `json:"userUuid"`
+}
+
+type LinkUserResponse struct {
+}
+
+type LinkableUser struct {
+	Uuid     string `json:"uuid"`
+	Username string `json:"username"`
+	Nickname string `json:"nickname"`
+}
+
+type LinkableUserListRequest struct {
+	PageRequest
+	Keyword string `form:"keyword,optional"`
+}
+
+type LinkableUserListResponse struct {
+	PageResponse
+	Records []LinkableUser `json:"records"`
+}
+
 type ListRequest struct {
 	PageRequest
 	EmployeeNo   string `form:"employeeNo,optional"`
@@ -218,4 +254,11 @@ type PageResponse struct {
 	Current int   `json:"current"`
 	Size    int   `json:"size"`
 	Total   int64 `json:"total"`
+}
+
+type UnlinkUserRequest struct {
+	EmployeeUuid string `json:"employeeUuid"`
+}
+
+type UnlinkUserResponse struct {
 }

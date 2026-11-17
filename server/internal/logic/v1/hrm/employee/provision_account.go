@@ -56,7 +56,18 @@ func ProvisionAccount(ctx context.Context, svcCtx *svc.ServiceContext, session s
 	return userUuid, nil
 }
 
+// accountOverrides 开号字段的调用方覆写 (HRM-51 新建并关联: 用户名/密码可自定义)。
+// 空串 = 沿用接缝默认 (用户名=工号, 密码取配置兜底)。
+type accountOverrides struct {
+	username string
+	password string
+}
+
 func provisionAccount(ctx context.Context, svcCtx *svc.ServiceContext, session sqlx.Session, employeeUuid string) (string, error) {
+	return provisionAccountWith(ctx, svcCtx, session, employeeUuid, accountOverrides{})
+}
+
+func provisionAccountWith(ctx context.Context, svcCtx *svc.ServiceContext, session sqlx.Session, employeeUuid string, ov accountOverrides) (string, error) {
 	row, err := svcCtx.Model.HrmEmployee.FindOneByUuid(ctx, session, employeeUuid)
 	if err != nil {
 		if err == sqlx.ErrNotFound {
@@ -75,15 +86,22 @@ func provisionAccount(ctx context.Context, svcCtx *svc.ServiceContext, session s
 		return "", nil
 	}
 
-	// 用户名=工号; manage_user.username UNIQUE, 撞名 (历史脏数据/手工建过账号) 报错
-	if _, err = svcCtx.Model.ManageUser.FindOneByUsername(ctx, session, row.EmployeeNo); err == nil {
+	// 用户名默认=工号, 调用方可覆写; manage_user.username UNIQUE, 撞名 (历史脏数据/手工建过账号) 报错
+	username := ov.username
+	if username == "" {
+		username = row.EmployeeNo
+	}
+	if _, err = svcCtx.Model.ManageUser.FindOneByUsername(ctx, session, username); err == nil {
 		return "", status.ErrorMessage(errcodes.EmployeeUserNoDuplicateCode,
-			"系统账号用户名已存在: "+row.EmployeeNo+" (工号与已有账号冲突)")
+			"系统账号用户名已存在: "+username+" (与已有账号冲突)")
 	} else if err != sqlx.ErrNotFound {
 		return "", err
 	}
 
-	initialPassword := svcCtx.MustGetConfig().Hrm.InitialUserPassword
+	initialPassword := ov.password
+	if initialPassword == "" {
+		initialPassword = svcCtx.MustGetConfig().Hrm.InitialUserPassword
+	}
 	if initialPassword == "" {
 		initialPassword = defaultInitialPassword
 	}
@@ -91,7 +109,7 @@ func provisionAccount(ctx context.Context, svcCtx *svc.ServiceContext, session s
 	userUuid := uuidNew()
 	if err = svcCtx.Model.ManageUser.InsertV2(ctx, session, &manage_user.ManageUser{
 		Uuid:     userUuid,
-		Username: row.EmployeeNo,
+		Username: username,
 		Password: initialPassword,
 		Nickname: row.Name,
 		Gender:   row.Gender,
