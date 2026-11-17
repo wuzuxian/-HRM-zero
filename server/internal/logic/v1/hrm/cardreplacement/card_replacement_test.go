@@ -10,6 +10,7 @@ import (
 	"github.com/jzero-io/jzero/core/stores/condition"
 
 	coresvc "github.com/jzero-io/jzero-admin/core-engine/svc"
+	"github.com/jzero-io/jzero-admin/server/internal/config"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/bill"
 	employeelogic "github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/employee"
 	orglogic "github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/org"
@@ -18,9 +19,9 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_punch_record"
 	"github.com/jzero-io/jzero-admin/server/internal/svc"
 	"github.com/jzero-io/jzero-admin/server/internal/svctest"
+	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/cardreplacement"
 	emptypes "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/employee"
 	orgtypes "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/org"
-	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/cardreplacement"
 )
 
 // Seams under test (issue acceptance criteria), all at logic seams against the
@@ -37,6 +38,7 @@ func newSvcCtx(t *testing.T, env *svctest.Env) *svc.ServiceContext {
 	t.Helper()
 	return &svc.ServiceContext{
 		ServiceContext: &coresvc.ServiceContext{SqlxConn: env.SqlConn},
+		ConfigCenter:   config.NewStaticConfigCenter(config.Config{Hrm: config.HrmConf{InitialUserPassword: "test-pwd-123"}}),
 		Model:          env.Model,
 	}
 }

@@ -5,25 +5,27 @@ import (
 	"testing"
 
 	coresvc "github.com/jzero-io/jzero-admin/core-engine/svc"
+	"github.com/jzero-io/jzero-admin/server/internal/config"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/employee"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/org"
 	"github.com/jzero-io/jzero-admin/server/internal/svc"
 	"github.com/jzero-io/jzero-admin/server/internal/svctest"
 	emptypes "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/employee"
-	orgtypes "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/org"
 	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/leavebalance"
+	orgtypes "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/org"
 	"github.com/jzero-io/jzero/core/status"
 )
 
 const (
-	testYear         = int64(2026)
-	annualLeaveCode  = "annual_leave"
+	testYear        = int64(2026)
+	annualLeaveCode = "annual_leave"
 )
 
 func newSvcCtx(t *testing.T, env *svctest.Env) *svc.ServiceContext {
 	t.Helper()
 	return &svc.ServiceContext{
 		ServiceContext: &coresvc.ServiceContext{SqlxConn: env.SqlConn},
+		ConfigCenter:   config.NewStaticConfigCenter(config.Config{Hrm: config.HrmConf{InitialUserPassword: "test-pwd-123"}}),
 		Model:          env.Model,
 	}
 }

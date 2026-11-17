@@ -8,19 +8,20 @@ import (
 
 	"github.com/jzero-io/jzero/core/stores/condition"
 
-	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee"
-	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_punch_record"
+	coreSvc "github.com/jzero-io/jzero-admin/core-engine/svc"
+	"github.com/jzero-io/jzero-admin/server/internal/config"
 	attendanceconfiglogic "github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/attendanceconfig"
 	attendancegrouplogic "github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/attendancegroup"
 	employeelogic "github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/employee"
 	orglogic "github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/org"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee"
+	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_punch_record"
+	"github.com/jzero-io/jzero-admin/server/internal/svc"
+	"github.com/jzero-io/jzero-admin/server/internal/svctest"
 	configtypes "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/attendanceconfig"
 	grouptypes "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/attendancegroup"
 	employeetypes "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/employee"
 	orgtypes "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/org"
-	coreSvc "github.com/jzero-io/jzero-admin/core-engine/svc"
-	"github.com/jzero-io/jzero-admin/server/internal/svc"
-	"github.com/jzero-io/jzero-admin/server/internal/svctest"
 )
 
 func newSvcCtx(t *testing.T) *svc.ServiceContext {
@@ -29,6 +30,7 @@ func newSvcCtx(t *testing.T) *svc.ServiceContext {
 	// 打卡/日结 logic 只依赖 Model；跨包调用 employee/org 事务需要 SqlxConn。
 	return &svc.ServiceContext{
 		ServiceContext: &coreSvc.ServiceContext{SqlxConn: env.SqlConn},
+		ConfigCenter:   config.NewStaticConfigCenter(config.Config{Hrm: config.HrmConf{InitialUserPassword: "test-pwd-123"}}),
 		Model:          env.Model,
 	}
 }
@@ -114,13 +116,13 @@ func addGroupFlexible(t *testing.T, svcCtx *svc.ServiceContext, name, startTime,
 func insertPunchRow(t *testing.T, svcCtx *svc.ServiceContext, date string, clockIn, clockOut time.Time, inStatus, outStatus string, overtime string) {
 	t.Helper()
 	row := &hrm_punch_record.HrmPunchRecord{
-		Uuid:          newUuid(),
-		PunchDate:     date,
-		EmployeeUuid:  "E-TEST",
-		ClockInStatus: inStatus,
+		Uuid:           newUuid(),
+		PunchDate:      date,
+		EmployeeUuid:   "E-TEST",
+		ClockInStatus:  inStatus,
 		ClockOutStatus: outStatus,
-		Overtime:      overtime,
-		Source:        SourceApp,
+		Overtime:       overtime,
+		Source:         SourceApp,
 	}
 	if !clockIn.IsZero() {
 		row.ClockInTime = nullTime(clockIn)

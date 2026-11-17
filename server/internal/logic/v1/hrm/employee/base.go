@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/jzero-io/jzero/core/status"
+	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
@@ -29,8 +29,8 @@ func uuidNew() string {
 // 在册口径 = person_status NOT IN (离职, 退休) — 组织架构图 (HRM-02) 汇总人数使用。
 // 用户状态由 user_uuid 派生: '1'=已生成系统账号, '0'=未生成 (#6 同步 seam)。
 const (
-	genderMale    = "1"
-	genderFemale  = "2"
+	genderMale   = "1"
+	genderFemale = "2"
 
 	maritalUnmarried = "1"
 	maritalMarried   = "2"
@@ -295,8 +295,9 @@ func SaveEmployeeChildren(ctx context.Context, session sqlx.Session, svcCtx *svc
 }
 
 // insertEmployee writes the master row (+ any provided sub-table rows) inside
-// the caller's transaction. Shared by Add and Import.
-func insertEmployee(ctx context.Context, session sqlx.Session, svcCtx *svc.ServiceContext, req *types.AddRequest) error {
+// the caller's transaction. Shared by Add and Import; returns the new archive
+// uuid (开号接缝 ProvisionAccount 需要档案指针).
+func insertEmployee(ctx context.Context, session sqlx.Session, svcCtx *svc.ServiceContext, req *types.AddRequest) (string, error) {
 	row := &hrm_employee.HrmEmployee{
 		Uuid:             uuidNew(),
 		EmployeeNo:       req.EmployeeNo,
@@ -330,9 +331,12 @@ func insertEmployee(ctx context.Context, session sqlx.Session, svcCtx *svc.Servi
 		Remark:           req.Remark,
 	}
 	if err := svcCtx.Model.HrmEmployee.InsertV2(ctx, session, row); err != nil {
-		return err
+		return "", err
 	}
-	return saveChildren(ctx, session, svcCtx, row.Uuid, req.Educations, req.Works, req.Families)
+	if err := saveChildren(ctx, session, svcCtx, row.Uuid, req.Educations, req.Works, req.Families); err != nil {
+		return "", err
+	}
+	return row.Uuid, nil
 }
 
 // findChildren loads the three sub-tables for a detail record.

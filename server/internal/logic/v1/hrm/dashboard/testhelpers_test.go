@@ -10,6 +10,7 @@ import (
 	"github.com/jzero-io/jzero/core/stores/condition"
 
 	coreSvc "github.com/jzero-io/jzero-admin/core-engine/svc"
+	"github.com/jzero-io/jzero-admin/server/internal/config"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/attendanceconfig"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/employee"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/org"
@@ -34,6 +35,7 @@ func newDashboardCtx(t *testing.T) *svc.ServiceContext {
 	env := svctest.New(t)
 	return &svc.ServiceContext{
 		ServiceContext: &coreSvc.ServiceContext{SqlxConn: env.SqlConn},
+		ConfigCenter:   config.NewStaticConfigCenter(config.Config{Hrm: config.HrmConf{InitialUserPassword: "test-pwd-123"}}),
 		Model:          env.Model,
 	}
 }
