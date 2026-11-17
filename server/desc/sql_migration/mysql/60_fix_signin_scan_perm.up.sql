@@ -7,6 +7,20 @@
 --   casbin 只是网关层粗粒度门禁，故把 API 码补进"扫码签到"菜单 permissions，
 --   并为绑定了该菜单的角色补 casbin_rule 存量行（与 role set_menus 的重建语义一致）。
 
+-- casbin_rule 表由 casbin adapter 在应用首启时创建；全新环境上迁移先于首启执行，
+-- 因此触及 casbin_rule 的迁移必须自带幂等建表（否则 fresh deploy 在此迁移即失败）。
+CREATE TABLE IF NOT EXISTS casbin_rule (
+    id     BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    p_type VARCHAR(32)  DEFAULT '' NOT NULL,
+    v0     VARCHAR(255) DEFAULT '' NOT NULL,
+    v1     VARCHAR(255) DEFAULT '' NOT NULL,
+    v2     VARCHAR(255) DEFAULT '' NOT NULL,
+    v3     VARCHAR(255) DEFAULT '' NOT NULL,
+    v4     VARCHAR(255) DEFAULT '' NOT NULL,
+    v5     VARCHAR(255) DEFAULT '' NOT NULL
+);
+
+
 UPDATE manage_menu SET permissions = '[{"code":"v1:hrm:signin:doSignin","desc":"学员扫码签到"}]'
 WHERE route_path = '/hrm/training/signin/scan' AND permissions NOT LIKE '%doSignin%';
 
