@@ -13,6 +13,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_family"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_work"
 	"github.com/jzero-io/jzero-admin/server/internal/model/manage_user"
+	"github.com/jzero-io/jzero-admin/server/internal/model/manage_user_role"
 	"github.com/jzero-io/jzero-admin/server/internal/svc"
 	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/employee"
 )
@@ -41,12 +42,17 @@ func (l *Delete) Delete(req *types.DeleteRequest) (resp *types.DeleteResponse, e
 
 	err = l.svcCtx.SqlxConn.TransactCtx(l.ctx, func(ctx context.Context, session sqlx.Session) error {
 		for _, uuid := range req.Uuids {
-			// 员工↔账号级联 (HRM-04): 先查 user_uuid, 级联删除对应系统账号.
+			// 员工↔账号级联 (HRM-04/ADR 0007): 先查 user_uuid, 级联删除对应系统账号
+			// 及其角色绑定 (HRM-52: 不留孤儿 manage_user_role 行).
 			emp, err := l.svcCtx.Model.HrmEmployee.FindOneByUuid(ctx, session, uuid)
 			if err != nil && err != sqlx.ErrNotFound {
 				return err
 			}
 			if emp != nil && emp.UserUuid != "" {
+				if err = l.svcCtx.Model.ManageUserRole.DeleteByCondition(ctx, session,
+					condition.NewChain().Equal(manage_user_role.UserUuid, emp.UserUuid).Build()...); err != nil {
+					return err
+				}
 				if err = l.svcCtx.Model.ManageUser.DeleteByCondition(ctx, session,
 					condition.NewChain().Equal(manage_user.Uuid, emp.UserUuid).Build()...); err != nil {
 					return err
