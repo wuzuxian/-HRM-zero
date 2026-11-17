@@ -115,23 +115,27 @@ async function openMenuPath(page: Page, ...labels: string[]) {
   }
 }
 
-/** admin 打开员工档案页并按姓名搜索（LIKE 前缀；搜索表单默认收在折叠面板里）。
- *  不用 networkidle（dev 模式 Vite 常驻连接会饿死 networkidle），一律等具体元素。 */
-async function gotoArchiveAndSearch(page: Page, keyword: string) {
-  await page.goto(ARCHIVE_ROUTE);
-  const nameInput = page.locator('input[placeholder*="姓名"]').first();
+/** admin 打开列表页并按输入框 placeholder 定位搜索（LIKE 前缀；搜索表单默认收在折叠面板里）。
+ *  员工档案页（placeholder 含「姓名」）与用户管理页（placeholder 含「用户名」）的搜索
+ *  折叠面板结构一致, 收敛为同一实现; 不用 networkidle（dev 模式 Vite 常驻连接会饿死
+ *  networkidle），一律等具体元素。 */
+async function gotoListAndSearch(page: Page, route: string, placeholderKeyword: string, keyword: string) {
+  await page.goto(route);
+  const searchInput = page.locator(`input[placeholder*="${placeholderKeyword}"]`).first();
   await page
-    .locator('.n-collapse-item__header, input[placeholder*="姓名"]')
+    .locator(`.n-collapse-item__header, input[placeholder*="${placeholderKeyword}"]`)
     .first()
     .waitFor({ state: 'visible', timeout: 15_000 });
-  if (!(await nameInput.isVisible().catch(() => false))) {
+  if (!(await searchInput.isVisible().catch(() => false))) {
     await page.locator('.n-collapse-item__header', { hasText: '搜索' }).first().click();
-    await nameInput.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
+    await searchInput.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
   }
-  await nameInput.fill(keyword);
+  await searchInput.fill(keyword);
   await page.locator('button:has-text("搜索")').first().click();
   await page.waitForTimeout(800);
 }
+
+const gotoArchiveAndSearch = (page: Page, keyword: string) => gotoListAndSearch(page, ARCHIVE_ROUTE, '姓名', keyword);
 
 /** 打开某员工行的编辑弹窗并切到「系统账号」Tab */
 async function openEditModalAccountTab(page: Page, employeeName: string) {
@@ -413,22 +417,8 @@ test('一对一冲突拒绝（占用者报出+已关联拒绝）且不写入', a
   expect(aDetail.userUuid, 'A 的关联未被变更').toBe(empA.userUuid);
 });
 
-/** 用户管理页搜索（搜索表单默认收在折叠面板里） */
-async function gotoUserAndSearch(page: Page, username: string) {
-  await page.goto(USER_ROUTE);
-  const usernameInput = page.locator('input[placeholder*="用户名"]').first();
-  await page
-    .locator('.n-collapse-item__header, input[placeholder*="用户名"]')
-    .first()
-    .waitFor({ state: 'visible', timeout: 15_000 });
-  if (!(await usernameInput.isVisible().catch(() => false))) {
-    await page.locator('.n-collapse-item__header', { hasText: '搜索' }).first().click();
-    await usernameInput.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
-  }
-  await usernameInput.fill(username);
-  await page.locator('button:has-text("搜索")').first().click();
-  await page.waitForTimeout(800);
-}
+/** 用户管理页搜索（与员工档案页共用 gotoListAndSearch） */
+const gotoUserAndSearch = (page: Page, username: string) => gotoListAndSearch(page, USER_ROUTE, '用户名', username);
 
 // ---------- 9. 用户管理「关联员工」列 ----------
 test('用户管理「关联员工」列显示工号 + 姓名', async ({ page }) => {

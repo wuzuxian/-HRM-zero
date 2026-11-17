@@ -3145,7 +3145,6 @@ declare namespace App {
             systemAccountCreateButton: string;
             systemAccountLinkSuccess: string;
             systemAccountUnlinkSuccess: string;
-            systemAccountCreatedTip: string;
             systemAccountSelectFirst: string;
             systemAccountAddModeTip: string;
             importSuccess: string;

@@ -3,11 +3,7 @@ package entry
 import (
 	"context"
 
-	"github.com/zeromicro/go-zero/core/stores/sqlx"
-
-	coresvc "github.com/jzero-io/jzero-admin/core-engine/svc"
 	"github.com/jzero-io/jzero-admin/server/internal/global"
-	"github.com/jzero-io/jzero-admin/server/internal/model"
 	"github.com/jzero-io/jzero-admin/server/internal/svc"
 )
 
@@ -25,6 +21,8 @@ func WithSvcCtx(ctx context.Context, svcCtx *svc.ServiceContext) context.Context
 
 // svcCtxOf resolves the ServiceContext from ctx; falls back to the process-wide
 // global (cmd/server.go 装配) when absent — server 运行态走全局，测试走 WithSvcCtx.
+// 入职单建档/开号全部显式传 session (无需 offer/cardreplacement 的 TxBoundSvcCtx
+// 整包换绑), 这里保持最小接缝。
 func svcCtxOf(ctx context.Context) *svc.ServiceContext {
 	if ctx != nil {
 		if v, ok := ctx.Value(svcCtxKey{}).(*svc.ServiceContext); ok && v != nil {
@@ -32,18 +30,4 @@ func svcCtxOf(ctx context.Context) *svc.ServiceContext {
 		}
 	}
 	return &global.ServiceContext
-}
-
-// TxBoundSvcCtx returns a shallow copy of svcCtx whose Model is rebuilt on the
-// approval transaction session, so nested domain calls read AND write inside
-// the same tx (offer 包同款; 入职单建档/开号全部显式传 session, 这里仅备用).
-func TxBoundSvcCtx(ctx context.Context, session sqlx.Session, base *svc.ServiceContext) *svc.ServiceContext {
-	if session == nil {
-		return base
-	}
-	conn := sqlx.NewSqlConnFromSession(session)
-	out := *base
-	out.ServiceContext = &coresvc.ServiceContext{SqlxConn: conn}
-	out.Model = model.NewModel(conn)
-	return &out
 }

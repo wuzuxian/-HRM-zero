@@ -22,7 +22,8 @@ import { APIRequestContext } from '@playwright/test';
  *   - 候选列表只返回未被任何档案占用的账号。
  */
 
-const API = process.env.E2E_API_URL ?? 'http://localhost:8001';
+/** 后端 API 直连基址（绕过前端代理）; perf-data 等其他造数 helper 复用同一处定义 */
+export const API = process.env.E2E_API_URL ?? 'http://localhost:8001';
 
 /** 员工测试数据统一前缀（历史置离线 + 清理时按名匹配） */
 export const EMPLOYEE_NAME_PREFIX = 'e2e账号员工';
@@ -47,6 +48,7 @@ export interface RawResponse {
   data: unknown;
 }
 
+/** Bearer 认证头（apiGet/apiPost/apiGetRaw/apiPostRaw 的唯一出处） */
 function authHeaders(token: string): Record<string, string> {
   return { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' };
 }
@@ -62,7 +64,8 @@ async function apiGetRaw(request: APIRequestContext, path: string, token: string
   return (await resp.json()) as RawResponse;
 }
 
-async function apiPost(request: APIRequestContext, path: string, token: string, data: unknown): Promise<unknown> {
+/** POST 且 code 非 200/0 抛异常（错误码断言走 apiPostRaw）; perf-data 等复用 */
+export async function apiPost(request: APIRequestContext, path: string, token: string, data: unknown): Promise<unknown> {
   const json = await apiPostRaw(request, path, token, data);
   if (json.code !== 200 && json.code !== 0) {
     throw new Error(`POST ${path} 失败: code=${json.code} msg=${json.msg}`);
@@ -70,7 +73,8 @@ async function apiPost(request: APIRequestContext, path: string, token: string, 
   return json.data;
 }
 
-async function apiGet(request: APIRequestContext, path: string, token: string, params?: Record<string, string>): Promise<unknown> {
+/** GET 且 code 非 200/0 抛异常; perf-data 等复用 */
+export async function apiGet(request: APIRequestContext, path: string, token: string, params?: Record<string, string>): Promise<unknown> {
   const json = await apiGetRaw(request, path, token, params);
   if (json.code !== 200 && json.code !== 0) {
     throw new Error(`GET ${path} 失败: code=${json.code} msg=${json.msg}`);

@@ -1514,7 +1514,6 @@ const local: App.I18n.Schema = {
         systemAccountCreateButton: 'Create and Link',
         systemAccountLinkSuccess: 'Linked',
         systemAccountUnlinkSuccess: 'Unlinked',
-        systemAccountCreatedTip: 'Account {username} created and linked. Initial password: {password}',
         systemAccountSelectFirst: 'Select an account to link first',
         systemAccountAddModeTip: 'System accounts are provisioned on creation; manage the link in the edit modal',
         importSuccess: 'Import succeeded',

@@ -68,11 +68,8 @@ func provisionAccount(ctx context.Context, svcCtx *svc.ServiceContext, session s
 }
 
 func provisionAccountWith(ctx context.Context, svcCtx *svc.ServiceContext, session sqlx.Session, employeeUuid string, ov accountOverrides) (string, error) {
-	row, err := svcCtx.Model.HrmEmployee.FindOneByUuid(ctx, session, employeeUuid)
+	row, err := findEmployeeOrNotFound(ctx, session, svcCtx, employeeUuid)
 	if err != nil {
-		if err == sqlx.ErrNotFound {
-			return "", status.ErrorMessage(errcodes.EmployeeUserNotFoundCode, "员工不存在: "+employeeUuid)
-		}
 		return "", err
 	}
 
@@ -114,7 +111,7 @@ func provisionAccountWith(ctx context.Context, svcCtx *svc.ServiceContext, sessi
 		Nickname: row.Name,
 		Gender:   row.Gender,
 		Phone:    row.Phone,
-		Status:   "1",
+		Status:   manage_user.StatusEnabled,
 		Email:    row.Email,
 	}); err != nil {
 		return "", err

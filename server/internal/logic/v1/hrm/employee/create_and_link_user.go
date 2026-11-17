@@ -37,11 +37,8 @@ func NewCreateAndLinkUser(ctx context.Context, svcCtx *svc.ServiceContext, r *ht
 func (l *CreateAndLinkUser) CreateAndLinkUser(req *types.CreateAndLinkUserRequest) (resp *types.CreateAndLinkUserResponse, err error) {
 	var userUuid string
 	err = l.svcCtx.SqlxConn.TransactCtx(l.ctx, func(ctx context.Context, session sqlx.Session) error {
-		emp, err := l.svcCtx.Model.HrmEmployee.FindOneByUuid(ctx, session, req.EmployeeUuid)
+		emp, err := findEmployeeOrNotFound(ctx, session, l.svcCtx, req.EmployeeUuid)
 		if err != nil {
-			if err == sqlx.ErrNotFound {
-				return status.ErrorMessage(errcodes.EmployeeUserNotFoundCode, "员工不存在: "+req.EmployeeUuid)
-			}
 			return err
 		}
 		if emp.UserUuid != "" {
