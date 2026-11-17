@@ -63,3 +63,26 @@ export function attachErrorCollector(page: Page): ConsoleReport {
   });
   return { errors };
 }
+
+/**
+ * 点击列表页 TableHeaderOperation 的“新增”按钮，断言弹窗打开且无 pageerror。
+ * 冒烟层交互步：页面加载干净不代表弹窗渲染干净（如 NTimePicker 契约错误
+ * 只在弹窗挂载时抛 RangeError，见 e2e/tests/bugs/time-picker-invalid-time-value.spec.ts）。
+ * 返回点击后收集到的 pageerror；无“新增”按钮的页面返回 null 并跳过。
+ */
+export async function clickAddAndCollectPageErrors(page: Page): Promise<string[] | null> {
+  const addBtn = page.locator('button:has-text("新增")').first();
+  if (!(await addBtn.isVisible().catch(() => false))) {
+    return null;
+  }
+
+  const pageErrors: string[] = [];
+  page.on('pageerror', (err) => {
+    pageErrors.push(`${err.name}: ${err.message}`);
+  });
+
+  await addBtn.click();
+  // 弹窗挂载/首帧渲染的同步异常在此窗口内抛出
+  await page.waitForTimeout(2000);
+  return pageErrors;
+}

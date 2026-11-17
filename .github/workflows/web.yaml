@@ -39,6 +39,7 @@ jobs:
           cd web
           pnpm i
           pnpm typecheck
+          pnpm guard:template
           VITE_SERVICE_BASE_URL=https://api.jzero-admin-server.jaronnie.com pnpm build
           VITE_SERVICE_BASE_URL=https://api.jzero-admin-server.jaronnie.com pnpm build --outDir fc3-dist
           cd ..

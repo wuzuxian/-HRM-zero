@@ -42,6 +42,7 @@
     "dev": "vite --mode test",
     "dev:prod": "vite --mode prod",
     "gen-route": "sa gen-route",
+    "guard:template": "node scripts/check-template-contracts.mjs",
     "lint": "eslint . --fix",
     "prepare": "simple-git-hooks",
     "preview": "vite preview",
@@ -129,7 +130,7 @@
   },
   "simple-git-hooks": {
     "commit-msg": "cd web && pnpm sa git-commit-verify",
-    "pre-commit": "cd web && pnpm typecheck && pnpm lint-staged"
+    "pre-commit": "cd web && pnpm typecheck && pnpm guard:template && pnpm lint-staged"
   },
   "lint-staged": {
     "*": "eslint --fix"
