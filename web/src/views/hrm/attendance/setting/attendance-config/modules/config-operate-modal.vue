@@ -151,18 +151,18 @@ watch(visible, () => {
       </NFormItem>
       <NFormItem :label="$t('page.hrm.attendance.group.startTime')" path="startTime">
         <NTimePicker
-          :value="model.startTime as unknown as number"
+          :formatted-value="model.startTime || null"
           format="HH:mm"
           value-format="HH:mm"
-          @update:value="(v: string | number | null) => (model.startTime = String(v ?? ''))"
+          @update:formatted-value="(v: string | null) => (model.startTime = v ?? '')"
         />
       </NFormItem>
       <NFormItem :label="$t('page.hrm.attendance.group.endTime')" path="endTime">
         <NTimePicker
-          :value="model.endTime as unknown as number"
+          :formatted-value="model.endTime || null"
           format="HH:mm"
           value-format="HH:mm"
-          @update:value="(v: string | number | null) => (model.endTime = String(v ?? ''))"
+          @update:formatted-value="(v: string | null) => (model.endTime = v ?? '')"
         />
       </NFormItem>
       <NFormItem :label="$t('page.hrm.attendance.group.workDays')" path="workDays">

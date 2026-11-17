@@ -114,38 +114,38 @@ watch(visible, () => {
         </NFormItem>
         <NFormItem :label="$t('page.hrm.attendance.shift.startTime')" path="startTime">
           <NTimePicker
-            :value="model.startTime as unknown as number"
+            :formatted-value="model.startTime || null"
             format="HH:mm"
             value-format="HH:mm"
-            @update:value="(v: string | number | null) => (model.startTime = String(v ?? ''))"
+            @update:formatted-value="(v: string | null) => (model.startTime = v ?? '')"
           />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.attendance.shift.endTime')" path="endTime">
           <NTimePicker
-            :value="model.endTime as unknown as number"
+            :formatted-value="model.endTime || null"
             format="HH:mm"
             value-format="HH:mm"
-            @update:value="(v: string | number | null) => (model.endTime = String(v ?? ''))"
+            @update:formatted-value="(v: string | null) => (model.endTime = v ?? '')"
           />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.attendance.shift.restStart')" path="restStart">
           <NTimePicker
-            :value="model.restStart as unknown as number"
+            :formatted-value="model.restStart || null"
             format="HH:mm"
             value-format="HH:mm"
             :placeholder="$t('page.hrm.attendance.shift.form.rest')"
             clearable
-            @update:value="(v: string | number | null) => (model.restStart = String(v ?? ''))"
+            @update:formatted-value="(v: string | null) => (model.restStart = v ?? '')"
           />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.attendance.shift.restEnd')" path="restEnd">
           <NTimePicker
-            :value="model.restEnd as unknown as number"
+            :formatted-value="model.restEnd || null"
             format="HH:mm"
             value-format="HH:mm"
             :placeholder="$t('page.hrm.attendance.shift.form.rest')"
             clearable
-            @update:value="(v: string | number | null) => (model.restEnd = String(v ?? ''))"
+            @update:formatted-value="(v: string | null) => (model.restEnd = v ?? '')"
           />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.attendance.shift.flexibleMinutes')" path="flexibleMinutes">

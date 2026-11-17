@@ -220,11 +220,11 @@ watch(visible, () => {
           :rule="timeRequired ? defaultRequiredRule : undefined"
         >
           <NTimePicker
-            :value="model.startTime as unknown as number"
+            :formatted-value="model.startTime || null"
             format="HH:mm"
             value-format="HH:mm"
             :disabled="model.groupType === '3'"
-            @update:value="(v: string | number | null) => (model.startTime = String(v ?? ''))"
+            @update:formatted-value="(v: string | null) => (model.startTime = v ?? '')"
           />
         </NFormItem>
         <NFormItem
@@ -233,11 +233,11 @@ watch(visible, () => {
           :rule="timeRequired ? defaultRequiredRule : undefined"
         >
           <NTimePicker
-            :value="model.endTime as unknown as number"
+            :formatted-value="model.endTime || null"
             format="HH:mm"
             value-format="HH:mm"
             :disabled="model.groupType === '3'"
-            @update:value="(v: string | number | null) => (model.endTime = String(v ?? ''))"
+            @update:formatted-value="(v: string | null) => (model.endTime = v ?? '')"
           />
         </NFormItem>
         <NFormItem :label="$t('page.hrm.attendance.group.flexibleMinutes')" path="flexibleMinutes">
