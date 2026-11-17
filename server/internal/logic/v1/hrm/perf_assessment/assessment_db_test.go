@@ -505,12 +505,11 @@ func TestAppealFlow(t *testing.T) {
 	appeals, err := svcCtx.Model.HrmPerfAppeal.FindByCondition(testCtx, nil, condition.NewChain().Build()...)
 	mustNoErr(t, err)
 	assertLen(t, appeals, 1)
-	appealUuid := appeals[0].Uuid
-	err = HandleAppealForTask(testCtx, svcCtx.SqlxConn, appealUuid, AppealUpheld, "", 0, "", actorFor("", reviewCodes...))
+	err = HandleAppealForTask(testCtx, svcCtx.SqlxConn, taskUuid, AppealUpheld, "", 0, "", actorFor("", reviewCodes...))
 	assertErrIs(t, err, ErrOperatorDenied)
 
 	// 裁决调整得分：92 → A
-	mustNoErr(t, HandleAppealForTask(testCtx, svcCtx.SqlxConn, appealUuid, AppealAdjusted, "复核上调", 92, "", actorFor("", calibCodes...)))
+	mustNoErr(t, HandleAppealForTask(testCtx, svcCtx.SqlxConn, taskUuid, AppealAdjusted, "复核上调", 92, "", actorFor("", calibCodes...)))
 	task = mustFindTask(t, svcCtx, mustPeriodOf(t, svcCtx, taskUuid))
 	assertEq(t, TaskStatusDone, task.TaskStatus)
 	assertInDelta(t, 92.0, task.FinalScore, 0.001)
@@ -520,7 +519,7 @@ func TestAppealFlow(t *testing.T) {
 	assertEq(t, AppealAdjusted, appeals[0].Status)
 
 	// 已裁决不可重复处理
-	err = HandleAppealForTask(testCtx, svcCtx.SqlxConn, appealUuid, AppealUpheld, "", 0, "", actorFor("", calibCodes...))
+	err = HandleAppealForTask(testCtx, svcCtx.SqlxConn, taskUuid, AppealUpheld, "", 0, "", actorFor("", calibCodes...))
 	assertErr(t, err)
 }
 

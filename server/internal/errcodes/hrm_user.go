@@ -9,6 +9,9 @@ const (
 	EmployeeUserNotFoundCode = 10460
 	// EmployeeUserNoDuplicateCode 系统账号用户名已存在（manage_user.username 与工号冲突）
 	EmployeeUserNoDuplicateCode = 10461
+	// EmployeeUserReferencedCode 账号被员工档案引用不可删除（HRM-52 删除一致性，
+	// 需先在员工档案解除关联；批量删除含任一被引用账号时整批拒绝）
+	EmployeeUserReferencedCode = 10469
 )
 
 // HRM-51 员工↔账号关联/解绑业务错误码。1072x 段：
@@ -33,4 +36,5 @@ func init() {
 	status.Register(EmployeeUserAccountNotFoundCode)
 	status.Register(EmployeeUserAlreadyLinkedCode)
 	status.Register(EmployeeUserResignedCode)
+	status.Register(EmployeeUserReferencedCode)
 }
