@@ -89,6 +89,7 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 		row.OrgUuid = req.OrgUuid
 		row.Position = req.Position
 		row.Post = req.Post
+		prevPersonStatus := row.PersonStatus
 		if req.PersonStatus != "" {
 			row.PersonStatus = req.PersonStatus
 		}
@@ -102,12 +103,18 @@ func (l *Edit) Edit(req *types.EditRequest) (resp *types.EditResponse, err error
 
 		// 员工↔账号双向同步 (HRM-04): 已生成账号的员工, 编辑档案同步账号资料
 		// (昵称=姓名, 手机号, 邮箱); 未生成账号 (user_uuid '') 则无账号可同步.
+		// HRM-53 (ADR 0007 生命周期一致性): 人员状态翻成离职('5')时, 同一事务内
+		// 把关联账号置禁用('2') — 重复置离职是幂等的; 离职→在职不自动恢复启用
+		// (重新启用是用户管理侧的手工动作, 由登录状态校验消费)。
 		if row.UserUuid != "" {
 			user, userErr := l.svcCtx.Model.ManageUser.FindOneByUuid(ctx, session, row.UserUuid)
 			if userErr != nil && userErr != sqlx.ErrNotFound {
 				return userErr
 			}
 			if userErr == nil {
+				if row.PersonStatus == PersonStatusResigned && prevPersonStatus != PersonStatusResigned {
+					user.Status = "2"
+				}
 				user.Nickname = row.Name
 				user.Phone = row.Phone
 				user.Email = row.Email

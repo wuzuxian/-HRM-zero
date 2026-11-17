@@ -11,6 +11,7 @@ import (
 
 	hrmemployee "github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee"
 	model "github.com/jzero-io/jzero-admin/server/internal/model/hrm_resignation_bill"
+	manageuser "github.com/jzero-io/jzero-admin/server/internal/model/manage_user"
 	"github.com/jzero-io/jzero-admin/server/internal/scheduler"
 )
 
@@ -26,6 +27,7 @@ const personStatusResigned = "5" // 离职 (HRM-03 enum: 1 正式/2 试用期/3 
 // bill applied=1. Idempotent via the applied flag; runs inside the caller's
 // transaction (cron tx). Missing archive rows are tolerated (snapshot contract)
 // but still marked applied so the scan does not retry them forever.
+// HRM-53 (ADR 0007 生命周期一致性): 置离职的同一事务内同步禁用关联账号。
 func applyResignation(ctx context.Context, session sqlx.Session, row *model.HrmResignationBill) error {
 	if row.Applied == 1 {
 		return nil // idempotent: already written back
@@ -50,10 +52,44 @@ func applyResignation(ctx context.Context, session sqlx.Session, row *model.HrmR
 			"resignation: 离职回写未命中员工档案（bill=%s employee=%s/%s uuid=%q），仅标记 applied",
 			row.BillNo, row.EmployeeNo, row.EmployeeName, row.EmployeeUuid)
 	}
+	// HRM-53: 离职生效同一事务内禁用关联账号 (登录状态校验随之拒绝该员工);
+	// 容错与档案回写一致: 档案未命中/未关联账号/账号行缺失都幂等跳过。
+	if err := disableEmployeeAccount(ctx, session, row.EmployeeUuid, row.EmployeeNo); err != nil {
+		return err
+	}
 	return model.NewHrmResignationBillModel(sqlx.NewSqlConnFromSession(session)).
 		UpdateFieldsByCondition(ctx, session,
 			map[string]any{"applied": int64(1)},
 			condition.NewChain().Equal(model.Uuid, row.Uuid).Build()...)
+}
+
+// disableEmployeeAccount sets the linked account's status to '2'(禁用) inside the
+// caller's transaction. Mirrors the archive write-back tolerance: no archive row
+// (snapshot-only bills), no user_uuid pointer, or a dangling pointer are all
+// idempotent skips, never errors.
+func disableEmployeeAccount(ctx context.Context, session sqlx.Session, employeeUuid, employeeNo string) error {
+	em := hrmemployee.NewHrmEmployeeModel(sqlx.NewSqlConnFromSession(session))
+	var emp *hrmemployee.HrmEmployee
+	var err error
+	if employeeUuid != "" {
+		emp, err = em.FindOneByUuid(ctx, session, employeeUuid)
+	} else {
+		emp, err = em.FindOneByCondition(ctx, session,
+			condition.NewChain().Equal(hrmemployee.EmployeeNo, employeeNo).Build()...)
+	}
+	if err == sqlx.ErrNotFound {
+		return nil // 档案不存在 (仅快照单), 无账号可禁用
+	}
+	if err != nil {
+		return err
+	}
+	if emp.UserUuid == "" {
+		return nil // 未关联账号 (建档即开号之前的存量档案)
+	}
+	return manageuser.NewManageUserModel(sqlx.NewSqlConnFromSession(session)).
+		UpdateFieldsByCondition(ctx, session,
+			map[string]any{"status": "2"},
+			condition.NewChain().Equal(manageuser.Uuid, emp.UserUuid).Build()...)
 }
 
 // ScanPendingResigned is the daily cron scan behind 离职生效: every 审批通过 bill
