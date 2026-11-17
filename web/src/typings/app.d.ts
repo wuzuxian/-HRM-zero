@@ -291,6 +291,7 @@ declare namespace App {
         action: string;
         add: string;
         addSuccess: string;
+        back: string;
         backToHome: string;
         batchDelete: string;
         cancel: string;
