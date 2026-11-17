@@ -307,15 +307,15 @@ async function handleGenerateUser() {
     return;
   }
   generateUserLoading.value = true;
-  const { error, data } = await GenerateEmployeeUser({ uuids });
+  const { error, data: genResult } = await GenerateEmployeeUser({ uuids });
   generateUserLoading.value = false;
   if (error) return;
-  if (data && data.generated > 0) {
+  if (genResult && genResult.generated > 0) {
     window.$message?.success(
-      $t('page.hrm.employee.generateUserSuccess', { generated: data.generated, skipped: data.skipped })
+      $t('page.hrm.employee.generateUserSuccess', { generated: genResult.generated, skipped: genResult.skipped })
     );
   } else {
-    window.$message?.info($t('page.hrm.employee.generateUserAllSkipped', { skipped: data?.skipped ?? 0 }));
+    window.$message?.info($t('page.hrm.employee.generateUserAllSkipped', { skipped: genResult?.skipped ?? 0 }));
   }
   checkedRowKeys.value = [];
   getData();
@@ -369,7 +369,7 @@ async function handleExport() {
             {{ $t('page.hrm.employee.exportEmployee') }}
           </NButton>
           <NButton
-            v-if="hasAuth('hrm:employee:generateuser')"
+            v-if="hasAuth('hrm:employee:generateUser')"
             size="small"
             ghost
             type="warning"
