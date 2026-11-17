@@ -8,6 +8,8 @@ const (
 	OrgNotFoundCode       = 10322
 	OrgHasChildrenCode    = 10323
 	OrgImportInvalidCode  = 10324
+	// OrgMoveCycleCode 编辑组织时把父组织改到自己或自己的子孙上（会成环）
+	OrgMoveCycleCode = 10325
 
 	// HRM 单据审批底座（HRM-06）业务错误码。
 	// HrmBillTypeNotRegisteredCode 单据类型未注册审批处理器
@@ -208,6 +210,7 @@ func init() {
 	status.Register(OrgNotFoundCode)
 	status.Register(OrgHasChildrenCode)
 	status.Register(OrgImportInvalidCode)
+	status.Register(OrgMoveCycleCode)
 
 	status.Register(HrmBillTypeNotRegisteredCode)
 	status.Register(HrmBillNotFoundCode)

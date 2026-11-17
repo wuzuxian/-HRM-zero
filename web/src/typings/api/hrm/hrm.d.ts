@@ -98,6 +98,8 @@ declare namespace Api {
     /** edit org request */
     type EditOrgRequest = {
       uuid: string;
+      /** parent org uuid; send a different non-empty value to move the node */
+      parentUuid?: string;
       /** org name */
       orgName: string;
       /** org type */
@@ -1987,7 +1989,7 @@ declare namespace Api {
       remark: string;
     };
 
-     // ===== HRM-34 薪酬方案 =====
+    // ===== HRM-34 薪酬方案 =====
 
     /** hrm salary scheme (薪酬方案, GLOSSARY: 某薪酬主体下适用于某类人员状态的薪资计算配置) */
     type SalaryScheme = {
@@ -4720,7 +4722,8 @@ declare namespace Api {
 
     /** salary archive search params */
     type SalaryArchiveSearchParams = CommonType.RecordNullable<
-      Pick<Api.Hrm.SalaryArchive, 'employeeName' | 'employeeNo' | 'subjectUuid' | 'schemeUuid' | 'status'> & Common.CommonSearchParams
+      Pick<Api.Hrm.SalaryArchive, 'employeeName' | 'employeeNo' | 'subjectUuid' | 'schemeUuid' | 'status'> &
+        Common.CommonSearchParams
     >;
 
     /** salary archive paginated list */
@@ -5145,7 +5148,9 @@ declare namespace Api {
 
     /** 薪资统计台账 search params（筛选 批次/姓名/部门/仅看异常） */
     type SalaryLedgerSearchParams = CommonType.RecordNullable<
-      Pick<Api.Hrm.SalaryLedgerRow, 'batchUuid' | 'employeeName' | 'orgName'> & { onlyAbnormal?: boolean } & Common.CommonSearchParams
+      Pick<Api.Hrm.SalaryLedgerRow, 'batchUuid' | 'employeeName' | 'orgName'> & {
+        onlyAbnormal?: boolean;
+      } & Common.CommonSearchParams
     >;
 
     /** 薪资统计台账 response（统计卡 + 明细行；分页字段 = PageResponse） */

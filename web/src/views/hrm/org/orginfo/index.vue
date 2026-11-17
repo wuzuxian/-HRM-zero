@@ -211,7 +211,7 @@ function buildColumns() {
       width: 240,
       render: (row: Api.Hrm.Org) => (
         <div class="flex-center justify-end gap-8px">
-          {hasAuth('hrm:org:addchild') && (
+          {hasAuth('hrm:org:addChild') && (
             <NButton type="primary" ghost size="small" onClick={() => handleAddChild(row)}>
               {$t('page.hrm.org.addChildOrg')}
             </NButton>
@@ -241,7 +241,8 @@ function buildColumns() {
 
 const columns = computed(() => {
   const visible = new Set(columnChecks.value.filter(item => item.checked).map(item => item.key));
-  return buildColumns().filter(column => 'type' in column || visible.has(column.key!));
+  // 操作列（operate）不参与列设置过滤，只管数据列——否则操作按钮整列消失
+  return buildColumns().filter(column => 'type' in column || column.key === 'operate' || visible.has(column.key!));
 });
 
 getData();

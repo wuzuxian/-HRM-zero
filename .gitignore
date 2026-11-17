@@ -3,3 +3,8 @@ deploy/docker-compose/mysql/data
 deploy/docker-compose/postgres/data
 # Python bytecode
 __pycache__/
+
+# 统一镜像 sqlite 数据卷（deploy/docker）
+deploy/docker/data
+deploy/docker/data-postgres
+deploy/docker/data-mysql

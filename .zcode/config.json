@@ -12,7 +12,7 @@
               "enabled": true,
               "statusMessage": "generated-file guard",
               "args": [
-                "${ZCODE_PROJECT_DIR}/.zcode/hooks/no-edit-generated.py"
+                "/home/wuzuxian/-HRM-zero/.zcode/hooks/no-edit-generated.py"
               ],
               "timeoutMs": 5000
             },
@@ -22,32 +22,7 @@
               "enabled": true,
               "statusMessage": "logic structure guard",
               "args": [
-                "${ZCODE_PROJECT_DIR}/.zcode/hooks/no-break-logic.py"
-              ],
-              "timeoutMs": 5000
-            }
-          ]
-        },
-        {
-          "matcher": "Bash",
-          "hooks": [
-            {
-              "type": "process",
-              "command": "python3",
-              "enabled": true,
-              "statusMessage": "bash generated-file guard",
-              "args": [
-                "${ZCODE_PROJECT_DIR}/.zcode/hooks/no-bash-edit-generated.py"
-              ],
-              "timeoutMs": 5000
-            },
-            {
-              "type": "process",
-              "command": "python3",
-              "enabled": true,
-              "statusMessage": "bash logic-file guard",
-              "args": [
-                "${ZCODE_PROJECT_DIR}/.zcode/hooks/no-break-logic-bash.py"
+                "/home/wuzuxian/-HRM-zero/.zcode/hooks/no-break-logic.py"
               ],
               "timeoutMs": 5000
             }

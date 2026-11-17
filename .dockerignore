@@ -1,0 +1,28 @@
+# Root .dockerignore for the unified image build (context = repo root,
+# see deploy/docker/Dockerfile). Only server/ and web/ sources are needed.
+
+# unrelated dirs
+core-engine
+deploy
+docs
+e2e
+scripts
+.claude
+.github
+.idea
+.zcode
+
+# web build artifacts & deps
+web/node_modules
+web/packages/*/node_modules
+web/dist
+web/*.local
+
+# server build artifacts & local db
+server/jzero-admin.db
+server/jzero-admin.db-*
+server/tmp
+
+# version control
+**/.git
+**/.gitignore

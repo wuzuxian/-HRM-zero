@@ -1,0 +1,9 @@
+# mysql profile override: 切 app 到外部 mysql
+services:
+  app:
+    environment:
+      - DRIVER_NAME=mysql
+      - DATASOURCE=root:123456@tcp(mysql:3306)/jzero-admin?charset=utf8mb4&parseTime=True&loc=Local
+      - REDIS_MINI_REDIS=true
+    depends_on:
+      - mysql

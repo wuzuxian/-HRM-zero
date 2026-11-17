@@ -1,0 +1,8 @@
+# redis profile override: 切 app 到外部 redis（数据库仍按基础文件的 sqlite）
+services:
+  app:
+    environment:
+      - REDIS_MINI_REDIS=false
+      - REDIS_HOST=redis:6379
+    depends_on:
+      - redis

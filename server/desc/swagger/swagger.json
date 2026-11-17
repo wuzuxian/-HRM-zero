@@ -7796,6 +7796,9 @@
                 "orgType": {
                   "type": "string"
                 },
+                "parentUuid": {
+                  "type": "string"
+                },
                 "remark": {
                   "type": "string"
                 },

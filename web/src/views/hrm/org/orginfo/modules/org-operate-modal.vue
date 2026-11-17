@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, reactive, watch } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 import { useLoading } from '@sa/hooks';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
-import { AddOrg, AddOrgChild, EditOrg } from '@/service/api';
+import { AddOrg, AddOrgChild, EditOrg, GetOrgTree } from '@/service/api';
 import { $t } from '@/locales';
 import { hrmOrgStatusOptions, hrmOrgTypeOptions } from '@/constants/business';
 import { translateOptions } from '@/utils/common';
@@ -47,12 +47,16 @@ const title = computed(() => {
 
 const parentOrgName = computed(() => (props.operateType === 'addChild' ? (props.rowData?.orgName ?? '') : ''));
 
-type Model = Pick<Api.Hrm.AddOrgRequest, 'orgName' | 'orgType' | 'leader' | 'orderNum' | 'status' | 'remark'>;
+type Model = Pick<Api.Hrm.AddOrgRequest, 'orgName' | 'orgType' | 'leader' | 'orderNum' | 'status' | 'remark'> & {
+  /** edit only: empty means root org */
+  parentUuid: string;
+};
 
 const model: Model = reactive(createDefaultModel());
 
 function createDefaultModel(): Model {
   return {
+    parentUuid: '',
     orgName: '',
     orgType: '2',
     leader: '',
@@ -69,11 +73,44 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
   orgType: defaultRequiredRule
 };
 
+// ---- org tree options (edit mode: pick a new parent to move the node) ----
+// naive-ui NTreeSelect 的选项契约是 key/label/children，v-model:value 绑定 key
+type OrgTreeOption = { key: string; label: string; children?: OrgTreeOption[] };
+
+const orgTreeOptions = ref<OrgTreeOption[]>([]);
+
+/** full org tree fetched on open (edit mode) */
+const fullTree = ref<Api.Hrm.Org[]>([]);
+
+/** build parent options excluding the edited node itself and its descendants (would form a cycle) */
+function buildParentOptions(excludeUuid: string | null, nodes: Api.Hrm.Org[]): OrgTreeOption[] {
+  const toOption = (node: Api.Hrm.Org): OrgTreeOption | null => {
+    if (node.uuid === excludeUuid) {
+      return null;
+    }
+    return {
+      key: node.uuid,
+      label: node.orgName,
+      children: node.children?.length ? buildParentOptions(excludeUuid, node.children) : undefined
+    };
+  };
+  return nodes.map(toOption).filter((item): item is OrgTreeOption => item !== null);
+}
+
+async function loadOrgTree() {
+  const { error, data: tree } = await GetOrgTree();
+  if (!error && tree) {
+    fullTree.value = tree.records ?? [];
+    orgTreeOptions.value = buildParentOptions(props.rowData?.uuid ?? null, fullTree.value);
+  }
+}
+
 function handleInitModel() {
   Object.assign(model, createDefaultModel());
 
   if (props.operateType === 'edit' && props.rowData) {
     Object.assign(model, {
+      parentUuid: props.rowData.parentUuid,
       orgName: props.rowData.orgName,
       orgType: props.rowData.orgType,
       leader: props.rowData.leader,
@@ -125,6 +162,7 @@ async function handleSubmit() {
   } else {
     const { error } = await EditOrg({
       uuid: props.rowData?.uuid ?? '',
+      parentUuid: model.parentUuid,
       orgName: model.orgName,
       orgType: model.orgType,
       leader: model.leader,
@@ -146,6 +184,9 @@ watch(visible, () => {
   if (visible.value) {
     handleInitModel();
     restoreValidation();
+    if (props.operateType === 'edit') {
+      loadOrgTree();
+    }
   }
 });
 </script>
@@ -155,6 +196,16 @@ watch(visible, () => {
     <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" :label-width="100">
       <NFormItem v-if="operateType === 'addChild'" :label="$t('page.hrm.org.parentOrg')" path="parentOrg">
         <NInput :value="parentOrgName" disabled />
+      </NFormItem>
+      <NFormItem v-if="operateType === 'edit'" :label="$t('page.hrm.org.parentOrg')" path="parentUuid">
+        <NTreeSelect
+          v-model:value="model.parentUuid"
+          :options="orgTreeOptions"
+          filterable
+          clearable
+          default-expand-all
+          :placeholder="$t('page.hrm.org.form.parentOrg')"
+        />
       </NFormItem>
       <NFormItem :label="$t('page.hrm.org.orgName')" path="orgName">
         <NInput v-model:value="model.orgName" :placeholder="$t('page.hrm.org.form.orgName')" />

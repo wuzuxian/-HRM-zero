@@ -43,13 +43,14 @@ type DeleteResponse struct {
 }
 
 type EditRequest struct {
-	Uuid     string `json:"uuid"`
-	OrgName  string `json:"orgName"`
-	OrgType  string `json:"orgType"`
-	Leader   string `json:"leader,optional"`
-	OrderNum int64  `json:"orderNum,optional"`
-	Status   string `json:"status"`
-	Remark   string `json:"remark,optional"`
+	Uuid       string `json:"uuid"`
+	ParentUuid string `json:"parentUuid,optional"`
+	OrgName    string `json:"orgName"`
+	OrgType    string `json:"orgType"`
+	Leader     string `json:"leader,optional"`
+	OrderNum   int64  `json:"orderNum,optional"`
+	Status     string `json:"status"`
+	Remark     string `json:"remark,optional"`
 }
 
 type EditResponse struct {

@@ -20,6 +20,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/handler"
 	"github.com/jzero-io/jzero-admin/server/internal/middleware"
 	"github.com/jzero-io/jzero-admin/server/internal/svc"
+	"github.com/jzero-io/jzero-admin/server/internal/static"
 	"github.com/jzero-io/jzero-admin/server/plugins"
 )
 
@@ -43,13 +44,21 @@ var serverCmd = &cobra.Command{
 		printVersion()
 
 		logx.Infof("Starting rest server at %s:%d...", cc.MustGetConfig().Rest.Host, cc.MustGetConfig().Rest.Port)
-		restServer := rest.MustNewServer(cc.MustGetConfig().Rest.RestConf, rest.WithUnauthorizedCallback(func(w http.ResponseWriter, r *http.Request, err error) {
+	restOpts := []rest.RunOption{
+		rest.WithUnauthorizedCallback(func(w http.ResponseWriter, r *http.Request, err error) {
 			httpx.ErrorCtx(r.Context(), w, err)
-		}), rest.WithCustomCors(func(header http.Header) {
+		}),
+		rest.WithCustomCors(func(header http.Header) {
 			header.Set("Access-Control-Allow-Origin", "*")
 			header.Add("Access-Control-Allow-Headers", "X-Request-Id")
 			header.Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
-		}, nil, "*"))
+		}, nil, "*"),
+	}
+	if webHandler := static.Handler(os.Getenv("WEB_DIST")); webHandler != nil {
+		logx.Infof("Serving web frontend from %s", os.Getenv("WEB_DIST"))
+		restOpts = append(restOpts, rest.WithNotFoundHandler(webHandler))
+	}
+	restServer := rest.MustNewServer(cc.MustGetConfig().Rest.RestConf, restOpts...)
 
 		m, err := migrate.NewMigrate(cc.MustGetConfig().Sqlx.SqlConf, migrate.WithSourceAppendDriver(true))
 		logx.Must(err)

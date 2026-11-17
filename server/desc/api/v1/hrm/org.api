@@ -57,13 +57,15 @@ type AddChildRequest {
 type AddChildResponse {}
 
 type EditRequest {
-	Uuid     string `json:"uuid"`
-	OrgName  string `json:"orgName"`
-	OrgType  string `json:"orgType"`
-	Leader   string `json:"leader,optional"`
-	OrderNum int64  `json:"orderNum,optional"`
-	Status   string `json:"status"`
-	Remark   string `json:"remark,optional"`
+	Uuid string `json:"uuid"`
+	// ParentUuid 可选；非空且不同时表示移动节点（换父组织），空/不变则保持原父
+	ParentUuid string `json:"parentUuid,optional"`
+	OrgName    string `json:"orgName"`
+	OrgType    string `json:"orgType"`
+	Leader     string `json:"leader,optional"`
+	OrderNum   int64  `json:"orderNum,optional"`
+	Status     string `json:"status"`
+	Remark     string `json:"remark,optional"`
 }
 
 type EditResponse {}

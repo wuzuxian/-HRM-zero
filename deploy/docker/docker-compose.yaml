@@ -1,0 +1,53 @@
+# 统一镜像部署（单进程：Go 后端直接托管前端静态资源，见 docs/adr/0005）。
+#
+# 默认：仅 app 一个容器，内置 sqlite（数据落 ./data/jzero-admin.db）+ miniredis，零外部依赖。
+# 可选外部数据库/缓存用 override 文件（同时加容器 + 切 app 环境变量，避免错位）：
+#   docker compose -f deploy/docker/docker-compose.yaml -f deploy/docker/docker-compose.postgres.yaml up -d
+#   docker compose -f deploy/docker/docker-compose.yaml -f deploy/docker/docker-compose.mysql.yaml up -d
+#   docker compose -f deploy/docker/docker-compose.yaml -f deploy/docker/docker-compose.redis.yaml up -d
+services:
+  app:
+    image: jzero-admin:latest
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile
+    restart: always
+    ports:
+      - "8001:8001"
+    environment:
+      - TZ=Asia/Shanghai
+      # 默认 sqlite，数据持久化到挂载卷
+      - DRIVER_NAME=sqlite
+      - DATASOURCE=/dist/data/jzero-admin.db
+      - REDIS_MINI_REDIS=true
+    volumes:
+      - ./data:/dist/data
+
+  postgres:
+    image: postgres:16
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_USER: root
+      POSTGRES_DB: jzero-admin
+    volumes:
+      - ./data-postgres:/var/lib/postgresql/data
+    # 仅内部网络访问，不暴露宿主端口
+
+  mysql:
+    image: mysql:8.0
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_ROOT_USER: root
+      MYSQL_DATABASE: jzero-admin
+    volumes:
+      - ./data-mysql:/var/lib/mysql
+    # 仅内部网络访问，不暴露宿主端口
+
+  redis:
+    image: redis:7
+    restart: always
+    # 仅内部网络访问，不暴露宿主端口
