@@ -41,6 +41,7 @@ const local: App.I18n.Schema = {
     pleaseCheckValue: '请检查输入的值是否合法',
     refresh: '刷新',
     reset: '重置',
+    save: '保存',
     search: '搜索',
     switch: '切换',
     tip: '提示',
@@ -919,6 +920,7 @@ const local: App.I18n.Schema = {
         confirmClose: '确认关闭该职位？关闭后不可再录用。',
         addPosition: '新增职位',
         editPosition: '编辑职位',
+        remark: '备注',
         form: {
           postName: '请输入岗位名称',
           requirement: '请选择审批通过的需求单',
@@ -1027,6 +1029,7 @@ const local: App.I18n.Schema = {
           email: '请输入邮箱',
           sourceChannel: '请选择来源渠道',
           education: '请选择最高学历',
+          status: '请选择状态',
           currentCompany: '请输入当前公司',
           currentPosition: '请输入当前岗位',
           expectSalary: '请输入期望薪资（如 20k-30k）',
@@ -1181,7 +1184,8 @@ const local: App.I18n.Schema = {
             orgUuids: '请选择部门（含下级，留空不限）',
             positions: '请输入职位（回车添加，留空不限）',
             posts: '请输入职务（回车添加，留空不限）',
-            personStatuses: '请选择人员状态（留空不限）'
+            personStatuses: '请选择人员状态（留空不限）',
+            status: '请选择状态'
           },
           addPeriod: '新增批次',
           editPeriod: '编辑批次',
@@ -1565,6 +1569,7 @@ const local: App.I18n.Schema = {
           confirmRenew: '确认续签？新到期日将为 {endDate}，续签次数 +1。',
           addContract: '新增劳动合同',
           editContract: '编辑劳动合同',
+          remark: '备注',
           form: {
             employeeName: '请输入员工姓名',
             employeeNo: '请输入员工工号',
@@ -1614,6 +1619,7 @@ const local: App.I18n.Schema = {
           stateExpired: '已过期',
           addCert: '新增证照',
           editCert: '编辑证照',
+          remark: '备注',
           form: {
             selectEmployee: '请选择员工',
             certType: '请输入证书类型',
@@ -1663,6 +1669,11 @@ const local: App.I18n.Schema = {
           noMembers: '暂无生效人员',
           addGroup: '新增考勤组',
           editGroup: '编辑考勤组',
+          startTime: '上班时间',
+          endTime: '下班时间',
+          flexibleMinutes: '弹性分钟数',
+          orgScope: '适用部门',
+          memberScope: '指定人员',
           weekday: {
             1: '周一',
             2: '周二',
@@ -1731,6 +1742,10 @@ const local: App.I18n.Schema = {
           remark: '备注',
           addShift: '新增班次',
           editShift: '编辑班次',
+          startTime: '上班时间',
+          endTime: '下班时间',
+          restStart: '休息开始',
+          restEnd: '休息结束',
           form: {
             shiftName: '请输入班次名称',
             startTime: '请选择上班时间',
@@ -1842,6 +1857,7 @@ const local: App.I18n.Schema = {
           settleHintSuffix: '天；实际天数按 0.5 天步进自动计算',
           settleRule: '实际少于预计退回差额，实际多于预计补扣差额（可用不足时销假失败）',
           dayPrecision: '天数口径：时长/8 向上取整到 0.5 天步进，最短 0.5 天',
+          reason: '请假事由',
           form: {
             billNo: '请输入单据编号',
             status: '请选择单据状态',
@@ -1898,6 +1914,7 @@ const local: App.I18n.Schema = {
           confirmRule:
             '审批通过后：折算调休小时 = 核定时长（未核定用申请时长）× 调休倍数，按最小计算单位向下取整；补偿方式=调休 时入账调休余额',
           hoursPrecision: '时长口径：按规则最小计算单位（默认30分钟）向下取整',
+          reason: '加班事由',
           form: {
             billNo: '请输入单据编号',
             status: '请选择单据状态',
@@ -2403,7 +2420,8 @@ const local: App.I18n.Schema = {
             remark: '请输入备注',
             none: '选择员工后自动带出',
             resignType: '请选择离职类型',
-            handoverPerson: '请输入交接人'
+            handoverPerson: '请输入交接人',
+            resignReason: '请输入离职原因'
           }
         },
         entry: {
@@ -2500,7 +2518,16 @@ const local: App.I18n.Schema = {
             attachmentDesc: '请输入附件说明（如需上传的材料清单）',
             remark: '请输入备注',
             billNo: '请输入单据编号',
-            status: '请选择单据状态'
+            status: '请选择单据状态',
+            workCompany: '请输入工作单位',
+            workPosition: '请输入职位',
+            workUnit: '请输入工作单位',
+            school: '请输入学校',
+            major: '请输入专业',
+            education: '请选择学历',
+            familyName: '请输入姓名',
+            relation: '请输入关系',
+            familyPhone: '请输入电话'
           }
         }
       },
@@ -2640,6 +2667,8 @@ const local: App.I18n.Schema = {
           employeeInfoTip: '选择员工后自动带出所属公司与部门',
           form: {
             employee: '请选择员工',
+            employeeName: '请输入员工姓名',
+            employeeNo: '请输入员工ID',
             subject: '请选择薪酬主体',
             scheme: '请选择薪酬方案（可留空）',
             effectiveDateRequired: '生效日期不能为空',
@@ -2914,6 +2943,7 @@ const local: App.I18n.Schema = {
           finished: '已结束'
         },
         certName: '证书名称',
+        certType: '证书类型',
         certNo: '证书号',
         issueTime: '发证时间',
         certStatusLabel: '状态',
@@ -3016,7 +3046,8 @@ const local: App.I18n.Schema = {
             templateName: '请输入模板名称',
             certType: '请输入证书类型',
             source: '请选择来源',
-            noPrefix: '请输入编号前缀（如 JN/AQ/HF，证书号=前缀-年-流水）'
+            noPrefix: '请输入编号前缀（如 JN/AQ/HF，证书号=前缀-年-流水）',
+            status: '请选择状态'
           }
         },
         certificate: {

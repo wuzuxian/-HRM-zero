@@ -28,7 +28,8 @@ Run from the repo root, never bare `vue-tsc`/`eslint` (they drown in node_module
 
 - `pnpm --dir web typecheck` — Vue/TS types
 - `pnpm --dir web guard:template` — bans `as unknown as` casts on template value bindings (see `web/scripts/check-template-contracts.mjs` header for the incident behind it)
-- `pnpm --dir web lint` — eslint
+- `pnpm --dir web guard:i18n` — every statically referenced `$t('...')` key must resolve in zh-CN; catches "component key ≠ locale Schema path" drift (label-level key written in the component while only the `form.*` placeholder key exists)
+- `pnpm --dir web lint` — eslint (⚠ runs `eslint . --fix`: it rewrites unrelated files; review `git status` afterwards and revert unintended formatting churn)
 - `pnpm --dir e2e exec playwright test tests/bugs tests/smoke` — frontend regression (needs the dev server on :9527; helpers in `e2e/helpers/auth.ts`, page inventory in `e2e/helpers/hrm-pages.ts`)
 
 ### GitHub access

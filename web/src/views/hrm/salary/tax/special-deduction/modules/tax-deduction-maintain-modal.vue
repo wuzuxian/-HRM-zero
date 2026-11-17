@@ -4,7 +4,7 @@ import { useLoading } from '@sa/hooks';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { GetEmployeeList, GetTaxSpecialDeductionList, MaintainTaxSpecialDeduction } from '@/service/api';
 import { $t } from '@/locales';
-import { hrmTaxDeductTypeOptions } from '@/constants/business';
+import { hrmTaxDeductTypeRecord } from '@/constants/business';
 
 defineOptions({
   name: 'TaxDeductionMaintainModal'
@@ -78,7 +78,8 @@ function setCellAmount(month: number, deductType: Api.Hrm.TaxDeductionType, valu
     grid.value[month] = {};
   }
   if (value === null || Number.isNaN(value)) {
-    delete grid.value[month][deductType];
+    const { [deductType]: _removed, ...rest } = grid.value[month];
+    grid.value[month] = rest;
   } else {
     grid.value[month][deductType] = value;
   }
@@ -98,11 +99,12 @@ async function loadExisting() {
   });
   if (error || !data) return;
   for (const rec of data.records ?? []) {
-    if (rec.employeeUuid !== model.employeeUuid) continue;
-    if (!grid.value[rec.deductMonth]) {
-      grid.value[rec.deductMonth] = {};
+    if (rec.employeeUuid === model.employeeUuid) {
+      if (!grid.value[rec.deductMonth]) {
+        grid.value[rec.deductMonth] = {};
+      }
+      grid.value[rec.deductMonth][rec.deductType] = rec.amount;
     }
-    grid.value[rec.deductMonth][rec.deductType] = rec.amount;
   }
 }
 
@@ -149,15 +151,7 @@ watch(visible, () => {
 </script>
 
 <script lang="ts">
-const deductTypes: Api.Hrm.TaxDeductionType[] = [
-  'CHILDREN_EDU',
-  'CONTINUING_EDU',
-  'CRITICAL_ILLNESS',
-  'HOUSE_LOAN',
-  'HOUSE_RENT',
-  'SUPPORT_ELDERLY',
-  'INFANT_CARE'
-];
+const deductTypes = Object.keys(hrmTaxDeductTypeRecord) as Api.Hrm.TaxDeductionType[];
 
 export default { deductTypes };
 </script>
@@ -193,7 +187,7 @@ export default { deductTypes };
         <thead>
           <tr>
             <th class="border border-gray-200 bg-gray-50 px-8px py-6px text-left">
-              {{ $t('page.hrm.salary.tax.deduction.deductType') }}
+              {{ $t('page.hrm.salary.tax.deduction.deductTypeTitle') }}
             </th>
             <th v-for="m in monthLabels" :key="m" class="w-56px border border-gray-200 bg-gray-50 px-4px py-6px">
               {{ m }}

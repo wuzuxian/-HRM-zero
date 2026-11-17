@@ -67,7 +67,7 @@ async function search() {
             </NFormItemGi>
             <NFormItemGi
               span="24 s:12 m:6"
-              :label="$t('page.hrm.salary.tax.deduction.deductType')"
+              :label="$t('page.hrm.salary.tax.deduction.deductTypeTitle')"
               path="deductType"
               class="pr-24px"
             >
@@ -80,7 +80,7 @@ async function search() {
             </NFormItemGi>
             <NFormItemGi
               span="24 s:12 m:6"
-              :label="$t('page.hrm.salary.tax.deduction.source')"
+              :label="$t('page.hrm.salary.tax.deduction.sourceTitle')"
               path="source"
               class="pr-24px"
             >

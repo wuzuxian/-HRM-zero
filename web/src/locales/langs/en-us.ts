@@ -41,6 +41,7 @@ const local: App.I18n.Schema = {
     pleaseCheckValue: 'Please check whether the value is valid',
     refresh: 'Refresh',
     reset: 'Reset',
+    save: 'Save',
     search: 'Search',
     switch: 'Switch',
     tip: 'Tip',
@@ -919,6 +920,7 @@ const local: App.I18n.Schema = {
         confirmClose: 'Close this position? Closed positions cannot hire anymore.',
         addPosition: 'Add Position',
         editPosition: 'Edit Position',
+        remark: 'Remark',
         form: {
           postName: 'Please enter post name',
           requirement: 'Please select an approved requirement',
@@ -1027,6 +1029,7 @@ const local: App.I18n.Schema = {
           email: 'Please enter email',
           sourceChannel: 'Please select source channel',
           education: 'Please select highest education',
+          status: 'Please select status',
           currentCompany: 'Please enter current company',
           currentPosition: 'Please enter current position',
           expectSalary: 'Please enter expected salary (e.g. 20k-30k)',
@@ -1181,7 +1184,8 @@ const local: App.I18n.Schema = {
             orgUuids: 'Select departments incl. descendants (empty = unrestricted)',
             positions: 'Type a position and press Enter (empty = unrestricted)',
             posts: 'Type a post and press Enter (empty = unrestricted)',
-            personStatuses: 'Select person statuses (empty = unrestricted)'
+            personStatuses: 'Select person statuses (empty = unrestricted)',
+            status: 'Please select status'
           },
           addPeriod: 'Add Period',
           editPeriod: 'Edit Period',
@@ -1565,6 +1569,7 @@ const local: App.I18n.Schema = {
           confirmRenew: 'Renew this contract? New end date {endDate}, renewals +1.',
           addContract: 'Add Contract',
           editContract: 'Edit Contract',
+          remark: 'Remark',
           form: {
             employeeName: 'Please enter employee name',
             employeeNo: 'Please enter employee no.',
@@ -1614,6 +1619,7 @@ const local: App.I18n.Schema = {
           stateExpired: 'Expired',
           addCert: 'Add Certificate',
           editCert: 'Edit Certificate',
+          remark: 'Remark',
           form: {
             selectEmployee: 'Please select employee',
             certType: 'Please enter certificate type',
@@ -1663,6 +1669,11 @@ const local: App.I18n.Schema = {
           noMembers: 'No effective members',
           addGroup: 'Add Attendance Group',
           editGroup: 'Edit Attendance Group',
+          startTime: 'Start Time',
+          endTime: 'End Time',
+          flexibleMinutes: 'Flexible Minutes',
+          orgScope: 'Departments',
+          memberScope: 'Members',
           weekday: {
             1: 'Mon',
             2: 'Tue',
@@ -1731,6 +1742,10 @@ const local: App.I18n.Schema = {
           remark: 'Remark',
           addShift: 'Add Shift',
           editShift: 'Edit Shift',
+          startTime: 'Start Time',
+          endTime: 'End Time',
+          restStart: 'Rest Start',
+          restEnd: 'Rest End',
           form: {
             shiftName: 'Please enter shift name',
             startTime: 'Please select start time',
@@ -1844,6 +1859,7 @@ const local: App.I18n.Schema = {
           settleRule:
             'Shorter actual leave refunds the difference; longer actual leave consumes more (fails if balance is insufficient)',
           dayPrecision: 'Days rule: hours/8 rounded up to 0.5-day steps, minimum 0.5 day',
+          reason: 'Leave Reason',
           form: {
             billNo: 'Please enter bill no.',
             status: 'Please select bill status',
@@ -1901,6 +1917,7 @@ const local: App.I18n.Schema = {
           confirmRule:
             'On approval: converted hours = confirmed hours (or applied if unconfirmed) × multiplier, floored to the rule min unit; credited to comp leave when compensation = comp leave',
           hoursPrecision: 'Hours rule: floored to the rule min unit (default 30 minutes)',
+          reason: 'Overtime Reason',
           form: {
             billNo: 'Please enter bill no.',
             status: 'Please select status',
@@ -2413,7 +2430,8 @@ const local: App.I18n.Schema = {
             remark: 'Please enter remark',
             none: 'Auto-filled after selecting an employee',
             resignType: 'Please select a resign type',
-            handoverPerson: 'Please enter the handover person'
+            handoverPerson: 'Please enter the handover person',
+            resignReason: 'Please enter resign reason'
           }
         },
         entry: {
@@ -2511,7 +2529,16 @@ const local: App.I18n.Schema = {
             attachmentDesc: 'Please describe the attachments to upload',
             remark: 'Please enter remark',
             billNo: 'Please enter bill no.',
-            status: 'Please select status'
+            status: 'Please select status',
+            workCompany: 'Please enter company',
+            workPosition: 'Please enter position',
+            workUnit: 'Please enter company',
+            school: 'Please enter school',
+            major: 'Please enter major',
+            education: 'Please select education level',
+            familyName: 'Please enter name',
+            relation: 'Please enter relationship',
+            familyPhone: 'Please enter phone'
           }
         }
       },
@@ -2644,6 +2671,8 @@ const local: App.I18n.Schema = {
           employeeInfoTip: 'Company and department are auto-filled from the selected employee',
           form: {
             employee: 'Please select employee',
+            employeeName: 'Please enter employee name',
+            employeeNo: 'Please enter employee ID',
             subject: 'Please select salary subject',
             scheme: 'Please select salary scheme (optional)',
             effectiveDateRequired: 'Effective date is required',
@@ -2926,6 +2955,7 @@ const local: App.I18n.Schema = {
           finished: 'Finished'
         },
         certName: 'Certificate Name',
+        certType: 'Certificate Type',
         certNo: 'Certificate No.',
         issueTime: 'Issue Time',
         certStatusLabel: 'Status',
@@ -3028,7 +3058,8 @@ const local: App.I18n.Schema = {
             templateName: 'Please enter template name',
             certType: 'Please enter certificate type',
             source: 'Please select source',
-            noPrefix: 'Please enter number prefix (e.g. JN/AQ/HF; cert no = prefix-year-seq)'
+            noPrefix: 'Please enter number prefix (e.g. JN/AQ/HF; cert no = prefix-year-seq)',
+            status: 'Please select status'
           }
         },
         certificate: {

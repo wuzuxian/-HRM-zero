@@ -42,6 +42,7 @@
     "dev": "vite --mode test",
     "dev:prod": "vite --mode prod",
     "gen-route": "sa gen-route",
+    "guard:i18n": "node scripts/check-i18n-keys.mjs",
     "guard:template": "node scripts/check-template-contracts.mjs",
     "lint": "eslint . --fix",
     "prepare": "simple-git-hooks",

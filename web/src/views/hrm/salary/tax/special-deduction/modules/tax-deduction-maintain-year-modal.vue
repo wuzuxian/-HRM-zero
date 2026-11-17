@@ -121,7 +121,11 @@ watch(visible, () => {
           :placeholder="$t('page.hrm.salary.tax.deduction.form.deductYear')"
         />
       </NFormItem>
-      <NFormItem :label="$t('page.hrm.salary.tax.deduction.deductType')" path="deductType" :rule="defaultRequiredRule">
+      <NFormItem
+        :label="$t('page.hrm.salary.tax.deduction.deductTypeTitle')"
+        path="deductType"
+        :rule="defaultRequiredRule"
+      >
         <NSelect
           v-model:value="model.deductType"
           :options="hrmTaxDeductTypeOptions"

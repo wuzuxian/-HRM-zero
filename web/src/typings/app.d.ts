@@ -322,6 +322,7 @@ declare namespace App {
         pleaseCheckValue: string;
         refresh: string;
         reset: string;
+        save: string;
         search: string;
         switch: string;
         tip: string;
@@ -1069,6 +1070,7 @@ declare namespace App {
                 positions: string;
                 posts: string;
                 personStatuses: string;
+                status: string;
               };
               addPeriod: string;
               editPeriod: string;
@@ -1346,6 +1348,10 @@ declare namespace App {
               remark: string;
               addShift: string;
               editShift: string;
+              startTime: string;
+              endTime: string;
+              restStart: string;
+              restEnd: string;
               form: {
                 shiftName: string;
                 startTime: string;
@@ -1383,6 +1389,11 @@ declare namespace App {
               noMembers: string;
               addGroup: string;
               editGroup: string;
+              startTime: string;
+              endTime: string;
+              flexibleMinutes: string;
+              orgScope: string;
+              memberScope: string;
               weekday: {
                 1: string;
                 2: string;
@@ -1535,6 +1546,7 @@ declare namespace App {
               settleHintSuffix: string;
               settleRule: string;
               dayPrecision: string;
+              reason: string;
               form: {
                 billNo: string;
                 status: string;
@@ -1590,6 +1602,7 @@ declare namespace App {
               confirmHintSuffix: string;
               confirmRule: string;
               hoursPrecision: string;
+              reason: string;
               form: {
                 billNo: string;
                 status: string;
@@ -2094,6 +2107,7 @@ declare namespace App {
                 none: string;
                 resignType: string;
                 handoverPerson: string;
+                resignReason: string;
               };
             };
             entry: {
@@ -2191,6 +2205,15 @@ declare namespace App {
                 remark: string;
                 billNo: string;
                 status: string;
+                workCompany: string;
+                workPosition: string;
+                workUnit: string;
+                school: string;
+                major: string;
+                education: string;
+                familyName: string;
+                relation: string;
+                familyPhone: string;
               };
             };
           };
@@ -2331,6 +2354,7 @@ declare namespace App {
             confirmClose: string;
             addPosition: string;
             editPosition: string;
+            remark: string;
             form: {
               postName: string;
               requirement: string;
@@ -2438,6 +2462,7 @@ declare namespace App {
               email: string;
               sourceChannel: string;
               education: string;
+              status: string;
               currentCompany: string;
               currentPosition: string;
               expectSalary: string;
@@ -2573,6 +2598,8 @@ declare namespace App {
               employeeInfoTip: string;
               form: {
                 employee: string;
+                employeeName: string;
+                employeeNo: string;
                 subject: string;
                 scheme: string;
                 effectiveDateRequired: string;
@@ -2855,6 +2882,7 @@ declare namespace App {
               finished: string;
             };
             certName: string;
+            certType: string;
             certNo: string;
             issueTime: string;
             certStatusLabel: string;
@@ -2958,6 +2986,7 @@ declare namespace App {
                 certType: string;
                 source: string;
                 noPrefix: string;
+                status: string;
               };
             };
             certificate: {
@@ -3173,6 +3202,7 @@ declare namespace App {
               confirmRenew: string;
               addContract: string;
               editContract: string;
+              remark: string;
               form: {
                 employeeName: string;
                 employeeNo: string;
@@ -3222,6 +3252,7 @@ declare namespace App {
               stateExpired: string;
               addCert: string;
               editCert: string;
+              remark: string;
               form: {
                 selectEmployee: string;
                 certType: string;
