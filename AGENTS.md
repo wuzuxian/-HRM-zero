@@ -18,6 +18,10 @@ Single-context: root `GLOSSARY.md` + `docs/adr/` at the repo root. See `docs/age
 
 ## Environment
 
+### Shell working directory
+
+Do not `cd` persistently in Bash calls — the primary working directory follows the last `cd`, and the PreToolUse hooks resolve their scripts relative to it, so hook invocations fail and every Bash/Write call gets blocked. Run everything from the repo root with absolute paths or `pnpm --dir <pkg>`; use `scripts/dev-restart-server.sh` instead of manual `kill`+`nohup` for the backend.
+
 ### GitHub access
 
 `raw.githubusercontent.com` and plain `WebFetch` to github.com are unreliable from this machine; fetch repo file contents with `gh api repos/<owner>/<repo>/contents/<path>` instead.

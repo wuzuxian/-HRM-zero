@@ -63,7 +63,8 @@ description: "HRM/后台模块的 UI 交互层验收测试工作流：用 Playwr
 ## 本仓已知坑清单（写测试与修 bug 前先过一遍）
 
 - **Vue Transition 空白**：页面组件 template 根部不能放 HTML 注释（dev 模式注释使组件根成 fragment，`out-in` 离场后新页永不进场，仅 F5 可恢复）。新页面一律把注释写在根 div 内部。
-- **权限码双消费者**：菜单 `permissions` JSON 同时喂 casbin（API 码 = route2code 生成映射，如 `submitLeaderReview`）和后端业务守卫常量（`errors.go` 的 `PermAssessment*`）。两处必须同名，新增端点时核对 `server/internal/handler/route2code.go`。
+- **权限码双消费者**：菜单 `permissions` JSON 同时喂 casbin（API 码 = route2code 生成映射，如 `submitLeaderReview`）和后端业务守卫常量（`errors.go` 的 `PermAssessment*`）。两处必须同名，新增端点时核对 `server/internal/handler/route2code.go`；一致性由守卫测试钉死（`go test ./internal/handler/ -run "TestRoute2Code|TestMenuPermission"`，红即码漂移——写新迁移修，勿动测试豁免清单除非是产品未接线端点）。
+- **触及 casbin_rule 的迁移自带幂等建表**：该表由 casbin adapter 首启创建，全新环境迁移先于首启执行——`CREATE TABLE IF NOT EXISTS casbin_rule(...)` 必须内联在每个触及它的迁移里（看 58-62 的写法），否则 fresh deploy 迁移即失败。
 - **configcenter 不应用 struct default**：配置默认值不能只靠 `json:",default="` 标签，代码里要空值兜底（见 generate_user.go）。
 - **AddResponse 全空**：创建类端点不回 uuid，一律创建后从列表端点按唯一名反查。
 - **NMessage 约 3s 自动关闭**：toast 断言要在点击后立即轮询（expect 默认轮询没问题，别在中间插长 sleep）。
