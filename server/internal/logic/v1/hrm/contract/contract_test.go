@@ -4,6 +4,7 @@ import (
 	"context"
 	"strings"
 	"testing"
+	"time"
 
 	coreSvc "github.com/jzero-io/jzero-admin/core-engine/svc"
 	"github.com/jzero-io/jzero-admin/server/internal/config"
@@ -80,7 +81,7 @@ func TestContractAddWithEmployeeSnapshot(t *testing.T) {
 		EmployeeUuid: emp.Uuid,
 		ContractNo:   "HT-2026-001",
 		StartDate:    "2026-01-01",
-		EndDate:      "2026-11-16",
+		EndDate:      time.Now().Format("2006-01-02"), // 今天到期 → DaysToExpiry=0/warning，跨天可复跑
 	}); err != nil {
 		t.Fatalf("add contract: %v", err)
 	}
