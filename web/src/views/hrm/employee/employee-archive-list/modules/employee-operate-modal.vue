@@ -213,10 +213,10 @@ async function handleCreateAndLink() {
   });
   createLoading.value = false;
   if (error) return;
-  // 成功弹窗明示凭据 (与新增员工建档即开号同一交互)
+  // 成功弹窗明示凭据 (与新增员工建档即开号同一交互, 文案共用 accountCreatedTip)
   window.$dialog?.success({
     title: $t('page.hrm.employee.systemAccountCreateTitle'),
-    content: $t('page.hrm.employee.systemAccountCreatedTip', {
+    content: $t('page.hrm.employee.accountCreatedTip', {
       username: data?.username ?? '',
       password: data?.initialPassword ?? ''
     }),

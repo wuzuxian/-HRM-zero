@@ -1512,7 +1512,6 @@ const local: App.I18n.Schema = {
         systemAccountCreateButton: '新建并关联',
         systemAccountLinkSuccess: '关联成功',
         systemAccountUnlinkSuccess: '已解除关联',
-        systemAccountCreatedTip: '账号 {username} 已创建并关联, 初始密码: {password}',
         systemAccountSelectFirst: '请先选择要关联的账号',
         systemAccountAddModeTip: '员工创建后可在编辑弹窗中关联系统账号 (新增时已自动开号)',
         importSuccess: '导入成功',

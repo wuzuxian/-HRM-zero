@@ -4,11 +4,9 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/jzero-io/jzero/core/status"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
-	"github.com/jzero-io/jzero-admin/server/internal/errcodes"
 	"github.com/jzero-io/jzero-admin/server/internal/svc"
 	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/employee"
 )
@@ -34,11 +32,8 @@ func NewUnlinkUser(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Requ
 // 禁用/删除账号属账号侧生命周期管理, 不在解绑语义内)。未关联时幂等成功。
 func (l *UnlinkUser) UnlinkUser(req *types.UnlinkUserRequest) (resp *types.UnlinkUserResponse, err error) {
 	err = l.svcCtx.SqlxConn.TransactCtx(l.ctx, func(ctx context.Context, session sqlx.Session) error {
-		emp, err := l.svcCtx.Model.HrmEmployee.FindOneByUuid(ctx, session, req.EmployeeUuid)
+		emp, err := findEmployeeOrNotFound(ctx, session, l.svcCtx, req.EmployeeUuid)
 		if err != nil {
-			if err == sqlx.ErrNotFound {
-				return status.ErrorMessage(errcodes.EmployeeUserNotFoundCode, "员工不存在: "+req.EmployeeUuid)
-			}
 			return err
 		}
 		if emp.UserUuid == "" {

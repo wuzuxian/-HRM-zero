@@ -1,13 +1,15 @@
 import { APIRequestContext, Page } from '@playwright/test';
 
+import { API, adminToken, apiGet, apiPost } from './employee-data';
+
 /**
  * 绩效考核任务交互层的数据准备 helper。
  * 全部走后端 API（:8001 直连，绕过前端代理）：
  *   指标 → 模板 → 方案 → 员工(+账号+角色) → 批次 → 发布 → 生成考核任务
  * 依据 server/desc/api/v1/hrm/{perf_indicator,perf_template,perf_scheme,perf_period}.api。
+ *
+ * API 调用基座（API 基址/apiGet/apiPost/adminToken）统一从 employee-data 引入，不在本文件重复定义。
  */
-
-const API = process.env.E2E_API_URL ?? 'http://localhost:8001';
 
 export const R_SUPER_ROLE_CODE = 'R_SUPER'; // editUser.userRoles 按角色 code 匹配（与前端 roleOptions 一致）
 
@@ -28,39 +30,6 @@ export interface AssessmentFixture {
   periodUuid: string;
   periodName: string;
   employees: EmployeeFixture[];
-}
-
-async function apiGet(request: APIRequestContext, path: string, token: string, params?: Record<string, string>) {
-  const resp = await request.get(`${API}/api/v1${path}`, {
-    headers: { Authorization: `Bearer ${token}` },
-    params
-  });
-  const json = await resp.json();
-  if (json.code !== 200 && json.code !== 0) {
-    throw new Error(`GET ${path} 失败: code=${json.code} msg=${json.msg}`);
-  }
-  return json.data;
-}
-
-async function apiPost(request: APIRequestContext, path: string, token: string, data: unknown) {
-  const resp = await request.post(`${API}/api/v1${path}`, {
-    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-    data
-  });
-  const json = await resp.json();
-  if (json.code !== 200 && json.code !== 0) {
-    throw new Error(`POST ${path} 失败: code=${json.code} msg=${json.msg}`);
-  }
-  return json.data;
-}
-
-/** admin 登录拿 token */
-export async function adminToken(request: APIRequestContext): Promise<string> {
-  const resp = await request.post(`${API}/api/v1/auth/pwd-login`, {
-    data: { username: 'admin', password: '123456' }
-  });
-  const json = await resp.json();
-  return json.data.token;
 }
 
 /**

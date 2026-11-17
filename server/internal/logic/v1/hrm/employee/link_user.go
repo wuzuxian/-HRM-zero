@@ -42,11 +42,8 @@ func NewLinkUser(ctx context.Context, svcCtx *svc.ServiceContext, r *http.Reques
 // 校验与写入在同一事务内, 拒绝时不留半截状态。
 func (l *LinkUser) LinkUser(req *types.LinkUserRequest) (resp *types.LinkUserResponse, err error) {
 	err = l.svcCtx.SqlxConn.TransactCtx(l.ctx, func(ctx context.Context, session sqlx.Session) error {
-		emp, err := l.svcCtx.Model.HrmEmployee.FindOneByUuid(ctx, session, req.EmployeeUuid)
+		emp, err := findEmployeeOrNotFound(ctx, session, l.svcCtx, req.EmployeeUuid)
 		if err != nil {
-			if err == sqlx.ErrNotFound {
-				return status.ErrorMessage(errcodes.EmployeeUserNotFoundCode, "员工不存在: "+req.EmployeeUuid)
-			}
 			return err
 		}
 
@@ -55,15 +52,14 @@ func (l *LinkUser) LinkUser(req *types.LinkUserRequest) (resp *types.LinkUserRes
 			return nil
 		}
 
-		// 已关联其他账号 → 拒绝 (唯一改绑路径: 先解绑再关联)
+		// 已关联其他账号 → 拒绝 (唯一改绑路径: 先解绑再关联)。
+		// 同一错误码, 消息尽力报出当前占用账号的用户名 (账号行缺失时退化为通用文案)。
 		if emp.UserUuid != "" {
-			current, userErr := l.svcCtx.Model.ManageUser.FindOneByUuid(ctx, session, emp.UserUuid)
-			if userErr == nil {
-				return status.ErrorMessage(errcodes.EmployeeUserAlreadyLinkedCode,
-					fmt.Sprintf("员工 %s(%s) 已关联系统账号 %s, 请先解除关联", emp.EmployeeNo, emp.Name, current.Username))
+			msg := fmt.Sprintf("员工 %s(%s) 已关联其他系统账号, 请先解除关联", emp.EmployeeNo, emp.Name)
+			if current, userErr := l.svcCtx.Model.ManageUser.FindOneByUuid(ctx, session, emp.UserUuid); userErr == nil {
+				msg = fmt.Sprintf("员工 %s(%s) 已关联系统账号 %s, 请先解除关联", emp.EmployeeNo, emp.Name, current.Username)
 			}
-			return status.ErrorMessage(errcodes.EmployeeUserAlreadyLinkedCode,
-				fmt.Sprintf("员工 %s(%s) 已关联其他系统账号, 请先解除关联", emp.EmployeeNo, emp.Name))
+			return status.ErrorMessage(errcodes.EmployeeUserAlreadyLinkedCode, msg)
 		}
 
 		// 账号必须存在

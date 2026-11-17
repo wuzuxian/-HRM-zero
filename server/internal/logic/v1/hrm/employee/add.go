@@ -64,16 +64,22 @@ func (l *Add) Add(req *types.AddRequest) (resp *types.AddResponse, err error) {
 	if userUuid != "" {
 		user, userErr := l.svcCtx.Model.ManageUser.FindOneByUuid(l.ctx, nil, userUuid)
 		if userErr != nil {
-			return nil, userErr
+			// 回读失败降级 (code review): 建档+开号事务已提交, 把已成功的建档报成错误
+			// 只会误导调用方重试出重复档案。凭据缺失只影响前端明示, 记日志后按已开号
+			// 响应: username 给接缝默认规则下的确定值 (本路径无覆写, 用户名=工号),
+			// 初始密码无法安全回取则留空。
+			l.Errorf("hrm: 员工 %s 建档开号成功但账号回读失败, 响应凭据降级 (不含初始密码): %v", employeeNo, userErr)
+			return &types.AddResponse{
+				UserCreated: true,
+				Username:    employeeNo,
+			}, nil
 		}
-		initialPassword := l.svcCtx.MustGetConfig().Hrm.InitialUserPassword
-		if initialPassword == "" {
-			initialPassword = defaultInitialPassword
-		}
+		// 初始密码取接缝已解析的值 (manage_user.password 明文存的是初始密码, 与
+		// create_and_link_user 同一来源), 不在响应侧重算配置兜底。
 		return &types.AddResponse{
 			UserCreated:     true,
 			Username:        user.Username,
-			InitialPassword: initialPassword,
+			InitialPassword: user.Password,
 		}, nil
 	}
 	return &types.AddResponse{UserCreated: false}, nil

@@ -7,6 +7,7 @@ import (
 	"github.com/jzero-io/jzero/core/status"
 	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/pkg/errors"
+	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
 	"github.com/jzero-io/jzero-admin/server/internal/errcodes"
@@ -110,9 +111,24 @@ func employeeToType(row *hrm_employee.HrmEmployee) types.HrmEmployee {
 	return out
 }
 
+// findEmployeeOrNotFound HRM-51 关联族端点 (link/unlink/createAndLink/开号接缝)
+// 共用的档案读取错误收敛: 档案缺失 → EmployeeUserNotFoundCode ("员工不存在: <uuid>"),
+// 其余错误原样透传。
+func findEmployeeOrNotFound(ctx context.Context, session sqlx.Session, svcCtx *svc.ServiceContext,
+	employeeUuid string) (*hrm_employee.HrmEmployee, error) {
+	emp, err := svcCtx.Model.HrmEmployee.FindOneByUuid(ctx, session, employeeUuid)
+	if err == sqlx.ErrNotFound {
+		return nil, status.ErrorMessage(errcodes.EmployeeUserNotFoundCode, "员工不存在: "+employeeUuid)
+	}
+	if err != nil {
+		return nil, err
+	}
+	return emp, nil
+}
+
 // fillLoginNames 批量回填 records 的 LoginName (账号侧 manage_user.username;
 // 工号变更不重命名账号, 二者可能不一致, 列表「登录账号」列展示该值).
-// 未关联账号的记录保持空串。查询失败不阻断列表 (登录账号是展示字段)。
+// 未关联账号的记录保持空串。查询失败不阻断列表 (登录账号是展示字段), 仅记日志。
 func fillLoginNames(ctx context.Context, svcCtx *svc.ServiceContext, records []types.HrmEmployee) {
 	userUuids := make([]any, 0, len(records))
 	seen := make(map[string]struct{}, len(records))
@@ -135,6 +151,7 @@ func fillLoginNames(ctx context.Context, svcCtx *svc.ServiceContext, records []t
 		Value:    userUuids,
 	})
 	if err != nil {
+		logx.WithContext(ctx).Errorf("hrm: 登录账号回填查询失败 (展示字段, 不阻断列表): %v", err)
 		return
 	}
 	nameByUuid := make(map[string]string, len(users))
