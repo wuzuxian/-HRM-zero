@@ -19,7 +19,18 @@ export function setupI18n(app: App) {
   app.use(i18n);
 }
 
-export const $t = i18n.global.t as App.I18n.$T;
+const rawT = i18n.global.t.bind(i18n.global);
+
+/**
+ * 枚举渲染守卫：全仓大量列表列用 `$t(enumRecord[row.x])` 渲染枚举 tag， 脏数据（空串/非法枚举值）会让索引结果为 undefined，vue-i18n 直接抛 "Invalid arguments"
+ * 且中断组件渲染，表格 keyed patch 崩溃（__vnode null）。 这里在唯一消费口统一兜底：非字符串 key 返回空串，合法 key 走正常翻译。
+ */
+export const $t = ((key: unknown, ...args: unknown[]) => {
+  if (typeof key !== 'string' || key.length === 0) {
+    return '';
+  }
+  return (rawT as (...a: unknown[]) => string)(key, ...args);
+}) as App.I18n.$T;
 
 export function setLocale(locale: App.I18n.LangType) {
   i18n.global.locale.value = locale;

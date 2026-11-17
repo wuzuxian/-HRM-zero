@@ -95,7 +95,9 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
       align: 'center',
       width: 80,
       render: row => {
-        if (row.status === null) {
+        const statusKey = row.status !== null ? enableStatusRecord[row.status as Api.Common.EnableStatus] : undefined;
+
+        if (!statusKey) {
           return null;
         }
 
@@ -104,9 +106,7 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
           2: 'warning'
         };
 
-        const label = $t(enableStatusRecord[row.status]);
-
-        return <NTag type={tagMap[row.status]}>{label}</NTag>;
+        return <NTag type={tagMap[row.status as Api.Common.EnableStatus]}>{$t(statusKey)}</NTag>;
       }
     },
     {

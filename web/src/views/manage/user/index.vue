@@ -63,7 +63,11 @@ const {
       align: 'center',
       width: 100,
       render: row => {
-        if (row.userGender === null) {
+        // e2e 造数可能写入空字符串 gender，未知的枚举值直接不渲染 tag，避免 $t(undefined) 崩掉整个表格 patch
+        const genderKey =
+          row.userGender !== null ? userGenderRecord[row.userGender as Api.Manage.UserGender] : undefined;
+
+        if (!genderKey) {
           return null;
         }
 
@@ -72,9 +76,7 @@ const {
           2: 'error'
         };
 
-        const label = $t(userGenderRecord[row.userGender]);
-
-        return <NTag type={tagMap[row.userGender]}>{label}</NTag>;
+        return <NTag type={tagMap[row.userGender as Api.Manage.UserGender]}>{$t(genderKey)}</NTag>;
       }
     },
     {
@@ -101,7 +103,9 @@ const {
       align: 'center',
       width: 100,
       render: row => {
-        if (row.status === null) {
+        const statusKey = row.status !== null ? enableStatusRecord[row.status as Api.Common.EnableStatus] : undefined;
+
+        if (!statusKey) {
           return null;
         }
 
@@ -110,9 +114,7 @@ const {
           2: 'warning'
         };
 
-        const label = $t(enableStatusRecord[row.status]);
-
-        return <NTag type={tagMap[row.status]}>{label}</NTag>;
+        return <NTag type={tagMap[row.status as Api.Common.EnableStatus]}>{$t(statusKey)}</NTag>;
       }
     },
     {
