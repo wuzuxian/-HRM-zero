@@ -1019,6 +1019,17 @@
           "200": {
             "description": "",
             "schema": {
+              "properties": {
+                "initialPassword": {
+                  "type": "string"
+                },
+                "userCreated": {
+                  "type": "boolean"
+                },
+                "username": {
+                  "type": "string"
+                }
+              },
               "type": "object"
             }
           }
@@ -4429,6 +4440,73 @@
         "summary": "CopyWeek",
         "tags": [
           "v1/hrm/scheduleboard"
+        ]
+      }
+    },
+    "/api/v1/hrm/createAndLinkUser": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:employee:createAndLinkUser",
+        "operationId": "v1/Hrm/EmployeeCreateAndLinkUser",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "employeeUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "initialPassword": {
+                  "type": "string"
+                },
+                "userUuid": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "CreateAndLinkUser",
+        "tags": [
+          "v1/hrm/employee"
         ]
       }
     },
@@ -13273,6 +13351,9 @@
                     "idCard": {
                       "type": "string"
                     },
+                    "loginName": {
+                      "type": "string"
+                    },
                     "maritalStatus": {
                       "type": "string"
                     },
@@ -13310,6 +13391,9 @@
                       "type": "string"
                     },
                     "userStatus": {
+                      "type": "string"
+                    },
+                    "userUuid": {
                       "type": "string"
                     },
                     "uuid": {
@@ -13382,6 +13466,8 @@
                     "hireDate",
                     "formalDate",
                     "userStatus",
+                    "userUuid",
+                    "loginName",
                     "remark",
                     "createTime",
                     "updateTime"
@@ -13587,6 +13673,9 @@
                       "idCard": {
                         "type": "string"
                       },
+                      "loginName": {
+                        "type": "string"
+                      },
                       "maritalStatus": {
                         "type": "string"
                       },
@@ -13624,6 +13713,9 @@
                         "type": "string"
                       },
                       "userStatus": {
+                        "type": "string"
+                      },
+                      "userUuid": {
                         "type": "string"
                       },
                       "uuid": {
@@ -13696,6 +13788,8 @@
                       "hireDate",
                       "formalDate",
                       "userStatus",
+                      "userUuid",
+                      "loginName",
                       "remark",
                       "createTime",
                       "updateTime"
@@ -15035,6 +15129,90 @@
         "summary": "List",
         "tags": [
           "v1/hrm/leavetype"
+        ]
+      }
+    },
+    "/api/v1/hrm/getLinkableUserList": {
+      "get": {
+        "description": "接口权限编码:v1:hrm:employee:linkableUserList",
+        "operationId": "v1/Hrm/EmployeeLinkableUserList",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "default": 1,
+            "in": "query",
+            "name": "current",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "default": 10,
+            "in": "query",
+            "name": "size",
+            "type": "integer"
+          },
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "keyword",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "current": {
+                  "type": "integer"
+                },
+                "records": {
+                  "items": {
+                    "properties": {
+                      "nickname": {
+                        "type": "string"
+                      },
+                      "username": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "uuid",
+                      "username",
+                      "nickname"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "LinkableUserList",
+        "tags": [
+          "v1/hrm/employee"
         ]
       }
     },
@@ -24215,6 +24393,60 @@
         ]
       }
     },
+    "/api/v1/hrm/linkEmployeeUser": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:employee:linkUser",
+        "operationId": "v1/Hrm/EmployeeLinkUser",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "employeeUuid": {
+                  "type": "string"
+                },
+                "userUuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "employeeUuid",
+                "userUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "LinkUser",
+        "tags": [
+          "v1/hrm/employee"
+        ]
+      }
+    },
     "/api/v1/hrm/lockAttendanceMonthReport": {
       "post": {
         "consumes": [
@@ -26426,6 +26658,56 @@
         ]
       }
     },
+    "/api/v1/hrm/unlinkEmployeeUser": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "接口权限编码:v1:hrm:employee:unlinkUser",
+        "operationId": "v1/Hrm/EmployeeUnlinkUser",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "employeeUuid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "employeeUuid"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "UnlinkUser",
+        "tags": [
+          "v1/hrm/employee"
+        ]
+      }
+    },
     "/api/v1/hrm/unlockAttendanceMonthReport": {
       "post": {
         "consumes": [
@@ -27506,6 +27788,67 @@
         "summary": "GetAll",
         "tags": [
           "v1/manage/role"
+        ]
+      }
+    },
+    "/api/v1/manage/getLinkedEmployees": {
+      "get": {
+        "description": "接口权限编码:v1:manage:user:linkedEmployees",
+        "operationId": "v1/Manage/UserLinkedEmployees",
+        "parameters": [
+          {
+            "allowEmptyValue": true,
+            "in": "query",
+            "name": "uuids",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "properties": {
+                "records": {
+                  "items": {
+                    "properties": {
+                      "employeeName": {
+                        "type": "string"
+                      },
+                      "employeeNo": {
+                        "type": "string"
+                      },
+                      "userUuid": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "userUuid",
+                      "employeeNo",
+                      "employeeName"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "schemes": [
+          "https"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "summary": "LinkedEmployees",
+        "tags": [
+          "v1/manage/user"
         ]
       }
     },

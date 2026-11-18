@@ -943,6 +943,10 @@ declare namespace Api {
       formalDate: string;
       /** 用户状态: 是否已生成系统账号 (1=已生成 0=未生成) */
       userStatus: UserStatus;
+      /** 关联系统账号 uuid (空串=未关联) */
+      userUuid: string;
+      /** 登录用户名 (账号侧用户名, 仅开号时取工号, 此后与工号解耦) */
+      loginName: string;
       remark: string;
       educations?: EmployeeEducation[];
       works?: EmployeeWork[];
@@ -1013,6 +1017,13 @@ declare namespace Api {
       successCount: number;
     };
 
+    /** add employee response: 建档即开号, 回带凭据供前端明示; userCreated=false 表示离职补录跳过开号 */
+    type AddEmployeeResponse = {
+      userCreated: boolean;
+      username?: string;
+      initialPassword?: string;
+    };
+
     /** export employees response (base64 xlsx, mirrors org export) */
     type ExportEmployeeResponse = {
       fileName: string;
@@ -1029,6 +1040,47 @@ declare namespace Api {
       generated: number;
       /** 已有账号而跳过的员工数 */
       skipped: number;
+    };
+
+    /** 关联已有系统账号请求 (HRM-51): 把账号 uuid 写入档案 user_uuid 指针 */
+    type LinkUserRequest = {
+      employeeUuid: string;
+      userUuid: string;
+    };
+
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    type LinkUserResponse = {};
+
+    /** 解除关联请求 (HRM-51): 只清指针, 账号与角色绑定保留 */
+    type UnlinkUserRequest = {
+      employeeUuid: string;
+    };
+
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    type UnlinkUserResponse = {};
+
+    /** 候选账号行 (HRM-51): 只返回未被任何档案关联的账号 */
+    type LinkableUser = {
+      uuid: string;
+      username: string;
+      nickname: string;
+    };
+
+    /** 候选账号分页 (关键字模糊匹配用户名/昵称) */
+    type LinkableUserListResponse = Common.PaginatingQueryRecord<LinkableUser>;
+
+    /** 新建账号并关联请求 (HRM-51): 用户名空取工号, 密码空取配置 */
+    type CreateAndLinkUserRequest = {
+      employeeUuid: string;
+      username?: string;
+      password?: string;
+    };
+
+    /** 新建账号并关联: 回带账号 uuid 与登录凭据供前端明示 */
+    type CreateAndLinkUserResponse = {
+      userUuid: string;
+      username: string;
+      initialPassword: string;
     };
     /**
      * attendance group 班制 (groupType)

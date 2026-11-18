@@ -33,12 +33,12 @@ CREATE TABLE `hrm_salary_archive` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 员工薪资档案 page（挂在 13xx 薪酬管理目录下，order 6：主体=1 项目=2 方案=3 个税=3/4/5 冲突取 6）
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000002901','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000001301','2','员工薪资档案',0,'',6,'hrm_salary_archive-list','/hrm/salary/archive-list','view.hrm_salary_archive-list','mdi:account-cash-outline','1','route.hrm_salary_archive-list',0,'',0,0,'[]','[{"code":"v1:hrm:salary_archive:list","desc":"员工薪资档案列表"},{"code":"v1:hrm:salary_archive:getEffectiveArchive","desc":"取员工生效档案"}]',0,'');
 
 -- 员工薪资档案 buttons
-INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, "order", route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
+INSERT INTO manage_menu (uuid, create_time, update_time, status, parent_uuid, menu_type, menu_name, hide_in_menu, active_menu, `order`, route_name, route_path, component, icon, icon_type, i18n_key, keep_alive, href, multi_tab, fixed_index_in_tab, query, permissions, constant, button_code)
 VALUES
     ('aaa10000-1111-4000-8000-000000002911','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000002901','3','新增薪资档案',0,'',0,'','','','','1','button.hrm.salary_archive.add',0,'',0,0,'[]','[{"code":"v1:hrm:salary_archive:add","desc":"新增薪资档案"}]',0,'v1:hrm:salary_archive:add'),
     ('aaa10000-1111-4000-8000-000000002912','2026-11-16 00:00:00','2026-11-16 00:00:00','1','aaa10000-1111-4000-8000-000000002901','3','编辑薪资档案',0,'',1,'','','','','1','button.hrm.salary_archive.edit',0,'',0,0,'[]','[{"code":"v1:hrm:salary_archive:edit","desc":"编辑薪资档案"}]',0,'v1:hrm:salary_archive:edit'),

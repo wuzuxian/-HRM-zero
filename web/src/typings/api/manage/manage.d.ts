@@ -82,8 +82,11 @@ declare namespace Api {
      *
      * - "1": "Enable"
      * - "2": "Disable"
+     *
+     * 与库内数据/前端常量 (enableStatusRecord) 一致, 引用公共定义
+     * (原孤立笔误 '0' | '1' 已修正, spec #53 / ADR 0007)。
      */
-    type EnableStatus = '0' | '1';
+    type EnableStatus = Api.Common.EnableStatus;
 
     /** user */
     type User = Common.CommonRecord<{
@@ -99,6 +102,8 @@ declare namespace Api {
       userEmail: string;
       /** user role code collection */
       userRoles: string[];
+      /** 关联员工 (HRM-51, 只读展示): 工号+姓名, 列表页按 GetLinkedEmployees 客户端回填, 后端行不返回 */
+      linkedEmployee?: string;
     }>;
 
     /** add user request */
@@ -152,6 +157,18 @@ declare namespace Api {
 
     /** user list */
     type UserList = Common.PaginatingQueryRecord<User>;
+
+    /** 关联员工简要信息 (HRM-51): 工号+姓名, 供用户列表只读「关联员工」列回填 */
+    type LinkedEmployee = {
+      userUuid: string;
+      employeeNo: string;
+      employeeName: string;
+    };
+
+    /** 批量按账号 uuid 查关联员工 (uuids 逗号分隔); 关联唯一入口在员工侧, 用户管理侧只读 */
+    type LinkedEmployeesResponse = {
+      records: LinkedEmployee[];
+    };
 
     /**
      * menu type

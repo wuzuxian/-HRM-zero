@@ -9,6 +9,7 @@ import (
 	"github.com/xuri/excelize/v2"
 
 	coreSvc "github.com/jzero-io/jzero-admin/core-engine/svc"
+	"github.com/jzero-io/jzero-admin/server/internal/config"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_org"
 	"github.com/jzero-io/jzero-admin/server/internal/svc"
 	"github.com/jzero-io/jzero-admin/server/internal/svctest"
@@ -20,8 +21,11 @@ func newCtx(t *testing.T) (*svc.ServiceContext, *svctest.Env) {
 	env := svctest.New(t)
 	// 员工档案 logic 使用 SqlxConn 做事务 (从表全删全插); org 逻辑只依赖 Model,
 	// 这里比 org 测试多注入 SqlxConn, core-engine 其余字段保持 nil。
+	// HRM-50 建档即开号: Add/Import 在事务内接开号接缝, 接缝读 ConfigCenter
+	// (初始密码/默认角色码), 测试环境必须注入 StaticConfigCenter。
 	return &svc.ServiceContext{
 		ServiceContext: &coreSvc.ServiceContext{SqlxConn: env.SqlConn},
+		ConfigCenter:   config.NewStaticConfigCenter(config.Config{Hrm: config.HrmConf{InitialUserPassword: "test-pwd-123"}}),
 		Model:          env.Model,
 	}, env
 }
@@ -90,8 +94,12 @@ func TestEmployeeAddAutoNo(t *testing.T) {
 		if rec.EmployeeNo != "00000001" && rec.EmployeeNo != "00000002" {
 			t.Fatalf("auto employeeNo = %q, want 00000001/00000002", rec.EmployeeNo)
 		}
-		if rec.UserStatus != "0" {
-			t.Fatalf("userStatus = %q, want 0 (未生成账号)", rec.UserStatus)
+		// HRM-50 建档即开号: 在职新增即产账号, 用户状态=已生成, 登录账号=工号
+		if rec.UserStatus != "1" {
+			t.Fatalf("userStatus = %q, want 1 (建档即开号)", rec.UserStatus)
+		}
+		if rec.LoginName != rec.EmployeeNo {
+			t.Fatalf("loginName = %q, want %q (开号时用户名=工号)", rec.LoginName, rec.EmployeeNo)
 		}
 	}
 

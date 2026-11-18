@@ -47,6 +47,8 @@ func (l *List) List(req *types.ListRequest) (resp *types.ListResponse, err error
 	for _, row := range rows {
 		records = append(records, employeeToType(row))
 	}
+	// 登录账号列: 回填账号侧用户名 (工号变更不重命名账号, 二者可能不一致)
+	fillLoginNames(l.ctx, l.svcCtx, records)
 
 	return &types.ListResponse{PageResponse: types.PageResponse{
 		Current: req.Current,

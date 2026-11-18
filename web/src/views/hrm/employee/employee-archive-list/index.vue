@@ -171,6 +171,13 @@ const {
         ) : null
     },
     {
+      key: 'loginName',
+      title: $t('page.hrm.employee.loginNameLabel'),
+      align: 'center',
+      width: 110,
+      render: row => (row.loginName ? row.loginName : $t('page.hrm.employee.loginNameNone'))
+    },
+    {
       key: 'createTime',
       title: $t('page.hrm.employee.createTime'),
       align: 'center',
@@ -307,15 +314,15 @@ async function handleGenerateUser() {
     return;
   }
   generateUserLoading.value = true;
-  const { error, data } = await GenerateEmployeeUser({ uuids });
+  const { error, data: genResult } = await GenerateEmployeeUser({ uuids });
   generateUserLoading.value = false;
   if (error) return;
-  if (data && data.generated > 0) {
+  if (genResult && genResult.generated > 0) {
     window.$message?.success(
-      $t('page.hrm.employee.generateUserSuccess', { generated: data.generated, skipped: data.skipped })
+      $t('page.hrm.employee.generateUserSuccess', { generated: genResult.generated, skipped: genResult.skipped })
     );
   } else {
-    window.$message?.info($t('page.hrm.employee.generateUserAllSkipped', { skipped: data?.skipped ?? 0 }));
+    window.$message?.info($t('page.hrm.employee.generateUserAllSkipped', { skipped: genResult?.skipped ?? 0 }));
   }
   checkedRowKeys.value = [];
   getData();
@@ -369,7 +376,7 @@ async function handleExport() {
             {{ $t('page.hrm.employee.exportEmployee') }}
           </NButton>
           <NButton
-            v-if="hasAuth('hrm:employee:generateuser')"
+            v-if="hasAuth('hrm:employee:generateUser')"
             size="small"
             ghost
             type="warning"
@@ -394,7 +401,7 @@ async function handleExport() {
         :data="data"
         size="small"
         :flex-height="!appStore.isMobile"
-        :scroll-x="1800"
+        :scroll-x="1900"
         :loading="loading"
         remote
         :row-key="row => row.uuid"

@@ -4,9 +4,10 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/jzero-io/jzero/core/status"
+	"github.com/jzero-io/jzero/core/stores/condition"
 	"github.com/pkg/errors"
+	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
 	"github.com/jzero-io/jzero-admin/server/internal/errcodes"
@@ -14,6 +15,7 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_education"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_family"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_work"
+	"github.com/jzero-io/jzero-admin/server/internal/model/manage_user"
 	"github.com/jzero-io/jzero-admin/server/internal/svc"
 	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/employee"
 )
@@ -28,8 +30,8 @@ func uuidNew() string {
 // 在册口径 = person_status NOT IN (离职, 退休) — 组织架构图 (HRM-02) 汇总人数使用。
 // 用户状态由 user_uuid 派生: '1'=已生成系统账号, '0'=未生成 (#6 同步 seam)。
 const (
-	genderMale    = "1"
-	genderFemale  = "2"
+	genderMale   = "1"
+	genderFemale = "2"
 
 	maritalUnmarried = "1"
 	maritalMarried   = "2"
@@ -64,7 +66,8 @@ func validPersonStatus(v string) bool {
 }
 
 // employeeToType converts a model row into the API record (UserStatus 由
-// user_uuid 派生: 是否已生成系统账号).
+// user_uuid 派生: 是否已生成系统账号). loginName 单独通过 fillLoginNames 回填
+// (需要 join manage_user, 列表/详情调用方按需调用).
 func employeeToType(row *hrm_employee.HrmEmployee) types.HrmEmployee {
 	out := types.HrmEmployee{
 		Uuid:             row.Uuid,
@@ -97,6 +100,7 @@ func employeeToType(row *hrm_employee.HrmEmployee) types.HrmEmployee {
 		HireDate:         row.HireDate,
 		FormalDate:       row.FormalDate,
 		UserStatus:       userStatusNone,
+		UserUuid:         row.UserUuid,
 		Remark:           row.Remark,
 		CreateTime:       row.CreateTime.Format("2006-01-02 15:04:05"),
 		UpdateTime:       row.UpdateTime.Format("2006-01-02 15:04:05"),
@@ -105,6 +109,72 @@ func employeeToType(row *hrm_employee.HrmEmployee) types.HrmEmployee {
 		out.UserStatus = userStatusCreated
 	}
 	return out
+}
+
+// findEmployeeOrNotFound HRM-51 关联族端点 (link/unlink/createAndLink/开号接缝)
+// 共用的档案读取错误收敛: 档案缺失 → EmployeeUserNotFoundCode ("员工不存在: <uuid>"),
+// 其余错误原样透传。
+func findEmployeeOrNotFound(ctx context.Context, session sqlx.Session, svcCtx *svc.ServiceContext,
+	employeeUuid string) (*hrm_employee.HrmEmployee, error) {
+	emp, err := svcCtx.Model.HrmEmployee.FindOneByUuid(ctx, session, employeeUuid)
+	if err == sqlx.ErrNotFound {
+		return nil, status.ErrorMessage(errcodes.EmployeeUserNotFoundCode, "员工不存在: "+employeeUuid)
+	}
+	if err != nil {
+		return nil, err
+	}
+	return emp, nil
+}
+
+// fillLoginNames 批量回填 records 的 LoginName (账号侧 manage_user.username;
+// 工号变更不重命名账号, 二者可能不一致, 列表「登录账号」列展示该值).
+// 未关联账号的记录保持空串。查询失败不阻断列表 (登录账号是展示字段), 仅记日志。
+func fillLoginNames(ctx context.Context, svcCtx *svc.ServiceContext, records []types.HrmEmployee) {
+	userUuids := make([]any, 0, len(records))
+	seen := make(map[string]struct{}, len(records))
+	for _, rec := range records {
+		if rec.UserUuid == "" {
+			continue
+		}
+		if _, ok := seen[rec.UserUuid]; ok {
+			continue
+		}
+		seen[rec.UserUuid] = struct{}{}
+		userUuids = append(userUuids, rec.UserUuid)
+	}
+	if len(userUuids) == 0 {
+		return
+	}
+	users, err := svcCtx.Model.ManageUser.FindByCondition(ctx, nil, condition.Condition{
+		Field:    manage_user.Uuid,
+		Operator: condition.In,
+		Value:    userUuids,
+	})
+	if err != nil {
+		logx.WithContext(ctx).Errorf("hrm: 登录账号回填查询失败 (展示字段, 不阻断列表): %v", err)
+		return
+	}
+	nameByUuid := make(map[string]string, len(users))
+	for _, u := range users {
+		nameByUuid[u.Uuid] = u.Username
+	}
+	for i := range records {
+		if records[i].UserUuid != "" {
+			records[i].LoginName = nameByUuid[records[i].UserUuid]
+		}
+	}
+}
+
+// fillLoginName 单条详情回填 LoginName。
+func fillLoginName(ctx context.Context, svcCtx *svc.ServiceContext, record *types.HrmEmployee) {
+	if record == nil || record.UserUuid == "" {
+		return
+	}
+	user, err := svcCtx.Model.ManageUser.FindOneByUuid(ctx, nil, record.UserUuid)
+	if err != nil {
+		return
+	}
+	record.LoginName = user.Username
 }
 
 // generateEmployeeNo resolves the 工号 for a new employee inside a transaction:
@@ -242,8 +312,9 @@ func SaveEmployeeChildren(ctx context.Context, session sqlx.Session, svcCtx *svc
 }
 
 // insertEmployee writes the master row (+ any provided sub-table rows) inside
-// the caller's transaction. Shared by Add and Import.
-func insertEmployee(ctx context.Context, session sqlx.Session, svcCtx *svc.ServiceContext, req *types.AddRequest) error {
+// the caller's transaction. Shared by Add and Import; returns the new archive
+// uuid (开号接缝 ProvisionAccount 需要档案指针).
+func insertEmployee(ctx context.Context, session sqlx.Session, svcCtx *svc.ServiceContext, req *types.AddRequest) (string, error) {
 	row := &hrm_employee.HrmEmployee{
 		Uuid:             uuidNew(),
 		EmployeeNo:       req.EmployeeNo,
@@ -277,9 +348,12 @@ func insertEmployee(ctx context.Context, session sqlx.Session, svcCtx *svc.Servi
 		Remark:           req.Remark,
 	}
 	if err := svcCtx.Model.HrmEmployee.InsertV2(ctx, session, row); err != nil {
-		return err
+		return "", err
 	}
-	return saveChildren(ctx, session, svcCtx, row.Uuid, req.Educations, req.Works, req.Families)
+	if err := saveChildren(ctx, session, svcCtx, row.Uuid, req.Educations, req.Works, req.Families); err != nil {
+		return "", err
+	}
+	return row.Uuid, nil
 }
 
 // findChildren loads the three sub-tables for a detail record.

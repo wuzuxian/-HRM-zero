@@ -64,6 +64,24 @@ func Edit(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	}
 }
 
+func LinkedEmployees(svcCtx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.LinkedEmployeesRequest
+		if err := httpx.Parse(r, &req); err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+			return
+		}
+
+		l := user.NewLinkedEmployees(r.Context(), svcCtx, r)
+		resp, err := l.LinkedEmployees(&req)
+		if err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+		} else {
+			httpx.OkJsonCtx(r.Context(), w, resp)
+		}
+	}
+}
+
 func List(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.ListRequest

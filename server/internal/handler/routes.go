@@ -501,6 +501,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					},
 					{
 						Method:  http.MethodPost,
+						Path:    "/hrm/createAndLinkUser",
+						Handler: v1hrmemployee.CreateAndLinkUser(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
 						Path:    "/hrm/deleteEmployee",
 						Handler: v1hrmemployee.Delete(serverCtx),
 					},
@@ -530,9 +535,24 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Handler: v1hrmemployee.List(serverCtx),
 					},
 					{
+						Method:  http.MethodGet,
+						Path:    "/hrm/getLinkableUserList",
+						Handler: v1hrmemployee.LinkableUserList(serverCtx),
+					},
+					{
 						Method:  http.MethodPost,
 						Path:    "/hrm/importEmployee",
 						Handler: v1hrmemployee.Import(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/linkEmployeeUser",
+						Handler: v1hrmemployee.LinkUser(serverCtx),
+					},
+					{
+						Method:  http.MethodPost,
+						Path:    "/hrm/unlinkEmployeeUser",
+						Handler: v1hrmemployee.UnlinkUser(serverCtx),
 					},
 				}...,
 			),
@@ -2161,6 +2181,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 						Method:  http.MethodPost,
 						Path:    "/manage/editUser",
 						Handler: v1manageuser.Edit(serverCtx),
+					},
+					{
+						Method:  http.MethodGet,
+						Path:    "/manage/getLinkedEmployees",
+						Handler: v1manageuser.LinkedEmployees(serverCtx),
 					},
 					{
 						Method:  http.MethodGet,

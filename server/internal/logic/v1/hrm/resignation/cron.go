@@ -9,6 +9,7 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
+	employeelogic "github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/employee"
 	hrmemployee "github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee"
 	model "github.com/jzero-io/jzero-admin/server/internal/model/hrm_resignation_bill"
 	"github.com/jzero-io/jzero-admin/server/internal/scheduler"
@@ -26,6 +27,7 @@ const personStatusResigned = "5" // 离职 (HRM-03 enum: 1 正式/2 试用期/3 
 // bill applied=1. Idempotent via the applied flag; runs inside the caller's
 // transaction (cron tx). Missing archive rows are tolerated (snapshot contract)
 // but still marked applied so the scan does not retry them forever.
+// HRM-53 (ADR 0007 生命周期一致性): 置离职的同一事务内同步禁用关联账号。
 func applyResignation(ctx context.Context, session sqlx.Session, row *model.HrmResignationBill) error {
 	if row.Applied == 1 {
 		return nil // idempotent: already written back
@@ -49,6 +51,12 @@ func applyResignation(ctx context.Context, session sqlx.Session, row *model.HrmR
 		logx.WithContext(ctx).Infof(
 			"resignation: 离职回写未命中员工档案（bill=%s employee=%s/%s uuid=%q），仅标记 applied",
 			row.BillNo, row.EmployeeNo, row.EmployeeName, row.EmployeeUuid)
+	}
+	// HRM-53: 离职生效同一事务内禁用关联账号 (登录状态校验随之拒绝该员工)。
+	// 规则的唯一实现放在员工包 (编辑档案翻离职同走此函数), 本处只调用;
+	// 容错与档案回写一致: 档案未命中/未关联账号/账号行缺失都幂等跳过。
+	if err := employeelogic.DisableLinkedAccount(ctx, session, row.EmployeeUuid, row.EmployeeNo); err != nil {
+		return err
 	}
 	return model.NewHrmResignationBillModel(sqlx.NewSqlConnFromSession(session)).
 		UpdateFieldsByCondition(ctx, session,

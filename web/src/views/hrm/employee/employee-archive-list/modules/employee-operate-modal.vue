@@ -2,7 +2,16 @@
 import { computed, reactive, ref, watch } from 'vue';
 import { useLoading } from '@sa/hooks';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
-import { AddEmployee, EditEmployee } from '@/service/api';
+import { useAuth } from '@/hooks/business/auth';
+import {
+  AddEmployee,
+  CreateAndLinkEmployeeUser,
+  EditEmployee,
+  GetEmployeeDetail,
+  GetLinkableUserList,
+  LinkEmployeeUser,
+  UnlinkEmployeeUser
+} from '@/service/api';
 import { $t } from '@/locales';
 import {
   hrmEmployeeGenderOptions,
@@ -39,6 +48,7 @@ const visible = defineModel<boolean>('visible', {
 const { formRef, validate, restoreValidation } = useNaiveForm();
 const { defaultRequiredRule } = useFormRules();
 const { loading: confirmLoading, startLoading: confirmStartLoading, endLoading: confirmEndLoading } = useLoading();
+const { hasAuth } = useAuth();
 
 const activeTab = ref<'basic' | 'education' | 'work' | 'family'>('basic');
 
@@ -116,7 +126,105 @@ function handleInitModel() {
       works: (props.rowData.works ?? []).map((item: Api.Hrm.EmployeeWork) => ({ ...item })),
       families: (props.rowData.families ?? []).map((item: Api.Hrm.EmployeeFamily) => ({ ...item }))
     });
+    // 系统账号区块: 关联状态取详情行 (userUuid 空串=未关联, ADR 0007)
+    linkedUserUuid.value = props.rowData.userUuid ?? '';
+    linkedUsername.value = props.rowData.loginName ?? '';
+    handleCandidateSearch('');
+  } else {
+    linkedUserUuid.value = '';
+    linkedUsername.value = '';
+    candidateOptions.value = [];
+    selectedUserUuid.value = null;
   }
+}
+
+// ---- 系统账号区块 (HRM-51): 关联/解绑/新建并关联; 关联唯一入口在员工侧 (ADR 0007) ----
+const linkedUserUuid = ref('');
+const linkedUsername = ref('');
+
+const candidateOptions = ref<{ label: string; value: string }[]>([]);
+const candidateLoading = ref(false);
+const selectedUserUuid = ref<string | null>(null);
+
+async function handleCandidateSearch(query: string) {
+  candidateLoading.value = true;
+  const { error, data } = await GetLinkableUserList({ current: 1, size: 20, keyword: query || null });
+  candidateLoading.value = false;
+  if (error || !data) {
+    return;
+  }
+  // 候选只含未关联账号 (后端排除已被占用的); 已关联的当前账号无需排除 (不在候选里)
+  candidateOptions.value = (data.records ?? []).map(user => ({
+    label: `${user.username} (${user.nickname})`,
+    value: user.uuid
+  }));
+}
+
+async function refreshAccountState() {
+  const { error, data: detail } = await GetEmployeeDetail(props.rowData?.uuid ?? '');
+  if (!error && detail) {
+    linkedUserUuid.value = detail.employee.userUuid;
+    linkedUsername.value = detail.employee.loginName;
+  }
+  emit('submitted');
+}
+
+const linkLoading = ref(false);
+
+async function handleLink() {
+  if (!selectedUserUuid.value) {
+    window.$message?.warning($t('page.hrm.employee.systemAccountSelectFirst'));
+    return;
+  }
+  linkLoading.value = true;
+  const { error } = await LinkEmployeeUser({
+    employeeUuid: props.rowData?.uuid ?? '',
+    userUuid: selectedUserUuid.value
+  });
+  linkLoading.value = false;
+  if (error) return;
+  window.$message?.success($t('page.hrm.employee.systemAccountLinkSuccess'));
+  selectedUserUuid.value = null;
+  candidateOptions.value = [];
+  await refreshAccountState();
+}
+
+const unlinkLoading = ref(false);
+
+async function handleUnlink() {
+  unlinkLoading.value = true;
+  const { error } = await UnlinkEmployeeUser({ employeeUuid: props.rowData?.uuid ?? '' });
+  unlinkLoading.value = false;
+  if (error) return;
+  window.$message?.success($t('page.hrm.employee.systemAccountUnlinkSuccess'));
+  linkedUsername.value = '';
+  await refreshAccountState();
+}
+
+const createForm = reactive({ username: '', password: '' });
+const createLoading = ref(false);
+
+async function handleCreateAndLink() {
+  createLoading.value = true;
+  const { error, data } = await CreateAndLinkEmployeeUser({
+    employeeUuid: props.rowData?.uuid ?? '',
+    username: createForm.username || undefined,
+    password: createForm.password || undefined
+  });
+  createLoading.value = false;
+  if (error) return;
+  // 成功弹窗明示凭据 (与新增员工建档即开号同一交互, 文案共用 accountCreatedTip)
+  window.$dialog?.success({
+    title: $t('page.hrm.employee.systemAccountCreateTitle'),
+    content: $t('page.hrm.employee.accountCreatedTip', {
+      username: data?.username ?? '',
+      password: data?.initialPassword ?? ''
+    }),
+    positiveText: $t('common.confirm')
+  });
+  createForm.username = '';
+  createForm.password = '';
+  await refreshAccountState();
 }
 
 function closeModel() {
@@ -127,14 +235,34 @@ async function handleSubmit() {
   await validate();
   confirmStartLoading();
 
-  const request =
-    props.operateType === 'add'
-      ? AddEmployee({ ...model })
-      : EditEmployee({ ...model, uuid: props.rowData?.uuid ?? '' });
+  if (props.operateType === 'add') {
+    const { error, data: added } = await AddEmployee({ ...model });
+    if (error) {
+      confirmEndLoading();
+      return;
+    }
+    closeModel();
+    emit('submitted');
+    // 建档即开号 (spec #50): 成功提示明示登录凭据; 离职补录 (userCreated=false) 不产账号
+    if (added?.userCreated && added.username) {
+      window.$dialog?.success({
+        title: $t('page.hrm.employee.accountCreatedTitle'),
+        content: $t('page.hrm.employee.accountCreatedTip', {
+          username: added.username,
+          password: added.initialPassword ?? ''
+        }),
+        positiveText: $t('common.confirm')
+      });
+    } else {
+      window.$message?.success($t('page.hrm.employee.addEmployeeNoAccount'));
+    }
+    confirmEndLoading();
+    return;
+  }
 
-  const { error } = await request;
+  const { error } = await EditEmployee({ ...model, uuid: props.rowData?.uuid ?? '' });
   if (!error) {
-    window.$message?.success(props.operateType === 'add' ? $t('common.addSuccess') : $t('common.updateSuccess'));
+    window.$message?.success($t('common.updateSuccess'));
     closeModel();
     emit('submitted');
   }
@@ -340,6 +468,65 @@ function onFormalDateChange(v: number | null) {
               </NFormItemGi>
             </NGrid>
           </NForm>
+        </NTabPane>
+        <NTabPane name="account" :tab="$t('page.hrm.employee.systemAccountTab')">
+          <NSpace v-if="operateType === 'edit'" vertical :size="16">
+            <NTag :type="linkedUserUuid ? 'success' : 'warning'" size="small">
+              {{
+                linkedUserUuid
+                  ? `${$t('page.hrm.employee.systemAccountLinked')}: ${linkedUsername}`
+                  : $t('page.hrm.employee.systemAccountUnlinked')
+              }}
+            </NTag>
+            <NCard
+              v-if="hasAuth('hrm:employee:linkUser')"
+              size="small"
+              :title="$t('page.hrm.employee.systemAccountLinkButton')"
+            >
+              <NSelect
+                v-model:value="selectedUserUuid"
+                remote
+                filterable
+                clearable
+                :options="candidateOptions"
+                :loading="candidateLoading"
+                :placeholder="$t('page.hrm.employee.systemAccountSearchPlaceholder')"
+                @search="handleCandidateSearch"
+              />
+              <NButton class="mt-12px" type="primary" ghost :loading="linkLoading" @click="handleLink">
+                {{ $t('page.hrm.employee.systemAccountLinkButton') }}
+              </NButton>
+            </NCard>
+            <NCard
+              size="small"
+              :title="$t('page.hrm.employee.systemAccountCreateTitle')"
+            >
+              <template #header-extra>
+                <NPopconfirm v-if="linkedUserUuid && hasAuth('hrm:employee:unlinkUser')" @positive-click="handleUnlink">
+                  <template #trigger>
+                    <NButton type="error" ghost size="small" :loading="unlinkLoading">
+                      {{ $t('page.hrm.employee.systemAccountUnlinkButton') }}
+                    </NButton>
+                  </template>
+                  {{ $t('page.hrm.employee.systemAccountUnlinkConfirm') }}
+                </NPopconfirm>
+              </template>
+              <NSpace v-if="hasAuth('hrm:employee:createAndLinkUser')" vertical>
+                <NInput
+                  v-model:value="createForm.username"
+                  :placeholder="$t('page.hrm.employee.systemAccountCreateUsername')"
+                />
+                <NInput
+                  v-model:value="createForm.password"
+                  :placeholder="$t('page.hrm.employee.systemAccountCreatePassword')"
+                />
+                <NButton type="primary" ghost :loading="createLoading" @click="handleCreateAndLink">
+                  {{ $t('page.hrm.employee.systemAccountCreateButton') }}
+                </NButton>
+              </NSpace>
+            </NCard>
+          </NSpace>
+          <NEmpty v-else :description="$t('page.hrm.employee.systemAccountAddModeTip')" />
         </NTabPane>
         <NTabPane name="education" :tab="$t('page.hrm.employee.tabEducation')">
           <NSpace vertical :size="12">

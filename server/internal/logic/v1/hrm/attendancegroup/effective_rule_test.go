@@ -8,6 +8,7 @@ import (
 
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee"
 	coreSvc "github.com/jzero-io/jzero-admin/core-engine/svc"
+	"github.com/jzero-io/jzero-admin/server/internal/config"
 	"github.com/jzero-io/jzero-admin/server/internal/svc"
 	"github.com/jzero-io/jzero-admin/server/internal/svctest"
 	orglogic "github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/org"
@@ -25,6 +26,7 @@ func newSvcCtx(t *testing.T) *svc.ServiceContext {
 	// 员工档案 logic 使用 SqlxConn 做事务; attendancegroup/config 逻辑只依赖 Model。
 	return &svc.ServiceContext{
 		ServiceContext: &coreSvc.ServiceContext{SqlxConn: env.SqlConn},
+		ConfigCenter:   config.NewStaticConfigCenter(config.Config{Hrm: config.HrmConf{InitialUserPassword: "test-pwd-123"}}),
 		Model:          env.Model,
 	}
 }

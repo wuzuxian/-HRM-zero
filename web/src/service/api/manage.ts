@@ -121,6 +121,15 @@ export function GetUserList(params?: Api.Manage.UserSearchParams) {
   });
 }
 
+/** 批量按账号 uuid 查关联员工 (HRM-51, 只读): 供用户列表「关联员工」列回填 */
+export function GetLinkedEmployees(uuids: string[]) {
+  return request<Api.Manage.LinkedEmployeesResponse>({
+    url: '/api/v1/manage/getLinkedEmployees',
+    method: 'get',
+    params: { uuids: uuids.join(',') }
+  });
+}
+
 export function AddMenu(req: Api.Manage.AddMenuRequest) {
   return request<Api.Common.Empty>({
     url: '/api/v1/manage/addMenu',

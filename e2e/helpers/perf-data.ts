@@ -1,13 +1,15 @@
 import { APIRequestContext, Page } from '@playwright/test';
 
+import { API, adminToken, apiGet, apiPost } from './employee-data';
+
 /**
  * 绩效考核任务交互层的数据准备 helper。
  * 全部走后端 API（:8001 直连，绕过前端代理）：
  *   指标 → 模板 → 方案 → 员工(+账号+角色) → 批次 → 发布 → 生成考核任务
  * 依据 server/desc/api/v1/hrm/{perf_indicator,perf_template,perf_scheme,perf_period}.api。
+ *
+ * API 调用基座（API 基址/apiGet/apiPost/adminToken）统一从 employee-data 引入，不在本文件重复定义。
  */
-
-const API = process.env.E2E_API_URL ?? 'http://localhost:8001';
 
 export const R_SUPER_ROLE_CODE = 'R_SUPER'; // editUser.userRoles 按角色 code 匹配（与前端 roleOptions 一致）
 
@@ -30,39 +32,6 @@ export interface AssessmentFixture {
   employees: EmployeeFixture[];
 }
 
-async function apiGet(request: APIRequestContext, path: string, token: string, params?: Record<string, string>) {
-  const resp = await request.get(`${API}/api/v1${path}`, {
-    headers: { Authorization: `Bearer ${token}` },
-    params
-  });
-  const json = await resp.json();
-  if (json.code !== 200 && json.code !== 0) {
-    throw new Error(`GET ${path} 失败: code=${json.code} msg=${json.msg}`);
-  }
-  return json.data;
-}
-
-async function apiPost(request: APIRequestContext, path: string, token: string, data: unknown) {
-  const resp = await request.post(`${API}/api/v1${path}`, {
-    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-    data
-  });
-  const json = await resp.json();
-  if (json.code !== 200 && json.code !== 0) {
-    throw new Error(`POST ${path} 失败: code=${json.code} msg=${json.msg}`);
-  }
-  return json.data;
-}
-
-/** admin 登录拿 token */
-export async function adminToken(request: APIRequestContext): Promise<string> {
-  const resp = await request.post(`${API}/api/v1/auth/pwd-login`, {
-    data: { username: 'admin', password: '123456' }
-  });
-  const json = await resp.json();
-  return json.data.token;
-}
-
 /**
  * 创建一条完整考核任务链数据（幂等可重跑：用带时间戳的命名避免撞唯一键）。
  * @param employeeCount 参与考核的员工数（每人一个系统账号，密码 123456）
@@ -71,10 +40,20 @@ export async function setupAssessmentData(request: APIRequestContext, employeeCo
   const token = await adminToken(request);
   const ts = Date.now().toString().slice(-8);
 
-  // 1. 组织（取种子公司，若无可建）
+  // 1. 组织：优先取已有节点；全新库（迁移不带业务种子数据）没有组织时自建一家公司，
+  //    保证 spec 在空库上自足可跑。每 run 独立公司 → 批次 scope 圈定互不串扰。
   const orgTree = await apiGet(request, '/hrm/getOrgTree', token);
-  const companyUuid = orgTree?.records?.[0]?.uuid ?? orgTree?.[0]?.uuid;
-  if (!companyUuid) throw new Error('无组织节点，无法圈定批次参与人');
+  let companyUuid = orgTree?.records?.[0]?.uuid ?? orgTree?.[0]?.uuid;
+  if (!companyUuid) {
+    await apiPost(request, '/hrm/addOrg', token, {
+      orgName: `e2e绩效公司${ts}`,
+      orgType: '1',
+      status: '1'
+    });
+    const recreated = await apiGet(request, '/hrm/getOrgTree', token);
+    companyUuid = recreated?.records?.[0]?.uuid ?? recreated?.[0]?.uuid;
+    if (!companyUuid) throw new Error('无组织节点且自建公司失败，无法圈定批次参与人');
+  }
 
   // 2. 指标（AddResponse 为空，创建后从列表反查）
   const indicatorCode = `E2E-KPI-${ts}`;
@@ -126,24 +105,29 @@ export async function setupAssessmentData(request: APIRequestContext, employeeCo
   }
 
   // 5b. 员工 + 账号 + 角色
+  // HRM-50 建档即开号收口: addEmployee 在同一事务内自动开号（AddResponse 带 userCreated），
+  // 不再走 generateUser 两步造数; 绩效页面确需管理端权限，授角色这一步保留。
   const employees: EmployeeFixture[] = [];
   for (let i = 0; i < employeeCount; i++) {
     const empName = `e2e考核员工${ts}_${i}`;
-    await apiPost(request, '/hrm/addEmployee', token, {
+    const addResp = (await apiPost(request, '/hrm/addEmployee', token, {
       name: empName,
       companyUuid,
       orgUuid: companyUuid,
       personStatus: '1'
-    });
+    })) as { userCreated?: boolean; username?: string; initialPassword?: string };
+    if (!addResp?.userCreated) {
+      throw new Error('addEmployee 未自动开号（userCreated=false）: ' + JSON.stringify(addResp));
+    }
+
     const empList = await apiGet(request, '/hrm/getEmployeeList', token, { name: empName, current: '1', size: '10' });
     const empRow = empList?.records?.[0];
     const employeeUuid = empRow?.uuid;
     const employeeNo = empRow?.employeeNo;
     if (!employeeUuid || !employeeNo) throw new Error('getEmployeeList 未返回 uuid/employeeNo: ' + JSON.stringify(empList));
-
-    // 一键生成账号（用户名=工号，密码 123456）
-    const gen = await apiPost(request, '/hrm/generateUser', token, { uuids: [employeeUuid] });
-    if ((gen?.generated ?? 0) !== 1) throw new Error('generateUser 未生成账号: ' + JSON.stringify(gen));
+    if (empRow?.userStatus !== '1' || empRow?.loginName !== employeeNo) {
+      throw new Error(`员工未关联账号或登录名≠工号: userStatus=${empRow?.userStatus} loginName=${empRow?.loginName}`);
+    }
 
     // 授予超管角色（让账号能看见考核任务菜单与按钮码）
     const userList = await apiGet(request, '/manage/getUserList', token, { username: employeeNo, current: '1', size: '10' });

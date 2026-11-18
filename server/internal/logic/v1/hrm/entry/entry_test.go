@@ -1,14 +1,21 @@
 package entry
 
 import (
+	"bytes"
 	"context"
+	"encoding/base64"
 	"strings"
 	"testing"
 
+	"github.com/google/uuid"
+	"github.com/jzero-io/jzero/core/status"
 	"github.com/jzero-io/jzero/core/stores/condition"
+	"github.com/xuri/excelize/v2"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
 	coreSvc "github.com/jzero-io/jzero-admin/core-engine/svc"
+	"github.com/jzero-io/jzero-admin/server/internal/config"
+	"github.com/jzero-io/jzero-admin/server/internal/errcodes"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/bill"
 	"github.com/jzero-io/jzero-admin/server/internal/logic/v1/hrm/employee"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee"
@@ -16,9 +23,13 @@ import (
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_family"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_employee_work"
 	"github.com/jzero-io/jzero-admin/server/internal/model/hrm_entry_bill"
+	"github.com/jzero-io/jzero-admin/server/internal/model/manage_role"
+	"github.com/jzero-io/jzero-admin/server/internal/model/manage_user"
+	"github.com/jzero-io/jzero-admin/server/internal/model/manage_user_role"
 	"github.com/jzero-io/jzero-admin/server/internal/svc"
-	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/entry"
 	"github.com/jzero-io/jzero-admin/server/internal/svctest"
+	empTypes "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/employee"
+	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/hrm/entry"
 )
 
 // Seams under test (per ticket acceptance criteria), all at the logic-method
@@ -47,8 +58,12 @@ func testCtxFor(uuid, username string, roles ...string) context.Context {
 
 func newSvcCtx(t *testing.T, env *svctest.Env) *svc.ServiceContext {
 	t.Helper()
+	// HRM-50 建档即开号: 审批通过 OnApproved 在建档事务内接开号接缝, 接缝读
+	// ConfigCenter (初始密码/默认角色码), 测试环境必须注入 StaticConfigCenter;
+	// 审批路径用 WithSvcCtx 把本环境带入 OnApproved 闭包 (生产走全局兜底)。
 	return &svc.ServiceContext{
 		ServiceContext: &coreSvc.ServiceContext{SqlxConn: env.SqlConn},
+		ConfigCenter:   config.NewStaticConfigCenter(config.Config{Hrm: config.HrmConf{InitialUserPassword: "test-pwd-123"}}),
 		Model:          env.Model,
 	}
 }
@@ -183,7 +198,7 @@ func TestApproveAutoCreatesArchive(t *testing.T) {
 	if err := bill.SubmitBill(context.Background(), env.SqlConn, BillTypeCode, billUuid, op, ""); err != nil {
 		t.Fatalf("SubmitBill: %v", err)
 	}
-	if err := bill.ApproveBill(context.Background(), env.SqlConn, BillTypeCode, billUuid, op, "同意入职"); err != nil {
+	if err := bill.ApproveBill(WithSvcCtx(context.Background(), svcCtx), env.SqlConn, BillTypeCode, billUuid, op, "同意入职"); err != nil {
 		t.Fatalf("ApproveBill: %v", err)
 	}
 
@@ -260,7 +275,7 @@ func TestApproveArchiveIdempotent(t *testing.T) {
 	if err := bill.SubmitBill(context.Background(), env.SqlConn, BillTypeCode, billUuid, op, ""); err != nil {
 		t.Fatalf("SubmitBill: %v", err)
 	}
-	if err := bill.ApproveBill(context.Background(), env.SqlConn, BillTypeCode, billUuid, op, ""); err != nil {
+	if err := bill.ApproveBill(WithSvcCtx(context.Background(), svcCtx), env.SqlConn, BillTypeCode, billUuid, op, ""); err != nil {
 		t.Fatalf("ApproveBill: %v", err)
 	}
 	row := mustFindEntry(t, svcCtx, billUuid)
@@ -270,10 +285,10 @@ func TestApproveArchiveIdempotent(t *testing.T) {
 	}
 
 	// Replay the write-back directly (重复审批兜底) — must be a no-op.
-	if err := onApproved(context.Background(), env.SqlConn, billUuid); err != nil {
+	if err := onApproved(WithSvcCtx(context.Background(), svcCtx), env.SqlConn, billUuid); err != nil {
 		t.Fatalf("onApproved replay: %v", err)
 	}
-	if err := onApproved(context.Background(), env.SqlConn, billUuid); err != nil {
+	if err := onApproved(WithSvcCtx(context.Background(), svcCtx), env.SqlConn, billUuid); err != nil {
 		t.Fatalf("onApproved replay 2: %v", err)
 	}
 
@@ -338,7 +353,7 @@ func TestRejectDoesNotArchive(t *testing.T) {
 	if err := bill.SubmitBill(context.Background(), env.SqlConn, BillTypeCode, billUuid, op, ""); err != nil {
 		t.Fatalf("SubmitBill (resubmit): %v", err)
 	}
-	if err := bill.ApproveBill(context.Background(), env.SqlConn, BillTypeCode, billUuid, op, ""); err != nil {
+	if err := bill.ApproveBill(WithSvcCtx(context.Background(), svcCtx), env.SqlConn, BillTypeCode, billUuid, op, ""); err != nil {
 		t.Fatalf("ApproveBill (resubmit): %v", err)
 	}
 	row = mustFindEntry(t, svcCtx, billUuid)
@@ -355,7 +370,7 @@ func TestRejectDoesNotArchive(t *testing.T) {
 	if err := bill.SubmitBill(context.Background(), env.SqlConn, BillTypeCode, billUuid2, op, ""); err != nil {
 		t.Fatalf("SubmitBill 2: %v", err)
 	}
-	if err := bill.ApproveBill(context.Background(), env.SqlConn, BillTypeCode, billUuid2, op, ""); err != nil {
+	if err := bill.ApproveBill(WithSvcCtx(context.Background(), svcCtx), env.SqlConn, BillTypeCode, billUuid2, op, ""); err != nil {
 		t.Fatalf("ApproveBill 2: %v", err)
 	}
 	row2 := mustFindEntry(t, svcCtx, billUuid2)
@@ -390,7 +405,7 @@ func TestEditDeleteGuardedByStatus(t *testing.T) {
 	}
 
 	// 审批通过 (approved) is locked too — 已自动建档.
-	if err := bill.ApproveBill(context.Background(), env.SqlConn, BillTypeCode, billUuid, op, ""); err != nil {
+	if err := bill.ApproveBill(WithSvcCtx(context.Background(), svcCtx), env.SqlConn, BillTypeCode, billUuid, op, ""); err != nil {
 		t.Fatalf("ApproveBill: %v", err)
 	}
 	if _, err := NewEdit(ctx, svcCtx, nil).Edit(&types.EditRequest{
@@ -528,3 +543,292 @@ func superAdminRoleUuid() string {
 }
 
 var _ = sqlx.ErrNotFound
+
+// ---- HRM-50 建档即开号: 入职单审批入口 (ADR 0007) ----
+
+// submitAndApproveEntry 提交并审批通过一张入职单 (审批事务内自动建档+开号)。
+func submitAndApproveEntry(t *testing.T, svcCtx *svc.ServiceContext, billUuid string) {
+	t.Helper()
+	op := bill.Operator{UserUuid: "approver-1", Name: "李审批"}
+	if err := bill.SubmitBill(WithSvcCtx(context.Background(), svcCtx), envSqlConnOf(svcCtx), BillTypeCode, billUuid, op, ""); err != nil {
+		t.Fatalf("SubmitBill: %v", err)
+	}
+	if err := bill.ApproveBill(WithSvcCtx(context.Background(), svcCtx), envSqlConnOf(svcCtx), BillTypeCode, billUuid, op, "同意入职"); err != nil {
+		t.Fatalf("ApproveBill: %v", err)
+	}
+}
+
+// envSqlConnOf 取测试环境的连接 (WithSvcCtx 注入的 svcCtx 与 ApproveBill 必须同一 DB)。
+func envSqlConnOf(svcCtx *svc.ServiceContext) sqlx.SqlConn {
+	return svcCtx.SqlxConn
+}
+
+// mustFindRoleByCodeEntry 按角色码定位 manage_role 行 (entry 包测试本地助手)。
+func mustFindRoleByCodeEntry(t *testing.T, svcCtx *svc.ServiceContext, code string) *manage_role.ManageRole {
+	t.Helper()
+	row, err := svcCtx.Model.ManageRole.FindOneByCondition(context.Background(), nil,
+		condition.NewChain().Equal(manage_role.Code, code).Build()...)
+	if err != nil {
+		t.Fatalf("find manage_role by code %q: %v", code, err)
+	}
+	return row
+}
+
+// accountShape 账号外部可见快照: password/nickname/phone/email/status/挂角色 uuid 集合。
+type accountShape struct {
+	password  string
+	nickname  string
+	phone     string
+	email     string
+	status    string
+	roleUuids map[string]bool
+}
+
+func accountShapeOf(t *testing.T, svcCtx *svc.ServiceContext, userUuid string) accountShape {
+	t.Helper()
+	user, err := svcCtx.Model.ManageUser.FindOneByUuid(context.Background(), nil, userUuid)
+	if err != nil {
+		t.Fatalf("find manage_user %s: %v", userUuid, err)
+	}
+	rows, err := svcCtx.Model.ManageUserRole.FindByCondition(context.Background(), nil,
+		condition.NewChain().Equal(manage_user_role.UserUuid, userUuid).Build()...)
+	if err != nil {
+		t.Fatalf("find user roles: %v", err)
+	}
+	roles := make(map[string]bool, len(rows))
+	for _, r := range rows {
+		roles[r.RoleUuid] = true
+	}
+	return accountShape{
+		password:  user.Password,
+		nickname:  user.Nickname,
+		phone:     user.Phone,
+		email:     user.Email,
+		status:    user.Status,
+		roleUuids: roles,
+	}
+}
+
+// TestThreeEntryProvisionsEquivalentAccounts 三入口账号等价 (ticket 验收): 同一份
+// 档案数据经 手工新增 / 批量导入 / 入职单审批自动建档 三个入口产出账号, 其
+// 用户名(=工号)、初始密码(取配置)、昵称/手机/邮箱(取档案)、状态(启用)、
+// 默认角色(R_EMPLOYEE) 完全一致。
+func TestThreeEntryProvisionsEquivalentAccounts(t *testing.T) {
+	env := svctest.New(t)
+	svcCtx := newSvcCtx(t, env)
+
+	// 入口一: 手工新增 (在职, 与入职单同基本资料)
+	addResp, err := employee.NewAdd(context.Background(), svcCtx, nil).Add(&empTypes.AddRequest{
+		Name: "王入职", Gender: "1", Phone: "13900000001", Email: "wang@example.com",
+		PersonStatus: employee.PersonStatusRegular,
+	})
+	if err != nil {
+		t.Fatalf("add entry: %v", err)
+	}
+	if !addResp.UserCreated {
+		t.Fatalf("add resp = %+v, want userCreated=true", addResp)
+	}
+
+	// 入口二: 批量导入 (同一模板, 空工号自动生成)
+	content := buildEmployeeImportXlsx(t, [][]string{
+		{"", "王入职", "男", "13900000001", "wang@example.com", "", "", "", "", "正式", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""},
+	})
+	importResp, err := employee.NewImport(context.Background(), svcCtx, nil).Import(&empTypes.ImportRequest{
+		FileName: "员工.xlsx", Content: content,
+	})
+	if err != nil {
+		t.Fatalf("import entry: %v", err)
+	}
+	if importResp.SuccessCount != 1 {
+		t.Fatalf("import successCount = %d, want 1", importResp.SuccessCount)
+	}
+
+	// 入口三: 入职单审批通过自动建档
+	billUuid, _ := addEntry(t, svcCtx, testCtxFor("user-1", "张三HR"), nil)
+	submitAndApproveEntry(t, svcCtx, billUuid)
+	entryRow := mustFindEntry(t, svcCtx, billUuid)
+	if entryRow.EmployeeUuid == "" {
+		t.Fatal("approval did not create archive")
+	}
+
+	// 三个档案的账号逐项等价
+	addEmp := mustFindEmployeeByName(t, svcCtx, "王入职", addResp.Username)
+	archEmp := mustFindEmployee(t, svcCtx, entryRow.EmployeeUuid)
+
+	userByUuid := func(t *testing.T, uuid string) *manage_user.ManageUser {
+		t.Helper()
+		row, err := svcCtx.Model.ManageUser.FindOneByUuid(context.Background(), nil, uuid)
+		if err != nil {
+			t.Fatalf("find manage_user %s: %v", uuid, err)
+		}
+		return row
+	}
+
+	// 新增入口的档案: 工号即账号用户名
+	addUser := userByUuid(t, addEmp.UserUuid)
+	shape1 := accountShapeOf(t, svcCtx, addEmp.UserUuid)
+
+	// 入职单入口档案
+	archUser := userByUuid(t, archEmp.UserUuid)
+	shape3 := accountShapeOf(t, svcCtx, archEmp.UserUuid)
+
+	// 用户名 = 各自档案工号
+	if addUser.Username != addEmp.EmployeeNo {
+		t.Fatalf("add entry username = %q, want 工号 %q", addUser.Username, addEmp.EmployeeNo)
+	}
+	if archUser.Username != archEmp.EmployeeNo {
+		t.Fatalf("entry-bill username = %q, want 工号 %q", archUser.Username, archEmp.EmployeeNo)
+	}
+
+	role := mustFindRoleByCodeEntry(t, svcCtx, "R_EMPLOYEE")
+
+	// 逐字段等价: 密码/昵称/手机/邮箱/状态/角色
+	if shape1.password != "test-pwd-123" || shape3.password != "test-pwd-123" {
+		t.Fatalf("password mismatch: add=%q arch=%q, want test-pwd-123", shape1.password, shape3.password)
+	}
+	if shape1.nickname != "王入职" || shape3.nickname != "王入职" {
+		t.Fatalf("nickname mismatch: %q / %q, want 王入职 (取档案姓名)", shape1.nickname, shape3.nickname)
+	}
+	if shape1.phone != "13900000001" || shape3.phone != "13900000001" {
+		t.Fatalf("phone mismatch: %q / %q", shape1.phone, shape3.phone)
+	}
+	if shape1.email != "wang@example.com" || shape3.email != "wang@example.com" {
+		t.Fatalf("email mismatch: %q / %q", shape1.email, shape3.email)
+	}
+	if shape1.status != "1" || shape3.status != "1" {
+		t.Fatalf("status mismatch: %q / %q, want 1 (启用)", shape1.status, shape3.status)
+	}
+	if len(shape1.roleUuids) != 1 || !shape1.roleUuids[role.Uuid] {
+		t.Fatalf("add entry roles = %+v, want exactly R_EMPLOYEE", shape1.roleUuids)
+	}
+	if len(shape3.roleUuids) != 1 || !shape3.roleUuids[role.Uuid] {
+		t.Fatalf("entry-bill roles = %+v, want exactly R_EMPLOYEE", shape3.roleUuids)
+	}
+
+	// 导入入口的账号同样等价 (工号 = 除新增/审批两个工号外的第三条记录)
+	addRespNo := addResp.Username
+	archNo := archEmp.EmployeeNo
+	importEmp := findEmployeeByExcludedNos(t, svcCtx, []string{addRespNo, archNo})
+	if importEmp == nil || importEmp.UserUuid == "" {
+		t.Fatal("import row did not provision account")
+	}
+	importUser := userByUuid(t, importEmp.UserUuid)
+	if importUser.Username != importEmp.EmployeeNo {
+		t.Fatalf("import username = %q, want 工号 %q", importUser.Username, importEmp.EmployeeNo)
+	}
+	shape2 := accountShapeOf(t, svcCtx, importEmp.UserUuid)
+	if shape2.password != "test-pwd-123" || shape2.nickname != "王入职" ||
+		shape2.phone != "13900000001" || shape2.email != "wang@example.com" || shape2.status != "1" {
+		t.Fatalf("import account shape mismatch: %+v", shape2)
+	}
+	if len(shape2.roleUuids) != 1 || !shape2.roleUuids[role.Uuid] {
+		t.Fatalf("import roles = %+v, want exactly R_EMPLOYEE", shape2.roleUuids)
+	}
+}
+
+// buildEmployeeImportXlsx entry 包本地的员工导入模板 (与 employee.importHeader 同一列序)。
+func buildEmployeeImportXlsx(t *testing.T, rows [][]string) string {
+	t.Helper()
+	f := excelize.NewFile()
+	sheet := f.GetSheetName(0)
+	header := []string{
+		"工号", "姓名", "性别", "手机号", "邮箱",
+		"所属部门", "所属单位", "职位", "职务",
+		"人员状态", "入职日期", "转正日期",
+		"生日", "民族", "政治面貌", "婚姻状况", "籍贯", "身份证号",
+		"户口地址", "现住址", "紧急联系人", "紧急联系人电话",
+		"工资开户行", "工资卡账户", "备注",
+	}
+	if err := f.SetSheetRow(sheet, "A1", &header); err != nil {
+		t.Fatalf("set header: %v", err)
+	}
+	for i, row := range rows {
+		cell, err := excelize.CoordinatesToCellName(1, i+2)
+		if err != nil {
+			t.Fatalf("cell: %v", err)
+		}
+		if err := f.SetSheetRow(sheet, cell, &row); err != nil {
+			t.Fatalf("set row: %v", err)
+		}
+	}
+	var buf bytes.Buffer
+	if err := f.Write(&buf); err != nil {
+		t.Fatalf("write xlsx: %v", err)
+	}
+	return base64.StdEncoding.EncodeToString(buf.Bytes())
+}
+
+// mustFindEmployeeByName 按姓名定位档案 (可选工号精确过滤; 测试数据受控)。
+func mustFindEmployeeByName(t *testing.T, svcCtx *svc.ServiceContext, name, employeeNo string) *hrm_employee.HrmEmployee {
+	t.Helper()
+	chain := condition.NewChain().Equal(hrm_employee.Name, name)
+	if employeeNo != "" {
+		chain = chain.Equal(hrm_employee.EmployeeNo, employeeNo)
+	}
+	rows, err := svcCtx.Model.HrmEmployee.FindByCondition(context.Background(), nil, chain.Build()...)
+	if err != nil || len(rows) == 0 {
+		t.Fatalf("find employee by name %s (no=%s): %v, rows=%d", name, employeeNo, err, len(rows))
+	}
+	return rows[0]
+}
+
+// findEmployeeByExcludedNos 取工号不在排除列表内的唯一档案 (三入口同姓名场景定位导入行)。
+func findEmployeeByExcludedNos(t *testing.T, svcCtx *svc.ServiceContext, excluded []string) *hrm_employee.HrmEmployee {
+	t.Helper()
+	rows, err := svcCtx.Model.HrmEmployee.FindByCondition(context.Background(), nil)
+	if err != nil {
+		t.Fatalf("find employees: %v", err)
+	}
+	excl := map[string]bool{}
+	for _, no := range excluded {
+		excl[no] = true
+	}
+	for _, row := range rows {
+		if !excl[row.EmployeeNo] {
+			return row
+		}
+	}
+	t.Fatalf("no employee outside excluded nos %v", excluded)
+	return nil
+}
+
+// TestApproveProvisionFailureRollsBackApproval 开号失败则审批整体回滚 (ticket 验收):
+// 自动生成的工号撞已有账号用户名 → ApproveBill 报 10461, 单据状态留在 审批中,
+// 档案不落库, employee_uuid 不回写。
+func TestApproveProvisionFailureRollsBackApproval(t *testing.T) {
+	env := svctest.New(t)
+	svcCtx := newSvcCtx(t, env)
+
+	// 空表下审批建档的自动工号是 00000001; 预先种一个同名账号制造开号冲突
+	if err := svcCtx.Model.ManageUser.InsertV2(context.Background(), nil, &manage_user.ManageUser{
+		Uuid: uuid.New().String(), Username: "00000001", Password: "x", Nickname: "冲突账号", Status: "1",
+	}); err != nil {
+		t.Fatalf("seed conflicting account: %v", err)
+	}
+
+	billUuid, _ := addEntry(t, svcCtx, testCtxFor("user-1", "张三HR"), nil)
+	op := bill.Operator{UserUuid: "approver-1", Name: "李审批"}
+	if err := bill.SubmitBill(WithSvcCtx(context.Background(), svcCtx), envSqlConnOf(svcCtx), BillTypeCode, billUuid, op, ""); err != nil {
+		t.Fatalf("SubmitBill: %v", err)
+	}
+	err := bill.ApproveBill(WithSvcCtx(context.Background(), svcCtx), envSqlConnOf(svcCtx), BillTypeCode, billUuid, op, "同意入职")
+	if st := status.FromError(err); st == nil || st.Code() != errcodes.EmployeeUserNoDuplicateCode {
+		t.Fatalf("approve err = %v, want EmployeeUserNoDuplicateCode (10461)", err)
+	}
+
+	// 审批整体回滚: 状态留在审批中, 员工档案未生成
+	row := mustFindEntry(t, svcCtx, billUuid)
+	if row.Status != bill.StatusApproving {
+		t.Fatalf("status after failed approval = %q, want approving (回滚)", row.Status)
+	}
+	if row.EmployeeUuid != "" {
+		t.Fatalf("employee_uuid = %q, want empty (档案未落库)", row.EmployeeUuid)
+	}
+	employees, err := svcCtx.Model.HrmEmployee.FindByCondition(context.Background(), nil)
+	if err != nil {
+		t.Fatalf("find employees: %v", err)
+	}
+	if len(employees) != 0 {
+		t.Fatalf("archives after failed approval = %d, want 0 (同事务回滚)", len(employees))
+	}
+}

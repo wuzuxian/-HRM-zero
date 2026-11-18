@@ -12,6 +12,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
 
+	"github.com/jzero-io/jzero-admin/server/internal/model/manage_user"
 	"github.com/jzero-io/jzero-admin/server/internal/model/manage_user_role"
 	"github.com/jzero-io/jzero-admin/server/internal/svc"
 	types "github.com/jzero-io/jzero-admin/server/internal/types/v1/auth"
@@ -49,6 +50,12 @@ func (l *PwdLogin) PwdLogin(req *types.PwdLoginRequest) (resp *types.LoginRespon
 	}
 	if req.Password != user.Password {
 		return nil, errors.New("用户名或密码错误")
+	}
+	// HRM-53 (ADR 0007 生命周期一致性): 密码校验通过后再看状态, 禁用账号明确拒绝,
+	// 文案与"用户名或密码错误"区分开 — 已存在的禁用账号从此真的登不进去 (预期行为变更)。
+	// 登录是 manage_user.status 的消费方, 枚举常量统一引用 model 包 (写入方在 employee 包)。
+	if user.Status == manage_user.StatusDisabled {
+		return nil, errors.New("账号已禁用, 无法登录")
 	}
 	userRoles, err := l.svcCtx.Model.ManageUserRole.FindByCondition(l.ctx, nil, condition.NewChain().
 		Equal(manage_user_role.UserUuid, user.Uuid).

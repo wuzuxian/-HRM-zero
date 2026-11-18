@@ -40,6 +40,7 @@ func (l *Detail) Detail(req *types.DetailRequest) (resp *types.DetailResponse, e
 	}
 
 	record := employeeToType(row)
+	fillLoginName(l.ctx, l.svcCtx, &record)
 	educations, works, families, err := findChildren(l.ctx, l.svcCtx, row.Uuid)
 	if err != nil {
 		return nil, err

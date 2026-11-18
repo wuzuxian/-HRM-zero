@@ -57,6 +57,10 @@ func (l *CodeLogin) CodeLogin(req *types.CodeLoginRequest) (resp *types.LoginRes
 	if err != nil {
 		return nil, errors.New("用户名/密码错误")
 	}
+	// HRM-53 (ADR 0007 生命周期一致性): 与 pwd_login 一致, 禁用账号明确拒绝.
+	if user.Status == manage_user.StatusDisabled {
+		return nil, errors.New("账号已禁用, 无法登录")
+	}
 
 	userRoles, err := l.svcCtx.Model.ManageUserRole.FindByCondition(l.ctx, nil, condition.NewChain().
 		Equal(manage_user_role.UserUuid, user.Uuid).
